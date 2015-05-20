@@ -15,7 +15,7 @@
  */
 package ch.abraxas.exception;
 
-import ch.abraxas.ecmip.solution.mobile.inspect.Messages;
+import ch.abraxas.Messages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
