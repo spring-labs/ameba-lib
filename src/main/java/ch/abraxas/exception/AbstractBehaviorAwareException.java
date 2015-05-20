@@ -15,8 +15,9 @@
  */
 package ch.abraxas.exception;
 
-import ch.abraxas.ecmip.solution.http.AbstractBase;
-import ch.abraxas.ecmip.solution.http.Response;
+
+import ch.abraxas.http.AbstractBase;
+import ch.abraxas.http.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
