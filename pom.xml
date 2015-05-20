@@ -4,23 +4,42 @@
 
     <groupId>ch.abraxas</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
-
+    <licenses>
+        <license>
+            <name>Apache-2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <organization>
+        <name>Abraxas Informatik AG</name>
+        <url>http://www.abraxas.ch</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>openwms</id>
+            <name>Heiko Scherrer</name>
+            <email>scherrer@openwms.org</email>
+        </developer>
+        <developer>
+            <id>Neolysion</id>
+            <name>Boris Simic</name>
+            <email>borischief@gmail.com</email>
+        </developer>
+    </developers>
     <properties>
-
         <java.version>1.7</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
         <spring.version>4.1.6.RELEASE</spring.version>
         <spring-hateoas.version>0.17.0.RELEASE</spring-hateoas.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
-
-        <maven-release-plugin.version>2.4.1</maven-release-plugin.version>
+        <maven-release-plugin.version>2.5</maven-release-plugin.version>
         <jackson-annotations.version>2.4.0</jackson-annotations.version>
     </properties>
 
@@ -140,13 +159,13 @@
         <connection>scm:git:https://github.com/abraxas-labs/ameba-lib.git</connection>
         <developerConnection>scm:git:git@github.com:abraxas-labs/ameba-lib.git</developerConnection>
         <url>https://github.com/abraxas-labs/ameba-lib</url>
-        <tag>0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
         <repository>
             <id>bintray</id>
-            <url>https://dl.bintray.com/content/abraxas/labs/morlock</url>
+            <url>https://api.bintray.com/maven/abraxas/labs/ameba</url>
         </repository>
     </distributionManagement>
 </project>
