@@ -15,7 +15,7 @@
  */
 package ch.abraxas.event;
 
-import ch.abraxas.ecmip.solution.http.AbstractBase;
+import ch.abraxas.http.AbstractBase;
 import org.springframework.context.ApplicationEvent;
 
 /**
