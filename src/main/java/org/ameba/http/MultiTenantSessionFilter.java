@@ -20,33 +20,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ameba.Constants;
-import org.slf4j.MDC;
+import org.ameba.TenantHolder;
 
 /**
- * A SLF4JMappedDiagnosticContextFilter adds the current tenant to SLF4J's Mapped Diagnostics Context.
+ * A MultiTenantSessionFilter set the current tenant value ({@value Constants#HEADER_VALUE_TENANT} in the {@link org.ameba.TenantHolder TenantHolder}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.1
- * @see org.slf4j.MDC
- * @since 0.9
+ * @version 1.0
+ * @see org.ameba.TenantHolder
+ * @since 1.0
  */
-public class SLF4JMappedDiagnosticContextFilter extends AbstractTenantAwareFilter {
+public class MultiTenantSessionFilter extends AbstractTenantAwareFilter {
 
     /**
      * {@inheritDoc}
-     * Set the MDC properly.
+     * If {@code tenant} is present, set it in the {@link org.ameba.TenantHolder TenantHolder}
      */
     @Override
     protected void doBefore(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
-        super.doBefore(request, response, filterChain, tenant);
+        if (null != tenant && !tenant.isEmpty()) {
+            TenantHolder.setCurrentTenant(tenant);
+        }
     }
 
     /**
      * {@inheritDoc}
-     * Remove the tenant information from MDC.
+     * Remove tenant from {@link org.ameba.TenantHolder TenantHolder}
      */
     @Override
     protected void doAfter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
-        MDC.remove(Constants.HEADER_VALUE_TENANT);
+        if (null != tenant && !tenant.isEmpty()) {
+            TenantHolder.destroy();
+        }
     }
 }
