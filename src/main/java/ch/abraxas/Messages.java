@@ -3,9 +3,9 @@ package ch.abraxas;
 /**
  * A Messages contains all possible message keys.
  *
- * @author <a href="mailto:heiko.scherrer@abraxas.ch">Heiko Scherrer</a>
- * @version 0.1
- * @since 0.1
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public final class Messages {
 
