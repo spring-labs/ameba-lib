@@ -53,4 +53,8 @@ public final class Messages {
     public static final String CREATED = "generic.created";
     public static final String NOT_FOUND = "not.found";
     public static final String ALREADY_EXISTS = "already.exists";
+	/**
+	 * Signals that a resource has changed unexpectedly and cannot be changed by the caller.
+	 */
+	public static final String RESOURCE_CHANGED_UNEXPECTEDLY = "resource.changed.unexpectedly";
 }
