@@ -15,35 +15,32 @@
  */
 package ch.abraxas.exception;
 
-import ch.abraxas.Messages;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 /**
- * A ResourceExistsException is used to signal a conflicting behavior in case a resource exists whereas its existence
- * was not expected.
+ * A ServiceLayerException.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1
+ * @since 0.2
  */
-@ResponseStatus(HttpStatus.CONFLICT)
-public class ResourceExistsException extends AbstractBehaviorAwareException {
+public class ServiceLayerException extends RuntimeException {
 
 	/**
-	 * Preset the message to {@link Messages#ALREADY_EXISTS}.
+	 * {@inheritDoc}
 	 */
-	public ResourceExistsException() {
-        super(Messages.ALREADY_EXISTS);
+	public ServiceLayerException() {
 	}
 
 	/**
-	 * {@link HttpStatus#CONFLICT}.
-	 *
-	 * @return {@link HttpStatus#CONFLICT}
+	 * {@inheritDoc}
 	 */
-	@Override
-    protected HttpStatus getStatus() {
-        return HttpStatus.CONFLICT;
-    }
+	public ServiceLayerException(String message) {
+		super(message);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public ServiceLayerException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }
