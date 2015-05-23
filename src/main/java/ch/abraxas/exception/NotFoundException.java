@@ -20,8 +20,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * A NotFoundException is used that an entity that should be looked up was not found. This class is marked to be
- * transformed into a HTTP response with status {@link org.springframework.http.HttpStatus#NOT_FOUND}
+ * A NotFoundException is used to signal an entity, expected to exist but was not found. This class is annotated with
+ * Springs {@link ResponseStatus} and results in a HTTP response with status {@link org.springframework.http.HttpStatus#NOT_FOUND}
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0.0
@@ -32,11 +32,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class NotFoundException extends AbstractBehaviorAwareException {
 
-    public NotFoundException(){
+	/**
+	 * Preset the message to {@link Messages#NOT_FOUND}.
+	 */
+	public NotFoundException(){
         super(Messages.NOT_FOUND);
-    }
+	}
 
-    @Override
+	/**
+	 * {@link HttpStatus#NOT_FOUND}.
+	 *
+	 * @return {@link HttpStatus#NOT_FOUND}
+	 */
+	@Override
     protected HttpStatus getStatus() {
         return HttpStatus.NOT_FOUND;
     }

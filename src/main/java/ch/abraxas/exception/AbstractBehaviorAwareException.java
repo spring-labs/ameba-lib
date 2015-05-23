@@ -34,8 +34,8 @@ public abstract class AbstractBehaviorAwareException extends RuntimeException {
     /**
      * {@inheritDoc}
      */
-    public AbstractBehaviorAwareException() {
-        super();
+	protected AbstractBehaviorAwareException() {
+		super();
     }
 
     /**
