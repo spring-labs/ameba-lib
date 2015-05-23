@@ -17,24 +17,23 @@ package ch.abraxas.exception;
 
 import ch.abraxas.Messages;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * A ResourceExistsException is used to signal a conflicting behavior in case a resource exists whereas its existence
- * was not expected.
+ * A ResourceChangedException signals that a resource cannot be changed, because it has been updated in the meantime.
+ * Similar what a java.persistence.OptimisticLockException expresses on the persistence layer, this type of exception
+ * is more generic and useful at the presentation layer.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.1
+ * @since 0.2
  */
-@ResponseStatus(HttpStatus.CONFLICT)
-public class ResourceExistsException extends AbstractBehaviorAwareException {
+public class ResourceChangedException extends AbstractBehaviorAwareException {
 
 	/**
-	 * Preset the message to {@link Messages#ALREADY_EXISTS}.
+	 * Preset the message to {@link Messages#RESOURCE_CHANGED_UNEXPECTEDLY}.
 	 */
-	public ResourceExistsException() {
-        super(Messages.ALREADY_EXISTS);
+	public ResourceChangedException() {
+		super(Messages.RESOURCE_CHANGED_UNEXPECTEDLY);
 	}
 
 	/**
@@ -43,7 +42,7 @@ public class ResourceExistsException extends AbstractBehaviorAwareException {
 	 * @return {@link HttpStatus#CONFLICT}
 	 */
 	@Override
-    protected HttpStatus getStatus() {
-        return HttpStatus.CONFLICT;
-    }
+	protected HttpStatus getStatus() {
+		return HttpStatus.CONFLICT;
+	}
 }
