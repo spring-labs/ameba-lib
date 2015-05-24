@@ -10,6 +10,6 @@ Ameba Lib is a collection of utils, exceptions, constants and other helpers used
 [license-image]: http://img.shields.io/:license-Apache2.0-blue.svg?style=flat-square
 [license-url]: LICENSE
 
-# Resources #
+# Resources
 
-Issue tracker is JIRA on [Atlassian][https://jira.eia.abraxas.ch/browse]
+Issue tracker is JIRA on [Atlassian](https://jira.eia.abraxas.ch/browse)
