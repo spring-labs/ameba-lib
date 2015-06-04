@@ -26,10 +26,10 @@ import org.springframework.http.ResponseEntity;
  * up was not found'.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.2
+ * @since 0.2
  */
-public abstract class AbstractBehaviorAwareException extends RuntimeException {
+public abstract class AbstractBehaviorAwareException extends BusinessRuntimeException {
 
     /**
      * {@inheritDoc}
@@ -44,6 +44,13 @@ public abstract class AbstractBehaviorAwareException extends RuntimeException {
     public AbstractBehaviorAwareException(String message) {
         super(message);
     }
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public AbstractBehaviorAwareException(String message, String msgKey) {
+		super(message, msgKey);
+	}
 
     /**
      * Transform exception into an {@code ResponseEntity} and return it.
