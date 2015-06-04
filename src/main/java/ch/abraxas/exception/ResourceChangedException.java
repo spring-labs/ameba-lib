@@ -16,6 +16,7 @@
 package ch.abraxas.exception;
 
 import ch.abraxas.Messages;
+import ch.abraxas.i18n.Translator;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -24,7 +25,7 @@ import org.springframework.http.HttpStatus;
  * is more generic and useful at the presentation layer.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
+ * @version 0.2
  * @since 0.2
  */
 public class ResourceChangedException extends AbstractBehaviorAwareException {
@@ -34,6 +35,20 @@ public class ResourceChangedException extends AbstractBehaviorAwareException {
 	 */
 	public ResourceChangedException() {
 		super(Messages.RESOURCE_CHANGED_UNEXPECTEDLY);
+	}
+
+	private ResourceChangedException(String message, String msgKey) {
+		super(message, msgKey);
+	}
+
+	/**
+	 * Create a generic ResourceChangedException with the translated message set.
+	 *
+	 * @param translator A Translator
+	 * @return The instance
+	 */
+	public static ResourceChangedException createChanged(Translator translator) {
+		return new ResourceChangedException(translator.translate(Messages.RESOURCE_CHANGED_UNEXPECTEDLY), Messages.RESOURCE_CHANGED_UNEXPECTEDLY);
 	}
 
 	/**

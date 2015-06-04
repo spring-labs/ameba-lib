@@ -16,6 +16,7 @@
 package ch.abraxas.exception;
 
 import ch.abraxas.Messages;
+import ch.abraxas.i18n.Translator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -24,8 +25,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Springs {@link ResponseStatus} and results in a HTTP response with status {@link org.springframework.http.HttpStatus#NOT_FOUND}
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.2
+ * @since 0.2
  * @see org.springframework.web.bind.annotation.ResponseStatus
  * @see org.springframework.http.HttpStatus#NOT_FOUND
  */
@@ -37,6 +38,20 @@ public class NotFoundException extends AbstractBehaviorAwareException {
 	 */
 	public NotFoundException(){
         super(Messages.NOT_FOUND);
+	}
+
+	private NotFoundException(String message, String msgKey) {
+		super(message, msgKey);
+	}
+
+	/**
+	 * Create a generic NotFoundException with the translated message set.
+	 *
+	 * @param translator A Translator
+	 * @return The instance
+	 */
+	public static NotFoundException createNotFound(Translator translator) {
+		return new NotFoundException(translator.translate(Messages.NOT_FOUND), Messages.NOT_FOUND);
 	}
 
 	/**
