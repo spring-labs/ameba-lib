@@ -4,7 +4,7 @@
 
     <groupId>ch.abraxas</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.4-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <licenses>
@@ -85,6 +85,16 @@
                     <releaseProfiles>release</releaseProfiles>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

@@ -16,6 +16,7 @@
 package ch.abraxas.exception;
 
 import ch.abraxas.Messages;
+import ch.abraxas.i18n.Translator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -24,8 +25,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * was not expected.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
+ * @version 0.2
+ * @since 0.2
  */
 @ResponseStatus(HttpStatus.CONFLICT)
 public class ResourceExistsException extends AbstractBehaviorAwareException {
@@ -35,6 +36,20 @@ public class ResourceExistsException extends AbstractBehaviorAwareException {
 	 */
 	public ResourceExistsException() {
         super(Messages.ALREADY_EXISTS);
+	}
+
+	private ResourceExistsException(String message, String msgKey) {
+		super(message, msgKey);
+	}
+
+	/**
+	 * Create a generic ResourceExistsException with the translated message set.
+	 *
+	 * @param translator A Translator
+	 * @return The instance
+	 */
+	public static ResourceExistsException createExists(Translator translator) {
+		return new ResourceExistsException(translator.translate(Messages.ALREADY_EXISTS), Messages.ALREADY_EXISTS);
 	}
 
 	/**
