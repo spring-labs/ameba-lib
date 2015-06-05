@@ -1,5 +1,7 @@
 ameba-lib
 =====================
+
+[![Join the chat at https://gitter.im/abraxas-labs/ameba-lib](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/abraxas-labs/ameba-lib?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build status][travis-image]][travis-url]
 [![License][license-image]][license-url]
 [![Gitter][gitter-image]][gitter-url]
