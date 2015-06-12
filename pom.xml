@@ -4,7 +4,7 @@
 
     <groupId>ch.abraxas</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.4</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <licenses>
@@ -172,7 +172,7 @@
         <connection>scm:git:https://github.com/abraxas-labs/ameba-lib.git</connection>
         <developerConnection>scm:git:git@github.com:abraxas-labs/ameba-lib.git</developerConnection>
         <url>https://github.com/abraxas-labs/ameba-lib</url>
-        <tag>HEAD</tag>
+        <tag>0.4</tag>
     </scm>
 
     <distributionManagement>
