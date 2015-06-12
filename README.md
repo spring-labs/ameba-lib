@@ -7,7 +7,8 @@ ameba-lib
 
 Ameba Lib is a collection of utils, exceptions, constants and other helpers used across projects and solutions
 
-== How to release
+How to release
+--------------
 
 ````
 $ mvn clean package -Drelease
