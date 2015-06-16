@@ -53,6 +53,18 @@ public class ResourceExistsException extends AbstractBehaviorAwareException {
 	}
 
 	/**
+	 * Create a generic ResourceExistsException with the translated message set.
+	 *
+	 * @since 0.5
+	 * @param translator A Translator
+	 * @param msgKey The message key to translate into exception message text
+	 * @return The instance
+	 */
+	public static ResourceExistsException createExists(Translator translator, String msgKey) {
+		return new ResourceExistsException(translator.translate(msgKey), msgKey);
+	}
+
+	/**
 	 * {@link HttpStatus#CONFLICT}.
 	 *
 	 * @return {@link HttpStatus#CONFLICT}

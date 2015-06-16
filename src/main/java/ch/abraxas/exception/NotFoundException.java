@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Springs {@link ResponseStatus} and results in a HTTP response with status {@link org.springframework.http.HttpStatus#NOT_FOUND}
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  * @see org.springframework.web.bind.annotation.ResponseStatus
  * @see org.springframework.http.HttpStatus#NOT_FOUND
@@ -52,6 +52,18 @@ public class NotFoundException extends AbstractBehaviorAwareException {
 	 */
 	public static NotFoundException createNotFound(Translator translator) {
 		return new NotFoundException(translator.translate(Messages.NOT_FOUND), Messages.NOT_FOUND);
+	}
+
+	/**
+	 * Create a generic NotFoundException with the translated message set.
+	 *
+	 * @since 0.5
+	 * @param translator A Translator
+	 * @param msgKey The message key to translate into exception message text
+	 * @return The instance
+	 */
+	public static NotFoundException createNotFound(Translator translator, String msgKey) {
+		return new NotFoundException(translator.translate(msgKey), msgKey);
 	}
 
 	/**
