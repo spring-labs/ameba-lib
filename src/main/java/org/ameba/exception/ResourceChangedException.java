@@ -61,10 +61,11 @@ public class ResourceChangedException extends AbstractBehaviorAwareException {
      * @since 0.5
      * @param translator A Translator
      * @param msgKey The message key to translate into exception message text
+     * @param obj Message parameters
      * @return The instance
      */
-    public static ResourceChangedException createChanged(Translator translator, String msgKey) {
-        return new ResourceChangedException(translator.translate(msgKey), msgKey);
+    public static ResourceChangedException createChanged(Translator translator, String msgKey, Object... obj) {
+        return new ResourceChangedException(translator.translate(msgKey, obj), msgKey);
     }
 
     /**
