@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ch.abraxas</groupId>
+    <groupId>org.ameba</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.6-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <licenses>
@@ -27,7 +27,7 @@
         <developer>
             <id>Neolysion</id>
             <name>Boris Simic</name>
-            <email>borischief@gmail.com</email>
+            <email>borochief@gmail.com</email>
         </developer>
     </developers>
     <properties>
@@ -35,12 +35,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
+
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
+        <jackson-annotations.version>2.4.0</jackson-annotations.version>
         <spring.version>4.1.6.RELEASE</spring.version>
         <spring-hateoas.version>0.17.0.RELEASE</spring-hateoas.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
+
+        <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
         <maven-release-plugin.version>2.5</maven-release-plugin.version>
-        <jackson-annotations.version>2.4.0</jackson-annotations.version>
     </properties>
 
     <profiles>
@@ -88,6 +91,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -103,6 +107,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.hateoas</groupId>
@@ -120,7 +125,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <!-- JEE dependencies -->
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -144,24 +148,23 @@
                 <groupId>org.springframework.hateoas</groupId>
                 <artifactId>spring-hateoas</artifactId>
                 <version>${spring-hateoas.version}</version>
+                <scope>provided</scope>
+                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
+                <scope>provided</scope>
+                <optional>true</optional>
             </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson-annotations.version}</version>
+                <scope>provided</scope>
+                <optional>true</optional>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
