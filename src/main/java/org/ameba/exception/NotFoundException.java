@@ -60,10 +60,11 @@ public class NotFoundException extends AbstractBehaviorAwareException {
 	 * @since 0.5
 	 * @param translator A Translator
 	 * @param msgKey The message key to translate into exception message text
+     * @param obj Message parameters
 	 * @return The instance
 	 */
-	public static NotFoundException createNotFound(Translator translator, String msgKey) {
-		return new NotFoundException(translator.translate(msgKey), msgKey);
+	public static NotFoundException createNotFound(Translator translator, String msgKey, Object... obj) {
+		return new NotFoundException(translator.translate(msgKey, obj), msgKey);
 	}
 
 	/**
