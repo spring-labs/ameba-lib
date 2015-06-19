@@ -18,6 +18,7 @@ package org.ameba.exception;
 import org.ameba.Messages;
 import org.ameba.i18n.Translator;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * A ResourceChangedException signals that a resource cannot be changed, because it has been updated in the meantime.
@@ -25,9 +26,12 @@ import org.springframework.http.HttpStatus;
  * is more generic and useful at the presentation layer.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.2
+ * @version 0.3
  * @since 0.2
+ * @see org.springframework.web.bind.annotation.ResponseStatus
+ * @see org.springframework.http.HttpStatus#CONFLICT
  */
+@ResponseStatus(HttpStatus.CONFLICT)
 public class ResourceChangedException extends AbstractBehaviorAwareException {
 
 	/**
@@ -51,7 +55,19 @@ public class ResourceChangedException extends AbstractBehaviorAwareException {
 		return new ResourceChangedException(translator.translate(Messages.RESOURCE_CHANGED_UNEXPECTEDLY), Messages.RESOURCE_CHANGED_UNEXPECTEDLY);
 	}
 
-	/**
+    /**
+     * Create a generic ResourceChangedException with the translated message set.
+     *
+     * @since 0.5
+     * @param translator A Translator
+     * @param msgKey The message key to translate into exception message text
+     * @return The instance
+     */
+    public static ResourceChangedException createChanged(Translator translator, String msgKey) {
+        return new ResourceChangedException(translator.translate(msgKey), msgKey);
+    }
+
+    /**
 	 * {@link HttpStatus#CONFLICT}.
 	 *
 	 * @return {@link HttpStatus#CONFLICT}
