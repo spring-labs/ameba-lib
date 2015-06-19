@@ -25,8 +25,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * was not expected.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.2
+ * @version 0.3
  * @since 0.2
+ * @see org.springframework.web.bind.annotation.ResponseStatus
+ * @see org.springframework.http.HttpStatus#CONFLICT
  */
 @ResponseStatus(HttpStatus.CONFLICT)
 public class ResourceExistsException extends AbstractBehaviorAwareException {
