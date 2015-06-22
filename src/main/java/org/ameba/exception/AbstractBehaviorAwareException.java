@@ -26,7 +26,7 @@ import org.springframework.http.ResponseEntity;
  * up was not found'.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.2
+ * @version 0.3
  * @since 0.2
  */
 public abstract class AbstractBehaviorAwareException extends BusinessRuntimeException {
@@ -57,9 +57,8 @@ public abstract class AbstractBehaviorAwareException extends BusinessRuntimeExce
      *
      * @return The ResponseEntity
      */
-    public ResponseEntity<Response> toResponse() {
-        AbstractBase[] ab = new AbstractBase[0];
-        return new ResponseEntity<>(new Response(this.getMessage(), this.getMessage(), getStatus().toString(), ab), getStatus());
+    public ResponseEntity<Response<AbstractBase>> toResponse() {
+        return new ResponseEntity<>(new Response<>(this.getMessage(), this.getMsgKey(), getStatus().toString(), new AbstractBase[0]), getStatus());
     }
 
     /**
