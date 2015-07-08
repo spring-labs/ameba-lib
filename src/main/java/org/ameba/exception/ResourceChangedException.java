@@ -41,7 +41,10 @@ public class ResourceChangedException extends AbstractBehaviorAwareException {
 		super(Messages.RESOURCE_CHANGED_UNEXPECTEDLY);
 	}
 
-	private ResourceChangedException(String message, String msgKey) {
+    /**
+     * {@inheritDoc}
+     */
+    public ResourceChangedException(String message, String msgKey) {
 		super(message, msgKey);
 	}
 
