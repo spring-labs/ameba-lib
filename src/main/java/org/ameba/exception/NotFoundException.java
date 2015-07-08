@@ -40,7 +40,10 @@ public class NotFoundException extends AbstractBehaviorAwareException {
         super(Messages.NOT_FOUND);
 	}
 
-	private NotFoundException(String message, String msgKey) {
+    /**
+     * {@inheritDoc}
+     */
+    public NotFoundException(String message, String msgKey) {
 		super(message, msgKey);
 	}
 

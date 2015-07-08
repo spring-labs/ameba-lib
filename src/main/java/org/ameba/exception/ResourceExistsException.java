@@ -40,7 +40,10 @@ public class ResourceExistsException extends AbstractBehaviorAwareException {
         super(Messages.ALREADY_EXISTS);
 	}
 
-	private ResourceExistsException(String message, String msgKey) {
+    /**
+     * {@inheritDoc}
+     */
+    public ResourceExistsException(String message, String msgKey) {
 		super(message, msgKey);
 	}
 
