@@ -4,7 +4,7 @@
 
     <groupId>org.ameba</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>0.6-SNAPSHOT</version>
+    <version>0.8-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <licenses>
@@ -31,7 +31,8 @@
         </developer>
     </developers>
     <properties>
-        <java.version>1.7</java.version>
+        <dozer.version>5.4.0</dozer.version>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -117,25 +118,37 @@
         <dependency>
             <groupId>org.springframework.hateoas</groupId>
             <artifactId>spring-hateoas</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
         </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
-            <!-- JEE dependencies -->
+            <!-- JavaEE dependencies -->
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax.servlet-api.version}</version>
-                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>javax.validation</groupId>
@@ -153,22 +166,27 @@
                 <groupId>org.springframework.hateoas</groupId>
                 <artifactId>spring-hateoas</artifactId>
                 <version>${spring-hateoas.version}</version>
-                <scope>provided</scope>
-                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
                 <version>${spring.version}</version>
-                <scope>provided</scope>
-                <optional>true</optional>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson-annotations.version}</version>
-                <scope>provided</scope>
-                <optional>true</optional>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>${dozer.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
