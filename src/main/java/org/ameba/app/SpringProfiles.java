@@ -19,15 +19,21 @@ package org.ameba.app;
  * SpringProfiles is a definition of profiles used to configure the Spring ApplicationContexts.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
+ * @version 1.1
+ * @since 0.x
  */
 public final class SpringProfiles {
 
-	/** Activate this profile in production environment. */
-	public static final String PRODUCTION_PROFILE = "PROD";
 	/** Activate this profile in development environment. */
 	public static final String DEVELOPMENT_PROFILE = "DEV";
 	/** Activate this profile in integration test environment (e.g. CI system). */
 	public static final String IT_PROFILE = "IT";
+	/**
+	 * Activate this profile in User Acceptance Test environment.
+	 */
+	public static final String UAT_PROFILE = "UAT";
+	/**
+	 * Activate this profile in production environment.
+	 */
+	public static final String PRODUCTION_PROFILE = "PROD";
 }
