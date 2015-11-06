@@ -36,4 +36,8 @@ public final class LoggingCategories {
 	public static final String LOG_MEASURED = "MEASURED";
 	/** Category to log time consumption of operations performed by the integration layer on external systems. */
 	public static final String INTEGARTION_LAYER_PROCESSING = "INTEGARTION_LAYER_PROCESSING";
+	/**
+	 * Category for tracing during application startup phase.
+	 */
+	public static final String BOOT = "BOOT";
 }
