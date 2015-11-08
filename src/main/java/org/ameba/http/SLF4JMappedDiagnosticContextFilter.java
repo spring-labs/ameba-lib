@@ -17,6 +17,7 @@ package org.ameba.http;
 
 import org.ameba.Constants;
 import org.slf4j.MDC;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -46,14 +47,18 @@ public class SLF4JMappedDiagnosticContextFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         boolean multiTenancyEnabled = Boolean.valueOf((String) request.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_ENABLED));
-        boolean throwIfNotPresent = Boolean.valueOf((String) request.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT));
 
         if (multiTenancyEnabled) {
             String tenant = request.getHeader(Constants.HEADER_VALUE_TENANT);
-            if (throwIfNotPresent && (null == tenant || tenant.isEmpty())) {
-                throw new IllegalArgumentException(String.format("No tenant information available in http header. Expected header %s attribute not present.", Constants.HEADER_VALUE_TENANT));
+            if (null == tenant || tenant.isEmpty()) {
+                boolean throwIfNotPresent = Boolean.valueOf((String) request.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT));
+                if (throwIfNotPresent) {
+                    response.setStatus(HttpStatus.BAD_REQUEST.value());
+                    throw new IllegalArgumentException(String.format("No tenant information available in http header. Expected header %s attribute not present.", Constants.HEADER_VALUE_TENANT));
+                }
+            } else{
+                MDC.put(Constants.HEADER_VALUE_TENANT, tenant);
             }
-            MDC.put(Constants.HEADER_VALUE_TENANT, tenant);
         }
         try {
             filterChain.doFilter(request, response);
