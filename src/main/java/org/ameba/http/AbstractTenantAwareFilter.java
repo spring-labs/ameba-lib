@@ -53,7 +53,7 @@ public abstract class AbstractTenantAwareFilter extends OncePerRequestFilter {
 
         boolean multiTenancyEnabled = Boolean.valueOf((String) request.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_ENABLED));
         String tenant = null;
-        if (multiTenancyEnabled) {
+        if (multiTenancyEnabled && !"OPTIONS".equalsIgnoreCase(request.getMethod())) {
             tenant = request.getHeader(Constants.HEADER_VALUE_TENANT);
             if (null == tenant || tenant.isEmpty()) {
                 boolean throwIfNotPresent = Boolean.valueOf((String) request.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT));
