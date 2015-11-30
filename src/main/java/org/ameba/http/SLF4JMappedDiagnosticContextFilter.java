@@ -38,7 +38,7 @@ public class SLF4JMappedDiagnosticContextFilter extends AbstractTenantAwareFilte
      */
     @Override
     protected void doBefore(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
-        super.doBefore(request, response, filterChain, tenant);
+        MDC.put(Constants.HEADER_VALUE_TENANT, tenant);
     }
 
     /**
