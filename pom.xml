@@ -4,7 +4,7 @@
 
     <groupId>org.ameba</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>0.9.1-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <licenses>
@@ -208,9 +208,5 @@
             <id>bintray</id>
             <url>https://api.bintray.com/maven/abraxas/labs/ameba</url>
         </repository>
-        <snapshotRepository>
-            <id>snapshot.repository</id>
-            <url>http://artifactory.eia.abraxas.ch/artifactory/libs-snapshot-local</url>
-        </snapshotRepository>
     </distributionManagement>
 </project>
