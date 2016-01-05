@@ -15,15 +15,15 @@
  */
 package org.ameba.http;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.hateoas.ResourceSupport;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An instance of Response is a transfer object that is used to encapsulate
@@ -31,8 +31,8 @@ import org.springframework.hateoas.ResourceSupport;
  * items specific to the request.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
+ * @version 1.1
+ * @since 0.1
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Response<T extends AbstractBase> extends ResourceSupport implements Serializable {
@@ -61,6 +61,12 @@ public class Response<T extends AbstractBase> extends ResourceSupport implements
     private String httpStatus;
 
     private Map<String, String> other = new HashMap<>();
+
+    /**
+     * Constructor used for deserialization.
+     */
+    protected Response() {
+    }
 
     /**
      * Create a new Response.
