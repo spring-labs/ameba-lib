@@ -21,7 +21,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.core.annotation.AliasFor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -32,8 +37,9 @@ import org.springframework.transaction.annotation.Transactional;
  * The concept is similar to the J2EE Session Facade pattern.
  * Also see J2EE Service Facade pattern http://corej2eepatterns.com/SessionFacade.htm
  *
+ * @deprecated Use a {@link TxService @TxService} in addition.
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  */
 @Target({ElementType.TYPE})
@@ -41,6 +47,60 @@ import org.springframework.transaction.annotation.Transactional;
 @Documented
 @Transactional
 @Service
+@Deprecated
 public @interface Facade {
+
+    /**
+     * @see Component#value()
+     */
+    @AliasFor(annotation = Component.class, attribute = "value")
+    String[] value() default "";
+
+    /**
+     * @see Transactional#transactionManager()
+     * @deprecated Use a {@link TxService @TxService} instead.
+     */
+    @Deprecated
+    @AliasFor(annotation = Transactional.class, attribute = "transactionManager")
+    String transactionManager() default "";
+
+    /**
+     * @see Transactional#propagation()
+     * @deprecated Use a {@link TxService @TxService} instead.
+     */
+    @Deprecated
+    @AliasFor(annotation = Transactional.class, attribute = "propagation") Propagation propagation() default Propagation.REQUIRED;
+
+    /**
+     * @see Transactional#readOnly()
+     * @deprecated Use a {@link TxService @TxService} instead.
+     */
+    @Deprecated
+    @AliasFor(annotation = Transactional.class, attribute = "readOnly")
+    boolean readOnly() default false;
+
+    /**
+     * @see Transactional#timeout()
+     * @deprecated Use a {@link TxService @TxService} instead.
+     */
+    @Deprecated
+    @AliasFor(annotation = Transactional.class, attribute = "timeout")
+    int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
+
+    /**
+     * @see Transactional#rollbackFor()
+     * @deprecated Use a {@link TxService @TxService} instead.
+     */
+    @Deprecated
+    @AliasFor(annotation = Transactional.class, attribute = "rollbackFor")
+    Class<? extends Throwable>[] rollbackFor() default {};
+
+    /**
+     * @see Transactional#isolation()
+     * @deprecated Use a {@link TxService @TxService} instead.
+     */
+    @Deprecated
+    @AliasFor(annotation = Transactional.class, attribute = "isolation")
+    Isolation isolation() default Isolation.DEFAULT;
 
 }
