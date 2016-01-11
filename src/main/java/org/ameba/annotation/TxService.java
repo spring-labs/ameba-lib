@@ -21,15 +21,19 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TxService is a stereotype annotation to define transactional Spring managed services.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  */
 @Transactional
@@ -37,7 +41,48 @@ import org.springframework.transaction.annotation.Transactional;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Component
 public @interface TxService {
+
+    /**
+     * @see Component#value()
+     */
+    @AliasFor(annotation = Component.class, attribute = "value")
+    String[] value() default "";
+
+    /**
+     * @see Transactional#transactionManager()
+     */
+    @AliasFor(annotation = Transactional.class, attribute = "transactionManager")
+    String transactionManager() default "";
+
+    /**
+     * @see Transactional#propagation()
+     */
+    @AliasFor(annotation = Transactional.class, attribute = "propagation")
+    Propagation propagation() default Propagation.REQUIRED;
+
+    /**
+     * @see Transactional#readOnly()
+     */
+    @AliasFor(annotation = Transactional.class, attribute = "readOnly")
+    boolean readOnly() default false;
+
+    /**
+     * @see Transactional#timeout()
+     */
+    @AliasFor(annotation = Transactional.class, attribute = "timeout")
+    int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
+
+    /**
+     * @see Transactional#rollbackFor()
+     */
+    @AliasFor(annotation = Transactional.class, attribute = "rollbackFor")
+    Class<? extends Throwable>[] rollbackFor() default {};
+
+    /**
+     * @see Transactional#isolation()
+     */
+    @AliasFor(annotation = Transactional.class, attribute = "isolation")
+    Isolation isolation() default Isolation.DEFAULT;
 
 }
