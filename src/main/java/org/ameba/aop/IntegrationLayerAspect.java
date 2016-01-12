@@ -37,7 +37,7 @@ import java.util.Optional;
  * @since 1.2
  */
 @Aspect
-public class IntegrationLayerAspect {
+public abstract class IntegrationLayerAspect {
 
     private static final Logger P_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGARTION_LAYER_PROCESSING);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_LAYER_EXCEPTION);
@@ -59,7 +59,7 @@ public class IntegrationLayerAspect {
      * Uses this pointcut definition to combine with your custom pointcut.
      */
     @Pointcut("@target(org.springframework.stereotype.Repository)")
-    public void isRepository() {
+    public final void isRepository() {
     }
 
     /**
