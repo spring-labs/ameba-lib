@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @since 1.2
  */
 @Aspect
-public class PresentationLayerAspect {
+public abstract class PresentationLayerAspect {
 
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.PRESENTATION_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
@@ -52,7 +52,7 @@ public class PresentationLayerAspect {
      * Uses this pointcut definition to combine with your custom pointcut.
      */
     @Pointcut("@target(org.springframework.web.bind.annotation.RestController)")
-    private void isRestController() {
+    public final void isRestController() {
     }
 
     /**
