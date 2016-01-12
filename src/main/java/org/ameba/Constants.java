@@ -27,7 +27,7 @@ public final class Constants {
     /**
      * Name of http header attribute used to carry tenant identifier from client to server.
      */
-    public static final String HEADER_VALUE_TENANT = "Tenant";
+    public static final String HEADER_VALUE_TENANT = "X-Tenant";
     /**
      * Name of servlet context param to enable multitenancy support, expected to be set as {@code true} or {@code false}.
      */
