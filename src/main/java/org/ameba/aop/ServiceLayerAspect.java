@@ -34,7 +34,7 @@ import java.util.Optional;
  * @since 1.2
  */
 @Aspect
-public class ServiceLayerAspect  {
+public abstract class ServiceLayerAspect  {
 
     private static final Logger SRV_LOGGER = LoggerFactory.getLogger("SERVICE_LAYER_ACCESS");
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
@@ -53,7 +53,7 @@ public class ServiceLayerAspect  {
      * Uses this pointcut definition to combine with your custom pointcut.
      */
     @Pointcut("@target(org.springframework.stereotype.Service)")
-    private void isService() {
+    public final void isService() {
     }
 
     /**
