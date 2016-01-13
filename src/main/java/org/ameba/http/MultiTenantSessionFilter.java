@@ -19,11 +19,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ameba.Constants;
 import org.ameba.TenantHolder;
 
 /**
- * A MultiTenantSessionFilter set the current tenant value ({@value Constants#HEADER_VALUE_TENANT} in the {@link org.ameba.TenantHolder TenantHolder}.
+ * A MultiTenantSessionFilter set the current tenant value ({@value org.ameba.Constants#HEADER_VALUE_TENANT} in the
+ * {@link org.ameba.TenantHolder TenantHolder}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
