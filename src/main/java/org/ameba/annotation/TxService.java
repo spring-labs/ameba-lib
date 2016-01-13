@@ -15,12 +15,6 @@
  */
 package org.ameba.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -28,6 +22,12 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * A TxService is a stereotype annotation to define transactional Spring managed services.
@@ -44,45 +44,51 @@ import org.springframework.transaction.annotation.Transactional;
 public @interface TxService {
 
     /**
+     * {@inheritDoc}
+     *
      * @see Component#value()
      */
-    @AliasFor(annotation = Component.class, attribute = "value")
-    String value() default "";
+    @AliasFor(annotation = Component.class, attribute = "value") String value() default "";
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#transactionManager()
      */
-    @AliasFor(annotation = Transactional.class, attribute = "transactionManager")
-    String transactionManager() default "";
+    @AliasFor(annotation = Transactional.class, attribute = "transactionManager") String transactionManager() default "";
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#propagation()
      */
-    @AliasFor(annotation = Transactional.class, attribute = "propagation")
-    Propagation propagation() default Propagation.REQUIRED;
+    @AliasFor(annotation = Transactional.class, attribute = "propagation") Propagation propagation() default Propagation.REQUIRED;
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#readOnly()
      */
-    @AliasFor(annotation = Transactional.class, attribute = "readOnly")
-    boolean readOnly() default false;
+    @AliasFor(annotation = Transactional.class, attribute = "readOnly") boolean readOnly() default false;
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#timeout()
      */
-    @AliasFor(annotation = Transactional.class, attribute = "timeout")
-    int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
+    @AliasFor(annotation = Transactional.class, attribute = "timeout") int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#rollbackFor()
      */
-    @AliasFor(annotation = Transactional.class, attribute = "rollbackFor")
-    Class<? extends Throwable>[] rollbackFor() default {};
+    @AliasFor(annotation = Transactional.class, attribute = "rollbackFor") Class<? extends Throwable>[] rollbackFor() default {};
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#isolation()
      */
-    @AliasFor(annotation = Transactional.class, attribute = "isolation")
-    Isolation isolation() default Isolation.DEFAULT;
-
+    @AliasFor(annotation = Transactional.class, attribute = "isolation") Isolation isolation() default Isolation.DEFAULT;
 }
