@@ -33,14 +33,13 @@ import org.springframework.transaction.annotation.Transactional;
  * A Facade is a stereotype annotation that marks a public service as a facade, that is able to delegate to multiple
  * services, whereas each service is responsible for its own business domain. The facade is a Spring managed
  * transactional service bean.
- *
  * The concept is similar to the J2EE Session Facade pattern.
  * Also see J2EE Service Facade pattern http://corej2eepatterns.com/SessionFacade.htm
  *
- * @deprecated Use a {@link TxService @TxService} in addition.
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.1
  * @since 1.0
+ * @deprecated Use a {@link TxService @TxService} in addition.
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -53,16 +52,14 @@ public @interface Facade {
     /**
      * @see Component#value()
      */
-    @AliasFor(annotation = Component.class, attribute = "value")
-    String[] value() default "";
+    @AliasFor(annotation = Component.class, attribute = "value") String value() default "";
 
     /**
      * @see Transactional#transactionManager()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
     @Deprecated
-    @AliasFor(annotation = Transactional.class, attribute = "transactionManager")
-    String transactionManager() default "";
+    @AliasFor(annotation = Transactional.class, attribute = "transactionManager") String transactionManager() default "";
 
     /**
      * @see Transactional#propagation()
@@ -76,31 +73,26 @@ public @interface Facade {
      * @deprecated Use a {@link TxService @TxService} instead.
      */
     @Deprecated
-    @AliasFor(annotation = Transactional.class, attribute = "readOnly")
-    boolean readOnly() default false;
+    @AliasFor(annotation = Transactional.class, attribute = "readOnly") boolean readOnly() default false;
 
     /**
      * @see Transactional#timeout()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
     @Deprecated
-    @AliasFor(annotation = Transactional.class, attribute = "timeout")
-    int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
+    @AliasFor(annotation = Transactional.class, attribute = "timeout") int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
 
     /**
      * @see Transactional#rollbackFor()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
     @Deprecated
-    @AliasFor(annotation = Transactional.class, attribute = "rollbackFor")
-    Class<? extends Throwable>[] rollbackFor() default {};
+    @AliasFor(annotation = Transactional.class, attribute = "rollbackFor") Class<? extends Throwable>[] rollbackFor() default {};
 
     /**
      * @see Transactional#isolation()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
     @Deprecated
-    @AliasFor(annotation = Transactional.class, attribute = "isolation")
-    Isolation isolation() default Isolation.DEFAULT;
-
+    @AliasFor(annotation = Transactional.class, attribute = "isolation") Isolation isolation() default Isolation.DEFAULT;
 }
