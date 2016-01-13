@@ -19,7 +19,6 @@ import org.ameba.LoggingCategories;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,27 +48,13 @@ public abstract class PresentationLayerAspect {
     }
 
     /**
-     * Uses this pointcut definition to combine with your custom pointcut.
-     */
-    @Pointcut("@target(org.springframework.web.bind.annotation.RestController)")
-    public final void isRestController() {
-    }
-
-    /**
-     * Override this method with your custom pointcut definition.
-     */
-    @Pointcut("isRestController()")
-    public void presentationLoggingPointcut() {
-    }
-
-    /**
      * Called around method invocations to log exceptions occurred in intercepted layer.
      *
      * @param pjp the ProceedingJoinPoint object
      * @return the return value of the method invocation
      * @throws Throwable any exception thrown by the method invocation
      */
-    @Around("presentationLoggingPointcut()")
+    @Around("org.ameba.aop.Pointcuts.presentationPointcut()")
     public Object measure(ProceedingJoinPoint pjp) throws Throwable {
         try {
             return pjp.proceed();
