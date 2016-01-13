@@ -29,13 +29,13 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @Configuration
 public class BaseConfiguration {
 
-	/**
-	 * Provides a bean instance to get a JSR-303 validator from.
-	 *
-	 * @return The factory bean
-	 */
-	@Bean
-	public LocalValidatorFactoryBean validatorFactoryBean() {
-		return new LocalValidatorFactoryBean();
-	}
+    /**
+     * Provides a bean instance to get a JSR-303 validator from.
+     *
+     * @return The factory bean
+     */
+    @Bean
+    public LocalValidatorFactoryBean validatorFactoryBean() {
+        return new LocalValidatorFactoryBean();
+    }
 }
