@@ -20,9 +20,9 @@ import org.ameba.exception.ServiceLayerException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -34,7 +34,8 @@ import java.util.Optional;
  * @since 1.2
  */
 @Aspect
-public abstract class ServiceLayerAspect  {
+@Component
+public class ServiceLayerAspect  {
 
     private static final Logger SRV_LOGGER = LoggerFactory.getLogger("SERVICE_LAYER_ACCESS");
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
@@ -49,21 +50,7 @@ public abstract class ServiceLayerAspect  {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
     }
 
-    /**
-     * Uses this pointcut definition to combine with your custom pointcut.
-     */
-    @Pointcut("@target(org.springframework.stereotype.Service)")
-    public final void isService() {
-    }
-
-    /**
-     * Override this method with your custom pointcut definition.
-     */
-    @Pointcut("isService()")
-    public void serviceLogging() {
-    }
-
-    @Around("serviceLogging()")
+    @Around("org.ameba.aop.Pointcuts.servicePointcut()")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startMillis = 0L;
         if (SRV_LOGGER.isDebugEnabled()) {

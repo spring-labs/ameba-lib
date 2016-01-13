@@ -21,7 +21,6 @@ import org.ameba.exception.ResourceExistsException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
@@ -56,27 +55,13 @@ public abstract class IntegrationLayerAspect {
     }
 
     /**
-     * Uses this pointcut definition to combine with your custom pointcut.
-     */
-    @Pointcut("@target(org.springframework.stereotype.Repository)")
-    public final void isRepository() {
-    }
-
-    /**
-     * Override this method with your custom pointcut definition.
-     */
-    @Pointcut("isRepository()")
-    public void integrationLoggingPointcut() {
-    }
-
-    /**
      * Called around method invocations to log time consumption of each method call.
      *
      * @param pjp the ProceedingJoinPoint object
      * @return the return value of the method invocation
      * @throws Throwable any exception thrown by the method invocation
      */
-    @Around("integrationLoggingPointcut()")
+    @Around("org.ameba.aop.Pointcuts.integrationPointcut()")
     public Object measure(ProceedingJoinPoint pjp) throws Throwable {
         StopWatch sw = null;
         if (P_LOGGER.isInfoEnabled()) {
