@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @since 1.2
  */
 @Aspect
-public abstract class PresentationLayerAspect {
+public class PresentationLayerAspect {
 
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.PRESENTATION_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
