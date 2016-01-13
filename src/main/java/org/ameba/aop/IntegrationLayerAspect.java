@@ -36,7 +36,7 @@ import java.util.Optional;
  * @since 1.2
  */
 @Aspect
-public abstract class IntegrationLayerAspect {
+public class IntegrationLayerAspect {
 
     private static final Logger P_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGARTION_LAYER_PROCESSING);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_LAYER_EXCEPTION);
