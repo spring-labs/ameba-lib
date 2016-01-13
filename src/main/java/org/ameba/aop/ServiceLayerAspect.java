@@ -76,6 +76,7 @@ public class ServiceLayerAspect  {
      * </p>
      *
      * @param ex The root exception that is thrown
+     * @return Returns the exception to be thrown
      */
     public Exception translateException(Throwable ex) {
         if (EXC_LOGGER.isErrorEnabled()) {
