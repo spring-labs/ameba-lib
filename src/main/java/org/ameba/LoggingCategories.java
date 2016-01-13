@@ -21,7 +21,7 @@ package org.ameba;
  * example).
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
+ * @version 0.2
  * @since 0.3
  */
 public final class LoggingCategories {
@@ -32,12 +32,12 @@ public final class LoggingCategories {
 	public static final String SERVICE_LAYER_EXCEPTION = "SERVICE_LAYER_EXCEPTION";
 	/** Category to log all errors thrown in the integration layer. */
 	public static final String INTEGRATION_LAYER_EXCEPTION = "INTEGRATION_LAYER_EXCEPTION";
+	/** Category to log time consumption of operations performed within the service layer. */
+	public static final String SERVICE_LAYER_ACCESS = "SERVICE_LAYER_ACCESS";
+	/** Category to log time consumption of operations performed within the integration layer. */
+	public static final String INTEGRATION_LAYER_ACCESS = "INTEGRATION_LAYER_ACCESS";
 	/** Category to log each method call with the time spent. */
 	public static final String LOG_MEASURED = "MEASURED";
-	/** Category to log time consumption of operations performed by the integration layer on external systems. */
-	public static final String INTEGARTION_LAYER_PROCESSING = "INTEGARTION_LAYER_PROCESSING";
-	/**
-	 * Category for tracing during application startup phase.
-	 */
+	/** Category for tracing during application startup phase. */
 	public static final String BOOT = "BOOT";
 }
