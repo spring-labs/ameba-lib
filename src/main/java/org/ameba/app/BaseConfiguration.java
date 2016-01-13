@@ -15,6 +15,7 @@
  */
 package org.ameba.app;
 
+import org.ameba.aop.ServiceLayerAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -29,13 +30,19 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 @Configuration
 public class BaseConfiguration {
 
-	/**
-	 * Provides a bean instance to get a JSR-303 validator from.
-	 *
-	 * @return The factory bean
-	 */
-	@Bean
-	public LocalValidatorFactoryBean validatorFactoryBean() {
-		return new LocalValidatorFactoryBean();
-	}
+    /**
+     * Provides a bean instance to get a JSR-303 validator from.
+     *
+     * @return The factory bean
+     */
+    @Bean
+    public LocalValidatorFactoryBean validatorFactoryBean() {
+        return new LocalValidatorFactoryBean();
+    }
+
+
+//    @Bean(name = ServiceLayerAspect.COMPONENT_NAME)
+    public ServiceLayerAspect serviceLayerAspect() {
+        return new ServiceLayerAspect();
+    }
 }
