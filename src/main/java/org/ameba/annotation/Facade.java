@@ -15,12 +15,6 @@
  */
 package org.ameba.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -28,6 +22,12 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * A Facade is a stereotype annotation that marks a public service as a facade, that is able to delegate to multiple
@@ -50,11 +50,15 @@ import org.springframework.transaction.annotation.Transactional;
 public @interface Facade {
 
     /**
+     * {@inheritDoc}
+     *
      * @see Component#value()
      */
     @AliasFor(annotation = Component.class, attribute = "value") String value() default "";
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#transactionManager()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
@@ -62,6 +66,8 @@ public @interface Facade {
     @AliasFor(annotation = Transactional.class, attribute = "transactionManager") String transactionManager() default "";
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#propagation()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
@@ -69,6 +75,8 @@ public @interface Facade {
     @AliasFor(annotation = Transactional.class, attribute = "propagation") Propagation propagation() default Propagation.REQUIRED;
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#readOnly()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
@@ -76,6 +84,8 @@ public @interface Facade {
     @AliasFor(annotation = Transactional.class, attribute = "readOnly") boolean readOnly() default false;
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#timeout()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
@@ -83,6 +93,8 @@ public @interface Facade {
     @AliasFor(annotation = Transactional.class, attribute = "timeout") int timeout() default TransactionDefinition.TIMEOUT_DEFAULT;
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#rollbackFor()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
@@ -90,6 +102,8 @@ public @interface Facade {
     @AliasFor(annotation = Transactional.class, attribute = "rollbackFor") Class<? extends Throwable>[] rollbackFor() default {};
 
     /**
+     * {@inheritDoc}
+     *
      * @see Transactional#isolation()
      * @deprecated Use a {@link TxService @TxService} instead.
      */
