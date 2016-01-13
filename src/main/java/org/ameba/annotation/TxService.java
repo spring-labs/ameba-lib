@@ -47,7 +47,7 @@ public @interface TxService {
      * @see Component#value()
      */
     @AliasFor(annotation = Component.class, attribute = "value")
-    String[] value() default "";
+    String value() default "";
 
     /**
      * @see Transactional#transactionManager()
