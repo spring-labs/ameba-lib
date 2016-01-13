@@ -13,37 +13,38 @@
  * names mentioned herein may be trademarks or trade names of the respective owner.
  * Specifications are subject to change without notice.
  */
-package org.ameba.aop;
+package org.ameba.annotation;
 
-import org.aspectj.lang.annotation.Pointcut;
+import org.ameba.aop.IntegrationLayerAspect;
+import org.ameba.aop.PresentationLayerAspect;
+import org.ameba.aop.ServiceLayerAspect;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
- * A SpringPointcuts.
+ * A AspectsConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-class SpringPointcuts {
+@Configuration
+@EnableAspectJAutoProxy
+class AspectsConfiguration {
 
-    /**
-     * Uses this pointcut definition to combine with your custom pointcut.
-     */
-    @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
-    public final void isRestController() {
+    @Bean(name = ServiceLayerAspect.COMPONENT_NAME)
+    public ServiceLayerAspect serviceLayerAspect() {
+        return new ServiceLayerAspect();
     }
 
-    /**
-     * Uses this pointcut definition to combine with your custom pointcut.
-     */
-    @Pointcut("@within(org.springframework.stereotype.Service)")
-    public void isService() {
+    @Bean(name = IntegrationLayerAspect.COMPONENT_NAME)
+    public IntegrationLayerAspect integrationLayerAspect() {
+        return new IntegrationLayerAspect();
     }
 
-    /**
-     * Uses this pointcut definition to combine with your custom pointcut.
-     */
-    @Pointcut("@within(org.springframework.stereotype.Repository)")
-    public final void isRepository() {
+    @Bean(name = PresentationLayerAspect.COMPONENT_NAME)
+    public PresentationLayerAspect presentationLayerAspect() {
+        return new PresentationLayerAspect();
     }
 }

@@ -13,37 +13,26 @@
  * names mentioned herein may be trademarks or trade names of the respective owner.
  * Specifications are subject to change without notice.
  */
-package org.ameba.aop;
+package org.ameba.annotation;
 
-import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.Import;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * A SpringPointcuts.
+ * A EnableAspects.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-class SpringPointcuts {
-
-    /**
-     * Uses this pointcut definition to combine with your custom pointcut.
-     */
-    @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
-    public final void isRestController() {
-    }
-
-    /**
-     * Uses this pointcut definition to combine with your custom pointcut.
-     */
-    @Pointcut("@within(org.springframework.stereotype.Service)")
-    public void isService() {
-    }
-
-    /**
-     * Uses this pointcut definition to combine with your custom pointcut.
-     */
-    @Pointcut("@within(org.springframework.stereotype.Repository)")
-    public final void isRepository() {
-    }
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Import(AspectsConfiguration.class)
+public @interface EnableAspects {
 }
