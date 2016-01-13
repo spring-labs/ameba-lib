@@ -5,7 +5,7 @@ ameba-lib
 [![Quality][codacy-image]][codacy-url]
 [![Gitter][gitter-image]][gitter-url]
 
-Ameba Lib is a collection of utils, exceptions, constants and other helpers used across projects and solutions
+Ameba Lib is a collection of utils, exceptions, constants and other helpers used across projects and solutions. All dependencies are defined as Maven `provided` scope to cut transitive dependencies.
 
 How to release
 --------------
