@@ -55,7 +55,7 @@ public abstract class AbstractTenantAwareFilter extends OncePerRequestFilter {
         String tenant = null;
         if (multiTenancyEnabled && !"OPTIONS".equalsIgnoreCase(request.getMethod())) {
             tenant = request.getHeader(Constants.HEADER_VALUE_TENANT) == null ||
-                    request.getHeader(Constants.HEADER_VALUE_TENANT).isEmpty() ? request.getHeader(Constants.HEADER_VALUE_X_TENANT) : "";
+                    request.getHeader(Constants.HEADER_VALUE_TENANT).isEmpty() ? request.getHeader(Constants.HEADER_VALUE_X_TENANT) : request.getHeader(Constants.HEADER_VALUE_TENANT);
             if (null == tenant || tenant.isEmpty()) {
                 boolean throwIfNotPresent = Boolean.valueOf((String) request.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT));
                 if (throwIfNotPresent) {
