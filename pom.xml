@@ -29,6 +29,11 @@
             <name>Boris Simic</name>
             <email>borochief@gmail.com</email>
         </developer>
+        <developer>
+            <id>ice3ider</id>
+            <name>Matteo Kamm</name>
+            <email>info@ice3ider4.de</email>
+        </developer>
     </developers>
     <properties>
         <dozer.version>5.5.1</dozer.version>
