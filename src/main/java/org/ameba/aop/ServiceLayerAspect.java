@@ -79,10 +79,15 @@ public class ServiceLayerAspect  {
      * @param ex The root exception that is thrown
      * @return Returns the exception to be thrown
      */
-    public Exception translateException(Throwable ex) {
+    public Exception translateException(Exception ex) {
         if (EXC_LOGGER.isErrorEnabled()) {
             EXC_LOGGER.error("[S] Service Layer Exception: " + ex.getLocalizedMessage(), ex);
         }
+
+        if (ex instanceof AbstractBehaviorAwareException) {
+            return ex;
+        }
+
         Optional<Exception> handledException = doTranslateException(ex);
         if (handledException.isPresent()) {
             return handledException.get();
