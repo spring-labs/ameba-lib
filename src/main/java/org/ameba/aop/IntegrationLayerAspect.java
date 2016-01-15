@@ -15,7 +15,10 @@
  */
 package org.ameba.aop;
 
+import java.util.Optional;
+
 import org.ameba.LoggingCategories;
+import org.ameba.exception.AbstractBehaviorAwareException;
 import org.ameba.exception.IntegrationLayerException;
 import org.ameba.exception.ResourceExistsException;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -25,8 +28,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.util.StopWatch;
-
-import java.util.Optional;
 
 /**
  * An IntegrationLayerAspect is used to measure time consumption of method calls in the integration layer.
@@ -100,6 +101,9 @@ public class IntegrationLayerAspect {
         }
         if (ex instanceof DuplicateKeyException) {
             return new ResourceExistsException();
+        }
+        if (ex instanceof AbstractBehaviorAwareException) {
+            return (Exception) ex;
         }
         if (ex instanceof IntegrationLayerException) {
             return ((IntegrationLayerException) ex);
