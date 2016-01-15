@@ -16,6 +16,7 @@
 package org.ameba.aop;
 
 import org.ameba.LoggingCategories;
+import org.ameba.exception.AbstractBehaviorAwareException;
 import org.ameba.exception.IntegrationLayerException;
 import org.ameba.exception.ResourceExistsException;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -90,10 +91,15 @@ public class IntegrationLayerAspect {
      * @param ex The root exception that is thrown
      * @return Returns the exception to be thrown
      */
-    public Exception translateException(Throwable ex) {
+    public Exception translateException(Exception ex) {
         if (EXC_LOGGER.isErrorEnabled()) {
             EXC_LOGGER.error("[I] Integration Layer Exception: " + ex.getLocalizedMessage(), ex);
         }
+
+        if (ex instanceof AbstractBehaviorAwareException) {
+            return ex;
+        }
+
         Optional<Exception> handledException = doTranslateException(ex);
         if (handledException.isPresent()) {
             return handledException.get();
@@ -102,7 +108,7 @@ public class IntegrationLayerAspect {
             return new ResourceExistsException();
         }
         if (ex instanceof IntegrationLayerException) {
-            return ((IntegrationLayerException) ex);
+            return ex;
         }
         return new IntegrationLayerException(ex.getMessage(), ex);
     }
