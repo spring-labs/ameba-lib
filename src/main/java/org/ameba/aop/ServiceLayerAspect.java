@@ -15,15 +15,16 @@
  */
 package org.ameba.aop;
 
+import java.util.Optional;
+
 import org.ameba.LoggingCategories;
+import org.ameba.exception.AbstractBehaviorAwareException;
 import org.ameba.exception.ServiceLayerException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Optional;
 
 /**
  * A ServiceLayerAspect is spawned around all public API methods and is responsible to log method execution time and log occurring exceptions around the service layer.
@@ -85,6 +86,9 @@ public class ServiceLayerAspect  {
         Optional<Exception> handledException = doTranslateException(ex);
         if (handledException.isPresent()) {
             return handledException.get();
+        }
+        if (ex instanceof AbstractBehaviorAwareException) {
+            return (Exception) ex;
         }
         return new ServiceLayerException(ex.getMessage());
     }
