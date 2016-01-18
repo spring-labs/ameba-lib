@@ -35,7 +35,7 @@ import java.util.Map;
  * @since 0.1
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Response<T extends AbstractBase> extends ResourceSupport implements Serializable {
+public class Response<T extends Serializable> extends ResourceSupport implements Serializable {
 
     private static final long serialVersionUID = -73613607195853087L;
 
