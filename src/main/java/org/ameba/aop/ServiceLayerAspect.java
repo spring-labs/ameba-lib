@@ -102,7 +102,7 @@ public class ServiceLayerAspect  {
      * @param ex Exception to handle
      * @return An empty Optional to use the default exception handling or an Exception to skip default handling
      */
-    protected Optional<Exception> doTranslateException(Throwable ex) {
+    protected Optional<Exception> doTranslateException(Exception ex) {
         return Optional.empty();
     }
 
