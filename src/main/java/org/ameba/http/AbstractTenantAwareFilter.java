@@ -60,7 +60,7 @@ public abstract class AbstractTenantAwareFilter extends OncePerRequestFilter {
                 boolean throwIfNotPresent = Boolean.valueOf((String) request.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT));
                 if (throwIfNotPresent) {
                     response.setStatus(HttpStatus.BAD_REQUEST.value());
-                    throw new IllegalArgumentException(String.format("No tenant information available in http header. Expected header %s attribute not present.", Constants.HEADER_VALUE_TENANT));
+                    throw new IllegalArgumentException(String.format("No tenant information available in http header. Expected header [%s/%s] attribute not present.", Constants.HEADER_VALUE_TENANT, Constants.HEADER_VALUE_X_TENANT));
                 }
             } else {
                 doBefore(request, response, filterChain, tenant);
