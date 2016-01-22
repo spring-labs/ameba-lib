@@ -36,7 +36,7 @@ public class Pointcuts extends SpringPointcuts {
     /**
      * Override this method with your custom pointcut definition.
      */
-    @Pointcut("isService()")
+    @Pointcut("isService() || isTransactionalService()")
     public void servicePointcut() {
     }
 
