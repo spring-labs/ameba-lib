@@ -16,31 +16,66 @@
 package org.ameba.exception;
 
 /**
- * A ServiceLayerException.
+ * A ServiceLayerException is used to wrap exceptions around the service layer together with a message key (used for
+ * translation) and a translated message text.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
+ * @version 1.1
  * @since 0.2
  */
 public class ServiceLayerException extends RuntimeException {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public ServiceLayerException() {
-	}
+    private String msgKey;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public ServiceLayerException(String message) {
-		super(message);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public ServiceLayerException() {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public ServiceLayerException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public ServiceLayerException(String message) {
+        super(message);
+    }
+
+    /**
+     * Create a ServiceLayerException.
+     *
+     * @param message    The message text
+     * @param messageKey The message key
+     */
+    public ServiceLayerException(String message, String messageKey) {
+        super(message);
+        this.msgKey = messageKey;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public ServiceLayerException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * Create a ServiceLayerException.
+     *
+     * @param message    The message text
+     * @param messageKey The message key
+     * @param cause      The root cause
+     */
+    public ServiceLayerException(String message, String messageKey, Throwable cause) {
+        super(message, cause);
+        this.msgKey = messageKey;
+    }
+
+    /**
+     * Get the message key.
+     *
+     * @return The message key
+     */
+    public String getMessageKey() {
+        return msgKey;
+    }
 }
