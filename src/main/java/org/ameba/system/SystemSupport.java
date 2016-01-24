@@ -20,9 +20,6 @@ package org.ameba.system;
  */
 public class SystemSupport {
 
-    private SystemSupport(){
-    }
-
     /**
      * True if the current operating system is windows
      */
@@ -33,4 +30,6 @@ public class SystemSupport {
      */
     public static final String JAVA_TMP_DIR = System.getProperty("java.io.tmpdir");
 
+    private SystemSupport(){
+    }
 }
