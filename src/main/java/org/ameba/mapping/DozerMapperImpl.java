@@ -18,7 +18,6 @@ package org.ameba.mapping;
 import org.dozer.Mapper;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -83,7 +82,7 @@ public class DozerMapperImpl implements BeanMapper {
     @Override
     public <S, T> List<T> map(List<S> entities, Class<T> clazz) {
         if (entities == null || entities.isEmpty()) {
-            return Collections.<T>emptyList();
+            return new ArrayList<>(0);
         }
         List<T> result = new ArrayList<>(entities.size());
         for (S entity : entities) {
