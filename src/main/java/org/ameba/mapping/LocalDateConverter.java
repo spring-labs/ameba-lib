@@ -17,31 +17,31 @@ package org.ameba.mapping;
 
 import org.dozer.DozerConverter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
- * A LocalDateTimeConverter is a Dozer converter to recognize java.time.LocalDateTime types. No conversion is applied,
+ * A LocalDateConverter is a Dozer converter to recognize java.time.LocalDate types. No conversion is applied,
  * but a type converter must be configured within Dozer, to accept Java 1.8 types. As soon as issue #172 https://github.com/DozerMapper/dozer/issues/172
  * is closed, this implementation can be deleted.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @since 0.8
+ * @since 1.3.0
  */
-public class LocalDateTimeConverter extends DozerConverter<LocalDateTime, LocalDateTime> {
+public class LocalDateConverter extends DozerConverter<LocalDate, LocalDate>  {
 
     /**
      * {@inheritDoc}
      */
-    public LocalDateTimeConverter() {
-        super(LocalDateTime.class, LocalDateTime.class);
+    public LocalDateConverter() {
+        super(LocalDate.class, LocalDate.class);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public LocalDateTime convertTo(LocalDateTime source, LocalDateTime destination) {
+    public LocalDate convertTo(LocalDate source, LocalDate destination) {
         return source;
     }
 
@@ -49,7 +49,7 @@ public class LocalDateTimeConverter extends DozerConverter<LocalDateTime, LocalD
      * {@inheritDoc}
      */
     @Override
-    public LocalDateTime convertFrom(LocalDateTime source, LocalDateTime destination) {
+    public LocalDate convertFrom(LocalDate source, LocalDate destination) {
         return convertTo(source, destination);
     }
 }
