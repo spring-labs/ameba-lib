@@ -27,21 +27,28 @@ import org.aspectj.lang.annotation.Pointcut;
 class SpringPointcuts {
 
     /**
-     * Uses this pointcut definition to combine with your custom pointcut.
+     * Checks for {@link org.springframework.web.bind.annotation.RestController RestController} annotations.
      */
     @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
     public final void isRestController() {
     }
 
     /**
-     * Uses this pointcut definition to combine with your custom pointcut.
+     * Matches {@link org.springframework.stereotype.Service Service} annotations.
      */
     @Pointcut("@within(org.springframework.stereotype.Service)")
     public void isService() {
     }
 
     /**
-     * Uses this pointcut definition to combine with your custom pointcut.
+     * Matches {@link org.ameba.annotation.TxService TxService} annotations.
+     */
+    @Pointcut("@within(org.ameba.annotation.TxService)")
+    public void isTransactionalService() {
+    }
+
+    /**
+     * Matches {@link org.springframework.stereotype.Repository Repository} annotations.
      */
     @Pointcut("@within(org.springframework.stereotype.Repository)")
     public final void isRepository() {

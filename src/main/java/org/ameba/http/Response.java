@@ -35,7 +35,7 @@ import java.util.Map;
  * @since 0.1
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Response<T extends AbstractBase> extends ResourceSupport implements Serializable {
+public class Response<T extends Serializable> extends ResourceSupport implements Serializable {
 
     private static final long serialVersionUID = -73613607195853087L;
 
@@ -95,7 +95,7 @@ public class Response<T extends AbstractBase> extends ResourceSupport implements
     }
 
     @JsonAnyGetter
-    Map<String, String> any() {
+    protected Map<String, String> any() {
         if (getFirst() != null) {
             other.put("class", getFirst().getClass().getSimpleName());
         }
@@ -103,13 +103,18 @@ public class Response<T extends AbstractBase> extends ResourceSupport implements
     }
 
     @JsonAnySetter
-    void set(String name, String value) {
+    protected void set(String name, String value) {
         if (getFirst() != null) {
             other.put("class", getFirst().getClass().getSimpleName());
         }
     }
 
-    T getFirst() {
+    /**
+     * If exists, return the first element of response object array.
+     *
+     * @return First element or {@code null}
+     */
+    protected T getFirst() {
         if (obj == null || obj.length == 0) {
             return null;
         }
@@ -167,9 +172,8 @@ public class Response<T extends AbstractBase> extends ResourceSupport implements
         if (httpStatus != null ? !httpStatus.equals(response.httpStatus) : response.httpStatus != null) return false;
         if (message != null ? !message.equals(response.message) : response.message != null) return false;
         if (messageKey != null ? !messageKey.equals(response.messageKey) : response.messageKey != null) return false;
-        if (!Arrays.equals(obj, response.obj)) return false;
+        return Arrays.equals(obj, response.obj);
 
-        return true;
     }
 
     @Override

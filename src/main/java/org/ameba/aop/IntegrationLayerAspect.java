@@ -91,10 +91,15 @@ public class IntegrationLayerAspect {
      * @param ex The root exception that is thrown
      * @return Returns the exception to be thrown
      */
-    public Exception translateException(Throwable ex) {
+    public Exception translateException(Exception ex) {
         if (EXC_LOGGER.isErrorEnabled()) {
             EXC_LOGGER.error("[I] Integration Layer Exception: " + ex.getLocalizedMessage(), ex);
         }
+
+        if (ex instanceof AbstractBehaviorAwareException) {
+            return ex;
+        }
+
         Optional<Exception> handledException = doTranslateException(ex);
         if (handledException.isPresent()) {
             return handledException.get();
@@ -102,11 +107,8 @@ public class IntegrationLayerAspect {
         if (ex instanceof DuplicateKeyException) {
             return new ResourceExistsException();
         }
-        if (ex instanceof AbstractBehaviorAwareException) {
-            return (Exception) ex;
-        }
         if (ex instanceof IntegrationLayerException) {
-            return ((IntegrationLayerException) ex);
+            return ex;
         }
         return new IntegrationLayerException(ex.getMessage(), ex);
     }
@@ -117,7 +119,7 @@ public class IntegrationLayerAspect {
      * @param ex Exception to handle
      * @return An empty Optional to use the default exception handling or an Exception to skip default handling
      */
-    protected Optional<Exception> doTranslateException(Throwable ex) {
+    protected Optional<Exception> doTranslateException(Exception ex) {
         return Optional.empty();
     }
 }

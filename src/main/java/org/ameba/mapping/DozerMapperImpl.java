@@ -15,11 +15,10 @@
  */
 package org.ameba.mapping;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.dozer.Mapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A DozerMapperImpl uses the Open Source Dozer project to automatically map between bean classes.
@@ -42,7 +41,9 @@ public class DozerMapperImpl implements BeanMapper {
     }
 
     /**
-     * {@inheritDoc} Garbage in - garbage out principle. In case a caller uses a repository implementation that may
+     * {@inheritDoc}
+     * <p>
+     * Garbage in - garbage out principle. In case a caller uses a repository implementation that may
      * return {@code null} in times of Java 8, a {@code null} value will simply be returned. It is not the job of this
      * library to decide on {@code null} values.
      */
@@ -55,28 +56,33 @@ public class DozerMapperImpl implements BeanMapper {
     }
 
     /**
-     * {@inheritDoc} Garbage in - garbage out principle. In case a caller uses a repository implementation that may
+     * {@inheritDoc}
+     * <p>
+     * Garbage in - garbage out principle. In case a caller uses a repository implementation that may
      * return {@code null} in times of Java 8, a {@code null} value will simply be returned. It is not the job of this
      * library to decide on {@code null} values.
      */
     @Override
     public <S, T> T mapFromTo(S source, T target) {
+        T result = target;
         if (source == null) {
-            target = null;
+            result = null;
         } else {
-            mapper.map(source, target);
+            mapper.map(source, result);
         }
-        return target;
+        return result;
     }
 
     /**
-     * {@inheritDoc} The caller gets at least an empty {@code java.util.List List} implementation when {@code entities}
+     * {@inheritDoc}
+     * <p>
+     * The caller gets at least an empty {@code java.util.List List} implementation when {@code entities}
      * is {@code null} or empty.
      */
     @Override
     public <S, T> List<T> map(List<S> entities, Class<T> clazz) {
         if (entities == null || entities.isEmpty()) {
-            return Collections.<T>emptyList();
+            return new ArrayList<>(0);
         }
         List<T> result = new ArrayList<>(entities.size());
         for (S entity : entities) {
