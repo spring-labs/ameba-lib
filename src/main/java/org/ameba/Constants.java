@@ -19,7 +19,7 @@ package org.ameba;
  * A Constants class to collect common used constants.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
+ * @version 1.1
  * @since 0.9
  */
 public final class Constants {
@@ -33,11 +33,13 @@ public final class Constants {
      */
     public static final String HEADER_VALUE_X_TENANT = "X-Tenant";
     /**
-     * Name of servlet context param to enable multitenancy support, expected to be set as {@code true} or {@code false}.
+     * Name of servlet context param to enable multitenancy support, expected to be set as {@code true} or {@code false}
+     * .
      */
     public static final String PARAM_MULTI_TENANCY_ENABLED = "multitenancy.enabled";
     /**
-     * Name of servlet context param to define whether an exception shall be thrown in case the tenant identifier is not present in the http header.
+     * Name of servlet context param to define whether an exception shall be thrown in case the tenant identifier is not
+     * present in the http header.
      */
     public static final String PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT = "multitenancy.throw";
 
