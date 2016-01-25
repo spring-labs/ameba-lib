@@ -22,7 +22,7 @@ package org.ameba.tenancy;
  * @version 1.1
  * @since 1.0
  */
-public class IllegalTenantException extends Exception {
+public class IllegalTenantException extends RuntimeException {
 
     /**
      * Constructor with message only.
