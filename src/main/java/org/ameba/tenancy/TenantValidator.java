@@ -28,7 +28,7 @@ public interface TenantValidator {
      * Validate the name of the tenant against a whitelist of tenants.
      *
      * @param tenantName The name of the tenant to validate
-     * @throws IllegalTenantException If the tenantName is not valid
+     * @throws IllegalTenantException May throw, if the tenantName is not valid
      */
-    void validate(String tenantName) throws IllegalTenantException;
+    void validate(String tenantName);
 }
