@@ -20,7 +20,7 @@ import org.dozer.DozerConverter;
 import java.time.LocalDate;
 
 /**
- * A LocalDateConverteris a Dozer converter to recognize java.time.LocalDate types. No conversion is applied,
+ * A LocalDateConverter is a Dozer converter to recognize java.time.LocalDate types. No conversion is applied,
  * but a type converter must be configured within Dozer, to accept Java 1.8 types. As soon as issue #172 https://github.com/DozerMapper/dozer/issues/172
  * is closed, this implementation can be deleted.
  *
