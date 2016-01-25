@@ -19,22 +19,22 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.ameba.TenantHolder;
+import org.ameba.tenancy.TenantHolder;
 
 /**
  * A MultiTenantSessionFilter set the current tenant value ({@value org.ameba.Constants#HEADER_VALUE_TENANT} in the
- * {@link org.ameba.TenantHolder TenantHolder}.
+ * {@link TenantHolder TenantHolder}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @see org.ameba.TenantHolder
+ * @see TenantHolder
  * @since 1.0
  */
 public class MultiTenantSessionFilter extends AbstractTenantAwareFilter {
 
     /**
      * {@inheritDoc}
-     * If {@code tenant} is present, set it in the {@link org.ameba.TenantHolder TenantHolder}
+     * If {@code tenant} is present, set it in the {@link TenantHolder TenantHolder}
      */
     @Override
     protected void doBefore(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
@@ -45,7 +45,7 @@ public class MultiTenantSessionFilter extends AbstractTenantAwareFilter {
 
     /**
      * {@inheritDoc}
-     * Remove tenant from {@link org.ameba.TenantHolder TenantHolder}
+     * Remove tenant from {@link TenantHolder TenantHolder}
      */
     @Override
     protected void doAfter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
