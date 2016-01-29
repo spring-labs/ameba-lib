@@ -107,9 +107,6 @@ public class IntegrationLayerAspect {
         if (ex instanceof DuplicateKeyException) {
             return new ResourceExistsException();
         }
-        if (ex instanceof AbstractBehaviorAwareException) {
-            return (Exception) ex;
-        }
         if (ex instanceof IntegrationLayerException) {
             return ex;
         }
