@@ -34,6 +34,11 @@
             <name>ice3ider</name>
             <email>admin@ice3ider.de</email>
         </developer>
+        <developer>
+            <id>ice3ider</id>
+            <name>ice3ider</name>
+            <email>admin@ice3ider.de</email>
+        </developer>
     </developers>
     <properties>
         <dozer.version>5.5.1</dozer.version>
