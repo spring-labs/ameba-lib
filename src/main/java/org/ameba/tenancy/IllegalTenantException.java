@@ -19,8 +19,8 @@ package org.ameba.tenancy;
  * A IllegalTenantException signals that the current tenant is invalid.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.1
- * @since 1.0
+ * @version 1.2
+ * @since 1.3
  */
 public class IllegalTenantException extends RuntimeException {
 

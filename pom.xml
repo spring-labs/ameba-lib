@@ -31,7 +31,7 @@
         </developer>
         <developer>
             <id>ice3ider</id>
-            <name>Matteo Kamm</name>
+            <name>ice3ider</name>
             <email>admin@ice3ider.de</email>
         </developer>
     </developers>
@@ -225,5 +225,9 @@
             <id>bintray</id>
             <url>https://api.bintray.com/maven/abraxas/labs/ameba</url>
         </repository>
+        <snapshotRepository>
+            <id>libs-snapshot-local</id>
+            <url>http://artifactory.eia.abraxas.ch/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
     </distributionManagement>
 </project>

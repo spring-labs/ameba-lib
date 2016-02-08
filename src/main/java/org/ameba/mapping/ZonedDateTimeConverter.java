@@ -14,7 +14,7 @@ import org.dozer.DozerConverter;
  * but a type converter must be configured within Dozer, to accept Java 1.8 types.
  * As soon as these types are included into Dozer this implementation can be deleted.
  *
- * @author <a href="mailto:matteo.kamm@abraxas.ch">Matteo Kamm</a>
+ * @author <a href="mailto:admin@ice3ider.de">Ice3ider</a>
  * @version 1.0
  * @since 1.3.0
  */
