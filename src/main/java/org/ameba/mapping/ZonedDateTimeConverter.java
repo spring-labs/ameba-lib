@@ -1,7 +1,17 @@
-/* 
- * Copyright 2015 by Abraxas Informatik AG,
- * Waltersbachstrasse 5, CH-8006 Zuerich
- * All rights reserved.
+/*
+ * Copyright 2014-2015 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.ameba.mapping;
 
@@ -14,7 +24,7 @@ import org.dozer.DozerConverter;
  * but a type converter must be configured within Dozer, to accept Java 1.8 types.
  * As soon as these types are included into Dozer this implementation can be deleted.
  *
- * @author <a href="mailto:matteo.kamm@abraxas.ch">Matteo Kamm</a>
+ * @author <a href="mailto:admin@ice3ider.de">Ice3ider</a>
  * @version 1.0
  * @since 1.3.0
  */
