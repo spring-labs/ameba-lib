@@ -27,23 +27,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A ServiceLayerAspect is spawned around all public API methods and is responsible to log method execution time and log occurring exceptions around the service layer.
+ * A ServiceLayerAspect is spawned around all public API methods and is responsible to log method execution time and log occurring
+ * exceptions around the service layer.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.1
  * @since 1.2
  */
 @Aspect
-public class ServiceLayerAspect  {
-
-    private static final Logger SRV_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_ACCESS);
-    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
-    private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
+public class ServiceLayerAspect {
 
     /**
      * Springs component name.
      */
     public static final String COMPONENT_NAME = "ServiceLayerAspect";
+    private static final Logger SRV_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_ACCESS);
+    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
+    private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
 
     public ServiceLayerAspect() {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
@@ -71,10 +71,7 @@ public class ServiceLayerAspect  {
     }
 
     /**
-     * Called after an exception is thrown by classes of the service layer.
-     * <p>
-     * Set log level to ERROR to log the root cause.
-     * </p>
+     * Called after an exception is thrown by classes of the service layer. <p> Set log level to ERROR to log the root cause. </p>
      *
      * @param ex The root exception that is thrown
      * @return Returns the exception to be thrown
@@ -92,12 +89,11 @@ public class ServiceLayerAspect  {
         if (handledException.isPresent()) {
             return handledException.get();
         }
-        if (ex instanceof AbstractBehaviorAwareException) {
-            return (Exception) ex;
+        if (ex instanceof ServiceLayerException) {
+            return ex;
         }
         return new ServiceLayerException(ex.getMessage());
     }
-
 
     /**
      * Override method to handle the transaction yourself and skip to the default exception handling .
@@ -108,5 +104,4 @@ public class ServiceLayerAspect  {
     protected Optional<Exception> doTranslateException(Exception ex) {
         return Optional.empty();
     }
-
 }
