@@ -15,20 +15,20 @@
  */
 package org.ameba.http;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.hateoas.ResourceSupport;
-
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.hateoas.ResourceSupport;
+
 /**
  * An instance of Response is a transfer object that is used to encapsulate
  * a server response to the client application. It contains an array of
- * items specific to the request.
+ * items specific to the request. Compare to the concept of SIREN.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.1
