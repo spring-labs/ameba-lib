@@ -34,16 +34,15 @@ import org.slf4j.LoggerFactory;
  * @since 1.2
  */
 @Aspect
-public class ServiceLayerAspect  {
-
-    private static final Logger SRV_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_ACCESS);
-    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
-    private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
+public class ServiceLayerAspect {
 
     /**
      * Springs component name.
      */
     public static final String COMPONENT_NAME = "ServiceLayerAspect";
+    private static final Logger SRV_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_ACCESS);
+    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
+    private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
 
     public ServiceLayerAspect() {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
@@ -92,8 +91,8 @@ public class ServiceLayerAspect  {
         if (handledException.isPresent()) {
             return handledException.get();
         }
-        if (ex instanceof AbstractBehaviorAwareException) {
-            return (Exception) ex;
+        if (ex instanceof ServiceLayerException) {
+            return ex;
         }
         return new ServiceLayerException(ex.getMessage());
     }
@@ -108,5 +107,4 @@ public class ServiceLayerAspect  {
     protected Optional<Exception> doTranslateException(Exception ex) {
         return Optional.empty();
     }
-
 }
