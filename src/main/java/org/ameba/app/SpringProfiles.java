@@ -28,12 +28,8 @@ public final class SpringProfiles {
 	public static final String DEVELOPMENT_PROFILE = "DEV";
 	/** Activate this profile in integration test environment (e.g. CI system). */
 	public static final String IT_PROFILE = "IT";
-	/**
-	 * Activate this profile in User Acceptance Test environment.
-	 */
+	/** Activate this profile in User Acceptance Test environment. */
 	public static final String UAT_PROFILE = "UAT";
-	/**
-	 * Activate this profile in production environment.
-	 */
+	/** Activate this profile in production environment. */
 	public static final String PRODUCTION_PROFILE = "PROD";
 }

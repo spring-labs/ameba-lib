@@ -16,31 +16,47 @@
 package org.ameba.exception;
 
 /**
- * A IntegrationLayerException.
+ * A IntegrationLayerException is used to signal exceptions around the integration layer. This type of exception might be caught by an AOP
+ * aspect.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
+ * @version 1.1
  * @since 0.2
  */
-public class IntegrationLayerException extends RuntimeException {
+public class IntegrationLayerException extends TechnicalRuntimeException {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public IntegrationLayerException() {
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public IntegrationLayerException() {
+        super();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public IntegrationLayerException(String message) {
-		super(message);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public IntegrationLayerException(String message) {
+        super(message);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public IntegrationLayerException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public IntegrationLayerException(String message, String messageKey) {
+        super(message, messageKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IntegrationLayerException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public IntegrationLayerException(String message, String messageKey, Throwable cause) {
+        super(message, messageKey, cause);
+    }
 }
