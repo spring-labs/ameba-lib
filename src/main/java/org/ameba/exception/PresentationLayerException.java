@@ -16,31 +16,47 @@
 package org.ameba.exception;
 
 /**
- * A PresentationLayerException.
+ * A PresentationLayerException is used to signal exceptions around the presentation layer. This type of exception might be caught by an AOP
+ * aspect.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
+ * @version 1.1
  * @since 0.2
  */
-public class PresentationLayerException extends RuntimeException {
+public class PresentationLayerException extends TechnicalRuntimeException {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public PresentationLayerException() {
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public PresentationLayerException() {
+        super();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public PresentationLayerException(String message) {
-		super(message);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public PresentationLayerException(String message) {
+        super(message);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public PresentationLayerException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public PresentationLayerException(String message, String messageKey) {
+        super(message, messageKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public PresentationLayerException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public PresentationLayerException(String message, String messageKey, Throwable cause) {
+        super(message, messageKey, cause);
+    }
 }

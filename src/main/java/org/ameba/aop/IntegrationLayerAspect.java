@@ -26,6 +26,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.util.StopWatch;
 
@@ -37,30 +38,32 @@ import org.springframework.util.StopWatch;
  * @since 1.2
  */
 @Aspect
+@Order(10)
 public class IntegrationLayerAspect {
 
+    /** Spring component name. */
+    public static final String COMPONENT_NAME = "IntegrationLayerAspect";
     private static final Logger P_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_LAYER_ACCESS);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
 
-    /**
-     * Spring component name.
-     */
-    public static final String COMPONENT_NAME = "IntegrationLayerAspect";
-
-    /**
-     * Create a new IntegrationLayerAspect.
-     */
+    /** Default constructor with some loginfo */
     public IntegrationLayerAspect() {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
     }
 
     /**
-     * Called around method invocations to log time consumption of each method call.
+     * Around intercepted methods do some logging and exception translation.
+     * <p>
+     * <ul>
+     *     <li> Set log level of {@link LoggingCategories#INTEGRATION_LAYER_ACCESS} to INFO to enable method tracing. </li>
+     *     <li>Set log level of {@link LoggingCategories#INTEGRATION_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
+     * </ul>
+     * </p>
      *
-     * @param pjp the ProceedingJoinPoint object
-     * @return the return value of the method invocation
-     * @throws Throwable any exception thrown by the method invocation
+     * @param pjp The joinpoint
+     * @return Method return value
+     * @throws Throwable in case of errors
      */
     @Around("org.ameba.aop.Pointcuts.integrationPointcut()")
     public Object measure(ProceedingJoinPoint pjp) throws Throwable {
@@ -83,10 +86,7 @@ public class IntegrationLayerAspect {
     }
 
     /**
-     * Called after an exception is thrown by classes of the integration layer.
-     * <p>
-     * Set log level to ERROR to log the root cause.
-     * </p>
+     * Called after an exception is thrown by classes of the integration layer. <p> Set log level to ERROR to log the root cause. </p>
      *
      * @param ex The root exception that is thrown
      * @return Returns the exception to be thrown

@@ -25,6 +25,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 
 /**
  * A ServiceLayerAspect is spawned around all public API methods and is responsible to log method execution time and log occurring
@@ -35,20 +36,33 @@ import org.slf4j.LoggerFactory;
  * @since 1.2
  */
 @Aspect
+@Order(15)
 public class ServiceLayerAspect {
 
-    /**
-     * Springs component name.
-     */
+    /** Springs component name. */
     public static final String COMPONENT_NAME = "ServiceLayerAspect";
     private static final Logger SRV_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_ACCESS);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
 
+    /** Default constructor with some loginfo */
     public ServiceLayerAspect() {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
     }
 
+    /**
+     * Around intercepted methods do some logging and exception translation.
+     * <p>
+     * <ul>
+     *     <li> Set log level of {@link LoggingCategories#SERVICE_LAYER_ACCESS} to INFO to enable method tracing. </li>
+     *     <li>Set log level of {@link LoggingCategories#SERVICE_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
+     * </ul>
+     * </p>
+     *
+     * @param pjp The joinpoint
+     * @return Method return value
+     * @throws Throwable in case of errors
+     */
     @Around("org.ameba.aop.Pointcuts.servicePointcut()")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startMillis = 0L;
