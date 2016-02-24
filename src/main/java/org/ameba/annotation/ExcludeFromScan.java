@@ -22,7 +22,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A ExcludeFromScan annotation is used on @Configuration classes to exclude them from Springs component scan mechanism.
+ * An ExcludeFromScan annotation is used on Spring's {@link org.springframework.context.annotation.Configuration
+ * Configuration} classes to exclude them from Springs component scan mechanism.
+ * <p/>
+ * Some application that defines the {@link org.springframework.context.annotation.ComponentScan ComponentScan}
+ * annotation may define a filter that excludes all types annotated with {@link ExcludeFromScan}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
