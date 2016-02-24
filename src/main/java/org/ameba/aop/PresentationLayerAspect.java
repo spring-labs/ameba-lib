@@ -21,6 +21,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.Order;
 
 /**
  * A PresentationLayerAspect.
@@ -30,29 +31,30 @@ import org.slf4j.LoggerFactory;
  * @since 1.2
  */
 @Aspect
+@Order(20)
 public class PresentationLayerAspect {
 
+    /** Spring component name. */
+    public static final String COMPONENT_NAME = "PresentationLayerAspect";
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.PRESENTATION_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
 
-    /**
-     * Spring component name.
-     */
-    public static final String COMPONENT_NAME = "PresentationLayerAspect";
-
-    /**
-     * Create a new PresentationLayerAspect.
-     */
+    /** Default constructor with some loginfo */
     public PresentationLayerAspect() {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
     }
 
     /**
-     * Called around method invocations to log exceptions occurred in intercepted layer.
+     * Around intercepted methods do some logging and exception translation.
+     * <p>
+     * <ul>
+     *     <li>Set log level of {@link LoggingCategories#PRESENTATION_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
+     * </ul>
+     * </p>
      *
-     * @param pjp the ProceedingJoinPoint object
-     * @return the return value of the method invocation
-     * @throws Throwable any exception thrown by the method invocation
+     * @param pjp The joinpoint
+     * @return Method return value
+     * @throws Throwable in case of errors
      */
     @Around("org.ameba.aop.Pointcuts.presentationPointcut()")
     public Object measure(ProceedingJoinPoint pjp) throws Throwable {
