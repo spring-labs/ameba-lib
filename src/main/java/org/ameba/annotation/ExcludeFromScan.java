@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * An ExcludeFromScan annotation is used on Spring's {@link org.springframework.context.annotation.Configuration
  * Configuration} classes to exclude them from Springs component scan mechanism.
- * <p/>
+ * <p>
  * Some application that defines the {@link org.springframework.context.annotation.ComponentScan ComponentScan}
  * annotation may define a filter that excludes all types annotated with {@link ExcludeFromScan}.
  *
