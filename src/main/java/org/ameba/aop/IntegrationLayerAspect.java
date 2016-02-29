@@ -15,8 +15,6 @@
  */
 package org.ameba.aop;
 
-import java.util.Optional;
-
 import org.ameba.LoggingCategories;
 import org.ameba.exception.AbstractBehaviorAwareException;
 import org.ameba.exception.IntegrationLayerException;
@@ -29,6 +27,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.util.StopWatch;
+
+import java.util.Optional;
 
 /**
  * An IntegrationLayerAspect is used to measure time consumption of method calls in the integration layer.
@@ -56,10 +56,10 @@ public class IntegrationLayerAspect {
      * Around intercepted methods do some logging and exception translation.
      * <p>
      * <ul>
-     *     <li> Set log level of {@link LoggingCategories#INTEGRATION_LAYER_ACCESS} to INFO to enable method tracing. </li>
-     *     <li>Set log level of {@link LoggingCategories#INTEGRATION_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
+     *     <li> Set log level of {@link LoggingCategories#INTEGRATION_LAYER_ACCESS} to INFO to enable method tracing.
+     *     <li>Set log level of {@link LoggingCategories#INTEGRATION_LAYER_EXCEPTION} to ERROR to enable exception
+     * logging.
      * </ul>
-     * </p>
      *
      * @param pjp The joinpoint
      * @return Method return value
@@ -86,7 +86,8 @@ public class IntegrationLayerAspect {
     }
 
     /**
-     * Called after an exception is thrown by classes of the integration layer. <p> Set log level to ERROR to log the root cause. </p>
+     * Called after an exception is thrown by classes of the integration layer. <p> Set log level to ERROR to log the
+     * root cause. </p>
      *
      * @param ex The root exception that is thrown
      * @return Returns the exception to be thrown
