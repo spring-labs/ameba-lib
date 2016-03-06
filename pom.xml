@@ -14,10 +14,6 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-    <organization>
-        <name>Abraxas Informatik AG</name>
-        <url>http://www.abraxas.ch</url>
-    </organization>
     <developers>
         <developer>
             <id>openwms</id>
