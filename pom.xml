@@ -41,6 +41,7 @@
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
         <jackson-annotations.version>2.4.0</jackson-annotations.version>
         <spring.version>4.2.3.RELEASE</spring.version>
+        <spring.security.version>4.0.4.RELEASE</spring.security.version>
         <spring-hateoas.version>0.17.0.RELEASE</spring-hateoas.version>
         <validation-api.version>1.0.0.GA</validation-api.version>
 
@@ -132,6 +133,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <scope>provided</scope>
@@ -183,6 +189,11 @@
                 <groupId>org.springframework.hateoas</groupId>
                 <artifactId>spring-hateoas</artifactId>
                 <version>${spring-hateoas.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-config</artifactId>
+                <version>${spring.security.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
