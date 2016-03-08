@@ -15,15 +15,15 @@
  */
 package org.ameba.http;
 
+import org.ameba.Constants;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import org.ameba.Constants;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * A AbstractTenantAwareFilter is a super class that handles resolution and validation of the current tenant from the

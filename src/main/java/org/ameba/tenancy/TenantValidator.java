@@ -20,7 +20,7 @@ package org.ameba.tenancy;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @since 1.1
+ * @since 1.3
  */
 public interface TenantValidator {
 
