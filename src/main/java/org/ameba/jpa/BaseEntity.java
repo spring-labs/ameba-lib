@@ -20,11 +20,11 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
 /**
- * A BaseEntity.
+ * A BaseEntity is a base superclass for JPA entities that comes with a mandatory ID field and a optimistic locking field.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @since 1.0
+ * @since 1.4
  */
 @MappedSuperclass
 public class BaseEntity {
@@ -36,6 +36,7 @@ public class BaseEntity {
     @Version
     private long ol;
 
+    /** Dear JPA ... */
     protected BaseEntity(){};
 
     /**
