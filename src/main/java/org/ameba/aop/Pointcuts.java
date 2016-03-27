@@ -18,10 +18,11 @@ package org.ameba.aop;
 import org.aspectj.lang.annotation.Pointcut;
 
 /**
- * A Pointcuts.
+ * A Pointcuts class encapsulates AOP pointcut definitions that are specific to the application architecture. Because pointcuts can not be
+ * extended, they must be patched by projects by putting the same class on the projects classpath.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  */
 public class Pointcuts extends SpringPointcuts {
@@ -30,20 +31,23 @@ public class Pointcuts extends SpringPointcuts {
      * Override this method with your custom pointcut definition.
      */
     @Pointcut("isRestController()")
-    public void presentationPointcut() {
+    public final void presentationPointcut() {
+        // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
     /**
      * Override this method with your custom pointcut definition.
      */
     @Pointcut("isService() || isTransactionalService()")
-    public void servicePointcut() {
+    public final void servicePointcut() {
+        // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
     /**
      * Override this method with your custom pointcut definition.
      */
     @Pointcut("isRepository()")
-    public void integrationPointcut() {
+    public final void integrationPointcut() {
+        // intended to kept empty because it is just the definition of the AOP pointcut
     }
 }
