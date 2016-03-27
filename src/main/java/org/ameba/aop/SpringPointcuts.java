@@ -18,10 +18,10 @@ package org.ameba.aop;
 import org.aspectj.lang.annotation.Pointcut;
 
 /**
- * A SpringPointcuts.
+ * A SpringPointcuts class encapsulates AOP pointcut definitions that are specific to Spring's stereotype annotations.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  */
 class SpringPointcuts {
@@ -31,20 +31,23 @@ class SpringPointcuts {
      */
     @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
     public final void isRestController() {
+        // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
     /**
      * Matches {@link org.springframework.stereotype.Service Service} annotations.
      */
     @Pointcut("@within(org.springframework.stereotype.Service)")
-    public void isService() {
+    public final void isService() {
+        // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
     /**
      * Matches {@link org.ameba.annotation.TxService TxService} annotations.
      */
     @Pointcut("@within(org.ameba.annotation.TxService)")
-    public void isTransactionalService() {
+    public final void isTransactionalService() {
+        // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
     /**
@@ -52,5 +55,6 @@ class SpringPointcuts {
      */
     @Pointcut("@within(org.springframework.stereotype.Repository)")
     public final void isRepository() {
+        // intended to kept empty because it is just the definition of the AOP pointcut
     }
 }
