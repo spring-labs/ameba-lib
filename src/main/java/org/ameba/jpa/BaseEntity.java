@@ -23,7 +23,7 @@ import javax.persistence.Version;
  * A BaseEntity is a base superclass for JPA entities that comes with a mandatory ID field and a optimistic locking field.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
+ * @version 1.1
  * @since 1.4
  */
 @MappedSuperclass
@@ -55,5 +55,14 @@ public class BaseEntity {
      */
     public Long getId() {
         return id;
+    }
+
+    /**
+     * Get the current optimistic locking version number.
+     *
+     * @return The number of the optimistic locking field
+     */
+    protected long getOl() {
+        return ol;
     }
 }
