@@ -15,6 +15,8 @@
  */
 package org.ameba.aop;
 
+import java.util.Optional;
+
 import org.ameba.LoggingCategories;
 import org.ameba.exception.AbstractBehaviorAwareException;
 import org.ameba.exception.IntegrationLayerException;
@@ -27,8 +29,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.util.StopWatch;
-
-import java.util.Optional;
 
 /**
  * An IntegrationLayerAspect is used to measure time consumption of method calls in the integration layer.
@@ -60,7 +60,7 @@ public class IntegrationLayerAspect {
      *     <li>Set log level of {@link LoggingCategories#INTEGRATION_LAYER_EXCEPTION} to ERROR to enable exception
      * logging.
      * </ul>
-     *
+     * </p>
      * @param pjp The joinpoint
      * @return Method return value
      * @throws Throwable in case of errors
