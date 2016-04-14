@@ -15,6 +15,8 @@
  */
 package org.ameba.aop;
 
+import java.util.Optional;
+
 import org.ameba.LoggingCategories;
 import org.ameba.exception.AbstractBehaviorAwareException;
 import org.ameba.exception.ServiceLayerException;
@@ -24,8 +26,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
-
-import java.util.Optional;
 
 /**
  * A ServiceLayerAspect is spawned around all public API methods and is responsible to log method execution time and log occurring
@@ -57,7 +57,7 @@ public class ServiceLayerAspect {
      *     <li> Set log level of {@link LoggingCategories#SERVICE_LAYER_ACCESS} to INFO to enable method tracing.
      *     <li>Set log level of {@link LoggingCategories#SERVICE_LAYER_EXCEPTION} to ERROR to enable exception logging.
      * </ul>
-     *
+     * </p>
      * @param pjp The joinpoint
      * @return Method return value
      * @throws Throwable in case of errors
