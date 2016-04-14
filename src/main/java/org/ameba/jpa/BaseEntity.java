@@ -16,6 +16,8 @@
 package org.ameba.jpa;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
@@ -24,7 +26,7 @@ import javax.persistence.Version;
  * A BaseEntity is a base superclass for JPA entities that comes with a mandatory ID field and a optimistic locking field.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.2
+ * @version 1.3
  * @since 1.4
  */
 @MappedSuperclass
@@ -33,6 +35,7 @@ public class BaseEntity {
     /** Persistent key, synonym for technical key or primary key. */
     @Id
     @Column(name = "C_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     /** Optimistic locking field (Property name {@code version} might be used differently). */
     @Version
