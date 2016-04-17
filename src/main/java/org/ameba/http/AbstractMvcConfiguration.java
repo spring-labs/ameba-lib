@@ -31,7 +31,7 @@ import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
- * @since 1.0
+ * @since 1.4.1
  */
 public abstract class AbstractMvcConfiguration extends WebMvcConfigurerAdapter {
 

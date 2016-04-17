@@ -35,8 +35,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
  * <pre>
  *
  *	public
- *	@Profile(SpringProfiles.DEVELOPMENT_PROFILE)
- *  @Bean
+ *	&#064;Profile(SpringProfiles.DEVELOPMENT_PROFILE)
+ *  &#064;Bean
  *  Filter corsFiler() {
  *      return new CorsFilter(new PermitAllCorsConfigurationSource());
  *  }
@@ -57,7 +57,7 @@ public class PermitAllCorsConfigurationSource implements CorsConfigurationSource
     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.addAllowedMethod("GET, POST, PUT, DELETE, OPTIONS");
+        corsConfiguration.addAllowedMethod("GET, POST, PUT, PATCH, DELETE");
         corsConfiguration.addAllowedHeader("Content-Type");
         corsConfiguration.setMaxAge(1800L);
         return corsConfiguration;
