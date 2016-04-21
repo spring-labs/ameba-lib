@@ -15,6 +15,8 @@
  */
 package org.ameba.http;
 
+import static java.util.Arrays.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.cors.CorsConfiguration;
@@ -57,7 +59,7 @@ public class PermitAllCorsConfigurationSource implements CorsConfigurationSource
     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.addAllowedMethod("GET, POST, PUT, PATCH, DELETE, OPTIONS");
+        corsConfiguration.setAllowedMethods(asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         corsConfiguration.addAllowedHeader("Content-Type");
         corsConfiguration.addAllowedHeader("X-REQUESTED-WITH");
         corsConfiguration.setMaxAge(1800L);
