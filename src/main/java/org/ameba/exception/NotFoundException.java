@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @see org.springframework.http.HttpStatus#NOT_FOUND
  */
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class NotFoundException extends AbstractBehaviorAwareException {
+public class NotFoundException extends BehaviorAwareException {
 
 	/**
 	 * Preset the message to {@link Messages#NOT_FOUND}.
@@ -45,6 +45,16 @@ public class NotFoundException extends AbstractBehaviorAwareException {
      */
     public NotFoundException(String message, String msgKey) {
 		super(message, msgKey);
+	}
+
+	/**
+	 * Create a generic NotFoundException with an arbitrary message.
+	 *
+	 * @param message Some message text
+	 * @return The instance
+	 */
+	public static NotFoundException createNotFound(String message) {
+		return new NotFoundException(message, Messages.NOT_FOUND);
 	}
 
 	/**

@@ -18,7 +18,7 @@ package org.ameba.aop;
 import java.util.Optional;
 
 import org.ameba.LoggingCategories;
-import org.ameba.exception.AbstractBehaviorAwareException;
+import org.ameba.exception.BehaviorAwareException;
 import org.ameba.exception.ServiceLayerException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -94,7 +94,7 @@ public class ServiceLayerAspect {
             EXC_LOGGER.error("[S] Service Layer Exception: " + ex.getLocalizedMessage(), ex);
         }
 
-        if (ex instanceof AbstractBehaviorAwareException) {
+        if (ex instanceof BehaviorAwareException) {
             return ex;
         }
 
