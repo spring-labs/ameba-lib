@@ -18,7 +18,7 @@ package org.ameba.aop;
 import java.util.Optional;
 
 import org.ameba.LoggingCategories;
-import org.ameba.exception.AbstractBehaviorAwareException;
+import org.ameba.exception.BehaviorAwareException;
 import org.ameba.exception.IntegrationLayerException;
 import org.ameba.exception.ResourceExistsException;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -97,7 +97,7 @@ public class IntegrationLayerAspect {
             EXC_LOGGER.error("[I] Integration Layer Exception: " + ex.getLocalizedMessage(), ex);
         }
 
-        if (ex instanceof AbstractBehaviorAwareException) {
+        if (ex instanceof BehaviorAwareException) {
             return ex;
         }
 

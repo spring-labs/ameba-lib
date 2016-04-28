@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @see org.springframework.http.HttpStatus#CONFLICT
  */
 @ResponseStatus(HttpStatus.CONFLICT)
-public class ResourceChangedException extends AbstractBehaviorAwareException {
+public class ResourceChangedException extends BehaviorAwareException {
 
 	/**
 	 * Preset the message to {@link Messages#RESOURCE_CHANGED_UNEXPECTEDLY}.

@@ -22,33 +22,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /**
- * A AbstractBehaviorAwareException is used to group exceptions that express a kind of behavior, like 'an entity to look
+ * A BehaviorAwareException is used to group exceptions that express a kind of behavior, like 'an entity to look
  * up was not found'.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.3
  * @since 0.2
  */
-public abstract class AbstractBehaviorAwareException extends BusinessRuntimeException {
+public abstract class BehaviorAwareException extends BusinessRuntimeException {
 
     /**
      * {@inheritDoc}
      */
-	protected AbstractBehaviorAwareException() {
+	protected BehaviorAwareException() {
 		super();
     }
 
     /**
      * {@inheritDoc}
      */
-    public AbstractBehaviorAwareException(String message) {
+    public BehaviorAwareException(String message) {
         super(message);
     }
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public AbstractBehaviorAwareException(String message, String msgKey) {
+	public BehaviorAwareException(String message, String msgKey) {
 		super(message, msgKey);
 	}
 

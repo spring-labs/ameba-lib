@@ -22,15 +22,19 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+import org.ameba.integration.TypedEntity;
+
 /**
  * A BaseEntity is a base superclass for JPA entities that comes with a mandatory ID field and a optimistic locking field.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.3
+ * @version 1.4
  * @since 1.4
+ * @deprecated Move class to ../integration/jpa
  */
+@Deprecated
 @MappedSuperclass
-public class BaseEntity {
+public class BaseEntity implements TypedEntity<Long> {
 
     /** Persistent key, synonym for technical key or primary key. */
     @Id

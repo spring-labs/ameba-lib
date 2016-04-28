@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @see org.springframework.http.HttpStatus#CONFLICT
  */
 @ResponseStatus(HttpStatus.CONFLICT)
-public class ResourceExistsException extends AbstractBehaviorAwareException {
+public class ResourceExistsException extends BehaviorAwareException {
 
 	/**
 	 * Preset the message to {@link Messages#ALREADY_EXISTS}.
