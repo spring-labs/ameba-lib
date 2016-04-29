@@ -22,32 +22,26 @@ import org.aspectj.lang.annotation.Pointcut;
  * extended, they must be patched by projects by putting the same class on the projects classpath.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.1
+ * @version 1.2
  * @since 1.0
  */
 public class Pointcuts extends SpringPointcuts {
 
-    /**
-     * Override this method with your custom pointcut definition.
-     */
+    /** Override this method with your custom pointcut definition. */
     @Pointcut("isRestController()")
-    public final void presentationPointcut() {
+    public void presentationPointcut() {
         // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
-    /**
-     * Override this method with your custom pointcut definition.
-     */
+    /** Override this method with your custom pointcut definition. */
     @Pointcut("isService() || isTransactionalService()")
-    public final void servicePointcut() {
+    public void servicePointcut() {
         // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
-    /**
-     * Override this method with your custom pointcut definition.
-     */
+    /** Override this method with your custom pointcut definition. */
     @Pointcut("isRepository()")
-    public final void integrationPointcut() {
+    public void integrationPointcut() {
         // intended to kept empty because it is just the definition of the AOP pointcut
     }
 }
