@@ -30,7 +30,7 @@ class SpringPointcuts {
      * Checks for {@link org.springframework.web.bind.annotation.RestController RestController} annotations.
      */
     @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
-    public final void isRestController() {
+    public void isRestController() {
         // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
@@ -38,7 +38,7 @@ class SpringPointcuts {
      * Matches {@link org.springframework.stereotype.Service Service} annotations.
      */
     @Pointcut("@within(org.springframework.stereotype.Service)")
-    public final void isService() {
+    public void isService() {
         // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
@@ -46,7 +46,7 @@ class SpringPointcuts {
      * Matches {@link org.ameba.annotation.TxService TxService} annotations.
      */
     @Pointcut("@within(org.ameba.annotation.TxService)")
-    public final void isTransactionalService() {
+    public void isTransactionalService() {
         // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
@@ -54,7 +54,7 @@ class SpringPointcuts {
      * Matches {@link org.springframework.stereotype.Repository Repository} annotations.
      */
     @Pointcut("@within(org.springframework.stereotype.Repository)")
-    public final void isRepository() {
+    public void isRepository() {
         // intended to kept empty because it is just the definition of the AOP pointcut
     }
 }
