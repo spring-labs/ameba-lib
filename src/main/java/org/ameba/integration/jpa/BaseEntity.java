@@ -13,26 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.jpa;
+package org.ameba.integration.jpa;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
+import java.util.Date;
 
 import org.ameba.integration.TypedEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 /**
  * A BaseEntity is a base superclass for JPA entities that comes with a mandatory ID field and a optimistic locking field.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.4
+ * @version 1.5
  * @since 1.4
- * @deprecated Move class to ../integration/jpa
  */
-@Deprecated
 @MappedSuperclass
 public class BaseEntity implements TypedEntity<Long> {
 
@@ -41,13 +44,23 @@ public class BaseEntity implements TypedEntity<Long> {
     @Column(name = "C_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    /** Optimistic locking field (Property name {@code version} might be used differently). */
+    /** Optimistic locking field (Property name {@code version} might be used differently2). */
     @Version
     @Column(name = "C_OL")
     private long ol;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "C_CREATED")
+    @CreatedDate
+    private Date createDt;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "C_UPDATED")
+    @LastModifiedDate
+    private Date lastModifiedDt;
+
     /** Dear JPA ... */
-    protected BaseEntity(){};
+    protected BaseEntity(){}
 
     /**
      * Checks whether this entity is a transient one or not.
@@ -74,5 +87,23 @@ public class BaseEntity implements TypedEntity<Long> {
      */
     protected long getOl() {
         return ol;
+    }
+
+    /**
+     * Get the date when the entity was persisted.
+     *
+     * @return creation date
+     */
+    public Date getCreateDt() {
+        return createDt;
+    }
+
+    /**
+     * Get the date when the entity was modified.
+     *
+     * @return last modified date
+     */
+    public Date getLastModifiedDt() {
+        return lastModifiedDt;
     }
 }
