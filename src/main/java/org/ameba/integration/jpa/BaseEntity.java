@@ -30,21 +30,23 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 /**
- * A BaseEntity is a base superclass for JPA entities that comes with a mandatory ID field and a optimistic locking field.
+ * A BaseEntity is a base superclass for JPA entities that comes with a mandatory primary key field, an application assign id and an
+ * optimistic locking field.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.5
+ * @version 1.7
  * @since 1.4
  */
 @MappedSuperclass
 public class BaseEntity implements TypedEntity<Long> {
 
-    /** Persistent key, synonym for technical key or primary key. */
+    /** Primary key, assigned by the underlying database or persistence strategy, shouldn't be used on API level. */
     @Id
-    @Column(name = "C_ID")
+    @Column(name = "C_PK")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    /** Optimistic locking field (Property name {@code version} might be used differently2). */
+    private Long pk;
+
+    /** Optimistic locking field (Property name {@code version} might be used differently, hence lets call it {@code ol}). */
     @Version
     @Column(name = "C_OL")
     private long ol;
@@ -60,7 +62,8 @@ public class BaseEntity implements TypedEntity<Long> {
     private Date lastModifiedDt;
 
     /** Dear JPA ... */
-    protected BaseEntity(){}
+    protected BaseEntity() {
+    }
 
     /**
      * Checks whether this entity is a transient one or not.
@@ -68,16 +71,16 @@ public class BaseEntity implements TypedEntity<Long> {
      * @return {@literal true} if transient, {@literal false} if detached or managed but not transient
      */
     public boolean isNew() {
-        return id != null;
+        return pk != null;
     }
 
     /**
-     * Get the persistent key.
+     * Get the primary key value.
      *
-     * @return The id property
+     * @return The primary key, may be {@literal null} for transient entities.
      */
-    public Long getId() {
-        return id;
+    public Long getPk() {
+        return pk;
     }
 
     /**
