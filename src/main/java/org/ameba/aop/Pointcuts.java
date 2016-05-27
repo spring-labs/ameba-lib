@@ -44,4 +44,10 @@ public class Pointcuts extends SpringPointcuts {
     public void integrationPointcut() {
         // intended to kept empty because it is just the definition of the AOP pointcut
     }
+
+    /** Map classes with Validated. */
+    @Pointcut("@within(org.springframework.validation.annotation.Validated)")
+    public void isValidated() {
+
+    }
 }
