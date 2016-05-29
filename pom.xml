@@ -48,7 +48,9 @@
         <validation-api.version>1.1.0.Final</validation-api.version> <!-- in line with platform 2.0.0.RELEASE -->
         <additionalparam>-Xdoclint:none</additionalparam>
         <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-        <maven-release-plugin.version>2.5</maven-release-plugin.version>
+        <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
+        <maven-source-plugin.version>3.0.0</maven-source-plugin.version>
     </properties>
 
     <profiles>
@@ -63,6 +65,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-source-plugin</artifactId>
+                        <version>${maven-source-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -74,6 +77,7 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
