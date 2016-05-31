@@ -15,6 +15,8 @@
  */
 package org.ameba.integration.jpa;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.ameba.IntegrationTestConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +45,11 @@ public class BaseEntityTest {
 
     @Test
     public void testIsNew() throws Exception {
-        em.persistAndGetId(new TestEntity());
+        TestEntity te = new TestEntity();
+        assertThat(te.isNew()).isTrue();
+        te = em.persist(te);
+        assertThat(te.isNew()).isFalse();
+
 
     }
 
