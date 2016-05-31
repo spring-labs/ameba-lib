@@ -49,13 +49,12 @@ public class BaseEntityTest {
         assertThat(te.isNew()).isTrue();
         te = em.persist(te);
         assertThat(te.isNew()).isFalse();
-
-
     }
 
     @Test
     public void testGetPk() throws Exception {
-
+        assertThat(new TestEntity().getPk()).isNull();
+        assertThat(em.persist(new TestEntity()).getPk()).isNotNull();
     }
 
     @Test
