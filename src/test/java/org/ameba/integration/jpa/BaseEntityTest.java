@@ -59,16 +59,20 @@ public class BaseEntityTest {
 
     @Test
     public void testGetOl() throws Exception {
-
+        assertThat(new TestEntity().getPk()).isNull();
+        assertThat(em.persist(new TestEntity()).getOl()).isNotNull();
     }
-
+/*
     @Test
     public void testGetCreateDt() throws Exception {
-
+        assertThat(new TestEntity().getPk()).isNull();
+        assertThat(em.persist(new TestEntity()).getCreateDt()).isNotNull();
     }
 
     @Test
     public void testGetLastModifiedDt() throws Exception {
-
+        assertThat(new TestEntity().getPk()).isNull();
+        assertThat(em.persist(new TestEntity()).getLastModifiedDt()).isNotNull();
     }
+*/
 }
