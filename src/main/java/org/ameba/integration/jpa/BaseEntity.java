@@ -73,7 +73,7 @@ public class BaseEntity implements TypedEntity<Long> {
      * @return {@literal true} if transient, {@literal false} if detached or managed but not transient
      */
     public boolean isNew() {
-        return pk != null;
+        return pk == null;
     }
 
     /**
