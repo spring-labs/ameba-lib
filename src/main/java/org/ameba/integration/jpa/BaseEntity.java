@@ -51,11 +51,13 @@ public class BaseEntity implements TypedEntity<Long> {
     @Column(name = "C_OL")
     private long ol;
 
+    /** Timestamp when the database record was inserted. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_CREATED")
     @CreatedDate
     private Date createDt;
 
+    /** Timestamp when the database record was updated the last time. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_UPDATED")
     @LastModifiedDate
