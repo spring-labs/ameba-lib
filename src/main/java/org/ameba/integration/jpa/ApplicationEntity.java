@@ -16,16 +16,20 @@
 package org.ameba.integration.jpa;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.UUID;
 
 /**
  * An ApplicationEntity adds a secondary key column that is an application assigned key that remains the same after database migrations.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
+ * @version 1.2
  * @since 1.6
  */
+@MappedSuperclass
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {ApplicationEntity.C_ID})})
 public class ApplicationEntity extends BaseEntity {
 
@@ -36,14 +40,19 @@ public class ApplicationEntity extends BaseEntity {
      * subclasses to defines those, if required.
      */
     @Column(name = ApplicationEntity.C_ID)
-    private Long id;
+    private String id;
 
     /**
      * Get the persistent key.
      *
      * @return The id property
      */
-    public Long getId() {
+    public String getId() {
         return id;
+    }
+
+    @PrePersist
+    public void onPersist() {
+        this.id = UUID.randomUUID().toString();
     }
 }

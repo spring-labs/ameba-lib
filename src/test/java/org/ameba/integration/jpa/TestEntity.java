@@ -26,7 +26,7 @@ import javax.persistence.Entity;
  * @since 1.6
  */
 @Entity
-class TestEntity extends BaseEntity {
+class TestEntity extends ApplicationEntity {
 
     @Basic
     private int i = 0;
