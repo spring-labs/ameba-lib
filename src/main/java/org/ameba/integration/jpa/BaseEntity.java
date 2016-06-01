@@ -16,6 +16,7 @@
 package org.ameba.integration.jpa;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +29,7 @@ import java.util.Date;
 import org.ameba.integration.TypedEntity;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * A BaseEntity is a base superclass for JPA entities that comes with a mandatory primary key field, an application assign id and an
@@ -38,6 +40,7 @@ import org.springframework.data.annotation.LastModifiedDate;
  * @since 1.4
  */
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public class BaseEntity implements TypedEntity<Long> {
 
     /** Primary key, assigned by the underlying database or persistence strategy, shouldn't be used on API level. */
