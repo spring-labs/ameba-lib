@@ -46,8 +46,17 @@ public class ApplicationEntityTest {
     @Test
     public void testID() throws Exception {
         TestEntity te = new TestEntity();
-        assertThat(te.getId()).isNull();
+        assertThat(te.getPersistentKey()).isNull();
         te = em.persist(te);
-        assertThat(te.getId()).isNotNull();
+        assertThat(te.getPersistentKey()).isNotNull();
+    }
+
+    @Test
+    public void testNonUnique() throws Exception {
+        TestEntity te1 = new TestApplicationEntity();
+        TestEntity te2 = new TestApplicationEntity();
+        te1 = em.persist(te1);
+        te2 = em.persist(te2);
+        assertThat(te1.getPersistentKey()).isEqualTo(te2.getPersistentKey());
     }
 }
