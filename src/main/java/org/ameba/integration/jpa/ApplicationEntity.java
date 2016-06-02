@@ -23,10 +23,11 @@ import javax.persistence.UniqueConstraint;
 import java.util.UUID;
 
 /**
- * An ApplicationEntity adds a secondary key column that is an application assigned key that remains the same after database migrations.
+ * An ApplicationEntity adds a secondary key column that is an application assigned key that remains the same after database migrations. An
+ * unique not-null constraint is placed on the column.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.2
+ * @version 1.0
  * @since 1.6
  */
 @MappedSuperclass
@@ -39,20 +40,32 @@ public class ApplicationEntity extends BaseEntity {
      * database migrations. An unique constraint or limitation to not-null is explicitly not defined here, because it is a matter of
      * subclasses to defines those, if required.
      */
-    @Column(name = ApplicationEntity.C_ID)
-    private String id;
+    @Column(name = ApplicationEntity.C_ID, nullable = false)
+    private String pKey;
 
     /**
      * Get the persistent key.
      *
-     * @return The id property
+     * @return The persistent key
      */
-    public String getId() {
-        return id;
+    public String getPersistentKey() {
+        return pKey;
     }
 
+    /**
+     * Set the persistent key from a subclass.
+     *
+     * @param pKey The persistent key to set
+     */
+    protected void setPersistentKey(String pKey) {
+        this.pKey = pKey;
+    }
+
+    /**
+     * JPA lifecycle method sets a random UUID before insertion.
+     */
     @PrePersist
-    public void onPersist() {
-        this.id = UUID.randomUUID().toString();
+    void onPersist() {
+        this.pKey = UUID.randomUUID().toString();
     }
 }
