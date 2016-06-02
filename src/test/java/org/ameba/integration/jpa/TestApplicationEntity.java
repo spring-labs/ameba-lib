@@ -15,26 +15,23 @@
  */
 package org.ameba.integration.jpa;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 
 /**
- * A TestEntity.
+ * A TestApplicationEntity.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.6
  */
 @Entity
-class TestEntity extends ApplicationEntity {
+class TestApplicationEntity extends TestEntity {
 
-    @Basic
-    private int i = 0;
-
-    public TestEntity() {
-    }
-
-    public void inc() {
-        i++;
+    /**
+     * JPA lifecycle method to set a random UUID before insertion.
+     */
+    @Override
+    void onPersist() {
+        setPersistentKey("1");
     }
 }
