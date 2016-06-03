@@ -39,7 +39,7 @@ TBD.
 
 TBD.
 
-### SMulti-tenancy
+### Multi-tenancy
 
 TBD.
 
@@ -52,6 +52,7 @@ TBD.
   - All Java types must provide a meaningful Javadoc comment with the initial author (`@author`), the version of ameba when the type was
     introduced (`@since`) and a manually managed type version (`@version`). The first sentence in Javadoc is used as headline and needs to
     be a short but meaningful description of the type class.
+
  ````
  /**
   * A SecurityConfigurers class is a collector of interfaces that provides a configuration option for security related topics.
@@ -61,6 +62,7 @@ TBD.
   * @since 1.4
   */
  ````
+
   - Public API methods have to be documented
 
 ## How to release
