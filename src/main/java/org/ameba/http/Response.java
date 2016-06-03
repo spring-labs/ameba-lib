@@ -37,8 +37,6 @@ import org.springframework.hateoas.ResourceSupport;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Response<T extends Serializable> extends ResourceSupport implements Serializable {
 
-    private static final long serialVersionUID = -73613607195853087L;
-
     /**
      * Shortcut if the server responds with only one item.
      */

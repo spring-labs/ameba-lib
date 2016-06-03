@@ -55,7 +55,17 @@ Referenced issues: [#1](https://github.com/abraxas-labs/ameba-lib/issues/1), [#2
 
 ### Web & MVC extensions
 
-TBD.
+Usually you expose resources RESTful. But in practise we've seen that a client application, written in a language like Objective-C, needs
+some help with the actual response type of a RESTful API. Of course we have HATEOS and HAL but on the other end of the wire, the client
+need to know what is the expected type of response? That's why we put the resource into an _envelope_ the `org.ameba.http.Response`. Beside
+the actual response(s), this class tracks a http status for each wrapped response object, has a message text and key for all and provides an
+arbitrary string dictionary that can be used to encode the repsonse type.
+
+A server using ameba-lib may respond with:
+
+```
+
+```
 
 ### Mapper abstraction
 
