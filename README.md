@@ -44,7 +44,7 @@ For method tracing the SLF4J loglevel has to be configured to `INFO`, exception 
 ### Common exception classes (0.2+)
 
  Exception classes we have used over and over again in projects were re-implemented in ameba-lib. All of them encapsulate a message key that
- can be used to translate the actual message text. Some kind of exceptions have a technical nature, whereas other exceptions express a
+ can be used to translate the actual message text. Some kind of exceptions are of technical nature, whereas other exceptions express a
  behavior.
 
 ![Exception hierarchy][4]
