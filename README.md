@@ -5,7 +5,8 @@
 [![Quality][codacy-image]][codacy-url]
 [![Gitter][gitter-image]][gitter-url]
 
-Ameba Lib is a collection of utils, exceptions, constants and other helpers used across projects and solutions. All dependencies are defined as Maven `provided` scope to cut transitive dependencies.
+Ameba Lib is a collection of utils, exceptions, constants and other helpers used across projects and solutions. All dependencies are defined
+in Maven `provided` scope to cut transitive dependencies.
 
 ## Core Features
 
@@ -16,6 +17,31 @@ Ameba Lib is a collection of utils, exceptions, constants and other helpers used
 - Mapper abstraction
 - Multi-tenancy
 
+### Spring Data extensions
+
+Since version 1.4+ Ameba provides base classes for JPA entities ([#69][2]) as well as for Spring Data MongoDB entity classes ([#79][3]).
+These common used types provide unique key definitions, version fields and timestamp fields to store creation and modified date. An
+additional feature is the abstraction of Spring Data repositories.
+
+### Useful AOP aspects
+
+TBD.
+
+### Common exception classes
+
+TBD.
+
+### Web & MVC extensions
+
+TBD.
+
+### Mapper abstraction
+
+TBD.
+
+### SMulti-tenancy
+
+TBD.
 
 ## Development process
 
@@ -23,19 +49,19 @@ Ameba Lib is a collection of utils, exceptions, constants and other helpers used
  follow:
 
   - All Java files must have the Apache License header on top
-  - All Java types must provide a meaningful Javadoc comment with the initial author (`@author`), version of ameba since when this type
-    exists (`@since`) and a manually managed type version (`@version`)
-  - Public API must documented
-
+  - All Java types must provide a meaningful Javadoc comment with the initial author (`@author`), the version of ameba when the type was
+    introduced (`@since`) and a manually managed type version (`@version`). The first sentence in Javadoc is used as headline and needs to
+    be a short but meaningful description of the type class.
  ````
  /**
-  * A SecurityConfigurers class is a collector of interfaces that provide a configuration option for security related topics.
+  * A SecurityConfigurers class is a collector of interfaces that provides a configuration option for security related topics.
   *
   * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
   * @version 1.1
   * @since 1.4
   */
  ````
+  - Public API methods have to be documented
 
 ## How to release
 
@@ -53,13 +79,16 @@ Ameba Lib is a collection of utils, exceptions, constants and other helpers used
 
  Follow these naming conventions:
 
-  - A release version should follow the MM(P)(E) pattern: <Mayor>.<Minor>(.<Patch>)(-<Extension>)
+  - A release version should follow the MM(P)(E) pattern: <Mayor>.<Minor>(.<Patch>)(-<Extension>)`
+
   Mayor, Minor and Patch are increasing numbers and follow the rules of [Apache ARP release strategy][1]. The patch version number is only
-  applied if the release is really a bug fix release of a feature version. An extensions may be applied for release candidates of milestone
-  releases, i.e. `-RC1` or `-M1`
+  applied if the release is a bug fix release of a feature version. An Extension may be applied for release candidates or milestone
+  releases, e.g. `-RC1` or `-M1`
 
 
  [1]: https://apr.apache.org/versioning.html#strategy
+ [2]: https://github.com/abraxas-labs/ameba-lib/issues/69
+ [3]: https://github.com/abraxas-labs/ameba-lib/issues/79
 
 [travis-image]: https://img.shields.io/travis/abraxas-labs/ameba-lib.svg?style=flat-square
 [travis-url]: https://travis-ci.org/abraxas-labs/ameba-lib
