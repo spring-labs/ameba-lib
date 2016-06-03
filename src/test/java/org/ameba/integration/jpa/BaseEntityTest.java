@@ -18,6 +18,7 @@ package org.ameba.integration.jpa;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.ameba.IntegrationTestConfig;
+import org.ameba.app.BaseConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ContextConfiguration(classes = IntegrationTestConfig.class)
-@ComponentScan(basePackageClasses = BaseEntityTest.class)
+@ComponentScan(basePackageClasses = {BaseEntityTest.class, BaseConfiguration.class})
 public class BaseEntityTest {
 
     @Autowired
