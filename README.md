@@ -85,16 +85,31 @@ The client application may first read the status code of the http response, then
 type of response entity (e.g. `"class" : "User"`. With the information of the response entity the client can then select the
 appropriate converter to convert from JSON into the correct client specific class. A similar concept is described by XXX
 
-Beside the response encapsulation ameba-lib provides an abstract base class, that provides HATEOS and Jackson support (org.ameba.http.AbstractBase`).
+Beside the response encapsulation ameba-lib provides an abstract base class, that provides HATEOS and Jackson support (`org.ameba.http.AbstractBase`).
 Some filter implementations for multi-tenancy and SLF4J context propagation are provided as well.
 
-### Mapper abstraction
+### Mapper abstraction (0.7+)
 
-TBD.
+In first place we use [Dozer](http://dozer.sourceforge.net) as mapping library. But this dependency is optional, and other mapper libraries can be used as well. A common
+interface is defined were client applications can rely on. This is a Java 5 generic interface that makes it easy to map at compile time.
+Why we need to map at all in Java is a different discussion. Since version 0.7 a `org.ameba.mapping.BeanMapper` interface is provided to
+applications that need to map object structures. Since the same version the `org.ameba.mapping.DozerMapperImpl` and several Dozer converters
+exist. We'd a look at several other Java mapping frameworks and have chosen the one with no compile time dependencies - just in a
+declarative way - thers than Dozer use Java annotations for example.
 
 ### Multi-tenancy
 
-TBD.
+Multi-tenancy support requires at first determination of the current tenant and afterwards actions, mostly on persistent data, that need to
+be taken depending on the tenant.
+
+Determination of the tenant can be realized using a web filter `org.ameba.http.MultiTenantSessionFilter` (1.0+). This filter tries to get
+a http header attribute called `X-Tenant` or `Tenant` and stores it in a threadlocal variable. On business- or integration layer this context
+information is used to separate log files or to separate between databases, database schemas or database tables (up to the specific solution).
+Have a look at the [tenancy sample](https://github.com/spring-labs/tenancy-sample) to understand how this works on database level. Separating
+the log files is special. Ameba-lib uses SLF4J to abstract from the underlying logging framework. In case context-aware data (like the
+tenant name) needs to be populated down to the underlying logging library, SLF4J make it easy to work with [Logback](http://logback.qos.ch/).
+SLF4J smoothly populates the logback context with its own context. If you're using other frameworks, like Log4j you need to implememt a
+custom _Context Populator_ that ready the SLF4J MDS/NDC and popultes the log4j MDC/NDC properly.
 
 ## Development process
 
