@@ -97,7 +97,7 @@ applications that need to map object structures. Since the same version the `org
 exist. We'd a look at several other Java mapping frameworks and have chosen the one with no compile time dependencies - just in a
 declarative way - thers than Dozer use Java annotations for example.
 
-### Multi-tenancy
+### Multi-tenancy (1.0+)
 
 Multi-tenancy support requires at first determination of the current tenant and afterwards actions, mostly on persistent data, that need to
 be taken depending on the tenant.
