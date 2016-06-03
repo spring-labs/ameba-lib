@@ -17,16 +17,20 @@ package org.ameba.app;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 /**
- * A BaseConfiguration.
+ * A BaseConfiguration enables auto configuration of Spring Data JPA and MongoDB Auditing and instantiates a JSR-303 ValidatorFactory.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
+ * @version 1.1
+ * @since 1.0
  */
 @Configuration
+@EnableJpaAuditing
+@EnableMongoAuditing
 public class BaseConfiguration {
 
     /**
