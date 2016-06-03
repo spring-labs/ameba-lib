@@ -19,7 +19,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 /**
- * A final SecurityConfigurers class is a collector of interfaces that provide a configuration option for security related topics.
+ * A SecurityConfigurers class is a collector of interfaces that provide a configuration option for security related topics.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.1
