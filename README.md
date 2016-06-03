@@ -49,6 +49,10 @@ For method tracing the SLF4J loglevel has to be configured to `INFO`, exception 
 
 ![Exception hierarchy][4]
 
+Referenced issues: [#1](https://github.com/abraxas-labs/ameba-lib/issues/1), [#2](https://github.com/abraxas-labs/ameba-lib/issues/2),
+[#8](https://github.com/abraxas-labs/ameba-lib/issues/8), [#21](https://github.com/abraxas-labs/ameba-lib/issues/21),
+[#37](https://github.com/abraxas-labs/ameba-lib/issues/37)
+
 ### Web & MVC extensions
 
 TBD.
