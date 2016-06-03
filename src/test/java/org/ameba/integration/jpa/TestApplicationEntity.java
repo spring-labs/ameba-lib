@@ -31,7 +31,7 @@ class TestApplicationEntity extends TestEntity {
      * JPA lifecycle method to set a random UUID before insertion.
      */
     @Override
-    void onPersist() {
+    protected void onPersist() {
         setPersistentKey("1");
     }
 }
