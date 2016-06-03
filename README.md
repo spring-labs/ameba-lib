@@ -81,7 +81,7 @@ TBD.
 
  Follow these naming conventions:
 
-  - A release version should follow the MM(P)(E) pattern: <Mayor>.<Minor>(.<Patch>)(-<Extension>)`
+  - A release version should follow the MM(P)(E) pattern: `<Mayor>.<Minor>(.<Patch>)(-<Extension>)`
 
   Mayor, Minor and Patch are increasing numbers and follow the rules of [Apache ARP release strategy][1]. The patch version number is only
   applied if the release is a bug fix release of a feature version. An Extension may be applied for release candidates or milestone
