@@ -108,8 +108,8 @@ information is used to separate log files or to separate between databases, data
 Have a look at the [tenancy sample](https://github.com/spring-labs/tenancy-sample) to understand how this works on database level. Separating
 the log files is special. Ameba-lib uses SLF4J to abstract from the underlying logging framework. In case context-aware data (like the
 tenant name) needs to be populated down to the underlying logging library, SLF4J make it easy to work with [Logback](http://logback.qos.ch/).
-SLF4J smoothly populates the logback context with its own context. If you're using other frameworks, like Log4j you need to implememt a
-custom _Context Populator_ that ready the SLF4J MDS/NDC and popultes the log4j MDC/NDC properly.
+SLF4J smoothly populates the logback context with its own context. If you're using other frameworks, like Log4j you need to implement a
+custom _Context Populator_ that ready the SLF4J MDC/NDC and populates the log4j MDC/NDC properly.
 
 ## Development process
 
@@ -125,7 +125,7 @@ custom _Context Populator_ that ready the SLF4J MDS/NDC and popultes the log4j M
  /**
   * A SecurityConfigurers class is a collector of interfaces that provides a configuration option for security related topics.
   *
-  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+  * @author <a href="mailto:scherrer@openvms.org">Heiko Scherrer</a>
   * @version 1.1
   * @since 1.4
   */
