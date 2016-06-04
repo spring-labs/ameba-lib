@@ -20,8 +20,8 @@ in Maven `provided` scope to cut transitive dependencies.
 ### Spring Data extensions (1.4+)
 
 Since version 1.4+ Ameba provides base classes for JPA entities ([#69][2]) as well as for Spring Data MongoDB entity classes ([#79][3]).
-These common used types provide unique key definitions, version fields and timestamp fields to store creation and modified date. An
-additional feature is the abstraction of Spring Data repositories.
+These common used types provide unique key definitions, version fields and timestamp fields to store date created and modified. An
+additional feature is the abstraction of Spring Data repositories. All this is put in package `org.ameba.integration`.
 
 ### Useful AOP aspects (1.2+)
 
