@@ -57,10 +57,11 @@ Referenced issues: [#1](https://github.com/abraxas-labs/ameba-lib/issues/1), [#2
 
 Usually you expose resources in a RESTful way. But in practise we've seen that a client application, written in languages like Objective-C, needs
 some help with the actual response type of a RESTful API. Of course we have HATEOS and HAL but on the other end of the wire, the client
-need to know what is the expected type of response. That's why we put the resource into an _envelope_ the `org.ameba.http.Response`. Beside
-the actual response(s), this class tracks a http status for each wrapped response object, has a message text and key for all and provides an
-arbitrary string dictionary that can be used to encode the response type. IOS clients do not have higher level libraries to deal with
-HATEOS responses, often they use [Restkit](https://github.com/RestKit/RestKit) and need to parse the response in a old-fashioned way.
+need to know what is the expected type of response. That's why we put the resource into an _envelope_ - the `org.ameba.http.Response`. Beside
+the actual response entities, this class tracks a http status for each wrapped response object, has a message text and key and provides an
+arbitrary string dictionary that may be used to store the response type. On IOS there is no library to deal with HATEOS responses in a
+comfortable way. Many solutions use [Restkit](https://github.com/RestKit/RestKit) and need to parse the response in a old-fashioned
+low-level way.
 
 A server using ameba-lib may respond with:
 
@@ -82,8 +83,9 @@ A server using ameba-lib may respond with:
 ```
 
 The client application may first read the status code of the http response, then the status code of each response item and then the
-type of response entity (e.g. `"class" : "User"`. With the information of the response entity the client can then select the
-appropriate converter to convert from JSON into the correct client specific class. A similar concept is described by XXX
+type of response entity (e.g. `"class" : "User"`. With this type information the client can then select the
+appropriate converter to convert from JSON into the corresponding client specific class. A similar concept is included in [JSON Siren]
+(https://github.com/kevinswiber/siren).
 
 Beside the response encapsulation ameba-lib provides an abstract base class, that provides HATEOS and Jackson support (`org.ameba.http.AbstractBase`).
 Some filter implementations for multi-tenancy and SLF4J context propagation are provided as well.
