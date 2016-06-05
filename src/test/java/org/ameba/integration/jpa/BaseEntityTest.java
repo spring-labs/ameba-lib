@@ -17,7 +17,6 @@ package org.ameba.integration.jpa;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.ameba.IntegrationTestConfig;
 import org.ameba.app.BaseConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
