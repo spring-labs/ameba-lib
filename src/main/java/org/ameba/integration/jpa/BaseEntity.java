@@ -24,7 +24,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 import org.ameba.integration.TypedEntity;
 import org.springframework.data.annotation.CreatedDate;
@@ -58,13 +58,13 @@ public class BaseEntity implements TypedEntity<Long> {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_CREATED")
     @CreatedDate
-    private ZonedDateTime createDt;
+    private Date createDt;
 
     /** Timestamp when the database record was updated the last time. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_UPDATED")
     @LastModifiedDate
-    private ZonedDateTime lastModifiedDt;
+    private Date lastModifiedDt;
 
     /** Dear JPA ... */
     protected BaseEntity() {
@@ -102,7 +102,7 @@ public class BaseEntity implements TypedEntity<Long> {
      *
      * @return creation date
      */
-    public ZonedDateTime getCreateDt() {
+    public Date getCreateDt() {
         return createDt;
     }
 
@@ -111,7 +111,7 @@ public class BaseEntity implements TypedEntity<Long> {
      *
      * @return last modified date
      */
-    public ZonedDateTime getLastModifiedDt() {
+    public Date getLastModifiedDt() {
         return lastModifiedDt;
     }
 }
