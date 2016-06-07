@@ -15,8 +15,11 @@
  */
 package org.ameba.integration.mongodb;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
 import org.ameba.app.BaseConfiguration;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -35,11 +38,17 @@ public class BaseEntityTest extends AbstractMongoDBIntegrationTests {
     @Autowired
     private MongoOperations template;
 
-    @Ignore("Need to be fiexed to run with Mongo, or have a deeper look at the SDM tests that are provided")
     @Test
     public void testPk() {
         TestDocument td = new TestDocument();
-        template.save(td);
+        template.insert(td);
 
+        List<TestDocument> all = template.findAll(TestDocument.class);
+        assertThat(all).hasSize(1);
+        assertThat(all.get(0).isNew()).isFalse();
+        assertThat(all.get(0).getPk()).isNotNull();
+//        assertThat(all.get(0).getCreateDt()).isNotNull();
+//        assertThat(all.get(0).getLastModifiedDt()).isNotNull();
+        assertThat(all.get(0)).extracting("ol").contains(0L);
     }
 }
