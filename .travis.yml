@@ -1,3 +1,15 @@
 language: java
+
 jdk:
   - oraclejdk8
+
+before_script:
+  - mongod --version
+
+addons:
+  apt:
+    sources:
+    - mongodb-3.2-precise
+    packages:
+    - mongodb-org-server
+    - mongodb-org-shell
