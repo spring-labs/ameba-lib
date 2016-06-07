@@ -39,7 +39,8 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 1.0
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = AbstractMongoDBIntegrationTests.TestConfig.class)
+//@EnableMongoAuditing
+@ContextConfiguration(/*classes = AbstractMongoDBIntegrationTests.TestConfig.class, */locations = "classpath:infrastructure.xml")
 public abstract class AbstractMongoDBIntegrationTests {
 
         @Configuration
