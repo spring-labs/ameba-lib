@@ -20,12 +20,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import org.ameba.app.BaseConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.test.context.ContextConfiguration;
@@ -39,9 +41,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 1.0
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(locations = "classpath:infrastructure.xml")
+@ContextConfiguration(classes = {AbstractMongoDBIntegrationTests.TestConfig.class, BaseConfiguration.class})
 public abstract class AbstractMongoDBIntegrationTests {
 
+        @EnableMongoAuditing
         @Configuration
         @EnableMongoRepositories(basePackageClasses = AbstractMongoDBIntegrationTests.class, considerNestedRepositories = true)
         static class TestConfig extends AbstractMongoConfiguration {
