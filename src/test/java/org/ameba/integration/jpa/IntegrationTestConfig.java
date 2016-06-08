@@ -16,6 +16,7 @@
 package org.ameba.integration.jpa;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
@@ -26,6 +27,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @since 1.6
  */
 @Configuration
+@EnableJpaAuditing
 @EnableJpaRepositories(basePackageClasses = IntegrationTestConfig.class)
 public class IntegrationTestConfig {
 
