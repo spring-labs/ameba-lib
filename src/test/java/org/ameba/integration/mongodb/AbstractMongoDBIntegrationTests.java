@@ -17,9 +17,9 @@ package org.ameba.integration.mongodb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.github.fakemongo.Fongo;
 import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -39,8 +39,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since 1.0
  */
 @RunWith(SpringRunner.class)
-//@EnableMongoAuditing
-@ContextConfiguration(/*classes = AbstractMongoDBIntegrationTests.TestConfig.class, */locations = "classpath:infrastructure.xml")
+@ContextConfiguration(locations = "classpath:infrastructure.xml")
 public abstract class AbstractMongoDBIntegrationTests {
 
         @Configuration
@@ -54,7 +53,7 @@ public abstract class AbstractMongoDBIntegrationTests {
 
             @Override
             public Mongo mongo() throws Exception {
-                return new Fongo(getDatabaseName()).getMongo();
+                return new MongoClient();
             }
         }
 
