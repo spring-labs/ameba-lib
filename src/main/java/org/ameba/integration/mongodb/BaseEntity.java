@@ -15,7 +15,7 @@
  */
 package org.ameba.integration.mongodb;
 
-import java.time.ZonedDateTime;
+import java.util.Date;
 
 import org.ameba.integration.TypedEntity;
 import org.springframework.data.annotation.CreatedDate;
@@ -54,14 +54,14 @@ public class BaseEntity implements TypedEntity<String> {
     /** Timestamp when the document was inserted. */
     @Field(FIELD_CREATED)
     @CreatedDate
-    private ZonedDateTime createDt;
+    private Date createDt;
     /** Field name of the timestamp when the document was inserted. */
     public static final String FIELD_CREATED = "_created";
 
     /** Timestamp when the document was updated the last time. */
     @Field(FIELD_UPDATED)
     @LastModifiedDate
-    private ZonedDateTime lastModifiedDt;
+    private Date lastModifiedDt;
     /** Field name of the timestamp when the document was updated the last time. */
     public static final String FIELD_UPDATED = "_updated";
 
@@ -97,7 +97,7 @@ public class BaseEntity implements TypedEntity<String> {
      *
      * @return Creation date
      */
-    public ZonedDateTime getCreateDt() {
+    public Date getCreateDt() {
         return createDt;
     }
 
@@ -106,7 +106,7 @@ public class BaseEntity implements TypedEntity<String> {
      *
      * @return Last modified date
      */
-    public ZonedDateTime getLastModifiedDt() {
+    public Date getLastModifiedDt() {
         return lastModifiedDt;
     }
 }
