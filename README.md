@@ -10,7 +10,7 @@ in Maven `provided` scope to cut transitive dependencies.
 
 ## Core Features
 
-- [Spring Data extensions] [Spring Data extensions (1.4+)]
+- Spring Data extensions
 - Useful AOP aspects
 - Common exception classes
 - Web & MVC extensions
