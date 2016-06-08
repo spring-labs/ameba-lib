@@ -26,7 +26,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 /**
- * A BaseEntity is a base superclass for MongoDB document entities.
+ * A BaseEntity is a base superclass for MongoDB document entities that defined useful fields for optimistic locking, unique persisted key,
+ * and timestamps for last change or insertion date. To active the latter feature the Spring application context need to enable Spring Data
+ * MongoDB MongoAuditingRegistrar. One approach to do this is to add {@code @EnableMongoAuditing} on a Spring configuration class.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
