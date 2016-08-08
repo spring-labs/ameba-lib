@@ -15,63 +15,93 @@
  */
 package org.ameba.exception;
 
+import java.io.Serializable;
+
 /**
- * A BusinessRuntimeException expresses a business error with a business message key ({@code msgKey}).
+ * A BusinessRuntimeException expresses a business error with some useful business information.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
  * @since 0.3
  */
 public class BusinessRuntimeException extends RuntimeException {
 
-	private String msgKey;
+    private String msgKey;
+    private Serializable[] data;
 
-	/**
-	 * Constructor.
-	 */
-	public BusinessRuntimeException() {}
+    /** Constructor. */
+    public BusinessRuntimeException() {
+    }
 
-	/**
-	 * Constructor with message text.
-	 *
-	 * @param message
-	 *            Message text
-	 */
-	public BusinessRuntimeException(String message) {
-		super(message);
-	}
+    /**
+     * Constructor with message text.
+     *
+     * @param message Message text
+     */
+    public BusinessRuntimeException(String message) {
+        super(message);
+    }
 
-	/**
-	 * Constructor with message text and cause exception.
-	 *
-	 * @param message
-	 *            Message text
-	 * @param cause
-	 *            Cause exception
-	 */
-	public BusinessRuntimeException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * Constructor with message text and cause exception.
+     *
+     * @param message Message text
+     * @param cause Cause exception
+     */
+    public BusinessRuntimeException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * Constructor with message text.
-	 *
-	 * @param message
-	 *            Message text
-	 * @param msgKey
-	 *            Message key
-	 */
-	public BusinessRuntimeException(String message, String msgKey) {
-		super(message);
-		this.msgKey = msgKey;
-	}
+    /**
+     * Constructor with message text.
+     *
+     * @param msgKey Message key
+     * @param message Message text
+     */
+    public BusinessRuntimeException(String msgKey, String message) {
+        super(message);
+        this.msgKey = msgKey;
+    }
 
-	/**
-	 * Get the message key.
-	 *
-	 * @return The message key
-	 */
-	public String getMsgKey() {
-		return msgKey;
-	}
+    /**
+     * Constructs with a message key and a message
+     *
+     * @param msgKey Message key
+     * @param data Additional implicit data passed to the caller
+     */
+    public BusinessRuntimeException(String msgKey, Serializable[] data) {
+        super();
+        this.msgKey = msgKey;
+        this.data = data;
+    }
+
+    /**
+     * Constructs with a message key and a message
+     *
+     * @param msgKey Message key
+     * @param message Message text
+     * @param data Additional implicit data passed to the caller
+     */
+    public BusinessRuntimeException(String msgKey, String message, Serializable[] data) {
+        super(message);
+        this.msgKey = msgKey;
+        this.data = data;
+    }
+
+    /**
+     * Get the message key.
+     *
+     * @return The message key
+     */
+    public String getMsgKey() {
+        return msgKey;
+    }
+
+    /**
+     * Get the data, applied to the exception.
+     *
+     * @return The applied data, the caller should know about how to use this information
+     */
+    public Serializable[] getData() {
+        return data;
+    }
 }
