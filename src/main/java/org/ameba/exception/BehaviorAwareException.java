@@ -16,6 +16,8 @@
 package org.ameba.exception;
 
 
+import java.io.Serializable;
+
 import org.ameba.http.AbstractBase;
 import org.ameba.http.Response;
 import org.springframework.http.HttpStatus;
@@ -53,6 +55,13 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
 	}
 
     /**
+     * {@inheritDoc}
+     */
+    protected BehaviorAwareException(String message, String msgKey, Serializable... data) {
+        super(message, msgKey, data);
+    }
+
+    /**
      * Transform exception into an {@code ResponseEntity} and return it.
      *
      * @return The ResponseEntity
@@ -66,5 +75,5 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      *
      * @return The HttpStatus
      */
-    protected abstract HttpStatus getStatus();
+    public abstract HttpStatus getStatus();
 }

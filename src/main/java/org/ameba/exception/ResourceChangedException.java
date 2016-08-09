@@ -77,7 +77,7 @@ public class ResourceChangedException extends BehaviorAwareException {
 	 * @return {@link HttpStatus#CONFLICT}
 	 */
 	@Override
-	protected HttpStatus getStatus() {
+	public HttpStatus getStatus() {
 		return HttpStatus.CONFLICT;
 	}
 }
