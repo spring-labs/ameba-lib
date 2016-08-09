@@ -104,4 +104,37 @@ public class BusinessRuntimeException extends RuntimeException {
     public Serializable[] getData() {
         return data;
     }
+
+    /**
+     * Create a generic BusinessRuntimeException with an arbitrary message.
+     *
+     * @param message Some message text
+     * @return The instance
+     */
+    public static BusinessRuntimeException create(String message) {
+        return new BusinessRuntimeException(message);
+    }
+
+    /**
+     * Create a generic BusinessRuntimeException with an arbitrary message.
+     *
+     * @param message Some message text
+     * @param msgKey Message key
+     * @return The instance
+     */
+    public static BusinessRuntimeException create(String message, String msgKey) {
+        return new BusinessRuntimeException(msgKey, message);
+    }
+
+    /**
+     * Create a generic BusinessRuntimeException with an arbitrary message.
+     *
+     * @param message Message text
+     * @param msgKey Message key
+     * @param data Additional implicit data passed to the caller
+     * @return The instance
+     */
+    public static BusinessRuntimeException create(String message, String msgKey, Serializable... data) {
+        return new BusinessRuntimeException(msgKey, message, data);
+    }
 }
