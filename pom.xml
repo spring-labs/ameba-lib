@@ -2,11 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.ameba</groupId>
+    <groupId>io.interface21</groupId>
     <artifactId>ameba-lib</artifactId>
     <version>1.7-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
+    <url>https://github.com/abraxas-labs/ameba-lib</url>
     <licenses>
         <license>
             <name>Apache-2.0</name>
@@ -54,6 +55,7 @@
         <maven-javadoc-plugin.version>2.10.3</maven-javadoc-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-source-plugin.version>3.0.0</maven-source-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     </properties>
 
     <profiles>
@@ -65,7 +67,27 @@
                 </property>
             </activation>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <artifactId>maven-gpg-plugin</artifactId>
+                            <version>${maven-gpg-plugin.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
+                    <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <artifactId>maven-source-plugin</artifactId>
                         <version>${maven-source-plugin.version}</version>
@@ -336,16 +358,22 @@
 
     <scm>
         <connection>scm:git:https://github.com/abraxas-labs/ameba-lib.git</connection>
-        <developerConnection>scm:git:git@github.com:abraxas-labs/ameba-lib.git</developerConnection>
-        <url>https://github.com/abraxas-labs/ameba-lib</url>
+        <developerConnection>scm:git:ssh://github.com:abraxas-labs/ameba-lib.git</developerConnection>
+        <url>https://github.com/abraxas-labs/ameba-lib/tree/master</url>
         <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
         <repository>
-            <id>bintray</id>
-            <url>https://api.bintray.com/maven/abraxas/labs/ameba</url>
+            <id>sonatype-nexus-staging</id>
+            <name>Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <repositories>
