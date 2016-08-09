@@ -18,7 +18,7 @@ package org.ameba.aop;
 import java.util.Optional;
 
 import org.ameba.LoggingCategories;
-import org.ameba.exception.BehaviorAwareException;
+import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.IntegrationLayerException;
 import org.ameba.exception.ResourceExistsException;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -53,14 +53,10 @@ public class IntegrationLayerAspect {
     }
 
     /**
-     * Around intercepted methods do some logging and exception translation.
-     * <p>
-     * <ul>
-     *     <li> Set log level of {@link LoggingCategories#INTEGRATION_LAYER_ACCESS} to INFO to enable method tracing.
-     *     <li>Set log level of {@link LoggingCategories#INTEGRATION_LAYER_EXCEPTION} to ERROR to enable exception
-     * logging.
-     * </ul>
-     * </p>
+     * Around intercepted methods do some logging and exception translation. <p> <ul> <li> Set log level of {@link
+     * LoggingCategories#INTEGRATION_LAYER_ACCESS} to INFO to enable method tracing. <li>Set log level of {@link
+     * LoggingCategories#INTEGRATION_LAYER_EXCEPTION} to ERROR to enable exception logging. </ul> </p>
+     *
      * @param pjp The joinpoint
      * @return Method return value
      * @throws Throwable in case of errors
@@ -86,8 +82,7 @@ public class IntegrationLayerAspect {
     }
 
     /**
-     * Called after an exception is thrown by classes of the integration layer. <p> Set log level to ERROR to log the
-     * root cause. </p>
+     * Called after an exception is thrown by classes of the integration layer. <p> Set log level to ERROR to log the root cause. </p>
      *
      * @param ex The root exception that is thrown
      * @return Returns the exception to be thrown
@@ -97,7 +92,7 @@ public class IntegrationLayerAspect {
             EXC_LOGGER.error("[I] Integration Layer Exception: " + ex.getLocalizedMessage(), ex);
         }
 
-        if (ex instanceof BehaviorAwareException) {
+        if (ex instanceof BusinessRuntimeException) {
             return ex;
         }
 

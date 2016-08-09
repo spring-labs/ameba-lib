@@ -15,6 +15,8 @@
  */
 package org.ameba.exception;
 
+import java.io.Serializable;
+
 import org.ameba.Messages;
 import org.ameba.i18n.Translator;
 import org.springframework.http.HttpStatus;
@@ -45,6 +47,25 @@ public class NotFoundException extends BehaviorAwareException {
      */
     public NotFoundException(String message, String msgKey) {
         super(message, msgKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected NotFoundException(String message, String msgKey, Serializable... data) {
+        super(message, msgKey, data);
+    }
+
+    /**
+     * Create a generic NotFoundException with an arbitrary message.
+     *
+     * @param message Message text
+     * @param msgKey Message key
+     * @param data Additional implicit data passed to the caller
+     * @return The instance
+     */
+    public static NotFoundException create(String message, String msgKey, Serializable... data) {
+        return new NotFoundException(message, msgKey, data);
     }
 
     /**
@@ -112,7 +133,7 @@ public class NotFoundException extends BehaviorAwareException {
      * @return {@link HttpStatus#NOT_FOUND}
      */
     @Override
-    protected HttpStatus getStatus() {
+    public HttpStatus getStatus() {
         return HttpStatus.NOT_FOUND;
     }
 }
