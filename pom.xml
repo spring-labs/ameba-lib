@@ -365,12 +365,12 @@
 
     <distributionManagement>
         <repository>
-            <id>ameba-releases</id>
+            <id>sonatype-nexus-staging</id>
             <name>Release Repository</name>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
         <snapshotRepository>
-            <id>ameba-snapshots</id>
+            <id>sonatype-nexus-snapshots</id>
             <name>Snapshot Repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
