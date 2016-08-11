@@ -77,6 +77,13 @@ public class NotFoundException extends BehaviorAwareException {
         super(translator.translate(msgKey, param), msgKey);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public NotFoundException(Translator translator, String msgKey, Serializable[] data, Object... param) {
+        super(translator.translate(msgKey, param), msgKey, data);
+    }
+
     /*~ factory methods */
     /**
      * Throw a NotFoundException when {@code obj} is {@literal null}.

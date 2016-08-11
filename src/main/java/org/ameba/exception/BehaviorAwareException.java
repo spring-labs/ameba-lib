@@ -18,7 +18,6 @@ package org.ameba.exception;
 
 import java.io.Serializable;
 
-import org.ameba.http.AbstractBase;
 import org.ameba.http.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,8 +64,18 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      *
      * @return The ResponseEntity
      */
-    public ResponseEntity<Response<AbstractBase>> toResponse() {
-        return new ResponseEntity<>(new Response<>(this.getMessage(), this.getMsgKey(), getStatus().toString(), new AbstractBase[0]), getStatus());
+    public ResponseEntity<Response<Serializable>> toResponse() {
+        return new ResponseEntity<>(new Response<>(this.getMessage(), this.getMsgKey(), getStatus().toString(), new Serializable[0]), getStatus());
+    }
+
+    /**
+     * Transform exception into an {@code ResponseEntity} and return it.
+     *
+     * @param data Additional implicit data passed to the caller
+     * @return The ResponseEntity
+     */
+    public ResponseEntity<Response<Serializable>> toResponse(Serializable... data) {
+        return new ResponseEntity<>(new Response<>(this.getMessage(), this.getMsgKey(), getStatus().toString(), data), getStatus());
     }
 
     /**
