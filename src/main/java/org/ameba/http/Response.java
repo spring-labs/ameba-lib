@@ -15,7 +15,10 @@
  */
 package org.ameba.http;
 
+import static com.jayway.jsonpath.JsonPath.read;
+
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,12 +26,12 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.jayway.jsonpath.Configuration;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
- * An instance of Response is a transfer object that is used to encapsulate
- * a server response to the client application. It contains an array of
- * items specific to the request. Compare to the concept of SIREN.
+ * An instance of Response is a transfer object that is used to encapsulate a server response to the client application. It contains an
+ * array of items specific to the request. Compare to the concept of SIREN.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.1
@@ -43,13 +46,11 @@ public class Response<T extends Serializable> extends ResourceSupport implements
     /** A text message to transfer as server response. */
     private String message = "";
     /**
-     * A unique key to identify a particular message. Note that this key can
-     * relate to the wrapped <tt>message</tt>, but it might not.
+     * A unique key to identify a particular message. Note that this key can relate to the wrapped <tt>message</tt>, but it might not.
      */
     private String messageKey = "";
     /**
-     * An array ob objects that can be passed to the client to identify
-     * failure items.
+     * An array ob objects that can be passed to the client to identify failure items.
      */
     //@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
     private T obj[];
@@ -64,6 +65,19 @@ public class Response<T extends Serializable> extends ResourceSupport implements
      * Constructor used for deserialization.
      */
     protected Response() {
+    }
+
+    /**
+     * Create a new Response.
+     *
+     * @param message The message as text
+     * @param messageKey A unique message key used to identify the message on client side
+     * @param httpStatus An HTTP status
+     */
+    public Response(String message, String messageKey, String httpStatus) {
+        this.message = message;
+        this.messageKey = messageKey;
+        this.httpStatus = httpStatus;
     }
 
     /**
@@ -90,6 +104,26 @@ public class Response<T extends Serializable> extends ResourceSupport implements
     public Response(String message, String httpStatus) {
         this.message = message;
         this.httpStatus = httpStatus;
+    }
+
+    /**
+     * Checks whether all mandatory fields are set on the String passed as {@literal s} and parses this String into a valid instance.
+     *
+     * @param s The String to get the mandatory fields from
+     * @return The instance
+     * @throws ParseException In case the passen String didn't match
+     */
+    public static Response<?> parse(String s) throws ParseException {
+        if (s.contains("message") &&
+                s.contains("messageKey") &&
+                s.contains("httpStatus") &&
+                s.contains("class")) {
+            Object d = Configuration.defaultConfiguration().jsonProvider().parse(s);
+            String[] obj = read(d, "$.obj");
+            Response<?> r = new Response<>(read(d, "$.message"), read(d, "$.messageKey"), read(d, "$.httpStatus"), obj );
+            r.any();
+        }
+        throw new ParseException(String.format("String does not contain mandatory fields. [%s]", s), -1);
     }
 
     @JsonAnyGetter
@@ -171,7 +205,6 @@ public class Response<T extends Serializable> extends ResourceSupport implements
         if (message != null ? !message.equals(response.message) : response.message != null) return false;
         if (messageKey != null ? !messageKey.equals(response.messageKey) : response.messageKey != null) return false;
         return Arrays.equals(obj, response.obj);
-
     }
 
     @Override
