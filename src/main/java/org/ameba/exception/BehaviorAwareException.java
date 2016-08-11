@@ -16,14 +16,14 @@
 package org.ameba.exception;
 
 
-import org.ameba.http.AbstractBase;
+import java.io.Serializable;
+
 import org.ameba.http.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 /**
- * A BehaviorAwareException is used to group exceptions that express a kind of behavior, like 'an entity to look
- * up was not found'.
+ * A BehaviorAwareException is used to group exceptions that express a kind of behavior, like 'an entity to look up was not found'.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.3
@@ -34,8 +34,8 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
     /**
      * {@inheritDoc}
      */
-	protected BehaviorAwareException() {
-		super();
+    public BehaviorAwareException() {
+        super();
     }
 
     /**
@@ -45,20 +45,37 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
         super(message);
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public BehaviorAwareException(String message, String msgKey) {
-		super(message, msgKey);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public BehaviorAwareException(String message, String msgKey) {
+        super(message, msgKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected BehaviorAwareException(String message, String msgKey, Serializable... data) {
+        super(message, msgKey, data);
+    }
 
     /**
      * Transform exception into an {@code ResponseEntity} and return it.
      *
      * @return The ResponseEntity
      */
-    public ResponseEntity<Response<AbstractBase>> toResponse() {
-        return new ResponseEntity<>(new Response<>(this.getMessage(), this.getMsgKey(), getStatus().toString(), new AbstractBase[0]), getStatus());
+    public ResponseEntity<Response<Serializable>> toResponse() {
+        return new ResponseEntity<>(new Response<>(this.getMessage(), this.getMsgKey(), getStatus().toString(), new Serializable[0]), getStatus());
+    }
+
+    /**
+     * Transform exception into an {@code ResponseEntity} and return it.
+     *
+     * @param data Additional implicit data passed to the caller
+     * @return The ResponseEntity
+     */
+    public ResponseEntity<Response<Serializable>> toResponse(Serializable... data) {
+        return new ResponseEntity<>(new Response<>(this.getMessage(), this.getMsgKey(), getStatus().toString(), data), getStatus());
     }
 
     /**
@@ -66,5 +83,5 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      *
      * @return The HttpStatus
      */
-    protected abstract HttpStatus getStatus();
+    public abstract HttpStatus getStatus();
 }
