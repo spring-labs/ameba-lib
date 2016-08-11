@@ -54,12 +54,25 @@ public class BusinessRuntimeException extends RuntimeException {
     /**
      * Constructor with message text.
      *
-     * @param msgKey Message key
      * @param message Message text
+     * @param msgKey Message key
      */
-    public BusinessRuntimeException(String msgKey, String message) {
+    protected BusinessRuntimeException(String message, String msgKey) {
         super(message);
         this.msgKey = msgKey;
+    }
+
+    /**
+     * Constructs with a message key and a message
+     *
+     * @param message Message text
+     * @param msgKey Message key
+     * @param data Additional implicit data passed to the caller
+     */
+    public BusinessRuntimeException(String message, String msgKey, Serializable[] data) {
+        super(message);
+        this.msgKey = msgKey;
+        this.data = data;
     }
 
     /**
@@ -70,19 +83,6 @@ public class BusinessRuntimeException extends RuntimeException {
      */
     public BusinessRuntimeException(String msgKey, Serializable[] data) {
         super();
-        this.msgKey = msgKey;
-        this.data = data;
-    }
-
-    /**
-     * Constructs with a message key and a message
-     *
-     * @param msgKey Message key
-     * @param message Message text
-     * @param data Additional implicit data passed to the caller
-     */
-    public BusinessRuntimeException(String msgKey, String message, Serializable[] data) {
-        super(message);
         this.msgKey = msgKey;
         this.data = data;
     }
@@ -103,38 +103,5 @@ public class BusinessRuntimeException extends RuntimeException {
      */
     public Serializable[] getData() {
         return data;
-    }
-
-    /**
-     * Create a generic BusinessRuntimeException with an arbitrary message.
-     *
-     * @param message Some message text
-     * @return The instance
-     */
-    public static BusinessRuntimeException create(String message) {
-        return new BusinessRuntimeException(message);
-    }
-
-    /**
-     * Create a generic BusinessRuntimeException with an arbitrary message.
-     *
-     * @param message Some message text
-     * @param msgKey Message key
-     * @return The instance
-     */
-    public static BusinessRuntimeException create(String message, String msgKey) {
-        return new BusinessRuntimeException(msgKey, message);
-    }
-
-    /**
-     * Create a generic BusinessRuntimeException with an arbitrary message.
-     *
-     * @param message Message text
-     * @param msgKey Message key
-     * @param data Additional implicit data passed to the caller
-     * @return The instance
-     */
-    public static BusinessRuntimeException create(String message, String msgKey, Serializable... data) {
-        return new BusinessRuntimeException(msgKey, message, data);
     }
 }

@@ -18,7 +18,7 @@ package org.ameba.aop;
 import java.util.Optional;
 
 import org.ameba.LoggingCategories;
-import org.ameba.exception.BehaviorAwareException;
+import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.ServiceLayerException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -51,13 +51,10 @@ public class ServiceLayerAspect {
     }
 
     /**
-     * Around intercepted methods do some logging and exception translation.
-     * <p>
-     * <ul>
-     *     <li> Set log level of {@link LoggingCategories#SERVICE_LAYER_ACCESS} to INFO to enable method tracing.
-     *     <li>Set log level of {@link LoggingCategories#SERVICE_LAYER_EXCEPTION} to ERROR to enable exception logging.
-     * </ul>
-     * </p>
+     * Around intercepted methods do some logging and exception translation. <p> <ul> <li> Set log level of {@link
+     * LoggingCategories#SERVICE_LAYER_ACCESS} to INFO to enable method tracing. <li>Set log level of {@link
+     * LoggingCategories#SERVICE_LAYER_EXCEPTION} to ERROR to enable exception logging. </ul> </p>
+     *
      * @param pjp The joinpoint
      * @return Method return value
      * @throws Throwable in case of errors
@@ -94,7 +91,7 @@ public class ServiceLayerAspect {
             EXC_LOGGER.error("[S] Service Layer Exception: " + ex.getLocalizedMessage(), ex);
         }
 
-        if (ex instanceof BehaviorAwareException) {
+        if (ex instanceof BusinessRuntimeException) {
             return ex;
         }
 

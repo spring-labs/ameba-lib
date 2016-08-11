@@ -15,69 +15,61 @@
  */
 package org.ameba.exception;
 
+import java.io.Serializable;
+
 import org.ameba.Messages;
-import org.ameba.i18n.Translator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * A ResourceChangedException signals that a resource cannot be changed, because it has been updated in the meantime.
- * Similar what a java.persistence.OptimisticLockException expresses on the persistence layer, this type of exception
- * is more generic and useful at the presentation layer.
+ * A ResourceChangedException signals that a resource cannot be changed, because it has been updated in the meantime. Similar what a
+ * java.persistence.OptimisticLockException expresses on the persistence layer, this type of exception is more generic and useful at the
+ * presentation layer.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 0.3
- * @since 0.2
  * @see org.springframework.web.bind.annotation.ResponseStatus
  * @see org.springframework.http.HttpStatus#CONFLICT
+ * @since 0.2
  */
 @ResponseStatus(HttpStatus.CONFLICT)
 public class ResourceChangedException extends BehaviorAwareException {
 
-	/**
-	 * Preset the message to {@link Messages#RESOURCE_CHANGED_UNEXPECTEDLY}.
-	 */
-	public ResourceChangedException() {
-		super(Messages.RESOURCE_CHANGED_UNEXPECTEDLY);
-	}
+    /**
+     * Preset the message to {@link Messages#RESOURCE_CHANGED_UNEXPECTEDLY}.
+     */
+    public ResourceChangedException() {
+        super(Messages.RESOURCE_CHANGED_UNEXPECTEDLY, Messages.RESOURCE_CHANGED_UNEXPECTEDLY);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public ResourceChangedException(String message) {
+        super(message, Messages.RESOURCE_CHANGED_UNEXPECTEDLY);
+    }
 
     /**
      * {@inheritDoc}
      */
     public ResourceChangedException(String message, String msgKey) {
-		super(message, msgKey);
-	}
-
-	/**
-	 * Create a generic ResourceChangedException with the translated message set.
-	 *
-	 * @param translator A Translator
-	 * @return The instance
-	 */
-	public static ResourceChangedException createChanged(Translator translator) {
-		return new ResourceChangedException(translator.translate(Messages.RESOURCE_CHANGED_UNEXPECTEDLY), Messages.RESOURCE_CHANGED_UNEXPECTEDLY);
-	}
-
-    /**
-     * Create a generic ResourceChangedException with the translated message set.
-     *
-     * @since 0.5
-     * @param translator A Translator
-     * @param msgKey The message key to translate into exception message text
-     * @param obj Message parameters
-     * @return The instance
-     */
-    public static ResourceChangedException createChanged(Translator translator, String msgKey, Object... obj) {
-        return new ResourceChangedException(translator.translate(msgKey, obj), msgKey);
+        super(message, msgKey);
     }
 
     /**
-	 * {@link HttpStatus#CONFLICT}.
-	 *
-	 * @return {@link HttpStatus#CONFLICT}
-	 */
-	@Override
-	protected HttpStatus getStatus() {
-		return HttpStatus.CONFLICT;
-	}
+     * {@inheritDoc}
+     */
+    protected ResourceChangedException(String message, String msgKey, Serializable... data) {
+        super(message, msgKey, data);
+    }
+
+    /**
+     * {@link HttpStatus#CONFLICT}.
+     *
+     * @return {@link HttpStatus#CONFLICT}
+     */
+    @Override
+    public HttpStatus getStatus() {
+        return HttpStatus.CONFLICT;
+    }
 }

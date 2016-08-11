@@ -67,7 +67,7 @@ public interface JpaRepositoryOperations<T extends TypedEntity<ID>, ID extends S
         default T findById(ID id) {
             T entity = getRepository().findOne(id);
             if (null == entity) {
-                throw NotFoundException.createNotFound(String.format("No entity with id %s found", id));
+                throw new NotFoundException(String.format("No entity with id %s found", id));
             }
             return entity;
         }

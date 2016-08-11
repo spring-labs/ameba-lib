@@ -15,6 +15,8 @@
  */
 package org.ameba.exception;
 
+import java.io.Serializable;
+
 import org.ameba.Messages;
 import org.ameba.i18n.Translator;
 import org.springframework.http.HttpStatus;
@@ -37,7 +39,14 @@ public class NotFoundException extends BehaviorAwareException {
      * Preset the message to {@link Messages#NOT_FOUND}.
      */
     public NotFoundException() {
-        super(Messages.NOT_FOUND);
+        super(Messages.NOT_FOUND, Messages.NOT_FOUND);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public NotFoundException(String message) {
+        super(message,  Messages.NOT_FOUND);
     }
 
     /**
@@ -48,38 +57,34 @@ public class NotFoundException extends BehaviorAwareException {
     }
 
     /**
-     * Create a generic NotFoundException with an arbitrary message.
-     *
-     * @param message Some message text
-     * @return The instance
+     * {@inheritDoc}
      */
-    public static NotFoundException createNotFound(String message) {
-        return new NotFoundException(message, Messages.NOT_FOUND);
+    public NotFoundException(String message, String msgKey, Serializable... data) {
+        super(message, msgKey, data);
     }
 
     /**
-     * Create a generic NotFoundException with the translated message set.
-     *
-     * @param translator A Translator
-     * @return The instance
+     * {@inheritDoc}
      */
-    public static NotFoundException createNotFound(Translator translator) {
-        return new NotFoundException(translator.translate(Messages.NOT_FOUND), Messages.NOT_FOUND);
+    public NotFoundException(Translator translator) {
+        super(translator.translate(Messages.NOT_FOUND), Messages.NOT_FOUND);
     }
 
     /**
-     * Create a generic NotFoundException with the translated message set.
-     *
-     * @param translator A Translator
-     * @param msgKey The message key to translate into exception message text
-     * @param param Message parameters
-     * @return The instance
-     * @since 0.5
+     * {@inheritDoc}
      */
-    public static NotFoundException createNotFound(Translator translator, String msgKey, Object... param) {
-        return new NotFoundException(translator.translate(msgKey, param), msgKey);
+    public NotFoundException(Translator translator, String msgKey, Object... param) {
+        super(translator.translate(msgKey, param), msgKey);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public NotFoundException(Translator translator, String msgKey, Serializable[] data, Object... param) {
+        super(translator.translate(msgKey, param), msgKey, data);
+    }
+
+    /*~ factory methods */
     /**
      * Throw a NotFoundException when {@code obj} is {@literal null}.
      *
@@ -90,7 +95,7 @@ public class NotFoundException extends BehaviorAwareException {
      */
     public static void throwIfNull(Object obj, Translator translator, String msgKey, Object... param) {
         if (obj == null) {
-            throw createNotFound(translator, msgKey, param);
+            throw new NotFoundException(translator, msgKey, param);
         }
     }
 
@@ -102,7 +107,7 @@ public class NotFoundException extends BehaviorAwareException {
      */
     public static void throwIfNull(Object obj, String message) {
         if (obj == null) {
-            throw createNotFound(message);
+            throw new NotFoundException(message);
         }
     }
 
@@ -112,7 +117,7 @@ public class NotFoundException extends BehaviorAwareException {
      * @return {@link HttpStatus#NOT_FOUND}
      */
     @Override
-    protected HttpStatus getStatus() {
+    public HttpStatus getStatus() {
         return HttpStatus.NOT_FOUND;
     }
 }

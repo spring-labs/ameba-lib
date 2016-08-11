@@ -15,8 +15,9 @@
  */
 package org.ameba.exception;
 
+import java.io.Serializable;
+
 import org.ameba.Messages;
-import org.ameba.i18n.Translator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -34,13 +35,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ResourceExistsException extends BehaviorAwareException {
 
 	/**
-	 * Preset the message to {@link Messages#ALREADY_EXISTS}.
+	 * {@inheritDoc}
 	 */
 	public ResourceExistsException() {
-        super(Messages.ALREADY_EXISTS);
+        super(Messages.ALREADY_EXISTS, Messages.ALREADY_EXISTS);
 	}
 
-    /**
+	/**
+	 * {@inheritDoc}
+	 */
+	public ResourceExistsException(String message) {
+		super(message, Messages.ALREADY_EXISTS);
+	}
+
+	/**
      * {@inheritDoc}
      */
     public ResourceExistsException(String message, String msgKey) {
@@ -48,26 +56,10 @@ public class ResourceExistsException extends BehaviorAwareException {
 	}
 
 	/**
-	 * Create a generic ResourceExistsException with the translated message set.
-	 *
-	 * @param translator A Translator
-	 * @return The instance
+	 * {@inheritDoc}
 	 */
-	public static ResourceExistsException createExists(Translator translator) {
-		return new ResourceExistsException(translator.translate(Messages.ALREADY_EXISTS), Messages.ALREADY_EXISTS);
-	}
-
-	/**
-	 * Create a generic ResourceExistsException with the translated message set.
-	 *
-	 * @since 0.5
-	 * @param translator A Translator
-	 * @param msgKey The message key to translate into exception message text
-     * @param obj Message parameters
-	 * @return The instance
-	 */
-	public static ResourceExistsException createExists(Translator translator, String msgKey, Object... obj) {
-		return new ResourceExistsException(translator.translate(msgKey, obj), msgKey);
+	protected ResourceExistsException(String message, String msgKey, Serializable... data) {
+		super(message, msgKey, data);
 	}
 
 	/**
@@ -76,7 +68,7 @@ public class ResourceExistsException extends BehaviorAwareException {
 	 * @return {@link HttpStatus#CONFLICT}
 	 */
 	@Override
-    protected HttpStatus getStatus() {
+    public HttpStatus getStatus() {
         return HttpStatus.CONFLICT;
     }
 }
