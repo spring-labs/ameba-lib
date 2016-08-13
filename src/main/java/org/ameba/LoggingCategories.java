@@ -40,4 +40,8 @@ public final class LoggingCategories {
 	public static final String LOG_MEASURED = "MEASURED";
 	/** Category for tracing during application startup phase. */
 	public static final String BOOT = "BOOT";
+	/** Key used to store the message key in MDC. */
+	public static final String MSGKEY = "MSGKEY";
+	/** Key used to store additional message data in MDC. */
+	public static final String MSGDATA = "MSGDATA";
 }

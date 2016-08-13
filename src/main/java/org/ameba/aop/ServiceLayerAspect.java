@@ -16,6 +16,7 @@
 package org.ameba.aop;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.ameba.LoggingCategories;
 import org.ameba.exception.BusinessRuntimeException;
@@ -25,6 +26,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 
 /**
@@ -63,7 +65,7 @@ public class ServiceLayerAspect {
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startMillis = 0L;
         if (SRV_LOGGER.isDebugEnabled()) {
-            SRV_LOGGER.debug("[S]>> Method call: " + pjp.toShortString());
+            SRV_LOGGER.debug("[S]>> Method call: {} ", pjp.toShortString());
             startMillis = System.currentTimeMillis();
         }
 
@@ -74,7 +76,7 @@ public class ServiceLayerAspect {
             throw translateException(ex);
         } finally {
             if (SRV_LOGGER.isDebugEnabled()) {
-                SRV_LOGGER.debug("[S]<< " + pjp.toShortString() + " took [ms]: " + (System.currentTimeMillis() - startMillis));
+                SRV_LOGGER.debug("[S]<< {} took {} [ms]", pjp.toShortString(), (System.currentTimeMillis() - startMillis));
             }
         }
         return obj;
@@ -88,11 +90,15 @@ public class ServiceLayerAspect {
      */
     public Exception translateException(Exception ex) {
         if (EXC_LOGGER.isErrorEnabled()) {
-            EXC_LOGGER.error("[S] Service Layer Exception: " + ex.getLocalizedMessage(), ex);
+            EXC_LOGGER.error(ex.getLocalizedMessage(), ex);
         }
 
         if (ex instanceof BusinessRuntimeException) {
-            return ex;
+            BusinessRuntimeException bre = (BusinessRuntimeException) ex;
+            MDC.put(LoggingCategories.MSGKEY, bre.getMsgKey());
+            MDC.put(LoggingCategories.MSGDATA, String.join(",", Stream.of(bre.getData()).map(Object::toString).toArray(String[]::new)));
+            // cleanup of context is done in SLF4JMappedDiagnosticContextFilter
+            return bre;
         }
 
         Optional<Exception> handledException = doTranslateException(ex);

@@ -67,7 +67,7 @@ public class IntegrationLayerAspect {
         if (P_LOGGER.isInfoEnabled()) {
             sw = new StopWatch();
             sw.start();
-            P_LOGGER.info(String.format(" >> %s#%s", pjp.getTarget().getClass().getSimpleName(), pjp.getSignature().getName()));
+            P_LOGGER.info("[I]>> {}#{}", pjp.getTarget().getClass().getSimpleName(), pjp.getSignature().getName());
         }
         try {
             return pjp.proceed();
@@ -76,7 +76,7 @@ public class IntegrationLayerAspect {
         } finally {
             if (P_LOGGER.isInfoEnabled() && sw != null) {
                 sw.stop();
-                P_LOGGER.info(String.format(" << %s#%s took [ms]: %s", pjp.getTarget().getClass().getSimpleName(), pjp.getSignature().getName(), sw.getTotalTimeMillis()));
+                P_LOGGER.info("[I]<< {}#{} took {} [ms]", pjp.getTarget().getClass().getSimpleName(), pjp.getSignature().getName(), sw.getTotalTimeMillis());
             }
         }
     }
@@ -89,7 +89,7 @@ public class IntegrationLayerAspect {
      */
     public Exception translateException(Exception ex) {
         if (EXC_LOGGER.isErrorEnabled()) {
-            EXC_LOGGER.error("[I] Integration Layer Exception: " + ex.getLocalizedMessage(), ex);
+            EXC_LOGGER.error(ex.getLocalizedMessage(), ex);
         }
 
         if (ex instanceof BusinessRuntimeException) {
