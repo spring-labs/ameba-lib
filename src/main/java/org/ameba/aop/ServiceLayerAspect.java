@@ -16,6 +16,7 @@
 package org.ameba.aop;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.ameba.LoggingCategories;
 import org.ameba.exception.BusinessRuntimeException;
@@ -25,6 +26,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 
 /**
@@ -92,7 +94,10 @@ public class ServiceLayerAspect {
         }
 
         if (ex instanceof BusinessRuntimeException) {
-            return ex;
+            BusinessRuntimeException bre = (BusinessRuntimeException) ex;
+            MDC.put(LoggingCategories.MSGKEY, bre.getMsgKey());
+            MDC.put(LoggingCategories.MSGDATA, String.join(",", Stream.of(bre.getData()).map(Object::toString).toArray(String[]::new)));
+            return bre;
         }
 
         Optional<Exception> handledException = doTranslateException(ex);
