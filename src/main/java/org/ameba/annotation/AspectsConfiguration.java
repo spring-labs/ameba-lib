@@ -26,21 +26,25 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * A AspectsConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
+ * @version 1.1
  * @since 1.0
  */
+@ExcludeFromScan
 @Configuration
 @EnableAspectJAutoProxy
-class AspectsConfiguration {
+public class AspectsConfiguration {
+
+    /** Set by the selector. */
+    public static boolean withRootCause = false;
 
     @Bean(name = ServiceLayerAspect.COMPONENT_NAME)
     public ServiceLayerAspect serviceLayerAspect() {
-        return new ServiceLayerAspect();
+        return new ServiceLayerAspect(withRootCause);
     }
 
     @Bean(name = IntegrationLayerAspect.COMPONENT_NAME)
     public IntegrationLayerAspect integrationLayerAspect() {
-        return new IntegrationLayerAspect();
+        return new IntegrationLayerAspect(withRootCause);
     }
 
     @Bean(name = PresentationLayerAspect.COMPONENT_NAME)
