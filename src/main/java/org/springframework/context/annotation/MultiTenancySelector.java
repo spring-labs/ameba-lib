@@ -43,7 +43,7 @@ public class MultiTenancySelector implements ImportSelector {
         }
         if (attributes.getBoolean("enabled")) {
             MultiTenancyConfiguration.enabled = attributes.getBoolean("enabled");
-            MultiTenancyConfiguration.throwIfNotPresent = attributes.getBoolean("enabled");
+            MultiTenancyConfiguration.throwIfNotPresent = attributes.getBoolean("throwIfNotPresent");
             return new String[]{MultiTenancyConfiguration.class.getName()};
         }
         return new String[]{};
