@@ -46,10 +46,17 @@ public class ServiceLayerAspect {
     private static final Logger SRV_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_ACCESS);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
+    private boolean withRootCause = false;
 
-    /** Default constructor with some loginfo */
+    /** Default constructor with some loginfo. */
     public ServiceLayerAspect() {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+    }
+
+    /** Constructor with some loginfo and considering the root cause. */
+    public ServiceLayerAspect(boolean withRootCause) {
+        BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+        this.withRootCause = withRootCause;
     }
 
     /**
@@ -96,7 +103,9 @@ public class ServiceLayerAspect {
         if (ex instanceof BusinessRuntimeException) {
             BusinessRuntimeException bre = (BusinessRuntimeException) ex;
             MDC.put(LoggingCategories.MSGKEY, bre.getMsgKey());
-            MDC.put(LoggingCategories.MSGDATA, String.join(",", Stream.of(bre.getData()).map(Object::toString).toArray(String[]::new)));
+            if (bre.getData() != null) {
+                MDC.put(LoggingCategories.MSGDATA, String.join(",", Stream.of(bre.getData()).map(Object::toString).toArray(String[]::new)));
+            }
             // cleanup of context is done in SLF4JMappedDiagnosticContextFilter
             return bre;
         }
@@ -108,7 +117,7 @@ public class ServiceLayerAspect {
         if (ex instanceof ServiceLayerException) {
             return ex;
         }
-        return new ServiceLayerException(ex.getMessage());
+        return withRootCause ? new ServiceLayerException(ex.getMessage(), ex) : new ServiceLayerException(ex.getMessage());
     }
 
     /**

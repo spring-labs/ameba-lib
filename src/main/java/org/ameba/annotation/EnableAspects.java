@@ -21,18 +21,27 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.context.annotation.AspectsSelector;
 import org.springframework.context.annotation.Import;
 
 /**
- * A EnableAspects.
+ * An EnableAspects annotation is used to include Ameba aspects for exception translation, logging and method execution consumption
+ * logging.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(AspectsConfiguration.class)
+@Import(AspectsSelector.class)
 public @interface EnableAspects {
+
+    /**
+     * Switch to enable root cause propagation. Default is {@literal true}.
+     * <p>
+     * Usually root cause exceptions are omitted when translating them. This switch enables to pass the root cause (and the exception stack)
+     * to the caller.
+     */
+    boolean propagateRootCause() default false;
 }
