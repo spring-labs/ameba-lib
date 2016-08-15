@@ -46,10 +46,17 @@ public class IntegrationLayerAspect {
     private static final Logger P_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_LAYER_ACCESS);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.INTEGRATION_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
+    private boolean withRootCause = false;
 
     /** Default constructor with some loginfo */
     public IntegrationLayerAspect() {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+    }
+
+    /** Constructor with some loginfo and considering the root cause. */
+    public IntegrationLayerAspect(boolean withRootCause) {
+        BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+        this.withRootCause = withRootCause;
     }
 
     /**
@@ -106,7 +113,7 @@ public class IntegrationLayerAspect {
         if (ex instanceof IntegrationLayerException) {
             return ex;
         }
-        return new IntegrationLayerException(ex.getMessage(), ex);
+        return withRootCause ? new IntegrationLayerException(ex.getMessage(), ex) : new IntegrationLayerException(ex.getMessage());
     }
 
     /**
