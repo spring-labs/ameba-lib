@@ -47,9 +47,7 @@ public class PresentationLayerAspect {
     /**
      * Around intercepted methods do some logging and exception translation.
      * <p>
-     * <ul>
-     *     <li>Set log level of {@link LoggingCategories#PRESENTATION_LAYER_EXCEPTION} to ERROR to enable exception logging.
-     * </ul>
+     * <ul> <li>Set log level of {@link LoggingCategories#PRESENTATION_LAYER_EXCEPTION} to ERROR to enable exception logging. </ul>
      *
      * @param pjp The joinpoint
      * @return Method return value
