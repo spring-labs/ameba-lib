@@ -73,7 +73,11 @@ public class ServiceLayerAspect {
         try {
             obj = pjp.proceed();
         } catch (Exception ex) {
-            throw translateException(ex);
+            Exception e = translateException(ex);
+            if (EXC_LOGGER.isErrorEnabled()) {
+                EXC_LOGGER.error(e.getLocalizedMessage(), e);
+            }
+            throw e;
         } finally {
             if (SRV_LOGGER.isDebugEnabled()) {
                 SRV_LOGGER.debug("[S]<< {} took {} [ms]", pjp.toShortString(), (System.currentTimeMillis() - startMillis));
@@ -89,10 +93,6 @@ public class ServiceLayerAspect {
      * @return Returns the exception to be thrown
      */
     public Exception translateException(Exception ex) {
-        if (EXC_LOGGER.isErrorEnabled()) {
-            EXC_LOGGER.error(ex.getLocalizedMessage(), ex);
-        }
-
         if (ex instanceof BusinessRuntimeException) {
             BusinessRuntimeException bre = (BusinessRuntimeException) ex;
             MDC.put(LoggingCategories.MSGKEY, bre.getMsgKey());
