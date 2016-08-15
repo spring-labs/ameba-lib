@@ -15,33 +15,34 @@
  */
 package org.ameba.http;
 
-import org.ameba.Constants;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import org.ameba.Constants;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 /**
- * A AbstractTenantAwareFilter is a super class that handles resolution and validation of the current tenant from the
- * incoming request. The tenant information is expected to be present as http header attribute with name {@value Constants#HEADER_VALUE_TENANT}.
- * The behavior of the validation of attribute existence can be configured via two {@code ServletContext} properties:
- * <ul>
- * <li>{@value Constants#PARAM_MULTI_TENANCY_ENABLED}: If {@literal true}, the filter expects the tenant attribute
- * set in the current request and goes further with validation and processing the tenant information.</li>
- * <li>{@value Constants#PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT}: If the tenant attribute is not present in the
- * current request and this property is set to {@literal true}, the filter will throw an exception. If set to {@literal false}
- * the filter ignores the missing attribute and goes further in the {@code filterChain} without calling the
- * subclasses {@link #doBefore(HttpServletRequest, HttpServletResponse, FilterChain, String)} method</li>
- * </ul>
+ * A AbstractTenantAwareFilter is a super class that handles resolution and validation of the current tenant from the incoming request.
+ * <p>
+ * The tenant information is expected to be present as http header attribute with name {@value Constants#HEADER_VALUE_TENANT}. The behavior
+ * of the validation of attribute existence can be configured via two properties: <ul> <li>{@value
+ * Constants#PARAM_MULTI_TENANCY_ENABLED}: If {@literal true}, the filter expects the tenant attribute set in the current request and goes
+ * further with validation and processing the tenant information.</li> <li>{@value Constants#PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT}: If
+ * the tenant attribute is not present in the current request and this property is set to {@literal true}, the filter will throw an
+ * exception. If set to {@literal false} the filter ignores the missing attribute and goes further in the {@code filterChain} without
+ * calling the subclasses {@link #doBefore(HttpServletRequest, HttpServletResponse, FilterChain, String)} method</li> </ul>
+ *
+ * Those properties can be either set as {@code ServletContext} attributes or as {@link javax.servlet.FilterConfig} parameters whereas the
+ * latter take precedence.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
+ * @version 1.1
  * @see org.springframework.web.filter.OncePerRequestFilter
+ * @since 1.0
  */
 public abstract class AbstractTenantAwareFilter extends OncePerRequestFilter {
 
@@ -49,27 +50,28 @@ public abstract class AbstractTenantAwareFilter extends OncePerRequestFilter {
      * {@inheritDoc}
      */
     @Override
-    protected final void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-        boolean multiTenancyEnabled = Boolean.valueOf((String) request.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_ENABLED));
+    protected final void doFilterInternal(HttpServletRequest r, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String fromSC = (String) r.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_ENABLED);
+        boolean multiTenancyEnabled = Boolean.valueOf(fromSC == null ? getFilterConfig().getInitParameter(Constants.PARAM_MULTI_TENANCY_ENABLED) : fromSC);
         String tenant = null;
-        if (multiTenancyEnabled && !"OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            tenant = request.getHeader(Constants.HEADER_VALUE_TENANT) == null ||
-                    request.getHeader(Constants.HEADER_VALUE_TENANT).isEmpty() ? request.getHeader(Constants.HEADER_VALUE_X_TENANT) : request.getHeader(Constants.HEADER_VALUE_TENANT);
+        if (multiTenancyEnabled && !"OPTIONS".equalsIgnoreCase(r.getMethod())) {
+            tenant = r.getHeader(Constants.HEADER_VALUE_TENANT) == null ||
+                    r.getHeader(Constants.HEADER_VALUE_TENANT).isEmpty() ? r.getHeader(Constants.HEADER_VALUE_X_TENANT) : r.getHeader(Constants.HEADER_VALUE_TENANT);
             if (null == tenant || tenant.isEmpty()) {
-                boolean throwIfNotPresent = Boolean.valueOf((String) request.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT));
+                String throwParam = (String) r.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT);
+                boolean throwIfNotPresent = Boolean.valueOf(throwParam == null ? getFilterConfig().getInitParameter(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT) : throwParam);
                 if (throwIfNotPresent) {
                     response.setStatus(HttpStatus.BAD_REQUEST.value());
                     throw new IllegalArgumentException(String.format("No tenant information available in http header. Expected header [%s/%s] attribute not present.", Constants.HEADER_VALUE_TENANT, Constants.HEADER_VALUE_X_TENANT));
                 }
             } else {
-                doBefore(request, response, filterChain, tenant);
+                doBefore(r, response, filterChain, tenant);
             }
         }
         try {
-            filterChain.doFilter(request, response);
+            filterChain.doFilter(r, response);
         } finally {
-            doAfter(request, response, filterChain, tenant);
+            doAfter(r, response, filterChain, tenant);
         }
     }
 

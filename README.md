@@ -108,10 +108,15 @@ Determination of the tenant can be realized using a web filter `org.ameba.http.M
 a http header attribute called `X-Tenant` or `Tenant` and stores it in a threadlocal variable. On business- or integration layer this context
 information is used to separate log files or to separate between databases, database schemas or database tables (up to the specific solution).
 Have a look at the [tenancy sample](https://github.com/spring-labs/tenancy-sample) to understand how this works on database level. Separating
-the log files is special. Ameba-lib uses SLF4J to abstract from the underlying logging framework. In case context-aware data (like the
+the log files is special. Ameba-lib uses SLF4J to abstract from the underlying logging framework. In case of context-aware data (like the
 tenant name) needs to be populated down to the underlying logging library, SLF4J make it easy to work with [Logback](http://logback.qos.ch/).
 SLF4J smoothly populates the logback context with its own context. If you're using other frameworks, like Log4j you need to implement a
 custom _Context Populator_ that ready the SLF4J MDC/NDC and populates the log4j MDC/NDC properly.
+
+Starting with 1.7 the configuration of multi-tenancy support can be done much more elegant by using the classlevel annotation ´@EnableMultiTenancy´. No
+manual filter registration needs to be done anymore.
+
+Referenced issues: [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
 
 ## Development process
 

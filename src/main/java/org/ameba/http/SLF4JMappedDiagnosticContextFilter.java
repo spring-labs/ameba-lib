@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ameba.Constants;
+import org.ameba.LoggingCategories;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
@@ -31,6 +34,12 @@ import org.slf4j.MDC;
  * @since 0.9
  */
 public class SLF4JMappedDiagnosticContextFilter extends AbstractTenantAwareFilter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
+
+    public SLF4JMappedDiagnosticContextFilter() {
+        LOGGER.info("Initialized filter {}", this.getClass().getSimpleName());
+    }
 
     /**
      * {@inheritDoc}

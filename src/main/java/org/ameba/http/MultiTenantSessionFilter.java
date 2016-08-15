@@ -19,7 +19,10 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ameba.LoggingCategories;
 import org.ameba.tenancy.TenantHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A MultiTenantSessionFilter set the current tenant value ({@value org.ameba.Constants#HEADER_VALUE_TENANT} in the
@@ -31,6 +34,12 @@ import org.ameba.tenancy.TenantHolder;
  * @since 1.0
  */
 public class MultiTenantSessionFilter extends AbstractTenantAwareFilter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
+
+    public MultiTenantSessionFilter() {
+        LOGGER.info("Initialized filter {}", this.getClass().getSimpleName());
+    }
 
     /**
      * {@inheritDoc}
