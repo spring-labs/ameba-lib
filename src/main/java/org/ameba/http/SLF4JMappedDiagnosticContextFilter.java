@@ -42,23 +42,22 @@ public class SLF4JMappedDiagnosticContextFilter extends AbstractTenantAwareFilte
     }
 
     /**
-     * {@inheritDoc}
-     * Set the MDC properly.
+     * {@inheritDoc} Set the MDC properly.
      */
     @Override
     protected void doBefore(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
         MDC.put(Constants.HEADER_VALUE_TENANT, tenant);
         MDC.put(Constants.HEADER_VALUE_X_TENANT, tenant);
+        if (RequestIDHolder.hasRequestID()) {
+            MDC.put(Constants.HEADER_VALUE_X_REQUESTID, RequestIDHolder.getRequestID());
+        }
     }
 
     /**
-     * {@inheritDoc}
-     * Remove the tenant information from MDC.
+     * {@inheritDoc} Remove the tenant information from MDC.
      */
     @Override
     protected void doAfter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
-        MDC.remove(Constants.HEADER_VALUE_TENANT);
-        MDC.remove(Constants.HEADER_VALUE_X_TENANT);
         MDC.clear();
     }
 }

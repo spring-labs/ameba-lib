@@ -72,7 +72,7 @@ public class ServiceLayerAspect {
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startMillis = 0L;
         if (SRV_LOGGER.isDebugEnabled()) {
-            SRV_LOGGER.debug("[S]>> Method call: {} ", pjp.toShortString());
+            SRV_LOGGER.debug("[S]>> Method call: {}", pjp.toShortString());
             startMillis = System.currentTimeMillis();
         }
 
