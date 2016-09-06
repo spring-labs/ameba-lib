@@ -4,7 +4,7 @@
 
     <groupId>io.interface21</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>1.7-SNAPSHOT</version>
+    <version>1.7</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <url>https://github.com/abraxas-labs/ameba-lib</url>
@@ -371,7 +371,7 @@
         <connection>scm:git:https://github.com/abraxas-labs/ameba-lib.git</connection>
         <developerConnection>scm:git:ssh://github.com:abraxas-labs/ameba-lib.git</developerConnection>
         <url>https://github.com/abraxas-labs/ameba-lib/tree/master</url>
-        <tag>HEAD</tag>
+        <tag>1.7</tag>
     </scm>
 
     <distributionManagement>
