@@ -50,7 +50,7 @@ public class TenantHolder {
     }
 
     /**
-     * Cleanup thread local-
+     * Cleanup thread local.
      */
     public static void destroy() {
         tenantHolder.remove();

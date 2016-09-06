@@ -44,6 +44,10 @@ public final class Constants {
      * present in the http header.
      */
     public static final String PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT = "multitenancy.throw";
+    /**
+     * Name of the custome http X- attribute used to store an unique request ID.
+     */
+    public static final String HEADER_VALUE_X_REQUESTID = "X-RequestID";
 
     /**
      * Hide constructor.
