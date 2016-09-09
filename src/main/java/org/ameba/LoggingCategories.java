@@ -21,13 +21,14 @@ package org.ameba;
  * example).
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.2
  * @since 0.3
  */
 public final class LoggingCategories {
 
 	/** Category to log all errors thrown in the presentation layer. */
 	public static final String PRESENTATION_LAYER_EXCEPTION = "PRESENTATION_LAYER_EXCEPTION";
+	/** Category to log time consumption of operations performed within the presentation layer. */
+	public static final String PRESENTATION_LAYER_ACCESS = "PRESENTATION_LAYER_ACCESS";
 	/** Category to log all errors thrown in the business layer. */
 	public static final String SERVICE_LAYER_EXCEPTION = "SERVICE_LAYER_EXCEPTION";
 	/** Category to log all errors thrown in the integration layer. */
