@@ -91,8 +91,8 @@ public class Response<T extends Serializable> extends ResourceSupport implements
     public Response(String message, String messageKey, String httpStatus, T[] obj) {
         this.message = message;
         this.messageKey = messageKey;
-        this.obj = obj;
         this.httpStatus = httpStatus;
+        this.obj = obj;
     }
 
     /**
