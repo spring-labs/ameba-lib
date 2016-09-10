@@ -26,7 +26,6 @@ import org.springframework.http.ResponseEntity;
  * A BehaviorAwareException is used to group exceptions that express a kind of behavior, like 'an entity to look up was not found'.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.3
  * @since 0.2
  */
 public abstract class BehaviorAwareException extends BusinessRuntimeException {
@@ -65,7 +64,7 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      * @return The ResponseEntity
      */
     public ResponseEntity<Response<Serializable>> toResponse() {
-        return new ResponseEntity<>(new Response<>(this.getMessage(), this.getMsgKey(), getStatus().toString(), new Serializable[0]), getStatus());
+        return new ResponseEntity<>(new Response<>(getMessage(), getMsgKey(), getStatus().toString(), getData()), getStatus());
     }
 
     /**
