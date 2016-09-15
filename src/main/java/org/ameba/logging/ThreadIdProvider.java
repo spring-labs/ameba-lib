@@ -21,7 +21,18 @@ import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 
 /**
- * A ThreadIdProvider.
+ * A ThreadIdProvider tracks a sequence number that gets increased per created thread. This class may be used to log the an unique thread id.
+ *
+ * Logback:
+ * <pre>
+ *     &lt;conversionRule conversionWord="tid" converterClass="org.ameba.logging.ThreadIdProvider" /&gt;
+ *     &lt;appender&gt;
+ *         &lt;encoder&gt;
+ *             ...
+ *             &lt;pattern>%tid %m%n&lt;/pattern&gt;
+ *         &lt;/encoder&gt;
+ *     &lt;/appender&gt;
+ * </pre>
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.7
@@ -35,7 +46,6 @@ public class ThreadIdProvider extends ClassicConverter {
          */
         @Override
         protected String initialValue() {
-
             return "" + nextId.incrementAndGet();
         }
     };
