@@ -57,7 +57,7 @@ public class BusinessRuntimeException extends RuntimeException {
      * @param message Message text
      * @param msgKey Message key
      */
-    protected BusinessRuntimeException(String message, String msgKey) {
+    public BusinessRuntimeException(String message, String msgKey) {
         super(message);
         this.msgKey = msgKey;
     }
