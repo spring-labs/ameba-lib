@@ -15,8 +15,6 @@
  */
 package org.ameba.integration.mongodb;
 
-import java.util.Date;
-
 import org.ameba.integration.TypedEntity;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -24,6 +22,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.util.Date;
 
 /**
  * A BaseEntity is a base superclass for MongoDB document entities that defined useful fields for optimistic locking, unique persisted key,
