@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+    <logger name="org.ameba" level="WARN"/>
+
+    <!-- Specialized loggers -->
+    <logger name="PRESENTATION_LAYER_ACCESS" level="DEBUG" additivity="false">
+        <appender-ref ref="TSL"/>
+    </logger>
+    <logger name="PRESENTATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
+        <appender-ref ref="EXCFILE"/>
+        <appender-ref ref="LOGFILE"/>
+    </logger>
+    <logger name="SERVICE_LAYER_ACCESS" level="DEBUG" additivity="false">
+        <appender-ref ref="TSL"/>
+    </logger>
+    <logger name="SERVICE_LAYER_EXCEPTION" level="ERROR" additivity="false">
+        <appender-ref ref="EXCFILE"/>
+        <appender-ref ref="LOGFILE"/>
+    </logger>
+    <logger name="INTEGRATION_LAYER_ACCESS" level="DEBUG" additivity="false">
+        <appender-ref ref="TSL"/>
+    </logger>
+    <logger name="INTEGRATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
+        <appender-ref ref="EXCFILE"/>
+        <appender-ref ref="LOGFILE"/>
+    </logger>
+    <logger name="MEASURED" level="DEBUG" additivity="false">
+        <appender-ref ref="TSL"/>
+    </logger>
+
+</included>
