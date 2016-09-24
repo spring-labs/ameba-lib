@@ -16,6 +16,7 @@ in Maven `provided` scope to cut transitive dependencies.
 - Web & MVC extensions
 - Mapper abstraction
 - Multi-tenancy
+- Logging extensions (Logback & Logstash)
 
 ### Spring Data extensions (1.4+)
 
@@ -118,6 +119,60 @@ manual filter registration needs to be done anymore.
 
 Referenced issues: [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
 
+### Logging extenstions (1.7+)
+
+Starting with version 1.7 some useful logging extensions were added. At first a `ThreadIdProvider` is used to identify each thread in a concurrent
+test run. By default logback does only provide a meaningless thread name. But a thread counter can now be configured to display the current value in the
+log message. To get the full power of Ameba log extensions just include the `logback-appenders.xml` and `logback-loggers.xml` into your logback.xml:
+
+ ````
+ <configuration>
+ 
+     <property name="MODULE_NAME" value="stamplets"/>
+ 
+     <include resource="logback-appenders.xml" />
+     <include resource="logback-loggers.xml" />
+ 
+     <logger name="org.foo" level="ERROR"/>
+ 
+     <root level="DEBUG">
+         <appender-ref ref="STDOUT"/>
+         <appender-ref ref="LOGFILE"/>
+     </root>
+ 
+ </configuration>
+ ```` 
+
+The following appender names are defined: 
+
+| Appender name | Outputs to                         | Description                              |
+| ------------ |:---------------------------------- |:---------------------------------------- |
+| STDOUT       | stdout                             | Print sto stdout. Useful for test output |
+| LOGFILE      | java.io.tmpdir/BOOT-<MODULE_NAME>.log   | Standard program or trace logging        |
+| EXCFILE      | java.io.tmpdir/BOOT-<MODULE_NAME>.exlog | Exception logs                           |
+| TSL          | java.io.tmpdir/BOOT-<MODULE_NAME>.tslog | Technical service logging. Logs method execution consumption |
+
+The module name can be configured as logback property:
+
+ ```` 
+     <property name="MODULE_NAME" value="my-module"/>
+ ```` 
+
+`BOOT` is the default tenant name. The logging is basically multitenant-aware. If no active tenant is set, the default is used as prefix.
+A tenant can be set by adding a property called `Tenant` to the `org.slf4j.MDC`. See `org.ameba.http.SLF4JMappedDiagnosticContextFilter`.
+
+The logfile path can be configured by setting the logback property:
+
+ ```` 
+     <property name="LOG_PATH" value="/tmp"/>
+ ```` 
+
+By default ameba logging first tries to find the configured $LOG_PATH property. If this property does not exist, it looks up $CATALINA_BASE
+to check if the application is running inside Tomcat. If even this does not exist it tries to find a logback property named $LOG_TEMP, and if
+that does not exist either, it will log to java.io.tmpdir.
+
+Notice: The output pattern is defined to be aligned to the Grok pattern that is used in combination with Logstash ([logstash.conf][logstashconf]).
+
 ## Development process
 
  Contribution welcome. The development process is kept lean, without the need to apply any IDE formatter templates. Just a few rules to
@@ -176,3 +231,4 @@ Referenced issues: [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
 [codacy-url]: https://www.codacy.com/app/openwms/ameba-lib
 [gitter-image]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/abraxas-labs/ameba-lib?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+[logstashconf]: src/main/resources/logstash.conf

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false">
+
+	<property name="LOG_TEMP" value="/tmp"/>
+	<property name="MODULE_NAME" value="TMS"/>
+
+	<include resource="logback-appenders.xml" />
+	<include resource="logback-loggers.xml" />
+
+	<logger name="org.ameba" level="debug"/>
+	<logger name="org.springframework" level="warn"/>
+	<logger name="org.hibernate" level="warn"/>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT"/>
+		<appender-ref ref="LOGFILE"/>
+	</root>
+
+</configuration>
