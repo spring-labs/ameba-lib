@@ -19,8 +19,7 @@ package org.ameba.app;
  * A SolutionApp is an empty marker interface to be included in component scan for base solution app configuration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
+ * @since 1.0
  */
 public interface SolutionApp {
 
