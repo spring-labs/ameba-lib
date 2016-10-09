@@ -25,6 +25,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
@@ -49,14 +50,20 @@ public abstract class AbstractMongoDBIntegrationTests {
         @EnableMongoRepositories(basePackageClasses = AbstractMongoDBIntegrationTests.class, considerNestedRepositories = true)
         static class TestConfig extends AbstractMongoConfiguration {
 
+            @Value("#{systemProperties['MONGO.HOST'] ?: '127.0.0.1'}")
+            private String host;
+            @Value("#{systemProperties['MONGO.PORT'] ?: 27017}")
+            private int port;
+            @Value("#{systemProperties['MONGO.DB'] ?: 'database'}")
+            private String database;
             @Override
             protected String getDatabaseName() {
-                return "database";
+                return database;
             }
 
             @Override
             public Mongo mongo() throws Exception {
-                return new MongoClient();
+                return new MongoClient(host, port);
             }
         }
 
