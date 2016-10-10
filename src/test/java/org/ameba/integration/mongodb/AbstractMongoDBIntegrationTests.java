@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import org.ameba.app.BaseConfiguration;
 import org.junit.After;
 import org.junit.Before;
@@ -50,10 +51,8 @@ public abstract class AbstractMongoDBIntegrationTests {
         @EnableMongoRepositories(basePackageClasses = AbstractMongoDBIntegrationTests.class, considerNestedRepositories = true)
         static class TestConfig extends AbstractMongoConfiguration {
 
-            @Value("#{systemProperties['MONGO.HOST'] ?: '127.0.0.1'}")
-            private String host;
-            @Value("#{systemProperties['MONGO.PORT'] ?: 27017}")
-            private int port;
+            @Value("#{systemProperties['MONGO.URI'] ?: 'mongodb://127.0.0.1'}")
+            private String uri;
             @Value("#{systemProperties['MONGO.DB'] ?: 'database'}")
             private String database;
             @Override
@@ -63,7 +62,7 @@ public abstract class AbstractMongoDBIntegrationTests {
 
             @Override
             public Mongo mongo() throws Exception {
-                return new MongoClient(host, port);
+                return new MongoClient(new MongoClientURI(uri));
             }
         }
 
