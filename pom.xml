@@ -380,7 +380,7 @@
 
     <scm>
         <connection>scm:git:https://github.com/abraxas-labs/ameba-lib.git</connection>
-        <developerConnection>scm:git:git@github.com/abraxas-labs/ameba-lib.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/abraxas-labs/ameba-lib.git</developerConnection>
         <url>https://github.com/abraxas-labs/ameba-lib</url>
         <tag>HEAD</tag>
     </scm>
