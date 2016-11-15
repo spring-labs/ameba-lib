@@ -33,7 +33,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <additionalparam>-Xdoclint:none</additionalparam> <!-- see: http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html -->
-        <project.scm.id>github<project.scm.id> <!-- Used to release and tag on GitHub -->
+        <project.scm.id>github</project.scm.id> <!-- Used to release and tag on GitHub -->
 
         <!-- Dependency versions -->
         <dozer.version>5.5.1</dozer.version>
