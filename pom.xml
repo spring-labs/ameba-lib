@@ -381,7 +381,7 @@
 
     <scm>
         <connection>scm:git:ssh://github.com/abraxas-labs/ameba-lib.git</connection>
-        <developerConnection>scm:git:ssh://github.com/abraxas-labs/ameba-lib.git</developerConnection>
+        <developerConnection>scm:git:ssh://git@github.com/abraxas-labs/ameba-lib.git</developerConnection>
         <url>https://github.com/abraxas-labs/ameba-lib</url>
         <tag>HEAD</tag>
     </scm>
