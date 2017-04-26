@@ -16,14 +16,13 @@
 package org.ameba.i18n;
 
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
  * A AbstractTranslator expects to translate messages from a Spring managed {@link MessageSource}. Subclasses may
  * provide their own {@link MessageSource}s that way.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
- * @since 0.3
  */
 public abstract class AbstractTranslator implements Translator {
 
@@ -32,7 +31,7 @@ public abstract class AbstractTranslator implements Translator {
      */
     @Override
     public String translate(String key, Object... objects) {
-        return getMessageSource().getMessage(key, objects, null);
+        return getMessageSource().getMessage(key, objects, LocaleContextHolder.getLocale());
     }
 
 	/**
