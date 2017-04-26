@@ -40,9 +40,9 @@ public class BaseEntity implements TypedEntity<String> {
     /** Unique persistent key, assigned by Spring Data MongoDB or MongoDB itself. */
     @Id
     @Field(FIELD_PK)
-    private String pk;
+    private String id;
     /** Field name to keep track of the current persisted identifier. */
-    public static final String FIELD_PK = "_pk";
+    public static final String FIELD_PK = "_id";
 
     /** Optimistic locking field, managed by Spring Data MongoDB. */
     @Version
@@ -71,7 +71,7 @@ public class BaseEntity implements TypedEntity<String> {
      * @return {@literal true} if transient, {@literal false} if detached or managed but not transient
      */
     public boolean isNew() {
-        return pk == null;
+        return id == null;
     }
 
     /**
@@ -80,7 +80,7 @@ public class BaseEntity implements TypedEntity<String> {
      * @return The persistent key, may be {@literal null} for transient entities.
      */
     public String getPk() {
-        return pk;
+        return id;
     }
 
     /**
@@ -89,7 +89,7 @@ public class BaseEntity implements TypedEntity<String> {
      * @param pk The persistent key to set
      */
     void setPk(String pk) {
-        this.pk = pk;
+        this.id = pk;
     }
 
     /**
