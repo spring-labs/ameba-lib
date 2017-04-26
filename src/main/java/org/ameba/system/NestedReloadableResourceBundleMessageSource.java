@@ -15,24 +15,38 @@
  */
 package org.ameba.system;
 
-import java.io.IOException;
-import java.util.Properties;
-
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * A NestedReloadableResourceBundleMessageSource.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.3
  */
 public class NestedReloadableResourceBundleMessageSource extends ReloadableResourceBundleMessageSource {
 
     private static final String PROPERTIES_SUFFIX = ".properties";
     private PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+
+    /**
+     * Create a new instance without any {@code basenames} set.
+     */
+    public NestedReloadableResourceBundleMessageSource() {
+    }
+
+    /**
+     * Create a new instance with {@code basenames} to {@code MessageSource} implementations.
+     *
+     * @param basenames Really the basenames to properties files without the .properties extension
+     */
+    public NestedReloadableResourceBundleMessageSource(String... basenames) {
+        super();
+        this.setBasenames(basenames);
+    }
 
     /**
      * {@inheritDoc}
