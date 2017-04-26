@@ -179,8 +179,7 @@ Notice: The output pattern is defined to be aligned to the Grok pattern that is 
  follow:
 
   - All Java files must have the Apache License header on top
-  - All Java types must provide a meaningful Javadoc comment with the initial author (`@author`), the version of ameba when the type was
-    introduced (`@since`) and a manually managed type version (`@version`). The first sentence in Javadoc is used as headline and needs to
+  - All Java types must provide a meaningful Javadoc comment with the initial author (`@author`). The first sentence in Javadoc is used as headline and needs to
     be a short but meaningful description of the type class.
 
  ````
@@ -188,14 +187,12 @@ Notice: The output pattern is defined to be aligned to the Grok pattern that is 
   * A SecurityConfigurers class is a collector of interfaces that provides a configuration option for security related topics.
   *
   * @author <a href="mailto:scherrer@openvms.org">Heiko Scherrer</a>
-  * @version 1.1
-  * @since 1.4
   */
  ````
 
   - Public API methods have to be documented
 
-## How to release
+### How to release
 
  A release is built from the `master` branch. At first all required feature branches need to be merged into the `develop` branch. Only if
  the `develop` branch builds successfully this can be merged into master.
