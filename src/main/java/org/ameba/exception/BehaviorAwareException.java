@@ -16,11 +16,11 @@
 package org.ameba.exception;
 
 
-import java.io.Serializable;
-
 import org.ameba.http.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.io.Serializable;
 
 /**
  * A BehaviorAwareException is used to group exceptions that express a kind of behavior, like 'an entity to look up was not found'.
@@ -31,28 +31,37 @@ import org.springframework.http.ResponseEntity;
 public abstract class BehaviorAwareException extends BusinessRuntimeException {
 
     /**
-     * {@inheritDoc}
+     * Default constructor.
      */
     public BehaviorAwareException() {
         super();
     }
 
     /**
-     * {@inheritDoc}
+     * Construct with a message.
+     *
+     * @param message The message
      */
     public BehaviorAwareException(String message) {
         super(message);
     }
 
     /**
-     * {@inheritDoc}
+     * Construct with a message and a message key.
+     *
+     * @param message The message
+     * @param msgKey  The message key
      */
     public BehaviorAwareException(String message, String msgKey) {
         super(message, msgKey);
     }
 
     /**
-     * {@inheritDoc}
+     * Construct with a message, a message key and parameters stored with the exception.
+     *
+     * @param message The message
+     * @param msgKey  The message key
+     * @param data    Data passed to clients
      */
     protected BehaviorAwareException(String message, String msgKey, Serializable... data) {
         super(message, msgKey, data);
