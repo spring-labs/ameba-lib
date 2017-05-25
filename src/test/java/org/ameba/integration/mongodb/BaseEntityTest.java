@@ -15,15 +15,13 @@
  */
 package org.ameba.integration.mongodb;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.ameba.app.BaseConfiguration;
+import org.junit.Test;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.util.List;
 
-import org.ameba.app.BaseConfiguration;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.mongodb.core.MongoOperations;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * A BaseEntityTest.
@@ -34,9 +32,6 @@ import org.springframework.data.mongodb.core.MongoOperations;
  */
 @ComponentScan(basePackageClasses = {BaseEntityTest.class, BaseConfiguration.class})
 public class BaseEntityTest extends AbstractMongoDBIntegrationTests {
-
-    @Autowired
-    private MongoOperations template;
 
     @Test
     public void testPk() {
