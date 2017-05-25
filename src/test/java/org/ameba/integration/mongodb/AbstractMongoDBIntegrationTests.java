@@ -15,15 +15,22 @@
  */
 package org.ameba.integration.mongodb;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import de.flapdoodle.embed.mongo.MongodExecutable;
+import de.flapdoodle.embed.mongo.MongodStarter;
+import de.flapdoodle.embed.mongo.config.IMongodConfig;
+import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
+import de.flapdoodle.embed.mongo.config.Net;
+import de.flapdoodle.embed.mongo.distribution.Version;
+import de.flapdoodle.embed.process.runtime.Network;
 import org.ameba.app.BaseConfiguration;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,53 +42,81 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * A AbstractMongoDBIntegrationTests.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {AbstractMongoDBIntegrationTests.TestConfig.class, BaseConfiguration.class})
 public abstract class AbstractMongoDBIntegrationTests {
 
-        @EnableMongoAuditing
-        @Configuration
-        @EnableMongoRepositories(basePackageClasses = AbstractMongoDBIntegrationTests.class, considerNestedRepositories = true)
-        static class TestConfig extends AbstractMongoConfiguration {
+    static final String HOST = "localhost";
+    private static final int PORT = 27017;
+    private static MongodExecutable mongodExecutable;
+    static final String DATABASE = "database";
+    @Autowired
+    MongoOperations template;
 
-            @Value("#{systemProperties['MONGO.URI'] ?: 'mongodb://127.0.0.1'}")
-            private String uri;
-            @Value("#{systemProperties['MONGO.DB'] ?: 'database'}")
-            private String database;
-            @Override
-            protected String getDatabaseName() {
-                return database;
-            }
+    @EnableMongoAuditing
+    @Configuration
+    @EnableMongoRepositories(basePackageClasses = AbstractMongoDBIntegrationTests.class, considerNestedRepositories = true)
+    static class TestConfig extends AbstractMongoConfiguration {
 
-            @Override
-            public Mongo mongo() throws Exception {
-                return new MongoClient(new MongoClientURI(uri));
-            }
+        @Value("#{systemProperties['MONGO.URI'] ?: 'mongodb://" + HOST + "'}")
+        private String uri;
+        @Value("#{systemProperties['MONGO.DB'] ?: '" + DATABASE + "'}")
+        private String database;
+
+        @Override
+        protected String getDatabaseName() {
+            return database;
         }
 
-        @Autowired MongoOperations operations;
-
-        @Before
-        @After
-        public void cleanUp() {
-            operations
-                    .getCollectionNames()
-                    .stream()
-                    .filter(collectionName ->
-                            !collectionName.startsWith("system"))
-                    .forEach(collectionName ->
-                            operations.execute(collectionName, collection -> {
-                                collection.remove(new BasicDBObject());
-                                assertThat(collection.find().hasNext()).isFalse();
-                                return null;
-                            })
-                    );
+        @Override
+        public Mongo mongo() throws Exception {
+            return new MongoClient(new MongoClientURI(uri));
         }
     }
+
+    @BeforeClass
+    public static void beforeClass() throws Exception {
+        MongodStarter starter = MongodStarter.getDefaultInstance();
+        IMongodConfig mongodConfig = new MongodConfigBuilder()
+                .version(Version.Main.PRODUCTION)
+                .net(new Net(HOST, PORT, Network.localhostIsIPv6()))
+                .build();
+        mongodExecutable = starter.prepare(mongodConfig);
+        mongodExecutable.start();
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        if (mongodExecutable != null) {
+            mongodExecutable.stop();
+        }
+    }
+
+    @After
+    @Before
+    public void aroundTests() throws Exception {
+        cleanUp();
+    }
+
+    private void cleanUp() {
+        template
+                .getCollectionNames()
+                .stream()
+                .filter(collectionName ->
+                        !collectionName.startsWith("system"))
+                .forEach(collectionName ->
+                        template.execute(collectionName, collection -> {
+                            collection.remove(new BasicDBObject());
+                            assertThat(collection.find().hasNext()).isFalse();
+                            return null;
+                        })
+                );
+    }
+}

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.interface21</groupId>
@@ -32,25 +34,32 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <additionalparam>-Xdoclint:none</additionalparam> <!-- see: http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html -->
+        <additionalparam>-Xdoclint:none
+        </additionalparam> <!-- see: http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html -->
         <project.scm.id>github</project.scm.id> <!-- Used to release and tag on GitHub -->
 
         <!-- Dependency versions -->
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
         <h2.version>1.4.194</h2.version> <!-- in line with boot -->
-        <hibernate-validator.version>5.2.4.Final</hibernate-validator.version> <!-- in line with boot -->
+        <hibernate-validator.version>5.2.4.Final
+        </hibernate-validator.version> <!-- in line with boot -->
         <jackson.version>2.8.8</jackson.version> <!-- in line with boot -->
-        <javax-persistence.version>2.1.1</javax-persistence.version> <!-- in line with Spring Data release train and org.eclipse.persistence:org.eclipse.persistence.jpa -->
-        <javax.validation-api.version>1.1.0.Final</javax.validation-api.version> <!-- in line with hibernate-validator-parent -->
+        <javax-persistence.version>2.1.1
+        </javax-persistence.version> <!-- in line with Spring Data release train and org.eclipse.persistence:org.eclipse.persistence.jpa -->
+        <javax.validation-api.version>1.1.0.Final
+        </javax.validation-api.version> <!-- in line with hibernate-validator-parent -->
         <json-path.version>2.2.0</json-path.version>
         <junit.version>4.12</junit.version> <!-- in line with boot -->
         <servlet-api.version>3.1.0</servlet-api.version> <!-- in line with boot -->
-        <spring-hateoas.version>0.23.0.RELEASE</spring-hateoas.version> <!-- in line with boot -->
-        <spring-security.version>4.2.2.RELEASE</spring-security.version> <!-- in line with boot -->
+        <spring-hateoas.version>0.23.0.RELEASE
+        </spring-hateoas.version> <!-- in line with boot -->
+        <spring-security.version>4.2.2.RELEASE
+        </spring-security.version> <!-- in line with boot -->
         <spring.version>4.3.8.RELEASE</spring.version> <!-- in line with boot -->
         <spring-boot-dependencies.version>1.5.3.RELEASE</spring-boot-dependencies.version>
-        <spring-data-releasetrain.version>Ingalls-SR3</spring-data-releasetrain.version> <!-- in line with boot -->
+        <spring-data-releasetrain.version>Ingalls-SR3
+        </spring-data-releasetrain.version> <!-- in line with boot -->
 
         <!-- Plugin versions -->
         <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
@@ -233,6 +242,10 @@
 
         <!-- Test dependencies -->
         <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -375,7 +388,8 @@
 
     <scm>
         <connection>scm:git:git@github.com:abraxas-labs/ameba-lib.git</connection>
-        <developerConnection>scm:git:git@github.com:abraxas-labs/ameba-lib.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:abraxas-labs/ameba-lib.git
+        </developerConnection>
         <url>scm:git:git@github.com:abraxas-labs/ameba-lib.git</url>
         <tag>HEAD</tag>
     </scm>
