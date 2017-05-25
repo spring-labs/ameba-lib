@@ -8,6 +8,43 @@
 Ameba Lib is a collection of utils, exceptions, constants and other helpers used across projects and solutions. All dependencies are defined
 in Maven `provided` scope to cut transitive dependencies.
 
+## Usage
+
+Add as Maven dependency
+```
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.interface21</groupId>
+                <artifactId>ameba-lib</artifactId>
+                <version>1.10-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>io.interface21</groupId>
+                <artifactId>ameba-lib</artifactId>
+                <version>1.10-SNAPSHOT</version>
+                <type>test-jar</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.interface21</groupId>
+            <artifactId>ameba-lib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.interface21</groupId>
+            <artifactId>ameba-lib</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+```
+
+To benefit from some abstract test classes use the `test-jar` for all other stuff go with 
+the `jar`.
+
 ## Core Features
 
 - Spring Data extensions
