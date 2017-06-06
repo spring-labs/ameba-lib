@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <included>
 
-    <property name="MODULE_NAME" value="AMEBA"/>
+    <property name="MODULE_NAME" value="${MODULE_NAME}:-AMEBA"/>
+    <property name="LOG_TEMP" value="${LOG_TEMP}:-${BUILD_FOLDER:-.}"/>
+    <variable scope="context" name="mdcPattern" value="%replace(;%X{MSGKEY};%X{MSGDATA}){';+( |$)', ''}"/>
 
     <conversionRule conversionWord="tid" converterClass="org.ameba.logging.ThreadIdProvider" />
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
@@ -9,7 +11,6 @@
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
     <property name="LOG_PATH" value="${LOG_PATH:-${CATALINA_BASE:-${LOG_TEMP:-${java.io.tmpdir:-/.}}}}"/>
     <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{YYYY-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([${PID:- }/%tid]){magenta} %clr(-){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    <variable scope="context" name="mdcPattern" value="%replace(;%X{MSGKEY};%X{MSGDATA}){';+( |$)', ''}"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -30,8 +31,7 @@
                 <!--prudent>false</prudent-->
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.log
-                    </fileNamePattern>
+                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.log.gz</fileNamePattern>
                     <MinIndex>1</MinIndex>
                     <MaxIndex>10</MaxIndex>
                 </rollingPolicy>
@@ -57,8 +57,7 @@
                 <!--prudent>false</prudent-->
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.exlog
-                    </fileNamePattern>
+                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.exlog.gz</fileNamePattern>
                     <MinIndex>1</MinIndex>
                     <MaxIndex>10</MaxIndex>
                 </rollingPolicy>
@@ -84,8 +83,7 @@
                 <!--prudent>false</prudent-->
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.tslog
-                    </fileNamePattern>
+                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.tslog.gz</fileNamePattern>
                     <MinIndex>1</MinIndex>
                     <MaxIndex>10</MaxIndex>
                 </rollingPolicy>

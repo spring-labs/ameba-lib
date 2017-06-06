@@ -50,4 +50,10 @@ public class Pointcuts extends SpringPointcuts {
     public void isValidated() {
 
     }
+
+    /** Map methods with Measured. */
+    @Pointcut("@annotation(org.ameba.annotation.Measured)")
+    public void isMeasured() {
+
+    }
 }

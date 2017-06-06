@@ -2,6 +2,7 @@
 <included>
 
     <logger name="org.ameba" level="WARN"/>
+    <logger name="ch.qos" level="OFF"/>
 
     <!-- Specialized loggers -->
     <logger name="PRESENTATION_LAYER_ACCESS" level="DEBUG" additivity="false">

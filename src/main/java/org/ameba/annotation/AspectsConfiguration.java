@@ -16,6 +16,7 @@
 package org.ameba.annotation;
 
 import org.ameba.aop.IntegrationLayerAspect;
+import org.ameba.aop.MeasuredAspect;
 import org.ameba.aop.PresentationLayerAspect;
 import org.ameba.aop.ServiceLayerAspect;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * A AspectsConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.1
+ * @version 1.2
  * @since 1.0
  */
 @ExcludeFromScan
@@ -40,6 +41,11 @@ public class AspectsConfiguration {
     @Bean(name = ServiceLayerAspect.COMPONENT_NAME)
     public ServiceLayerAspect serviceLayerAspect() {
         return new ServiceLayerAspect(withRootCause);
+    }
+
+    @Bean(name = MeasuredAspect.COMPONENT_NAME)
+    public MeasuredAspect measuredAspect() {
+        return new MeasuredAspect();
     }
 
     @Bean(name = IntegrationLayerAspect.COMPONENT_NAME)

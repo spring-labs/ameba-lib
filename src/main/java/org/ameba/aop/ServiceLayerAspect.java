@@ -15,9 +15,6 @@
  */
 package org.ameba.aop;
 
-import java.util.Optional;
-import java.util.stream.Stream;
-
 import org.ameba.LoggingCategories;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.ServiceLayerException;
@@ -28,6 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
+
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * A ServiceLayerAspect is spawned around all public API methods and is responsible to log method execution time and log occurring
