@@ -63,9 +63,9 @@ additional feature is the abstraction of Spring Data repositories. All this is p
 
 ### Useful AOP aspects (1.2+)
 
-Three aspects are implemented to track method calls around application layers. Each aspect measures and traces the method execution time at
+Four aspects are implemented to track method calls around application layers. Three of them measure and trace the method execution time at
 a defined logging category. The pointcut definition where the aspect actually takes place is pre-defined in `org.ameba.aop.Pointcuts`. This
-definition can be overridden by putting a customized `org.ameba.aop.Pointcuts` class onto the classpath. In addition to method tracing some
+definition can be overridden by putting a customized `org.ameba.aop.Pointcuts` class on the classpath. In addition to method tracing some
 aspects although care about exception translation and offer an extension point to translate custom exceptions.
 
 Ameba AOP support is enabled by including the package `org.ameba.annotation` in component-scan **or** by using the `@EnableAspects`
@@ -76,6 +76,7 @@ annotation on a custom `@Configuration` class. Furthermore `org.springframework:
 | PresentationLayerAspect      | --                              | --                     | PRESENTATION_LAYER_EXCEPTION |
 | ServiceLayerAspect           | SERVICE_LAYER_ACCESS            | X                      | SERVICE_LAYER_EXCEPTION      |
 | IntegrationLayerAspect       | INTEGRATION_LAYER_ACCESS        | X                      | INTEGRATION_LAYER_EXCEPTION  |
+| MeasuredAspect               | MEASURED                        | --                     | --                           |
 
 For method tracing the SLF4J loglevel has to be configured to `INFO`, exception logging need to be configured to level `ERROR` instead.
 
