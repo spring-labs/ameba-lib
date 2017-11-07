@@ -95,10 +95,10 @@ Referenced issues: [#1](https://github.com/abraxas-labs/ameba-lib/issues/1), [#2
 ### Web & MVC extensions
 
 Usually you expose resources in a RESTful way. But in practise we've seen that a client application, written in languages like Objective-C, needs
-some help with the actual response type of a RESTful API. Of course we have HATEOS and HAL but on the other end of the wire, the client
+some help with the actual response type of a RESTful API. Of course we have HATEOAS and HAL but on the other end of the wire, the client
 need to know what is the expected type of response. That's why we put the resource into an _envelope_ - the `org.ameba.http.Response`. Beside
 the actual response entities, this class tracks a http status for each wrapped response object, has a message text and key and provides an
-arbitrary string dictionary that may be used to store the response type. On IOS there is no library to deal with HATEOS responses in a
+arbitrary string dictionary that may be used to store the response type. On IOS there is no library to deal with HATEOAS responses in a
 comfortable way. Many solutions use [Restkit](https://github.com/RestKit/RestKit) and need to parse the response in a old-fashioned
 low-level way.
 
@@ -126,7 +126,7 @@ type of response entity (e.g. `"class" : "User"`. With this type information the
 appropriate converter to convert from JSON into the corresponding client specific class. A similar concept is included in [JSON Siren]
 (https://github.com/kevinswiber/siren).
 
-Beside the response encapsulation ameba-lib provides an abstract base class, that provides HATEOS and Jackson support (`org.ameba.http.AbstractBase`).
+Beside the response encapsulation ameba-lib provides an abstract base class, that provides HATEOAS and Jackson support (`org.ameba.http.AbstractBase`).
 Some filter implementations for multi-tenancy and SLF4J context propagation are provided as well.
 
 ### Mapper abstraction (0.7+)
