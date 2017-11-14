@@ -28,7 +28,7 @@ public class BusinessRuntimeException extends RuntimeException {
     private String msgKey;
     private Serializable[] data;
 
-    /** Constructor. */
+    /** Default constructor. */
     public BusinessRuntimeException() {
     }
 
@@ -55,35 +55,35 @@ public class BusinessRuntimeException extends RuntimeException {
      * Constructor with message text.
      *
      * @param message Message text
-     * @param msgKey Message key
+     * @param messageKey Message key
      */
-    public BusinessRuntimeException(String message, String msgKey) {
+    public BusinessRuntimeException(String message, String messageKey) {
         super(message);
-        this.msgKey = msgKey;
+        this.msgKey = messageKey;
     }
 
     /**
      * Constructs with a message key and a message
      *
      * @param message Message text
-     * @param msgKey Message key
+     * @param messageKey Message key
      * @param data Additional implicit data passed to the caller
      */
-    public BusinessRuntimeException(String message, String msgKey, Serializable[] data) {
+    public BusinessRuntimeException(String message, String messageKey, Serializable[] data) {
         super(message);
-        this.msgKey = msgKey;
+        this.msgKey = messageKey;
         this.data = data;
     }
 
     /**
      * Constructs with a message key and a message
      *
-     * @param msgKey Message key
+     * @param messageKey Message key
      * @param data Additional implicit data passed to the caller
      */
-    public BusinessRuntimeException(String msgKey, Serializable[] data) {
+    public BusinessRuntimeException(String messageKey, Serializable[] data) {
         super();
-        this.msgKey = msgKey;
+        this.msgKey = messageKey;
         this.data = data;
     }
 
@@ -91,8 +91,19 @@ public class BusinessRuntimeException extends RuntimeException {
      * Get the message key.
      *
      * @return The message key
+     * @deprecated since 1.11 use {@link #getMessageKey()}
      */
+    @Deprecated
     public String getMsgKey() {
+        return msgKey;
+    }
+
+    /**
+     * Get the message key.
+     *
+     * @return The message key
+     */
+    public String getMessageKey() {
         return msgKey;
     }
 
