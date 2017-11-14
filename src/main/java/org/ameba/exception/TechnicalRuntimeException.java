@@ -15,6 +15,8 @@
  */
 package org.ameba.exception;
 
+import java.io.Serializable;
+
 /**
  * A TechnicalRuntimeException keeps the message text of the superclass together with a message key (used for translation) and a translated
  * message text
@@ -26,10 +28,9 @@ package org.ameba.exception;
 public class TechnicalRuntimeException extends RuntimeException {
 
     private String msgKey;
+    private Serializable[] data;
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public TechnicalRuntimeException() {
         super();
     }
@@ -44,6 +45,16 @@ public class TechnicalRuntimeException extends RuntimeException {
     }
 
     /**
+     * Create a TechnicalRuntimeException with message and root cause.
+     *
+     * @param message The message text
+     * @param cause The root cause
+     */
+    public TechnicalRuntimeException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
      * Create a TechnicalRuntimeException with message and message key.
      *
      * @param message The message text
@@ -54,15 +65,29 @@ public class TechnicalRuntimeException extends RuntimeException {
         this.msgKey = messageKey;
     }
 
+    /**
+     * Constructs with a message key and a message
+     *
+     * @param message Message text
+     * @param messageKey Message key
+     * @param data Additional implicit data passed to the caller
+     */
+    public TechnicalRuntimeException(String message, String messageKey, Serializable[] data) {
+        super(message);
+        this.msgKey = messageKey;
+        this.data = data;
+    }
 
     /**
-     * Create a TechnicalRuntimeException with message and root cause.
+     * Constructs with a message key and a message
      *
-     * @param message The message text
-     * @param cause The root cause
+     * @param messageKey Message key
+     * @param data Additional implicit data passed to the caller
      */
-    public TechnicalRuntimeException(String message, Throwable cause) {
-        super(message, cause);
+    public TechnicalRuntimeException(String messageKey, Serializable[] data) {
+        super();
+        this.msgKey = messageKey;
+        this.data = data;
     }
 
     /**
@@ -77,6 +102,15 @@ public class TechnicalRuntimeException extends RuntimeException {
         this.msgKey = messageKey;
     }
 
+    private TechnicalRuntimeException(Builder builder) {
+        msgKey = builder.msgKey;
+        data = builder.data;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     /**
      * Get the message key.
      *
@@ -84,5 +118,37 @@ public class TechnicalRuntimeException extends RuntimeException {
      */
     public String getMessageKey() {
         return msgKey;
+    }
+
+    /**
+     * Get the data, applied to the exception.
+     *
+     * @return The applied data, the caller should know about how to use this information
+     */
+    public Serializable[] getData() {
+        return data;
+    }
+
+
+    public static final class Builder {
+        private String msgKey;
+        private Serializable[] data;
+
+        private Builder() {
+        }
+
+        public Builder withMsgKey(String val) {
+            msgKey = val;
+            return this;
+        }
+
+        public Builder withData(Serializable[] val) {
+            data = val;
+            return this;
+        }
+
+        public TechnicalRuntimeException build() {
+            return new TechnicalRuntimeException(this);
+        }
     }
 }

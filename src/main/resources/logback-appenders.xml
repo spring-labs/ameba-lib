@@ -28,8 +28,6 @@
         <sift>
             <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>${LOG_PATH}/${Tenant}-${MODULE_NAME}.log</file>
-                <!--prudent>false</prudent-->
-
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
                     <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.log.gz</fileNamePattern>
                     <MinIndex>1</MinIndex>
