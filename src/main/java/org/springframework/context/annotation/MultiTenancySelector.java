@@ -24,7 +24,6 @@ import org.springframework.core.type.AnnotationMetadata;
  * A MultiTenancySelector does the programatic configuration based on the {@link EnableMultiTenancy} counterpart.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.7
  */
 public class MultiTenancySelector implements ImportSelector {
@@ -42,6 +41,7 @@ public class MultiTenancySelector implements ImportSelector {
                     annoType.getSimpleName(), importingClassMetadata.getClassName()));
         }
         if (attributes.getBoolean("enabled")) {
+            MultiTenancyConfiguration.urlPatterns = attributes.getStringArray("urlPatterns");
             MultiTenancyConfiguration.enabled = attributes.getBoolean("enabled");
             MultiTenancyConfiguration.throwIfNotPresent = attributes.getBoolean("throwIfNotPresent");
             return new String[]{MultiTenancyConfiguration.class.getName()};

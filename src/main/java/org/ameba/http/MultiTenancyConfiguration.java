@@ -15,12 +15,12 @@
  */
 package org.ameba.http;
 
-import javax.servlet.DispatcherType;
-
 import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.servlet.DispatcherType;
 
 /**
  * A MultiTenancyConfiguration is not meant to be scanned by applications, therefor it is {@link ExcludeFromScan} and not in the {@literal
@@ -38,6 +38,8 @@ public class MultiTenancyConfiguration {
     public static boolean enabled = false;
     /** Set by selector! */
     public static boolean throwIfNotPresent = false;
+    /** Set by selector! */
+    public static String[] urlPatterns;
 
     /**
      * Registers the MultiTenantSessionFilter filter.
@@ -49,6 +51,9 @@ public class MultiTenancyConfiguration {
     FilterRegistrationBean multiTenantSessionFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new MultiTenantSessionFilter());
         registration.setDispatcherTypes(DispatcherType.REQUEST);
+        if (urlPatterns != null) {
+            registration.addUrlPatterns(urlPatterns);
+        }
         registration.addInitParameter(org.ameba.Constants.PARAM_MULTI_TENANCY_ENABLED, String.valueOf(enabled));
         registration.addInitParameter(org.ameba.Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT, String.valueOf(throwIfNotPresent));
         return registration;
@@ -64,6 +69,9 @@ public class MultiTenancyConfiguration {
     FilterRegistrationBean slf4JMappedDiagnosticContextFilter() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new SLF4JMappedDiagnosticContextFilter());
         registration.setDispatcherTypes(DispatcherType.REQUEST);
+        if (urlPatterns != null) {
+            registration.addUrlPatterns(urlPatterns);
+        }
         registration.addInitParameter(org.ameba.Constants.PARAM_MULTI_TENANCY_ENABLED, String.valueOf(enabled));
         registration.addInitParameter(org.ameba.Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT, String.valueOf(throwIfNotPresent));
         return registration;
