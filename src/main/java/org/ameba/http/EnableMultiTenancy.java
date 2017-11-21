@@ -15,20 +15,19 @@
  */
 package org.ameba.http;
 
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.MultiTenancySelector;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.MultiTenancySelector;
-
 /**
  * A EnableMultiTenancy is able to enable Spring configuration for multi-tenancy.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.7
  */
 @Target(ElementType.TYPE)
@@ -51,4 +50,11 @@ public @interface EnableMultiTenancy {
      * @return Set to {@literal true} to throw exception if not present
      */
     boolean throwIfNotPresent() default false;
+
+    /**
+     * All url patterns that should be handled by the multi-tenancy filters.
+     *
+     * @return Patterns matching the URL to activate multi-tenancy on, no Ant style supported
+     */
+    String[] urlPatterns() default "/*";
 }
