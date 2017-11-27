@@ -18,7 +18,7 @@ package org.ameba.oauth2;
 import io.jsonwebtoken.Jwt;
 
 /**
- * A ExtractionResult.
+ * A ExtractionResult is an encapsulation of a token extraction process.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */

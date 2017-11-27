@@ -15,27 +15,22 @@
  */
 package org.ameba.oauth2;
 
+import io.jsonwebtoken.Jwt;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
- * A TokenExtractor is able to extract a structure token format from a String.
+ * A JWTValidator validates JWT.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface TokenExtractor {
+public interface JWTValidator {
 
     /**
-     * Is the implementation able to extract a token from the given {@code token} String?
+     * Validate the given {@code jwt}.
      *
-     * @param token The String
-     * @return {@literal true} if so, otherwise {@literal false}
+     * @param jwt The JWT to validate
+     * @param request The current http request
      */
-    ExtractionResult canExtract(String token);
-
-    /**
-     * Extract a token from the given {@code token} String.
-     *
-     * @param token The String
-     * @return The result
-     * @throws InvalidTokenException in case extraction is not possible
-     */
-    ExtractionResult extract(String token);
+    void validate(Jwt jwt, HttpServletRequest request);
 }

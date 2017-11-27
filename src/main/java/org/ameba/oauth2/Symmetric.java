@@ -16,26 +16,16 @@
 package org.ameba.oauth2;
 
 /**
- * A TokenExtractor is able to extract a structure token format from a String.
+ * A Symmetric Issuer provides a secret signing key to validate token signatures.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface TokenExtractor {
+public interface Symmetric extends Issuer {
 
     /**
-     * Is the implementation able to extract a token from the given {@code token} String?
+     * The secret signing key used to build and validate the signature.
      *
-     * @param token The String
-     * @return {@literal true} if so, otherwise {@literal false}
+     * @return As String
      */
-    ExtractionResult canExtract(String token);
-
-    /**
-     * Extract a token from the given {@code token} String.
-     *
-     * @param token The String
-     * @return The result
-     * @throws InvalidTokenException in case extraction is not possible
-     */
-    ExtractionResult extract(String token);
+    String getSigningKey();
 }

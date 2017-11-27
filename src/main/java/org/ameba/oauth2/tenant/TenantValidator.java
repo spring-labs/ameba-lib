@@ -19,31 +19,35 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwt;
 import org.ameba.oauth2.InvalidTokenException;
-import org.ameba.oauth2.TokenValidator;
+import org.ameba.oauth2.JWTValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 import static org.ameba.Constants.HEADER_VALUE_X_TENANT;
 
 /**
- * A TokenValidatorImpl.
+ * A TenantValidator validates the Tenant is known, it belongs to the configured Realm and
+ * it is foreseen as the token audience, that said the receiver of the token.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
-class TenantValidatorImpl implements TokenValidator {
+public class TenantValidator implements JWTValidator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TenantValidatorImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TenantValidator.class);
     private final TenantRepository repository;
 
-    private TenantValidatorImpl(TenantRepository repository) {
+    @Inject
+    private TenantValidator(TenantRepository repository) {
         this.repository = repository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void validate(Jwt jwt, HttpServletRequest request) {
         if (jwt instanceof Jws) {
@@ -52,7 +56,7 @@ class TenantValidatorImpl implements TokenValidator {
             String realm = issuer.substring(issuer.lastIndexOf("/")+1, issuer.length());
             Optional<TenantEO> tenantEO = repository.findByHash(request.getHeader(HEADER_VALUE_X_TENANT));
             if (!tenantEO.isPresent()){
-                throw new InvalidTokenException("Tenant to registered");
+                throw new InvalidTokenException("Tenant not registered");
             }
             if (!tenantEO.get().sameRealm(realm)) {
                 throw new InvalidTokenException("The issue does not match the configured REALM for the Tenant");
@@ -60,7 +64,9 @@ class TenantValidatorImpl implements TokenValidator {
             if (!tenantEO.get().getName().equals(jws.getBody().getAudience())) {
                 throw new InvalidTokenException("The token has been issued for some other audience, is the token leaked or replayed?");
             }
-            LOGGER.debug("{} has been translated into [{}]", HEADER_VALUE_X_TENANT, tenantEO.get().getName());
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("{} has been translated into [{}]", HEADER_VALUE_X_TENANT, tenantEO.get().getName());
+            }
             request.setAttribute(HEADER_VALUE_X_TENANT, tenantEO.get().getName());
         } else {
             throw new InvalidTokenException("Only signed JWT are supported");

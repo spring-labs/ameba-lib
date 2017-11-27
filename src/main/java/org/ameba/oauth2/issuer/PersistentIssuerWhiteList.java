@@ -16,31 +16,34 @@
 package org.ameba.oauth2.issuer;
 
 import org.ameba.oauth2.InvalidTokenException;
-import org.ameba.oauth2.TokenIssuerWhiteList;
-import org.springframework.stereotype.Component;
+import org.ameba.oauth2.IssuerWhiteList;
 
+import javax.inject.Inject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Optional;
 
 /**
- * A TokenIssuerWhiteListImpl.
+ * A PersistentIssuerWhiteList.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
-class TokenIssuerWhiteListImpl implements TokenIssuerWhiteList {
+public class PersistentIssuerWhiteList implements IssuerWhiteList {
 
     private final IssuerRepository repository;
 
-    private TokenIssuerWhiteListImpl(IssuerRepository repository) {
+    @Inject
+    private PersistentIssuerWhiteList(IssuerRepository repository) {
         this.repository = repository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Optional<IssuerEO> getIssuer(String issuer) {
+    public Optional<IssuerEO> getIssuer(String issuerId) {
         try {
-            return repository.findByIssUrl(new URL(issuer));
+            return repository.findByIssUrl(new URL(issuerId));
         } catch (MalformedURLException e) {
             throw new InvalidTokenException("Format of issuer not supported. The current implementation supports URL formats only");
         }

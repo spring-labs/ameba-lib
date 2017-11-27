@@ -16,7 +16,9 @@
 package org.ameba.oauth2.issuer;
 
 import org.ameba.integration.jpa.ApplicationEntity;
+import org.ameba.oauth2.Asymmetric;
 import org.ameba.oauth2.Issuer;
+import org.ameba.oauth2.Symmetric;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +32,7 @@ import java.net.URL;
  */
 @Entity
 @Table(name = "CORE_ISSUER")
-class IssuerEO extends ApplicationEntity implements Issuer {
+class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric, Issuer {
 
     @Column(name = "C_URL", nullable = false, unique = true)
     private URL issUrl;
@@ -58,5 +60,10 @@ class IssuerEO extends ApplicationEntity implements Issuer {
     @Override
     public long getSkewSeconds() {
         return tokenLifetime;
+    }
+
+    @Override
+    public String getPublicKey() {
+        return publicKey;
     }
 }

@@ -16,73 +16,90 @@
 package org.ameba.oauth2;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwsHeader;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-import java.security.KeyFactory;
-import java.security.PublicKey;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static java.lang.String.format;
 
 /**
- * A AccessTokenExtractor.
+ * A BearerTokenExtractor tries to extract the Bearer token from an authorization header.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
-class AccessTokenExtractor implements TokenExtractor {
+public class BearerTokenExtractor implements TokenExtractor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccessTokenExtractor.class);
-    private final TokenIssuerWhiteList whiteList;
+    private static final Logger LOGGER = LoggerFactory.getLogger(BearerTokenExtractor.class);
+    private final IssuerWhiteList whiteList;
+    private final List<TokenParser> parsers;
+    private Map<String, TokenParser<Issuer, ?>> parserMap = new ConcurrentHashMap<>();
 
-    private AccessTokenExtractor(TokenIssuerWhiteList whiteList) {
+    @Inject
+    private BearerTokenExtractor(IssuerWhiteList whiteList, List<TokenParser> parsers) {
         this.whiteList = whiteList;
+        this.parsers = parsers;
     }
 
+    @PostConstruct
+    private void onPostConstruct() {
+        parsers.stream().map(p->parserMap.put(p.supportAlgorithm(), p));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * This implementation supports the 'Bearer' authorization scheme.
+     */
     @Override
     public ExtractionResult canExtract(String authHeader) {
-        String token = authHeader.replace("Bearer ", "");
+        String token = stripBearer(authHeader);
         String[] parts = token.split("\\.");
         return authHeader.startsWith("Bearer ") && parts.length == 3 ? new ExtractionResult() : new ExtractionResult("Not a valid JWT");
     }
 
+    private String stripBearer(String authHeader) {
+        return authHeader.replace("Bearer ", "");
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * This implementation expects a JWT as Bearer Token. It parses the JWT and validates
+     * the signature of the JWT.
+     */
     @Override
     public ExtractionResult extract(final String authHeader) {
         if (!canExtract(authHeader).isExtractionPossible()) {
             throw new InvalidTokenException("Not a valid JWT");
         }
-        String token = authHeader.replace("Bearer ", "");
+        String token = stripBearer(authHeader);
         // we do not trust the signature so first parse the token an check the issuer
         String[] splitToken = token.split("\\.");
         Jwt<JwsHeader,Claims> jwt = Jwts.parser().setAllowedClockSkewSeconds(2592000).parse(splitToken[0] + "." + splitToken[1] + ".");
-        Optional<Issuer> optIssuer = whiteList.getIssuer(jwt.getBody().getIssuer());
 
+        Optional<Issuer> optIssuer = whiteList.getIssuer(jwt.getBody().getIssuer());
         if (!optIssuer.isPresent()) {
             throw new InvalidTokenException("Token issuer is not known and therefor rejected");
         }
         Issuer issuer = optIssuer.get();
-        LOGGER.debug("Issuer accepted [{}]", issuer.getIssuerId());
-        Jws jws;
-        try {
-            byte[] publicBytes = Base64.getDecoder().decode(issuer.getSigningKey());
-            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            PublicKey pubKey = keyFactory.generatePublic(keySpec);
-            // Now check with Signature
-            jws = Jwts.parser()
-                    .setAllowedClockSkewSeconds(issuer.getSkewSeconds())
-                    .setSigningKey(pubKey)
-                    .parseClaimsJws(token);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new InvalidTokenException(e.getMessage());
+        if (LOGGER.isDebugEnabled()){
+            LOGGER.debug("Issuer accepted [{}]", issuer.getIssuerId());
         }
-        return new ExtractionResult(jws);
+
+        // Now check with Signature
+        TokenParser<Issuer, ?> parser = parserMap.get(jwt.getHeader().getAlgorithm());
+        if (parser == null) {
+            throw new InvalidTokenException(format("Algorithm [%s] not supported", jwt.getHeader().getAlgorithm()));
+        }
+        return new ExtractionResult(parser.parse(token, issuer));
     }
 }

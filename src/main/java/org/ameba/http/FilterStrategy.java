@@ -13,16 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.oauth2;
+package org.ameba.http;
 
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * A TokenIssuerWhiteList.
+ * A FilterStrategy encapsulates filter logic that may be used by servlet filters to
+ * introduce logic into the filter chain. It is extracted into a strategy in order to be
+ * used independent from the actual filter implementation. A filter may inherit from
+ * Spring Frameworks filter classes or be a plain http servlet filter.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface TokenIssuerWhiteList<T extends Issuer> {
+public interface FilterStrategy {
 
-    Optional<T> getIssuer(String issuer);
+    void doFilter(HttpServletRequest request, HttpServletResponse response);
 }

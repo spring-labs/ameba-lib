@@ -15,16 +15,20 @@
  */
 package org.ameba.oauth2;
 
-import io.jsonwebtoken.Jwt;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
- * A TokenValidator.
+ * A IssuerWhiteList manages and stores all allowed Issuers.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface TokenValidator {
+public interface IssuerWhiteList<T extends Issuer> {
 
-    void validate(Jwt jwt, HttpServletRequest request);
+    /**
+     * Resolve the Issuer by the given {@code issuerId}.
+     *
+     * @param issuerId The unique ID of the Issuer, see {@link Issuer#getIssuerId()}
+     * @return The Issuer instance
+     */
+    Optional<T> getIssuer(String issuerId);
 }

@@ -16,15 +16,23 @@
 package org.ameba.oauth2;
 
 /**
- * A Issuer.
+ * An Issuer is authorized to issue OAuth2 tokens.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface Issuer {
 
+    /**
+     * The unique ID of the issuer, e.g. an URL (in case of ReadHat KeyCloak).
+     *
+     * @return As String
+     */
     String getIssuerId();
 
-    String getSigningKey();
-
+    /**
+     * Leap seconds allowed when a token signature is validated.
+     *
+     * @return In seconds
+     */
     long getSkewSeconds();
 }

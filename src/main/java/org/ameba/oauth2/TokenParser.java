@@ -15,27 +15,28 @@
  */
 package org.ameba.oauth2;
 
+import io.jsonwebtoken.Jwt;
+
 /**
- * A TokenExtractor is able to extract a structure token format from a String.
+ * A TokenParser is able to parse tokens as Strings into JWT types.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface TokenExtractor {
+public interface TokenParser<T extends Issuer, U extends Jwt> {
 
     /**
-     * Is the implementation able to extract a token from the given {@code token} String?
+     * Returns the signing algorithm that is supported by the parser.
      *
-     * @param token The String
-     * @return {@literal true} if so, otherwise {@literal false}
+     * @return As shortcut, see <a href="https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-31#section-4.1.1">
      */
-    ExtractionResult canExtract(String token);
+    String supportAlgorithm();
 
     /**
-     * Extract a token from the given {@code token} String.
+     * Parse the given {@code token} as String into a valid kind of JWT type.
      *
-     * @param token The String
-     * @return The result
-     * @throws InvalidTokenException in case extraction is not possible
+     * @param token The String token to parse
+     * @param issuer The origin token issuer that provides the signing key
+     * @return The parsed JWT instance
      */
-    ExtractionResult extract(String token);
+    U parse(String token, T issuer);
 }
