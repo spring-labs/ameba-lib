@@ -25,13 +25,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A HS256TokenParserImpl uses a symmetric SHA-512 signing key to verify the signature.
+ * A HS256TokenParser uses a symmetric SHA-512 signing key to verify the signature.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class HS512TokenParserImpl implements TokenParser<Symmetric, Jwt> {
+public class HS512TokenParser implements TokenParser<Symmetric, Jwt> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HS512TokenParserImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HS512TokenParser.class);
 
     /**
      * {@inheritDoc}

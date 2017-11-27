@@ -25,7 +25,7 @@ import java.util.Optional;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface IssuerRepository extends JpaRepository<IssuerEO, Long> {
+public interface IssuerRepository extends JpaRepository<IssuerEO, Long> {
 
     Optional<IssuerEO> findByIssUrl(URL issUrl);
 }

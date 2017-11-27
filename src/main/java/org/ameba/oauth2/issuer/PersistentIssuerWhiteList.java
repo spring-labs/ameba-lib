@@ -33,7 +33,7 @@ public class PersistentIssuerWhiteList implements IssuerWhiteList {
     private final IssuerRepository repository;
 
     @Inject
-    private PersistentIssuerWhiteList(IssuerRepository repository) {
+    public PersistentIssuerWhiteList(IssuerRepository repository) {
         this.repository = repository;
     }
 

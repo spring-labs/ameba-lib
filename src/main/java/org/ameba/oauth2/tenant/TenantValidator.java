@@ -41,7 +41,7 @@ public class TenantValidator implements JWTValidator {
     private final TenantRepository repository;
 
     @Inject
-    private TenantValidator(TenantRepository repository) {
+    public TenantValidator(TenantRepository repository) {
         this.repository = repository;
     }
 

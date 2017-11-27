@@ -24,7 +24,7 @@ import java.util.Optional;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface TenantRepository extends JpaRepository<TenantEO, Long> {
+public interface TenantRepository extends JpaRepository<TenantEO, Long> {
 
     Optional<TenantEO> findByHash(String hash);
 }

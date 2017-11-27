@@ -31,13 +31,13 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 /**
- * A RSA256TokenParserImpl uses a SHA-256 Public Key to verify signature.
+ * A RSA256TokenParser uses a SHA-256 Public Key to verify signature.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class RSA256TokenParserImpl implements TokenParser<Asymmetric, Jws<Claims>> {
+public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RSA256TokenParserImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RSA256TokenParser.class);
 
     /**
      * {@inheritDoc}

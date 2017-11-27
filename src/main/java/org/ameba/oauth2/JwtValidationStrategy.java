@@ -40,7 +40,7 @@ public class JwtValidationStrategy implements FilterStrategy {
     private final JWTValidator validator;
 
     @Inject
-    JwtValidationStrategy(List<TokenExtractor> extractors, JWTValidator validator) {
+    public JwtValidationStrategy(List<TokenExtractor> extractors, JWTValidator validator) {
         this.extractors = extractors;
         this.validator = validator;
     }
