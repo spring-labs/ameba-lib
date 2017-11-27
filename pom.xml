@@ -58,6 +58,7 @@
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-source-plugin.version>3.0.0</maven-source-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <jjwt.version>0.9.0</jjwt.version>
     </properties>
 
     <profiles>
@@ -230,6 +231,11 @@
             <artifactId>logback-classic</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>
@@ -374,6 +380,11 @@
                 <groupId>org.glassfish.web</groupId>
                 <artifactId>el-impl</artifactId>
                 <version>${el-impl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
