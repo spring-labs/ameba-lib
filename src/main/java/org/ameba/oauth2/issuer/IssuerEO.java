@@ -43,10 +43,6 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
     @Column(name = "C_TOKEN_LIFETIME")
     private long tokenLifetime;
 
-    /** Dear JPA... */
-    protected IssuerEO() {
-    }
-
     @Override
     public String getIssuerId() {
         return issUrl.toString();
