@@ -32,7 +32,7 @@ import java.net.URL;
  */
 @Entity
 @Table(name = "CORE_ISSUER")
-class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric, Issuer {
+public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric, Issuer {
 
     @Column(name = "C_URL", nullable = false, unique = true)
     private URL issUrl;
