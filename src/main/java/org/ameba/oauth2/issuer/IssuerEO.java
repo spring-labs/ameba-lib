@@ -54,7 +54,7 @@ class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric, Issue
 
     @Override
     public String getSigningKey() {
-        return publicKey;
+        return signingKey;
     }
 
     @Override

@@ -55,7 +55,7 @@ public class BearerTokenExtractor implements TokenExtractor {
     }
 
     @PostConstruct
-    private void onPostConstruct() {
+    protected void onPostConstruct() {
         // TODO [openwms]: 27.11.17  
         for (TokenParser parser : parsers) {
             parserMap.put(parser.supportAlgorithm(), parser);
