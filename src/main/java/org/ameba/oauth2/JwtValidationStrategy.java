@@ -37,10 +37,10 @@ public class JwtValidationStrategy implements FilterStrategy {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtValidationStrategy.class);
     private final List<TokenExtractor> extractors;
-    private final JWTValidator validator;
+    private final JwtValidator validator;
 
     @Inject
-    public JwtValidationStrategy(List<TokenExtractor> extractors, JWTValidator validator) {
+    public JwtValidationStrategy(List<TokenExtractor> extractors, JwtValidator validator) {
         this.extractors = extractors;
         this.validator = validator;
     }

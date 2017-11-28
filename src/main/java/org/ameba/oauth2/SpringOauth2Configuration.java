@@ -65,12 +65,12 @@ public class SpringOauth2Configuration {
     }
 
     @Bean
-    JWTValidator jwtValidator() {
+    JwtValidator jwtValidator() {
         return new TenantValidator(tenantRepository);
     }
 
     @Bean
-    FilterStrategy filterStrategy(List<TokenExtractor> extractors, JWTValidator jwtValidator) {
+    FilterStrategy filterStrategy(List<TokenExtractor> extractors, JwtValidator jwtValidator) {
         return new JwtValidationStrategy(extractors, jwtValidator);
     }
 }

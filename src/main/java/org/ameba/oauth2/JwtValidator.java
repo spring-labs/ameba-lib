@@ -20,11 +20,11 @@ import io.jsonwebtoken.Jwt;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * A JWTValidator validates JWT.
+ * A JwtValidator validates JWT.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface JWTValidator {
+public interface JwtValidator {
 
     /**
      * Validate the given {@code jwt}.
