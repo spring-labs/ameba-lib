@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -37,12 +38,12 @@ public class JwtValidationStrategy implements FilterStrategy {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtValidationStrategy.class);
     private final List<TokenExtractor> extractors;
-    private final JwtValidator validator;
+    private final Optional<JwtValidator> validator;
 
     @Inject
     public JwtValidationStrategy(List<TokenExtractor> extractors, JwtValidator validator) {
         this.extractors = extractors;
-        this.validator = validator;
+        this.validator = Optional.ofNullable(validator);
     }
 
     /**
@@ -61,7 +62,7 @@ public class JwtValidationStrategy implements FilterStrategy {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Extracted JWT: [{}]", jwt);
             }
-            validator.validate(jwt, request);
+            validator.ifPresent(jwtValidator -> jwtValidator.validate(jwt, request));
         }
     }
 

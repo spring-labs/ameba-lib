@@ -21,7 +21,6 @@ import org.ameba.oauth2.issuer.IssuerRepository;
 import org.ameba.oauth2.issuer.PersistentIssuerWhiteList;
 import org.ameba.oauth2.parser.RSA256TokenParser;
 import org.ameba.oauth2.tenant.TenantRepository;
-import org.ameba.oauth2.tenant.TenantValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,12 +64,7 @@ public class SpringOauth2Configuration {
     }
 
     @Bean
-    JwtValidator jwtValidator() {
-        return new TenantValidator(tenantRepository);
-    }
-
-    @Bean
-    FilterStrategy filterStrategy(List<TokenExtractor> extractors, JwtValidator jwtValidator) {
+    FilterStrategy filterStrategy(List<TokenExtractor> extractors, @Autowired(required = false) JwtValidator jwtValidator) {
         return new JwtValidationStrategy(extractors, jwtValidator);
     }
 }
