@@ -17,12 +17,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>1.11-SNAPSHOT</version>
+                <version>1.11</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>1.11-SNAPSHOT</version>
+                <version>1.11</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>
@@ -54,6 +54,7 @@ the `jar`.
 - Mapper abstraction
 - Multi-tenancy
 - Logging extensions (Logback & Logstash)
+- OAuth2 Token Parsing and Handling
 
 ### Spring Data extensions (1.4+)
 
@@ -210,6 +211,27 @@ to check if the application is running inside Tomcat. If even this does not exis
 that does not exist either, it will log to java.io.tmpdir.
 
 Notice: The output pattern is defined to be aligned to the Grok pattern that is used in combination with Logstash ([logstash.conf][logstashconf]).
+
+### OAuth2 Token Parsing and Handling (1.11+)
+
+Java package `org.ameba.oauth2` contains all types to ease the handling of OAuth2 and OpenID Connect JWT parsing, validation and handling. Notice that
+the structure nor the content of the tokens are not defined by the OAuth2 specification. Often the JWT format is used as token format with various
+signing algorithms. An application may define a servlet filter or a `javax.ws.rs.container.ContainerRequestFilter` to introduce OAuth2 Token handling.
+This filter could then delegate to an instance of `org.ameba.oauth2.JwtValidationStrategy` to integrate Ameba OAuth2 support.
+
+Basically Ameba OAuth2 Support works as the follows;
+ 
+ - The filter strategy uses Extractors and Validators to extract tokens from the incoming request and to validate them
+ - The `BearerTokenExtractor` extracts a Bearer token from the Authorization header
+ - The `DefaultTokenExtractor` uses the unsigned part of the JWT and validates the token issuer against an `IssuerWhiteList` first, afterwards it
+ uses one of the `TokenParsers` to extract and parse the token under consideration of the token signature
+ - The `TenantValidator` should be used when a Tenant identifier exists and the Tenant is configured to work with the Token issuer. 
+
+Extension Points:
+ 
+ - Support additional signing algorithms and implement another `TokenParser`
+ - Implement your own Repository to retrieve whitelist information and implement `IssuerWhiteList`
+ - Implement your own `JwtValidator`
 
 ## Development process
 
