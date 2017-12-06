@@ -34,9 +34,9 @@ import java.net.URL;
 @Table(name = "CORE_ISSUER")
 public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric, Issuer {
 
-    @Column(name = "C_URL", nullable = false, unique = true, length = 512)
+    @Column(name = "C_ISS_URL", nullable = false, unique = true, length = 512)
     private URL issUrl;
-    @Column(name = "C_URL", length = 512)
+    @Column(name = "C_JWK_URL", length = 512)
     private URL jwkUrl;
     @Column(name = "C_KID", length = 512)
     private String kid;
