@@ -15,6 +15,8 @@
  */
 package org.ameba.oauth2;
 
+import java.net.URL;
+
 /**
  * An Issuer is authorized to issue OAuth2 tokens.
  *
@@ -35,4 +37,11 @@ public interface Issuer {
      * @return In seconds
      */
     long getSkewSeconds();
+
+    /**
+     * Return the base URL of the authorization server.
+     *
+     * @return As URL
+     */
+    URL getBaseURL();
 }

@@ -34,10 +34,12 @@ import java.net.URL;
 @Table(name = "CORE_ISSUER")
 public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric, Issuer {
 
-    @Column(name = "C_URL", nullable = false, unique = true)
+    @Column(name = "C_URL", nullable = false, unique = true, length = 512)
     private URL issUrl;
-    @Column(name = "C_PUB_KEY", length = 2048)
-    private String publicKey;
+    @Column(name = "C_URL", length = 512)
+    private URL jwkUrl;
+    @Column(name = "C_KID", length = 512)
+    private String kid;
     @Column(name = "C_SIGN_KEY", length = 1024)
     private String signingKey;
     @Column(name = "C_TOKEN_LIFETIME")
@@ -59,7 +61,17 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
     }
 
     @Override
-    public String getPublicKey() {
-        return publicKey;
+    public URL getBaseURL() {
+        return issUrl;
+    }
+
+    @Override
+    public String getKID() {
+        return kid;
+    }
+
+    @Override
+    public URL getJWKURL() {
+        return jwkUrl;
     }
 }

@@ -44,9 +44,10 @@
         <jackson.version>2.8.8</jackson.version> <!-- in line with boot -->
         <javax-persistence.version>2.1.1</javax-persistence.version> <!-- in line with Spring Data release train and org.eclipse.persistence:org.eclipse.persistence.jpa -->
         <javax.validation-api.version>1.1.0.Final</javax.validation-api.version> <!-- in line with hibernate-validator-parent -->
-        <jjwt.version>0.9.0</jjwt.version>
         <json-path.version>2.2.0</json-path.version>
+        <jjwt.version>0.9.0</jjwt.version>
         <junit.version>4.12</junit.version> <!-- in line with boot -->
+        <jwks-rsa.version>0.3.0</jwks-rsa.version>
         <servlet-api.version>3.1.0</servlet-api.version> <!-- in line with boot -->
         <spring-hateoas.version>0.23.0.RELEASE</spring-hateoas.version> <!-- in line with boot -->
         <spring-security.version>4.2.2.RELEASE</spring-security.version> <!-- in line with boot -->
@@ -242,6 +243,11 @@
             <artifactId>jjwt</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>jwks-rsa</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- Test dependencies -->
         <dependency>
@@ -396,6 +402,11 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
                 <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>jwks-rsa</artifactId>
+                <version>${jwks-rsa.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

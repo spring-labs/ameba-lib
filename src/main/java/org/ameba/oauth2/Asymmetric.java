@@ -15,6 +15,8 @@
  */
 package org.ameba.oauth2;
 
+import java.net.URL;
+
 /**
  * An Asymmetric Issuer can provide the Public Key to validate token signatures.
  *
@@ -23,9 +25,16 @@ package org.ameba.oauth2;
 public interface Asymmetric extends Issuer {
 
     /**
-     * Return the public key.
+     * Return the KID in terms of JWK.
      *
      * @return As String
      */
-    String getPublicKey();
+    String getKID();
+
+    /**
+     * Return the URL where to resolve JWK information from.
+     *
+     * @return The JWK endpoint URL
+     */
+    URL getJWKURL();
 }

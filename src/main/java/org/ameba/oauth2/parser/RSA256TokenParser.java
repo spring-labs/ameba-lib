@@ -15,6 +15,8 @@
  */
 package org.ameba.oauth2.parser;
 
+import com.auth0.jwk.Jwk;
+import com.auth0.jwk.JwkProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -28,7 +30,6 @@ import org.slf4j.LoggerFactory;
 import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 
 /**
  * A RSA256TokenParser uses a SHA-256 Public Key to verify signature.
@@ -38,6 +39,11 @@ import java.util.Base64;
 public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RSA256TokenParser.class);
+    private final JwkProvider jwkProvider;
+
+    public RSA256TokenParser(JwkProvider jwkProvider) {
+        this.jwkProvider = jwkProvider;
+    }
 
     /**
      * {@inheritDoc}
@@ -55,7 +61,8 @@ public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
 
         Jws<Claims> jws;
         try {
-            byte[] publicKeyBytes = Base64.getDecoder().decode(issuer.getPublicKey());
+            Jwk jwk = jwkProvider.get(issuer.getKID());
+            byte[] publicKeyBytes = jwk.getPublicKey().getEncoded();
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             PublicKey pubKey = keyFactory.generatePublic(keySpec);

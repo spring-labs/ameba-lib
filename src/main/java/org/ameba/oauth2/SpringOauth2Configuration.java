@@ -15,6 +15,7 @@
  */
 package org.ameba.oauth2;
 
+import com.auth0.jwk.JwkProvider;
 import org.ameba.annotation.ExcludeFromScan;
 import org.ameba.http.FilterStrategy;
 import org.ameba.oauth2.issuer.IssuerRepository;
@@ -37,6 +38,8 @@ import java.util.List;
  *     &#064;EnableJpaRepositories(basePackages = {"org.ameba.oauth2.issuer", "org.ameba.oauth2.tenant"})
  * </pre>
  *
+ * Required bean definitions: JwkProvider
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @ExcludeFromScan
@@ -54,8 +57,8 @@ public class SpringOauth2Configuration {
     }
 
     @Bean
-    RSA256TokenParser rsa256TokenParser() {
-        return new RSA256TokenParser();
+    RSA256TokenParser rsa256TokenParser(JwkProvider jwkProvider) {
+        return new RSA256TokenParser(jwkProvider);
     }
 
     @Bean
