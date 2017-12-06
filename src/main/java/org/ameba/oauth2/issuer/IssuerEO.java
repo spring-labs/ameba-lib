@@ -34,14 +34,22 @@ import java.net.URL;
 @Table(name = "CORE_ISSUER")
 public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric, Issuer {
 
+    /** The unique ID of the issuer, this may be an URL. */
     @Column(name = "C_ISS_URL", nullable = false, unique = true, length = 512)
     private URL issUrl;
+    /** The .wellknown endpoint URL where to get the JWK cert from. */
     @Column(name = "C_JWK_URL", length = 512)
     private URL jwkUrl;
+    /** The ID of the JWK key that is used for asymmetric signing algorithms. */
     @Column(name = "C_KID", length = 512)
     private String kid;
+    /** The signing key that is used for symmetric signing algorithms. */
     @Column(name = "C_SIGN_KEY", length = 1024)
     private String signingKey;
+    /**
+     * A duration in seconds that the implementation allows as a time frame when tokens
+     * are validated against an expiration date.
+     */
     @Column(name = "C_TOKEN_LIFETIME")
     private long tokenLifetime;
 
