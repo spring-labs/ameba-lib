@@ -17,12 +17,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>1.11.1</version>
+                <version>1.11.2</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>1.11.1</version>
+                <version>1.11.2</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>
