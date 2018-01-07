@@ -59,7 +59,7 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
     /**
      * Dear JPA...
      */
-    void IssuerEO() {
+    IssuerEO() {
     }
 
     /**
