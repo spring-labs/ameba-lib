@@ -37,6 +37,9 @@ import static org.ameba.oauth2.issuer.IssuerEO.TABLE_NAME;
 public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric, Issuer {
 
     public static final String TABLE_NAME = "CORE_ISSUER";
+    /** An unique name of the issuer. */
+    @Column(name = "C_NAME", nullable = false, unique = true)
+    private String name;
     /** The unique ID of the issuer, this may be an URL. */
     @Column(name = "C_ISS_URL", nullable = false, unique = true, length = 512)
     private URL issUrl;
@@ -65,10 +68,30 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
     /**
      * Create an Issuer with the business key.
      *
+     * @param name The name of the issuer
      * @param issUrl The base URL or issuer URL
      */
-    public IssuerEO(URL issUrl) {
+    public IssuerEO(String name, URL issUrl) {
+        this.name = name;
         this.issUrl = issUrl;
+    }
+
+    /**
+     * Return the name of the issuer.
+     *
+     * @return The name as String
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set the name of the issuer.
+     *
+     * @param name The name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
