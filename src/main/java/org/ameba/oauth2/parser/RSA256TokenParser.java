@@ -58,7 +58,12 @@ public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
      */
     @Override
     public Jws<Claims> parse(String token, Asymmetric issuer) {
-
+        if (issuer == null) {
+            throw new IllegalArgumentException("Expected asymmetric issuer is null");
+        }
+        if ( issuer.getKID() == null || "".equals(issuer.getKID())) {
+            throw new IllegalArgumentException("JWK kid is null or empty. Configure a kid");
+        }
         Jws<Claims> jws;
         try {
             Jwk jwk = jwkProvider.get(issuer.getKID());

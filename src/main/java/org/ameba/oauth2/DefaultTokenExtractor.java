@@ -40,7 +40,7 @@ import static java.lang.String.format;
  */
 public class DefaultTokenExtractor implements TokenExtractor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BearerTokenExtractor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultTokenExtractor.class);
     public static final int MAX_SKEW_SECONDS = 2592000;
     private final IssuerWhiteList whiteList;
     private final List<TokenParser> parsers;
