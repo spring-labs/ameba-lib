@@ -46,6 +46,13 @@ public class HS512TokenParser implements TokenParser<Symmetric, Jwt> {
      */
     @Override
     public Jwt parse(String token, Symmetric issuer) {
+        if (issuer == null) {
+            throw new IllegalArgumentException("Expected symmetric issuer is null");
+        }
+        if ( issuer.getSigningKey() == null || "".equals(issuer.getSigningKey())) {
+            throw new IllegalArgumentException("Symmetric signing key is null or empty. Configure a signing key");
+        }
+
         Jwt jwt;
         try {
             jwt = Jwts.parser()

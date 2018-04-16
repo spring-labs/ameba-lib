@@ -16,45 +16,39 @@
 package org.ameba;
 
 /**
- * A Messages contains all possible message keys.
+ * A Messages contains all possible message and problem keys.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0.0
- * @since 1.0.0
  */
 public final class Messages {
 
     /*~ Server status */
+    /** Expresses a generic server-okay status. */
     public static final String SERVER_OK = "server.ok";
+    /** Expresses a generic server-not-okay status. */
     public static final String SERVER_NOK = "server.nok";
 
     /*~ Security */
+    /** Signals bad credentials during authentication. */
     public static final String BAD_CREDENTIALS = "server.bad.credentials";
+    /** Expresses a successful authentication. */
     public static final String AUTHENTICATED = "server.authenticated";
+    /** Signals that a logout attempt has failed. */
     public static final String LOGOUT_FAILED = "server.logout.failed";
 
-    /*~ Dossiers */
-    public static final String DOSSIER_FOUND = "dossier.found";
-    public static final String DOSSIERS_FOUND = "dossier.found.all";
-    public static final String NO_DOSSIERS_FOUND = "dossier.not.found";
-    public static final String UNKNOWN_DOSSIER = "dossier.unknown";
-    public static final String DOSSIER_ALREADY_EXIST = "dossier.already.exist";
-    public static final String MULTIPLE_DOSSIERS = "dossier.multiple";
-    public static final String DOSSIER_NOT_EXIST = "dossier.not.exist";
-
-    /*~ Documents */
-    public static final String UNKNOWN_DOCUMENT = "unknown.document";
-    public static final String MULTIPLE_DOCUMENTS = "multiple.documents";
-
-    /*~ Folders */
-
     /*~ Generic */
-    public static final String UNKNOWN_COMPONENT = "unknown.component";
+    /** Signals that a resource has been created successfully. */
     public static final String CREATED = "generic.created";
+    /** Signals that a requested resource does not exist. */
     public static final String NOT_FOUND = "not.found";
+    /** Signals that a resource does exist unexpectedly. */
     public static final String ALREADY_EXISTS = "already.exists";
-	/**
-	 * Signals that a resource has changed unexpectedly and cannot be changed by the caller.
-	 */
+    /** Signals a generic gateway problem. */
+    public static String GW_GENERIC = "gw.generic";
+    /** Signals a gateway timeout. */
+    public static String GW_TIMEOUT = "gw.timeout";
+    /** Signals a bad request. */
+    public static String REQ_GENERIC = "req.generic-error";
+	/** Signals that a resource has changed unexpectedly and cannot be modified by the caller. */
 	public static final String RESOURCE_CHANGED_UNEXPECTEDLY = "resource.changed.unexpectedly";
 }

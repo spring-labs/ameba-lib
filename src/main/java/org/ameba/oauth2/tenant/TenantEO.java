@@ -43,7 +43,7 @@ public class TenantEO extends ApplicationEntity {
     private String name;
 
     /** Dear JPA... */
-    TenantEO() {
+    protected TenantEO() {
     }
 
     /**
