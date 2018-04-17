@@ -15,6 +15,8 @@
  */
 package org.ameba.http;
 
+import org.ameba.integration.hibernate.TenantResolverTenancyStrategy;
+import org.ameba.integration.jpa.SeparationStrategy;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.MultiTenancySelector;
 
@@ -57,4 +59,19 @@ public @interface EnableMultiTenancy {
      * @return Patterns matching the URL to activate multi-tenancy on, no Ant style supported
      */
     String[] urlPatterns() default "/*";
+
+    /**
+     * The strategy used to separate tenant data in databases.
+     *
+     * @return NONE is default
+     */
+    SeparationStrategy separationStrategy() default SeparationStrategy.NONE;
+
+    /**
+     * Implementation class used to resolve the current tenant from. In case of Hibernate, the class must implement
+     * {@code CurrentTenantIdentifierResolver}.
+     *
+     * @return implementation class;
+     */
+    Class tenantResolverStrategy() default TenantResolverTenancyStrategy.class;
 }
