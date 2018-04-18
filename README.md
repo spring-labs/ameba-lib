@@ -159,9 +159,10 @@ manual filter registration needs to be done anymore.
 #### Data record separation
 
 New since 1.12: Tenant separation on database schema level. The `@EnableMultiTenancy` annotation is now capable to
-define the data separation strategy for relational databases. Currenlty only the `SeparationStrategy.SCHEMA` is
+define a data separation strategy for relational databases. Currently only the `SeparationStrategy.SCHEMA` is
 supported and by default database separation is turned off (`SeparationStrategy.NONE`).
-**Restrictions**
+
+**Requirements and restrictions**
 - Requires Hibernate 5.x and Spring Boot 2.x
 - Only database schema separation supported yet (1.12)
 - Database schema must already exist and cannot be generated with Hibernate generation strategies
