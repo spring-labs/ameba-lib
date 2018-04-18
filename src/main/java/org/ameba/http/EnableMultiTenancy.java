@@ -38,6 +38,8 @@ import java.lang.annotation.Target;
 @Import(MultiTenancySelector.class)
 public @interface EnableMultiTenancy {
 
+    public static final String DEFAULT_SCHEMA = "public";
+
     /**
      * Turn multi-tenancy support on or off. Default is {@literal true}.
      *
@@ -75,5 +77,5 @@ public @interface EnableMultiTenancy {
      */
     Class tenantResolverStrategy() default TenantResolverTenancyStrategy.class;
 
-    String defaultDatabaseSchema() default "public";
+    String defaultDatabaseSchema() default DEFAULT_SCHEMA;
 }

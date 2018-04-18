@@ -15,6 +15,7 @@
  */
 package org.ameba.integration.hibernate;
 
+import org.ameba.http.EnableMultiTenancy;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
@@ -69,7 +70,7 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
     @Override
     public Connection getConnection(String tenantIdentifier) throws SQLException {
         Connection connection = this.getAnyConnection();
-        if (!"public".equals(tenantIdentifier)) {
+        if (!EnableMultiTenancy.DEFAULT_SCHEMA.equals(tenantIdentifier)) {
             connection.setSchema(tenantIdentifier);
         }
         return connection;
@@ -83,7 +84,7 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
         try {
             connection.createStatement().execute("USE blabla");
         } catch (SQLException se) {
-            throw new HibernateException("Not put back into pool");
+            throw new HibernateException(se.getMessage(), se);
         } finally {
             connection.close();
         }
