@@ -17,7 +17,7 @@ package org.springframework.context.annotation;
 
 import org.ameba.http.EnableMultiTenancy;
 import org.ameba.http.MultiTenancyConfiguration;
-import org.ameba.integration.hibernate.HibernateSchemaBasedTenancyConfiguration;
+import org.ameba.integration.hibernate.SchemaBasedTenancyConfiguration;
 import org.ameba.integration.hibernate.SchemaSeparationConfigurator;
 import org.ameba.integration.jpa.SeparationStrategy;
 import org.springframework.context.ApplicationContextException;
@@ -58,7 +58,7 @@ public class MultiTenancySelector implements ImportSelector {
                 throw new ApplicationContextException("Cannot instantiate a TenantResolverStrategy class to support multi-tenancy, please check @EnableMutliTenancy", e);
             }
             return attributes.getEnum("separationStrategy").equals(SeparationStrategy.SCHEMA) ?
-                    new String[]{MultiTenancyConfiguration.class.getName(), HibernateSchemaBasedTenancyConfiguration.class.getName()} :
+                    new String[]{MultiTenancyConfiguration.class.getName(), SchemaBasedTenancyConfiguration.class.getName()} :
                     new String[]{MultiTenancyConfiguration.class.getName()};
         }
         return new String[]{};

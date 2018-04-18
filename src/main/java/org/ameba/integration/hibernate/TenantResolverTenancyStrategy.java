@@ -19,7 +19,8 @@ import org.ameba.tenancy.TenantHolder;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 
 /**
- * A TenantResolverTenancyStrategy.
+ * A TenantResolverTenancyStrategy is the adapter between the Hibernate {@link CurrentTenantIdentifierResolver}
+ * entry point and the Ameba {@link TenantHolder} implementation.
  *
  * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
@@ -36,7 +37,7 @@ public class TenantResolverTenancyStrategy implements CurrentTenantIdentifierRes
      */
     @Override
     public String resolveCurrentTenantIdentifier() {
-        return TenantHolder.getCurrentTenant() == null ? defaultDatabaseSchema: TenantHolder.getCurrentTenant();
+        return TenantHolder.getCurrentTenant() == null ? defaultDatabaseSchema : TenantHolder.getCurrentTenant();
     }
 
     /**

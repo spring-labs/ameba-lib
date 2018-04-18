@@ -63,9 +63,9 @@ public @interface EnableMultiTenancy {
     String[] urlPatterns() default "/*";
 
     /**
-     * The strategy used to separate tenant data in databases.
+     * The strategy used to separate tenant data in databases. Default is {@link SeparationStrategy#NONE}
      *
-     * @return NONE is default
+     * @return The strategy to use
      */
     SeparationStrategy separationStrategy() default SeparationStrategy.NONE;
 

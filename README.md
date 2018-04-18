@@ -156,7 +156,19 @@ custom _Context Populator_ that ready the SLF4J MDC/NDC and populates the log4j 
 Starting with 1.7 the configuration of multi-tenancy support can be done much more elegant by using the classlevel annotation ´@EnableMultiTenancy´. No
 manual filter registration needs to be done anymore.
 
-Referenced issues: [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
+#### Data record separation
+
+New since 1.12: Tenant separation on database schema level. The `@EnableMultiTenancy` annotation is now capable to
+define the data separation strategy for relational databases. Currenlty only the `SeparationStrategy.SCHEMA` is
+supported and by default database separation is turned off (`SeparationStrategy.NONE`).
+**Restrictions**
+- Requires Hibernate 5.x and Spring Boot 2.x
+- Only database schema separation supported yet (1.12)
+- Database schema must already exist and cannot be generated with Hibernate generation strategies
+
+Referenced issues:
+- [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
+- [#141](https://github.com/abraxas-labs/ameba-lib/issues/141)
 
 ### Logging extenstions (1.7+)
 

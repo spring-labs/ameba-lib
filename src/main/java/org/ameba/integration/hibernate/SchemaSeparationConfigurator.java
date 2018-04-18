@@ -28,7 +28,12 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomi
 import java.util.Map;
 
 /**
- * A SchemaSeparationConfigurator.
+ * A SchemaSeparationConfigurator is a Spring Boot recognized class type to customize Hibernate properties
+ * programmatically at application startup (when the EntityManagerFactory and SessionFactory are bootstrapped). In fact
+ * this implementation configures Hibernate to use a schema-based data separation.
+ * <p />
+ * The tenant resolution strategy may change between projects and can be defined as an attribute of the {@code EnableMultiTenancy}
+ * annotation.
  *
  * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
@@ -37,9 +42,9 @@ public class SchemaSeparationConfigurator implements HibernatePropertiesCustomiz
     public static Object tenantResolver;
 
     /**
-     * Customize the specified JPA vendor properties.
-     *
-     * @param hibernateProperties the JPA vendor properties to customize
+     * {@inheritDoc}
+     * <p>
+     * Setup schema-based data separation for multiple tenants.
      */
     @Override
     public void customize(Map<String, Object> hibernateProperties) {

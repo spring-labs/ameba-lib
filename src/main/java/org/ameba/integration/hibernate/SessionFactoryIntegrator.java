@@ -31,9 +31,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * A SessionFactoryIntegrator is a Hibernate {@link Integrator} that injects an already configured and built
- * SessionFactory into the {@link DefaultMultiTenantConnectionProvider}. By this mechanism the solely managed
+ * SessionFactory into the {@link DefaultMultiTenantConnectionProvider}. By this mechanism the managed
  * {@link DefaultMultiTenantConnectionProvider} (that implements {@code MultiTenantConnectionProvider}) is able
- * to access the SessionFactory and finally the Connection.
+ * to access the SessionFactory and finally create a JDBC Connection. Unfortunately Hibernate is not able to combine the
+ * {@link Integrator} instance and a {@code MultiTenantConnectionProvider} instance in one class, therefore we need this
+ * configuration mechanism.
  *
  * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
@@ -43,7 +45,7 @@ public class SessionFactoryIntegrator implements Integrator {
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * Set the {@code sessionFactory} at the {@link DefaultMultiTenantConnectionProvider}.
      */
     @Override
@@ -58,7 +60,7 @@ public class SessionFactoryIntegrator implements Integrator {
 
     /**
      * {@inheritDoc}
-     *
+     * <p>
      * NOP
      */
     @Override

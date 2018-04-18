@@ -27,19 +27,21 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * A HibernateSchemaBasedTenancyConfiguration is a Spring configuration file, excluded from component scanning to
- * bootstrap beans according to the multi-tenancy database separation.
+ * A SchemaBasedTenancyConfiguration is a Spring configuration file, excluded from component scanning to bootstrap beans
+ * according to the multi-tenancy database separation based on the {@code SeparationStrategy.SCHEMA}.
  *
  * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
 @ExcludeFromScan
 @Configuration
-public class HibernateSchemaBasedTenancyConfiguration {
+class SchemaBasedTenancyConfiguration {
 
     /** Contribute Hibernate properties to use schema based separation. */
     @Bean HibernatePropertiesCustomizer schemaSeparationConfigurator() {
         return new SchemaSeparationConfigurator();
     }
 
-    @Bean DefaultMultiTenantConnectionProvider DefaultMultiTenantConnectionProvider() { return new DefaultMultiTenantConnectionProvider(); }
+    @Bean DefaultMultiTenantConnectionProvider DefaultMultiTenantConnectionProvider() {
+        return new DefaultMultiTenantConnectionProvider();
+    }
 }
