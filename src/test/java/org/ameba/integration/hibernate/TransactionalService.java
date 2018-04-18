@@ -21,29 +21,18 @@
  */
 package org.ameba.integration.hibernate;
 
-import org.ameba.annotation.ExcludeFromScan;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
+import java.util.Optional;
 
 /**
- * A HibernateSchemaBasedTenancyConfiguration.
+ * A TransactionalServic.
  *
  * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
-@ExcludeFromScan
-@Configuration
-public class HibernateSchemaBasedTenancyConfiguration {
+public interface TransactionalService {
 
-    /** Contribute Hibernate properties to use schema based separation. */
-    @Bean
-    HibernatePropertiesCustomizer schemaSeparationConfigurator() {
-        return new SchemaSeparationConfigurator();
-    }
+    void create(String schemaName);
 
-    @Bean DefaultMultiTenantConnectionProvider DefaultMultiTenantConnectionProvider(DataSource dataSource) {
-        return new DefaultMultiTenantConnectionProvider(dataSource);
-    }
+    void createSchema(String schemaName);
+
+    Optional<TestEntity> findBySchemaName(String schemaName);
 }

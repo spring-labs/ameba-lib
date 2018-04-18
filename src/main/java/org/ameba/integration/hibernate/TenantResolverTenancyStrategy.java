@@ -25,12 +25,18 @@ import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
  */
 public class TenantResolverTenancyStrategy implements CurrentTenantIdentifierResolver {
 
+    private final String defaultDatabaseSchema;
+
+    public TenantResolverTenancyStrategy(String defaultDatabaseSchema) {
+        this.defaultDatabaseSchema = defaultDatabaseSchema;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public String resolveCurrentTenantIdentifier() {
-        return TenantHolder.getCurrentTenant();
+        return TenantHolder.getCurrentTenant() == null ? defaultDatabaseSchema: TenantHolder.getCurrentTenant();
     }
 
     /**

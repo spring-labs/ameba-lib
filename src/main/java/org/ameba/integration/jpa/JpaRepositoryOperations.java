@@ -15,14 +15,14 @@
  */
 package org.ameba.integration.jpa;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Collections;
-
 import org.ameba.exception.NotFoundException;
 import org.ameba.integration.FindOperations;
 import org.ameba.integration.TypedEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * A GenericJpaRepositories.
@@ -65,11 +65,7 @@ public interface JpaRepositoryOperations<T extends TypedEntity<ID>, ID extends S
          */
         @Override
         default T findById(ID id) {
-            T entity = getRepository().findOne(id);
-            if (null == entity) {
-                throw new NotFoundException(String.format("No entity with id %s found", id));
-            }
-            return entity;
+            return getRepository().findById(id).orElseThrow(() -> new NotFoundException(String.format("No entity with id %s found", id)));
         }
     }
 }

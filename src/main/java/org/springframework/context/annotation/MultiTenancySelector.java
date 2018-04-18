@@ -52,8 +52,8 @@ public class MultiTenancySelector implements ImportSelector {
             MultiTenancyConfiguration.throwIfNotPresent = attributes.getBoolean("throwIfNotPresent");
             try {
                 Class<?> resolverStrategyClass = attributes.getClass("tenantResolverStrategy");
-                Constructor<?> ctor = resolverStrategyClass.getConstructor();
-                SchemaSeparationConfigurator.tenantResolver = ctor.newInstance();
+                Constructor<?> ctor = resolverStrategyClass.getConstructor(String.class);
+                SchemaSeparationConfigurator.tenantResolver = ctor.newInstance(attributes.getString("defaultDatabaseSchema"));
             } catch (Exception e) {
                 throw new ApplicationContextException("Cannot instantiate a TenantResolverStrategy class to support multi-tenancy, please check @EnableMutliTenancy", e);
             }

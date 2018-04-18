@@ -74,4 +74,6 @@ public @interface EnableMultiTenancy {
      * @return implementation class;
      */
     Class tenantResolverStrategy() default TenantResolverTenancyStrategy.class;
+
+    String defaultDatabaseSchema() default "public";
 }

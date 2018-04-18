@@ -15,11 +15,15 @@
  */
 package org.ameba.integration.hibernate;
 
-import org.hibernate.engine.jdbc.connections.spi.AbstractMultiTenantConnectionProvider;
+import org.hibernate.HibernateException;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
+import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.springframework.orm.hibernate5.SessionFactoryUtils;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * A DefaultMultiTenantConnectionProvider extends the abstract Hibernate type to provide the actual {@link ConnectionProvider}
@@ -27,32 +31,85 @@ import java.util.Map;
  *
  * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
-public class DefaultMultiTenantConnectionProvider extends AbstractMultiTenantConnectionProvider {
+public class DefaultMultiTenantConnectionProvider implements MultiTenantConnectionProvider {
 
-    private final Map<String, ConnectionProvider> connectionProviderMap = new HashMap<>();
+    private DataSource dataSource;
+    SessionFactoryImplementor sessionFactory;
 
-    /**
-     * {@inheritDoc}
-     *
-     * Additionally feeding a simple {@link HashMap} with all providers.
-     */
-    public DefaultMultiTenantConnectionProvider(Map<String, ConnectionProvider> connectionProviderMap) {
-        this.connectionProviderMap.putAll(connectionProviderMap);
+    public DefaultMultiTenantConnectionProvider() {
+    }
+
+    public DefaultMultiTenantConnectionProvider(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected ConnectionProvider getAnyConnectionProvider() {
-        return connectionProviderMap.values().iterator().next();
+    public Connection getAnyConnection() throws SQLException {
+        if (sessionFactory== null) {
+            return null;
+        }
+        DataSource dataSource = SessionFactoryUtils.getDataSource(sessionFactory);
+        return dataSource.getConnection();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected ConnectionProvider selectConnectionProvider(String tenantIdentifier) {
-        return connectionProviderMap.get(tenantIdentifier);
+    public void releaseAnyConnection(Connection connection) throws SQLException {
+        connection.close();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Connection getConnection(String tenantIdentifier) throws SQLException {
+        Connection connection = this.getAnyConnection();
+        if (!"public".equals(tenantIdentifier)) {
+            connection.setSchema(tenantIdentifier);
+        }
+        return connection;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void releaseConnection(String tenantIdentifier, Connection connection) throws SQLException {
+        try {
+            connection.createStatement().execute("USE blabla");
+        } catch (SQLException se) {
+            throw new HibernateException("Not put back into pool");
+        } finally {
+            connection.close();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean supportsAggressiveRelease() {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isUnwrappableAs(Class unwrapType) {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public <T> T unwrap(Class<T> unwrapType) {
+        return null;
     }
 }
