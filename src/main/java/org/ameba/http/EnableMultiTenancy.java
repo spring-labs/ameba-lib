@@ -77,5 +77,11 @@ public @interface EnableMultiTenancy {
      */
     Class tenantResolverStrategy() default TenantResolverTenancyStrategy.class;
 
+    /**
+     * Define the name of the default database schema that is used when no tenant information is available. Default is
+     * {@value DEFAULT_SCHEMA}.
+     *
+     * @return Name of the default schema
+     */
     String defaultDatabaseSchema() default DEFAULT_SCHEMA;
 }

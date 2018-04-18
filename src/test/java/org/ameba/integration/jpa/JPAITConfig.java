@@ -15,20 +15,21 @@
  */
 package org.ameba.integration.jpa;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
- * A IntegrationTestConfig.
+ * A JPAITConfig.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.6
  */
 @Configuration
 @EnableJpaAuditing
-@EnableJpaRepositories(basePackageClasses = IntegrationTestConfig.class)
-public class IntegrationTestConfig {
+@EnableJpaRepositories(basePackageClasses = JPAITConfig.class)
+@EntityScan(basePackageClasses = JPAITConfig.class)
+public class JPAITConfig {
 
 }

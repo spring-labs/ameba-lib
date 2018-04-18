@@ -58,7 +58,6 @@ public class HibernateSchemaBasedTenancyConfigurationTest {
         after the tx commits. Unfortunately a DataJpaTest itself is a transactional test, therefore we cannot takeover
         control of transaction boundaries.
         */
-
         // Lets create two empty schemas first
         service.createSchema("SCHEMA_1");
         service.createSchema("SCHEMA_2");

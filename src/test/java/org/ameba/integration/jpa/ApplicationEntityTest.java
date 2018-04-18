@@ -15,8 +15,6 @@
  */
 package org.ameba.integration.jpa;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * A ApplicationEntityTest.
@@ -35,7 +35,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@ContextConfiguration(classes = IntegrationTestConfig.class)
+@ContextConfiguration(classes = JPAITConfig.class)
 @ComponentScan(basePackageClasses = BaseEntityTest.class)
 public class ApplicationEntityTest {
 

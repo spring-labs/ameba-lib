@@ -24,7 +24,10 @@ package org.ameba.integration.hibernate;
 import org.hibernate.boot.Metadata;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.integrator.spi.Integrator;
+import org.hibernate.service.UnknownServiceException;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A SessionFactoryIntegrator is a Hibernate {@link Integrator} that injects an already configured and built
@@ -36,6 +39,8 @@ import org.hibernate.service.spi.SessionFactoryServiceRegistry;
  */
 public class SessionFactoryIntegrator implements Integrator {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SessionFactoryIntegrator.class);
+
     /**
      * {@inheritDoc}
      *
@@ -43,8 +48,12 @@ public class SessionFactoryIntegrator implements Integrator {
      */
     @Override
     public void integrate(Metadata metadata, SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
-        DefaultMultiTenantConnectionProvider service = serviceRegistry.getService(DefaultMultiTenantConnectionProvider.class);
-        service.sessionFactory = sessionFactory;
+        try {
+            DefaultMultiTenantConnectionProvider service = serviceRegistry.getService(DefaultMultiTenantConnectionProvider.class);
+            service.sessionFactory = sessionFactory;
+        } catch (UnknownServiceException use) {
+            LOGGER.error("No Hibernate service DefaultMultiTenantConnectionProvider is registered, check the bootstrap configuration (i.e. Spring configuration)");
+        }
     }
 
     /**
