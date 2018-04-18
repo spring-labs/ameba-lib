@@ -26,10 +26,9 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomi
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
-
 /**
- * A HibernateSchemaBasedTenancyConfiguration.
+ * A HibernateSchemaBasedTenancyConfiguration is a Spring configuration file, excluded from component scanning to
+ * bootstrap beans according to the multi-tenancy database separation.
  *
  * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
@@ -38,12 +37,9 @@ import javax.sql.DataSource;
 public class HibernateSchemaBasedTenancyConfiguration {
 
     /** Contribute Hibernate properties to use schema based separation. */
-    @Bean
-    HibernatePropertiesCustomizer schemaSeparationConfigurator() {
+    @Bean HibernatePropertiesCustomizer schemaSeparationConfigurator() {
         return new SchemaSeparationConfigurator();
     }
 
-    @Bean DefaultMultiTenantConnectionProvider DefaultMultiTenantConnectionProvider(DataSource dataSource) {
-        return new DefaultMultiTenantConnectionProvider(dataSource);
-    }
+    @Bean DefaultMultiTenantConnectionProvider DefaultMultiTenantConnectionProvider() { return new DefaultMultiTenantConnectionProvider(); }
 }

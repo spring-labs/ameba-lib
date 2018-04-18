@@ -16,7 +16,6 @@
 package org.ameba.integration.hibernate;
 
 import org.ameba.http.EnableMultiTenancy;
-import org.hibernate.HibernateException;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
@@ -34,22 +33,14 @@ import java.sql.SQLException;
  */
 public class DefaultMultiTenantConnectionProvider implements MultiTenantConnectionProvider {
 
-    private DataSource dataSource;
     SessionFactoryImplementor sessionFactory;
-
-    public DefaultMultiTenantConnectionProvider() {
-    }
-
-    public DefaultMultiTenantConnectionProvider(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public Connection getAnyConnection() throws SQLException {
-        if (sessionFactory== null) {
+        if (sessionFactory == null) {
             return null;
         }
         DataSource dataSource = SessionFactoryUtils.getDataSource(sessionFactory);
@@ -81,13 +72,7 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
      */
     @Override
     public void releaseConnection(String tenantIdentifier, Connection connection) throws SQLException {
-        try {
-            connection.createStatement().execute("USE blabla");
-        } catch (SQLException se) {
-            throw new HibernateException(se.getMessage(), se);
-        } finally {
-            connection.close();
-        }
+        connection.close();
     }
 
     /**

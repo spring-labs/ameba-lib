@@ -27,33 +27,30 @@ import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.service.spi.SessionFactoryServiceRegistry;
 
 /**
- * A DefaultSessionFactoryStore.
+ * A SessionFactoryIntegrator is a Hibernate {@link Integrator} that injects an already configured and built
+ * SessionFactory into the {@link DefaultMultiTenantConnectionProvider}. By this mechanism the solely managed
+ * {@link DefaultMultiTenantConnectionProvider} (that implements {@code MultiTenantConnectionProvider}) is able
+ * to access the SessionFactory and finally the Connection.
  *
  * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
-public class DefaultSessionFactoryStore implements Integrator {
-
-    SessionFactoryImplementor sessionFactory;
+public class SessionFactoryIntegrator implements Integrator {
 
     /**
-     * Perform integration.
+     * {@inheritDoc}
      *
-     * @param metadata The "compiled" representation of the mapping information
-     * @param sessionFactory The session factory being created
-     * @param serviceRegistry The session factory's service registry
+     * Set the {@code sessionFactory} at the {@link DefaultMultiTenantConnectionProvider}.
      */
     @Override
     public void integrate(Metadata metadata, SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
-        this.sessionFactory = sessionFactory;
         DefaultMultiTenantConnectionProvider service = serviceRegistry.getService(DefaultMultiTenantConnectionProvider.class);
         service.sessionFactory = sessionFactory;
     }
 
     /**
-     * Tongue-in-cheek name for a shutdown callback.
+     * {@inheritDoc}
      *
-     * @param sessionFactory The session factory being closed.
-     * @param serviceRegistry That session factory's service registry
+     * NOP
      */
     @Override
     public void disintegrate(SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
