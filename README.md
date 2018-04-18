@@ -171,7 +171,7 @@ Referenced issues:
 - [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
 - [#141](https://github.com/abraxas-labs/ameba-lib/issues/141)
 
-### Logging extenstions (1.7+)
+### Logging extensions (1.7+)
 
 Starting with version 1.7 some useful logging extensions were added. At first a `ThreadIdProvider` is used to identify each thread in a concurrent
 test run. By default logback does only provide a meaningless thread name. But a thread counter can now be configured to display the current value in the

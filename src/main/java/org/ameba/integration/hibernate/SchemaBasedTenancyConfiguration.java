@@ -34,7 +34,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @ExcludeFromScan
 @Configuration
-class SchemaBasedTenancyConfiguration {
+public class SchemaBasedTenancyConfiguration {
 
     /** Contribute Hibernate properties to use schema based separation. */
     @Bean HibernatePropertiesCustomizer schemaSeparationConfigurator() {
