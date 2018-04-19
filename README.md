@@ -153,12 +153,12 @@ tenant name) needs to be populated down to the underlying logging library, SLF4J
 SLF4J smoothly populates the logback context with its own context. If you're using other frameworks, like Log4j you need to implement a
 custom _Context Populator_ that ready the SLF4J MDC/NDC and populates the log4j MDC/NDC properly.
 
-Starting with 1.7 the configuration of multi-tenancy support can be done much more elegant by using the classlevel annotation ´@EnableMultiTenancy´. No
+Starting with 1.7 the configuration of multi-tenancy support can be done much more elegant by using the classlevel annotation `@EnableMultiTenancy`. No
 manual filter registration needs to be done anymore.
 
 #### Data record separation
 
-New since 1.12: Tenant separation on database schema level. The `@EnableMultiTenancy` annotation is now capable to
+New since 1.12: Tenant separation on database schema level. With the `@EnableMultiTenancy` annotation it is now possible to
 define a data separation strategy for relational databases. Currently only the `SeparationStrategy.SCHEMA` is
 supported and by default database separation is turned off (`SeparationStrategy.NONE`).
 
