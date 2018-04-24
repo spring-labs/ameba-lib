@@ -13,20 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.oauth2.tenant;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
-
 /**
- * A TenantRepository.
- *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * This package contains types used for OAuth2 token issuer validation.
  */
-public interface TenantRepository extends JpaRepository<TenantEO, Long> {
-
-    Optional<TenantEO> findByHash(String hash);
-
-    Optional<TenantEO> findByName(String name);
-}
+package org.ameba.oauth2.parser;

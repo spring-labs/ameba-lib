@@ -25,10 +25,8 @@ import io.jsonwebtoken.impl.TextCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -41,11 +39,9 @@ import static java.lang.String.format;
 public class DefaultTokenExtractor implements TokenExtractor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultTokenExtractor.class);
-    public static final int MAX_SKEW_SECONDS = 2592000;
-    private final IssuerWhiteList whiteList;
+    private final IssuerWhiteList<Issuer> whiteList;
     private final List<TokenParser> parsers;
 
-    @Inject
     public DefaultTokenExtractor(IssuerWhiteList whiteList, List<TokenParser> parsers) {
         this.whiteList = whiteList;
         this.parsers = parsers;
@@ -68,15 +64,11 @@ public class DefaultTokenExtractor implements TokenExtractor {
         // we do not trust the signature so first parse the token an check the issuer
         String[] splitToken = token.split("\\.");
         Jwt<Header, Claims> jwt = Jwts.parser()
-                .setAllowedClockSkewSeconds(MAX_SKEW_SECONDS)
+                .setAllowedClockSkewSeconds(Issuer.DEFAULT_MAX_SKEW_SECONDS)
                 .parse(splitToken[0] + "." + splitToken[1] + ".");
 
-        Optional<Issuer> optIssuer = whiteList.getIssuer(jwt.getBody().getIssuer());
-        if (!optIssuer.isPresent()) {
-            throw new InvalidTokenException("Token issuer is not known and therefor rejected");
-        }
-        Issuer issuer = optIssuer.get();
-        if (LOGGER.isDebugEnabled()){
+        Issuer issuer = whiteList.getIssuer(jwt.getBody().getIssuer());
+        if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Issuer accepted [{}]", issuer.getIssuerId());
         }
 
@@ -85,10 +77,13 @@ public class DefaultTokenExtractor implements TokenExtractor {
         try {
             JsonNode jsonNode = om.readValue(TextCodec.BASE64URL.decodeToString(token), JsonNode.class);
             if (jsonNode.has("alg")) {
-                TokenParser parser = parsers.stream().filter(p -> p.supportAlgorithm().equals(jsonNode.get("alg").asText())).findFirst().orElseThrow(()->new InvalidTokenException(format("Algorithm [%s] not supported", jsonNode.get("alg"))));
+                TokenParser parser = parsers.stream()
+                        .filter(p -> jsonNode.get("alg").asText().equals(p.supportAlgorithm()))
+                        .findFirst()
+                        .orElseThrow(() -> new InvalidTokenException(format("Algorithm [%s] not supported", jsonNode.get("alg"))));
                 return new ExtractionResult(parser.parse(token, issuer));
             }
-            return new ExtractionResult();
+            return new ExtractionResult("No alg claim defined in JWT header");
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
             throw new InvalidTokenException("Token cannot be parsed into JSON");

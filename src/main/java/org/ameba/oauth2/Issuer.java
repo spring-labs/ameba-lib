@@ -25,6 +25,11 @@ import java.net.URL;
 public interface Issuer {
 
     /**
+     * The time leap (skew seconds) in seconds before a token expires.
+     */
+    int DEFAULT_MAX_SKEW_SECONDS = 2592000;
+
+    /**
      * The unique ID of the issuer, e.g. an URL (in case of ReadHat KeyCloak).
      *
      * @return As String

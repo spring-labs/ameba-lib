@@ -49,7 +49,7 @@ public class HS512TokenParser implements TokenParser<Symmetric, Jwt> {
         if (issuer == null) {
             throw new IllegalArgumentException("Expected symmetric issuer is null");
         }
-        if ( issuer.getSigningKey() == null || "".equals(issuer.getSigningKey())) {
+        if (issuer.getSigningKey() == null || "".equals(issuer.getSigningKey())) {
             throw new IllegalArgumentException("Symmetric signing key is null or empty. Configure a signing key");
         }
 
