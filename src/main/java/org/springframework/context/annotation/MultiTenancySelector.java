@@ -17,6 +17,7 @@ package org.springframework.context.annotation;
 
 import org.ameba.http.EnableMultiTenancy;
 import org.ameba.http.MultiTenancyConfiguration;
+import org.ameba.integration.hibernate.DefaultMultiTenantConnectionProvider;
 import org.ameba.integration.hibernate.SchemaBasedTenancyConfiguration;
 import org.ameba.integration.hibernate.SchemaSeparationConfigurator;
 import org.ameba.integration.jpa.SeparationStrategy;
@@ -41,11 +42,6 @@ public class MultiTenancySelector implements ImportSelector {
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
         Class<?> annoType = EnableMultiTenancy.class;
         AnnotationAttributes attributes = AnnotationConfigUtils.attributesFor(importingClassMetadata, annoType);
-        if (attributes == null) {
-            throw new IllegalArgumentException(String.format(
-                    "@%s is not present on importing class '%s' as expected",
-                    annoType.getSimpleName(), importingClassMetadata.getClassName()));
-        }
         if (attributes.getBoolean("enabled")) {
             MultiTenancyConfiguration.urlPatterns = attributes.getStringArray("urlPatterns");
             MultiTenancyConfiguration.enabled = attributes.getBoolean("enabled");
@@ -57,6 +53,7 @@ public class MultiTenancySelector implements ImportSelector {
             } catch (Exception e) {
                 throw new ApplicationContextException("Cannot instantiate a TenantResolverStrategy class to support multi-tenancy, please check @EnableMutliTenancy", e);
             }
+            DefaultMultiTenantConnectionProvider.defaultSchema = attributes.getString("defaultDatabaseSchema");
             return attributes.getEnum("separationStrategy").equals(SeparationStrategy.SCHEMA) ?
                     new String[]{MultiTenancyConfiguration.class.getName(), SchemaBasedTenancyConfiguration.class.getName()} :
                     new String[]{MultiTenancyConfiguration.class.getName()};

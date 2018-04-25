@@ -15,7 +15,6 @@
  */
 package org.ameba.integration.hibernate;
 
-import org.ameba.http.EnableMultiTenancy;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
@@ -34,6 +33,7 @@ import java.sql.SQLException;
 public class DefaultMultiTenantConnectionProvider implements MultiTenantConnectionProvider {
 
     SessionFactoryImplementor sessionFactory;
+    public static String defaultSchema;
 
     /**
      * {@inheritDoc}
@@ -61,7 +61,7 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
     @Override
     public Connection getConnection(String tenantIdentifier) throws SQLException {
         Connection connection = this.getAnyConnection();
-        if (!EnableMultiTenancy.DEFAULT_SCHEMA.equals(tenantIdentifier)) {
+        if (!defaultSchema.equals(tenantIdentifier)) {
             connection.setSchema(tenantIdentifier);
         }
         return connection;
