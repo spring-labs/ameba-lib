@@ -18,6 +18,8 @@ package org.ameba.integration.hibernate;
 import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate5.SessionFactoryUtils;
 
 import javax.sql.DataSource;
@@ -32,6 +34,7 @@ import java.sql.SQLException;
  */
 public class DefaultMultiTenantConnectionProvider implements MultiTenantConnectionProvider {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultMultiTenantConnectionProvider.class);
     SessionFactoryImplementor sessionFactory;
     public static String defaultSchema;
 
@@ -62,7 +65,24 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
     public Connection getConnection(String tenantIdentifier) throws SQLException {
         Connection connection = this.getAnyConnection();
         if (!defaultSchema.equals(tenantIdentifier)) {
-            connection.setSchema(tenantIdentifier);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Switch to schema [{}]", tenantIdentifier);
+            }
+            String databaseProductName = connection.getMetaData().getDatabaseProductName();
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Database product name {}", databaseProductName);
+            }
+            if (databaseProductName.contains("Microsoft SQL Server")) {
+                String user = connection.getMetaData().getUserName();
+                String sql = "ALTER USER " + user + " WITH DEFAULT_SCHEMA = " + tenantIdentifier;
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Setting DB schema not supported, executing ALTER statement [{}]", sql);
+                }
+                connection.prepareStatement(sql).execute();
+            } else {
+                LOGGER.debug("Setting DB schema supported");
+                connection.setSchema(tenantIdentifier);
+            }
         }
         return connection;
     }
