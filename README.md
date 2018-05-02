@@ -10,7 +10,7 @@ in Maven `provided` scope to cut transitive dependencies.
 
 ## Usage
 
-**Notice: For releases compatible with Spring Boot 1.5.x checkout ameba-lib version 1.x**
+**Notice: For releases compatible with Spring Boot 1.5.x checkout ameba-lib version 1.x, the current development branch is tested with Spring Boot 2.0.x**
 
 Add as Maven dependency
 ```
