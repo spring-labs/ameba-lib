@@ -73,7 +73,7 @@ public class DefaultTokenExtractor implements TokenExtractor {
 
         Optional<Issuer> optIssuer = whiteList.getIssuer(jwt.getBody().getIssuer());
         if (!optIssuer.isPresent()) {
-            throw new InvalidTokenException("Token issuer is not known and therefor rejected");
+            throw new InvalidTokenException(format("Token issuer [%s] is not known and therefor rejected", jwt.getBody().getIssuer()));
         }
         Issuer issuer = optIssuer.get();
         if (LOGGER.isDebugEnabled()){

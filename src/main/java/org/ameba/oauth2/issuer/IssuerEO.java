@@ -152,7 +152,7 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
      *
      * @param skewSeconds Skew seconds
      */
-    public void setSkwSeconds(long skewSeconds) {
+    public void setSkewSeconds(long skewSeconds) {
         this.tokenLifetime = skewSeconds;
     }
 
@@ -188,7 +188,7 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
      *
      * @param kid The KID
      */
-    public void setKID(String kid) {
+    public void setKid(String kid) {
         this.kid = kid;
     }
 
