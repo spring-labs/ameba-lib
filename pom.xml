@@ -35,24 +35,24 @@
         <project.scm.id>github</project.scm.id> <!-- Used to release and tag on GitHub -->
 
         <!-- Dependency versions -->
-        <cdi-api.version>1.1</cdi-api.version>
+        <cdi-api.version>2.0</cdi-api.version>
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
-        <h2.version>1.4.194</h2.version> <!-- in line with boot -->
-        <hibernate-validator.version>5.2.4.Final</hibernate-validator.version> <!-- in line with boot -->
-        <jackson.version>2.8.8</jackson.version> <!-- in line with boot -->
-        <javax-persistence.version>2.1.1</javax-persistence.version> <!-- in line with Spring Data release train and org.eclipse.persistence:org.eclipse.persistence.jpa -->
-        <javax.validation-api.version>1.1.0.Final</javax.validation-api.version> <!-- in line with hibernate-validator-parent -->
-        <json-path.version>2.2.0</json-path.version>
+        <h2.version>1.4.197</h2.version> <!-- in line with boot -->
+        <hibernate-validator.version>6.0.9.Final</hibernate-validator.version> <!-- in line with boot -->
+        <jackson.version>2.9.5</jackson.version> <!-- in line with boot -->
+        <javax-persistence.version>2.2.0</javax-persistence.version> <!-- in line with Spring Data release train and org.eclipse.persistence:org.eclipse.persistence.jpa -->
+        <javax.validation-api.version>2.0.1.Final</javax.validation-api.version> <!-- in line with hibernate-validator-parent -->
+        <json-path.version>2.4.0</json-path.version> <!-- in line with boot -->
         <jjwt.version>0.9.0</jjwt.version>
         <junit.version>4.12</junit.version> <!-- in line with boot -->
         <jwks-rsa.version>0.3.0</jwks-rsa.version>
         <servlet-api.version>3.1.0</servlet-api.version> <!-- in line with boot -->
-        <spring-hateoas.version>0.23.0.RELEASE</spring-hateoas.version> <!-- in line with boot -->
-        <spring-security.version>4.2.2.RELEASE</spring-security.version> <!-- in line with boot -->
-        <spring.version>4.3.8.RELEASE</spring.version> <!-- in line with boot -->
-        <spring-boot-dependencies.version>1.5.3.RELEASE</spring-boot-dependencies.version>
-        <spring-data-releasetrain.version>Ingalls-SR3</spring-data-releasetrain.version> <!-- in line with boot -->
+        <spring-hateoas.version>0.24.0.RELEASE</spring-hateoas.version> <!-- in line with boot -->
+        <spring-security.version>5.0.4.RELEASE</spring-security.version> <!-- in line with boot -->
+        <spring.version>5.0.5.RELEASE</spring.version> <!-- in line with boot -->
+        <spring-boot-dependencies.version>2.0.1.RELEASE</spring-boot-dependencies.version>
+        <spring-data-releasetrain.version>Kay-SR6</spring-data-releasetrain.version> <!-- in line with boot -->
 
         <!-- Plugin versions -->
         <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
@@ -174,6 +174,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
             <scope>provided</scope>
@@ -278,6 +283,10 @@
             <groupId>org.glassfish.web</groupId>
             <artifactId>el-impl</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
         </dependency>
     </dependencies>
 

@@ -18,10 +18,7 @@ package org.ameba.oauth2;
 import com.auth0.jwk.JwkProvider;
 import org.ameba.annotation.ExcludeFromScan;
 import org.ameba.http.FilterStrategy;
-import org.ameba.oauth2.issuer.IssuerRepository;
-import org.ameba.oauth2.issuer.PersistentIssuerWhiteList;
 import org.ameba.oauth2.parser.RSA256TokenParser;
-import org.ameba.oauth2.tenant.TenantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,8 +31,8 @@ import java.util.List;
  *
  * <pre>
  *     &#064;Import(SpringOauth2Configuration.class)
- *     &#064;EntityScan(basePackages = {"org.ameba.oauth2.issuer", "org.ameba.oauth2.tenant"})
- *     &#064;EnableJpaRepositories(basePackages = {"org.ameba.oauth2.issuer", "org.ameba.oauth2.tenant"})
+ *     &#064;EntityScan(basePackageClasses = {IssuerPackage.class, TenantPackage.class})
+ *     &#064;EnableJpaRepositories(basePackageClasses = {IssuerPackage.class, TenantPackage.class})
  * </pre>
  *
  * Required bean definitions: JwkProvider
@@ -45,16 +42,6 @@ import java.util.List;
 @ExcludeFromScan
 @Configuration
 public class SpringOauth2Configuration {
-
-    @Autowired
-    private TenantRepository tenantRepository;
-    @Autowired
-    private IssuerRepository issuerRepository;
-
-    @Bean
-    PersistentIssuerWhiteList persistentIssuerWhiteList(IssuerRepository issuerRepository) {
-        return new PersistentIssuerWhiteList(issuerRepository);
-    }
 
     @Bean
     RSA256TokenParser rsa256TokenParser(JwkProvider jwkProvider) {

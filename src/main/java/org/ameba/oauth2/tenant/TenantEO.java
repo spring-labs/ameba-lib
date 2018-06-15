@@ -31,7 +31,7 @@ import javax.persistence.Table;
 @Table(name = TenantEO.TABLE_NAME)
 public class TenantEO extends ApplicationEntity {
 
-    public static final String TABLE_NAME = "CORE_TENANT";
+    public static final String TABLE_NAME = "T_TENANT";
     /** An identifying opaque String. */
     @Column(name ="C_HASH", unique = true, nullable = false)
     private String hash;

@@ -15,6 +15,11 @@
  */
 package org.ameba.integration.jpa;
 
+import org.ameba.integration.TypedEntity;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -25,11 +30,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import java.util.Date;
-
-import org.ameba.integration.TypedEntity;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * A BaseEntity is a base superclass for JPA entities that comes with a mandatory primary key field, an application assign id and an
@@ -93,8 +93,21 @@ public class BaseEntity implements TypedEntity<Long> {
      *
      * @return The number of the optimistic locking field
      */
-    protected long getOl() {
+    public long getOl() {
         return ol;
+    }
+
+    /**
+     * Set the optimistic locking field.
+     * <p>
+     * <strong>CAUTION: This method is meant to be called by framework code only, like JPA ORM or mapping libraries, but
+     * not from application code.</strong>
+     * </p>
+     *
+     * @param ol The optimistic locking field
+     */
+    public void setOl(long ol) {
+        this.ol = ol;
     }
 
     /**

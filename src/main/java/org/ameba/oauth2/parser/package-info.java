@@ -13,22 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.integration.jpa;
-
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
 /**
- * A IntegrationTestConfig.
- *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.6
+ * This package contains types used for OAuth2 token issuer validation.
  */
-@Configuration
-@EnableJpaAuditing
-@EnableJpaRepositories(basePackageClasses = IntegrationTestConfig.class)
-public class IntegrationTestConfig {
-
-}
+package org.ameba.oauth2.parser;

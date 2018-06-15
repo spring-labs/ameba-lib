@@ -13,20 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.oauth2.tenant;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
+package org.ameba.oauth2.issuer;
 
 /**
- * A TenantRepository.
+ * A IssuerPackage is a stereotype used for package scanning.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
-public interface TenantRepository extends JpaRepository<TenantEO, Long> {
+public final class IssuerPackage {
 
-    Optional<TenantEO> findByHash(String hash);
-
-    Optional<TenantEO> findByName(String name);
+    private IssuerPackage() {}
 }

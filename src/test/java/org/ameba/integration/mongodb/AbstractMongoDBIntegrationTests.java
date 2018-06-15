@@ -16,7 +16,6 @@
 package org.ameba.integration.mongodb;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import de.flapdoodle.embed.mongo.MongodExecutable;
@@ -76,7 +75,7 @@ public abstract class AbstractMongoDBIntegrationTests {
         }
 
         @Override
-        public Mongo mongo() throws Exception {
+        public MongoClient mongoClient() {
             return new MongoClient(new MongoClientURI(uri));
         }
     }
@@ -113,8 +112,8 @@ public abstract class AbstractMongoDBIntegrationTests {
                         !collectionName.startsWith("system"))
                 .forEach(collectionName ->
                         template.execute(collectionName, collection -> {
-                            collection.remove(new BasicDBObject());
-                            assertThat(collection.find().hasNext()).isFalse();
+                            collection.deleteOne(new BasicDBObject());
+                            assertThat(collection.find().iterator().hasNext()).isFalse();
                             return null;
                         })
                 );

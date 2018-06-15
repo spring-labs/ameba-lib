@@ -15,6 +15,8 @@
  */
 package org.ameba.http;
 
+import org.ameba.integration.hibernate.TenantResolverTenancyStrategy;
+import org.ameba.integration.jpa.SeparationStrategy;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.MultiTenancySelector;
 
@@ -35,6 +37,8 @@ import java.lang.annotation.Target;
 @Documented
 @Import(MultiTenancySelector.class)
 public @interface EnableMultiTenancy {
+
+    public static final String DEFAULT_SCHEMA = "public";
 
     /**
      * Turn multi-tenancy support on or off. Default is {@literal true}.
@@ -57,4 +61,27 @@ public @interface EnableMultiTenancy {
      * @return Patterns matching the URL to activate multi-tenancy on, no Ant style supported
      */
     String[] urlPatterns() default "/*";
+
+    /**
+     * The strategy used to separate tenant data in databases. Default is {@link SeparationStrategy#NONE}
+     *
+     * @return The strategy to use
+     */
+    SeparationStrategy separationStrategy() default SeparationStrategy.NONE;
+
+    /**
+     * Implementation class used to resolve the current tenant from. In case of Hibernate, the class must implement
+     * {@code CurrentTenantIdentifierResolver}.
+     *
+     * @return implementation class;
+     */
+    Class tenantResolverStrategy() default TenantResolverTenancyStrategy.class;
+
+    /**
+     * Define the name of the default database schema that is used when no tenant information is available. Default is
+     * {@value DEFAULT_SCHEMA}.
+     *
+     * @return Name of the default schema
+     */
+    String defaultDatabaseSchema() default DEFAULT_SCHEMA;
 }

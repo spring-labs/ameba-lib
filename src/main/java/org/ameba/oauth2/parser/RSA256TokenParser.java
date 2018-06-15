@@ -31,6 +31,8 @@ import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
 
+import static java.lang.String.format;
+
 /**
  * A RSA256TokenParser uses a SHA-256 Public Key to verify signature.
  *
@@ -61,11 +63,14 @@ public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
         if (issuer == null) {
             throw new IllegalArgumentException("Expected asymmetric issuer is null");
         }
-        if ( issuer.getKID() == null || "".equals(issuer.getKID())) {
+        if (issuer.getKID() == null || "".equals(issuer.getKID())) {
             throw new IllegalArgumentException("JWK kid is null or empty. Configure a kid");
         }
         Jws<Claims> jws;
         try {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug(format("Checking issuer with KID [%s]", issuer.getKID()));
+            }
             Jwk jwk = jwkProvider.get(issuer.getKID());
             byte[] publicKeyBytes = jwk.getPublicKey().getEncoded();
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);

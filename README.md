@@ -155,12 +155,25 @@ tenant name) needs to be populated down to the underlying logging library, SLF4J
 SLF4J smoothly populates the logback context with its own context. If you're using other frameworks, like Log4j you need to implement a
 custom _Context Populator_ that ready the SLF4J MDC/NDC and populates the log4j MDC/NDC properly.
 
-Starting with 1.7 the configuration of multi-tenancy support can be done much more elegant by using the classlevel annotation ´@EnableMultiTenancy´. No
+Starting with 1.7 the configuration of multi-tenancy support can be done much more elegant by using the classlevel annotation `@EnableMultiTenancy`. No
 manual filter registration needs to be done anymore.
 
-Referenced issues: [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
+#### Data record separation
 
-### Logging extenstions (1.7+)
+New since 1.12: Tenant separation on database schema level. With the `@EnableMultiTenancy` annotation it is now possible to
+define a data separation strategy for relational databases. Currently only the `SeparationStrategy.SCHEMA` is
+supported and by default database separation is turned off (`SeparationStrategy.NONE`).
+
+**Requirements and restrictions**
+- Requires Hibernate 5.x and Spring Boot 2.x
+- Only database schema separation supported yet (1.12)
+- Database schema must already exist and cannot be generated with Hibernate generation strategies
+
+Referenced issues:
+- [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
+- [#141](https://github.com/abraxas-labs/ameba-lib/issues/141)
+
+### Logging extensions (1.7+)
 
 Starting with version 1.7 some useful logging extensions were added. At first a `ThreadIdProvider` is used to identify each thread in a concurrent
 test run. By default logback does only provide a meaningless thread name. But a thread counter can now be configured to display the current value in the

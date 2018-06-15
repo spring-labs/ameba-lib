@@ -19,13 +19,12 @@ import io.jsonwebtoken.Jwt;
 import org.ameba.http.FilterStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -38,14 +37,16 @@ public class JwtValidationStrategy implements FilterStrategy {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtValidationStrategy.class);
     private final List<TokenExtractor> extractors;
-    private final Optional<JwtValidator> validator;
+    private JwtValidator validator;
 
-    @Inject
-    public JwtValidationStrategy(List<TokenExtractor> extractors, JwtValidator validator) {
+    public JwtValidationStrategy(List<TokenExtractor> extractors, @Autowired(required = false) JwtValidator validator) {
         this.extractors = extractors;
-        this.validator = Optional.ofNullable(validator);
+        this.validator = validator;
     }
 
+    public JwtValidationStrategy(List<TokenExtractor> extractors) {
+        this.extractors = extractors;
+    }
     /**
      * {@inheritDoc}
      *
@@ -62,7 +63,9 @@ public class JwtValidationStrategy implements FilterStrategy {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Extracted JWT: [{}]", jwt);
             }
-            validator.ifPresent(jwtValidator -> jwtValidator.validate(jwt, request));
+            if (null != validator) {
+                validator.validate(jwt, request);
+            }
         }
     }
 

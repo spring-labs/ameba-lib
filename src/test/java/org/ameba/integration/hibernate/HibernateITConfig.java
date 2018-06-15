@@ -13,40 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.oauth2;
+package org.ameba.integration.hibernate;
 
-import java.net.URL;
+import org.ameba.http.EnableMultiTenancy;
+import org.ameba.integration.jpa.SeparationStrategy;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
- * An Issuer is authorized to issue OAuth2 tokens.
+ * A HibernateITConfig.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface Issuer {
+@Configuration
+@EnableMultiTenancy(separationStrategy = SeparationStrategy.SCHEMA)
+@EnableJpaRepositories(basePackageClasses = HibernateITConfig.class)
+@EntityScan(basePackageClasses = HibernateITConfig.class)
+public class HibernateITConfig {
 
-    /**
-     * The time leap (skew seconds) in seconds before a token expires.
-     */
-    int DEFAULT_MAX_SKEW_SECONDS = 2592000;
-
-    /**
-     * The unique ID of the issuer, e.g. an URL (in case of ReadHat KeyCloak).
-     *
-     * @return As String
-     */
-    String getIssuerId();
-
-    /**
-     * Leap seconds allowed when a token signature is validated.
-     *
-     * @return In seconds
-     */
-    long getSkewSeconds();
-
-    /**
-     * Return the base URL of the authorization server.
-     *
-     * @return As URL
-     */
-    URL getBaseURL();
 }
