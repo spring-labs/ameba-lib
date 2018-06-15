@@ -160,14 +160,14 @@ manual filter registration needs to be done anymore.
 
 #### Data record separation
 
-New since 1.12: Tenant separation on database schema level. With the `@EnableMultiTenancy` annotation it is now possible to
+New since 2.0: Tenant separation on database schema level. With the `@EnableMultiTenancy` annotation it is now possible to
 define a data separation strategy for relational databases. Currently only the `SeparationStrategy.SCHEMA` is
 supported and by default database separation is turned off (`SeparationStrategy.NONE`).
 
 **Requirements and restrictions**
 - Requires Hibernate 5.x and Spring Boot 2.x
-- Only database schema separation supported yet (1.12)
-- Database schema must already exist and cannot be generated with Hibernate generation strategies
+- Only database schema separation supported yet (2.0)
+- Database schema must already exist and cannot be created with Hibernate creation strategies on the fly
 
 Referenced issues:
 - [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
