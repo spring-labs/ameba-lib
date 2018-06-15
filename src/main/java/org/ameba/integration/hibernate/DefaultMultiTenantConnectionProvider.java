@@ -44,9 +44,12 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
     @Override
     public Connection getAnyConnection() throws SQLException {
         if (sessionFactory == null) {
-            return null;
+            throw new SQLException("Cannot obtain JDBC Connection, no SessionFactoryImplementor set");
         }
         DataSource dataSource = SessionFactoryUtils.getDataSource(sessionFactory);
+        if (dataSource== null) {
+            throw new SQLException("Cannot obtain JDBC Connection, no DataSource accessible from SessionFactory");
+        }
         return dataSource.getConnection();
     }
 
@@ -60,6 +63,9 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
 
     /**
      * {@inheritDoc}
+     *
+     * Notice that the JDBC driver must support setting the schema on the connection. Most drivers allow this, but
+     * SQLServer does not allow to do so.
      */
     @Override
     public Connection getConnection(String tenantIdentifier) throws SQLException {
@@ -68,21 +74,7 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Switch to schema [{}]", tenantIdentifier);
             }
-            String databaseProductName = connection.getMetaData().getDatabaseProductName();
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Database product name {}", databaseProductName);
-            }
-            if (databaseProductName.contains("Microsoft SQL Server")) {
-                String user = connection.getMetaData().getUserName();
-                String sql = "ALTER USER " + user + " WITH DEFAULT_SCHEMA = " + tenantIdentifier;
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Setting DB schema not supported, executing ALTER statement [{}]", sql);
-                }
-                connection.prepareStatement(sql).execute();
-            } else {
-                LOGGER.debug("Setting DB schema supported");
-                connection.setSchema(tenantIdentifier);
-            }
+            connection.setSchema(tenantIdentifier);
         }
         return connection;
     }
