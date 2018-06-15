@@ -423,7 +423,7 @@
         <connection>scm:git:git@github.com:abraxas-labs/ameba-lib.git</connection>
         <developerConnection>scm:git:git@github.com:abraxas-labs/ameba-lib.git</developerConnection>
         <url>scm:git:git@github.com:abraxas-labs/ameba-lib.git</url>
-        <tag>1.12</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
