@@ -40,7 +40,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * latter take precedence.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.1
  * @see org.springframework.web.filter.OncePerRequestFilter
  * @since 1.0
  */
@@ -55,14 +54,13 @@ public abstract class AbstractTenantAwareFilter extends OncePerRequestFilter {
         boolean multiTenancyEnabled = Boolean.valueOf(fromSC == null ? getFilterConfig().getInitParameter(Constants.PARAM_MULTI_TENANCY_ENABLED) : fromSC);
         String tenant = null;
         if (multiTenancyEnabled && !"OPTIONS".equalsIgnoreCase(r.getMethod())) {
-            tenant = r.getHeader(Constants.HEADER_VALUE_TENANT) == null ||
-                    r.getHeader(Constants.HEADER_VALUE_TENANT).isEmpty() ? r.getHeader(Constants.HEADER_VALUE_X_TENANT) : r.getHeader(Constants.HEADER_VALUE_TENANT);
+            tenant = r.getHeader(Constants.HEADER_VALUE_X_TENANT);
             if (null == tenant || tenant.isEmpty()) {
                 String throwParam = (String) r.getServletContext().getAttribute(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT);
                 boolean throwIfNotPresent = Boolean.valueOf(throwParam == null ? getFilterConfig().getInitParameter(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT) : throwParam);
                 if (throwIfNotPresent) {
                     response.setStatus(HttpStatus.BAD_REQUEST.value());
-                    throw new IllegalArgumentException(String.format("No tenant information available in http header. Expected header [%s/%s] attribute not present.", Constants.HEADER_VALUE_TENANT, Constants.HEADER_VALUE_X_TENANT));
+                    throw new IllegalArgumentException(String.format("No tenant information available in http header. Expected header [%s/%s] attribute not present.", Constants.HEADER_VALUE_X_TENANT, Constants.HEADER_VALUE_X_TENANT));
                 }
             } else {
                 doBefore(r, response, filterChain, tenant);

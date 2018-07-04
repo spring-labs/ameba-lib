@@ -102,7 +102,7 @@ public class ServiceLayerAspect {
     public Exception translateException(Exception ex) {
         if (ex instanceof BusinessRuntimeException) {
             BusinessRuntimeException bre = (BusinessRuntimeException) ex;
-            MDC.put(LoggingCategories.MSGKEY, bre.getMsgKey());
+            MDC.put(LoggingCategories.MSGKEY, bre.getMessageKey());
             if (bre.getData() != null) {
                 MDC.put(LoggingCategories.MSGDATA, String.join(",", Stream.of(bre.getData()).map(Object::toString).toArray(String[]::new)));
             }

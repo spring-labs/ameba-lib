@@ -25,12 +25,6 @@ package org.ameba;
 public final class Constants {
 
     /**
-     * Name of http header attribute used to carry tenant identifier from client to server.
-     * @deprecated Use {@link #HEADER_VALUE_X_TENANT} instead
-     */
-    @Deprecated
-    public static final String HEADER_VALUE_TENANT = "Tenant";
-    /**
      * Name of http X- header attribute used to carry tenant identifier from client to server.
      */
     public static final String HEADER_VALUE_X_TENANT = "X-Tenant";
