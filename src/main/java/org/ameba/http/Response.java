@@ -15,7 +15,11 @@
  */
 package org.ameba.http;
 
-import static com.jayway.jsonpath.JsonPath.read;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.jayway.jsonpath.Configuration;
+import org.springframework.hateoas.ResourceSupport;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -23,11 +27,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.jayway.jsonpath.Configuration;
-import org.springframework.hateoas.ResourceSupport;
+import static com.jayway.jsonpath.JsonPath.read;
 
 /**
  * An instance of Response is a transfer object that is used to encapsulate a server response to the client application. It contains an
@@ -67,43 +67,18 @@ public class Response<T extends Serializable> extends ResourceSupport implements
     protected Response() {
     }
 
-    /**
-     * Create a new Response.
-     *
-     * @param message The message as text
-     * @param messageKey A unique message key used to identify the message on client side
-     * @param httpStatus An HTTP status
-     */
-    public Response(String message, String messageKey, String httpStatus) {
-        this.message = message;
-        this.messageKey = messageKey;
-        this.httpStatus = httpStatus;
-    }
-
-    /**
-     * Create a new Response.
-     *
-     * @param message The message as text
-     * @param messageKey A unique message key used to identify the message on client side
-     * @param httpStatus An HTTP status
-     * @param obj An array of result entities
-     */
-    public Response(String message, String messageKey, String httpStatus, T[] obj) {
+    private Response(String message, String messageKey, String httpStatus, T[] obj) {
         this.message = message;
         this.messageKey = messageKey;
         this.httpStatus = httpStatus;
         this.obj = obj;
     }
 
-    /**
-     * Create a new Response.
-     *
-     * @param message The message as text
-     * @param httpStatus An HTTP status
-     */
-    public Response(String message, String httpStatus) {
-        this.message = message;
-        this.httpStatus = httpStatus;
+    private Response(Builder<T> builder) {
+        message = builder.message;
+        messageKey = builder.messageKey;
+        obj = builder.obj;
+        httpStatus = builder.httpStatus;
     }
 
     /**
@@ -124,6 +99,10 @@ public class Response<T extends Serializable> extends ResourceSupport implements
             r.any();
         }
         throw new ParseException(String.format("String does not contain mandatory fields. [%s]", s), -1);
+    }
+
+    public static <T extends Serializable> Builder<T> newBuilder() {
+        return new Builder<T>();
     }
 
     @JsonAnyGetter
@@ -157,40 +136,23 @@ public class Response<T extends Serializable> extends ResourceSupport implements
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getMessageKey() {
         return messageKey;
-    }
-
-    public void setMessageKey(String messageKey) {
-        this.messageKey = messageKey;
     }
 
     public T[] getObj() {
         return obj;
     }
 
-    public void setObj(T[] obj) {
-        this.obj = obj;
-    }
-
     public String getHttpStatus() {
         return httpStatus;
     }
 
-    public void setHttpStatus(String httpStatus) {
-        this.httpStatus = httpStatus;
-    }
-
-    public Map<String, String> getOther() {
-        return other;
-    }
-
-    public void setOther(Map<String, String> other) {
-        this.other = other;
+    public String getAny(String key) {
+        if (key == null) {
+            throw new IllegalArgumentException("key argument is null");
+        }
+        return other.get(key);
     }
 
     @Override
@@ -225,5 +187,74 @@ public class Response<T extends Serializable> extends ResourceSupport implements
                 ", messageKey='" + messageKey + '\'' +
                 ", obj=" + Arrays.toString(obj) +
                 '}';
+    }
+
+    /**
+     * {@code Response} builder static inner class.
+     */
+    public static final class Builder<T extends Serializable> {
+        private String message;
+        private String messageKey;
+        private T[] obj;
+        private String httpStatus;
+
+        private Builder() {
+        }
+
+        /**
+         * Sets the {@code message} and returns a reference to this Builder so that the methods can be chained
+         * together.
+         *
+         * @param val the {@code message} to set
+         * @return a reference to this Builder
+         */
+        public Builder<T> withMessage(String val) {
+            message = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code messageKey} and returns a reference to this Builder so that the methods can be chained
+         * together.
+         *
+         * @param val the {@code messageKey} to set
+         * @return a reference to this Builder
+         */
+        public Builder<T> withMessageKey(String val) {
+            messageKey = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code obj} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code obj} to set
+         * @return a reference to this Builder
+         */
+        public Builder<T> withObj(T... val) {
+            obj = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code httpStatus} and returns a reference to this Builder so that the methods can be chained
+         * together.
+         *
+         * @param val the {@code httpStatus} to set
+         * @return a reference to this Builder
+         */
+        public Builder<T> withHttpStatus(String val) {
+            httpStatus = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Response} built from the parameters previously set.
+         *
+         * @return a {@code Response} built with parameters of this {@code Response.Builder}
+         */
+        public Response<T> build() {
+            return new Response<>(this);
+        }
     }
 }

@@ -73,7 +73,7 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      * @return The ResponseEntity
      */
     public ResponseEntity<Response<Serializable>> toResponse() {
-        return new ResponseEntity<>(new Response<>(getMessage(), getMsgKey(), getStatus().toString(), getData()), getStatus());
+        return new ResponseEntity<>(Response.newBuilder().withMessage(getMessage()).withMessageKey(getMessageKey()).withHttpStatus(getStatus().toString()).withObj(getData()).build(), getStatus());
     }
 
     /**
@@ -83,7 +83,7 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      * @return The ResponseEntity
      */
     public ResponseEntity<Response<Serializable>> toResponse(Serializable... data) {
-        return new ResponseEntity<>(new Response<>(getMessage(), getMsgKey(), getStatus().toString(), data), getStatus());
+        return new ResponseEntity<>(Response.newBuilder().withMessage(getMessage()).withMessageKey(getMessageKey()).withHttpStatus(getStatus().toString()).withObj(getData()).build(), getStatus());
     }
 
     /**

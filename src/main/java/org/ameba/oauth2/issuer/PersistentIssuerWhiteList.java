@@ -16,6 +16,7 @@
 package org.ameba.oauth2.issuer;
 
 import org.ameba.oauth2.InvalidTokenException;
+import org.ameba.oauth2.Issuer;
 import org.ameba.oauth2.IssuerWhiteList;
 
 import java.net.MalformedURLException;
@@ -38,7 +39,7 @@ public class PersistentIssuerWhiteList implements IssuerWhiteList {
      * {@inheritDoc}
      */
     @Override
-    public IssuerEO getIssuer(String issuerId) {
+    public Issuer getIssuer(String issuerId) {
         try {
             return repository.findByIssUrl(new URL(issuerId)).orElseThrow(() -> new InvalidTokenException("Token issuer is not known and therefor rejected"));
         } catch (MalformedURLException e) {

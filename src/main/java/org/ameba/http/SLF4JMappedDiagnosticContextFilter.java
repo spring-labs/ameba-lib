@@ -15,21 +15,20 @@
  */
 package org.ameba.http;
 
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.ameba.Constants;
 import org.ameba.LoggingCategories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
+import javax.servlet.FilterChain;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * A SLF4JMappedDiagnosticContextFilter adds the current tenant to SLF4J's Mapped Diagnostics Context.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.1
  * @see org.slf4j.MDC
  * @since 0.9
  */
@@ -46,7 +45,6 @@ public class SLF4JMappedDiagnosticContextFilter extends AbstractTenantAwareFilte
      */
     @Override
     protected void doBefore(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
-        MDC.put(Constants.HEADER_VALUE_TENANT, tenant);
         MDC.put(Constants.HEADER_VALUE_X_TENANT, tenant);
         if (RequestIDHolder.hasRequestID()) {
             MDC.put(Constants.HEADER_VALUE_X_REQUESTID, RequestIDHolder.getRequestID());

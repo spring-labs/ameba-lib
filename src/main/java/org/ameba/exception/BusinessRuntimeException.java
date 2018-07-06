@@ -91,17 +91,6 @@ public class BusinessRuntimeException extends RuntimeException {
      * Get the message key.
      *
      * @return The message key
-     * @deprecated since 1.11 use {@link #getMessageKey()}
-     */
-    @Deprecated
-    public String getMsgKey() {
-        return msgKey;
-    }
-
-    /**
-     * Get the message key.
-     *
-     * @return The message key
      */
     public String getMessageKey() {
         return msgKey;
