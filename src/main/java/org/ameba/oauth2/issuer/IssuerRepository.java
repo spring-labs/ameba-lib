@@ -15,7 +15,7 @@
  */
 package org.ameba.oauth2.issuer;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.ameba.oauth2.Issuer;
 
 import java.net.URL;
 import java.util.Optional;
@@ -25,7 +25,7 @@ import java.util.Optional;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface IssuerRepository extends JpaRepository<IssuerEO, Long> {
+public interface IssuerRepository {
 
-    Optional<IssuerEO> findByIssUrl(URL issUrl);
+    Optional<Issuer> findByIssUrl(URL issUrl);
 }
