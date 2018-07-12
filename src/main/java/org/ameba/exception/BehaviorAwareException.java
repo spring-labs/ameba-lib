@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -72,7 +72,7 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      *
      * @return The ResponseEntity
      */
-    public ResponseEntity<Response<Serializable>> toResponse() {
+    public ResponseEntity<Response> toResponse() {
         return new ResponseEntity<>(Response.newBuilder().withMessage(getMessage()).withMessageKey(getMessageKey()).withHttpStatus(getStatus().toString()).withObj(getData()).build(), getStatus());
     }
 
@@ -82,7 +82,7 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      * @param data Additional implicit data passed to the caller
      * @return The ResponseEntity
      */
-    public ResponseEntity<Response<Serializable>> toResponse(Serializable... data) {
+    public ResponseEntity<Response> toResponse(Serializable... data) {
         return new ResponseEntity<>(Response.newBuilder().withMessage(getMessage()).withMessageKey(getMessageKey()).withHttpStatus(getStatus().toString()).withObj(getData()).build(), getStatus());
     }
 
