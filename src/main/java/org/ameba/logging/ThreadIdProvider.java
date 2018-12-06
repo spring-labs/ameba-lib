@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,10 @@
  */
 package org.ameba.logging;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * A ThreadIdProvider tracks a sequence number that gets increased per created thread. This class may be used to log the an unique thread id.
@@ -29,7 +29,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
  *     &lt;appender&gt;
  *         &lt;encoder&gt;
  *             ...
- *             &lt;pattern>%tid %m%n&lt;/pattern&gt;
+ *             &lt;pattern&gt;%tid %m%n&lt;/pattern&gt;
  *         &lt;/encoder&gt;
  *     &lt;/appender&gt;
  * </pre>

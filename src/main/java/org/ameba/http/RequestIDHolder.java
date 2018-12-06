@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ public class RequestIDHolder {
     /**
      * Checks whether a request ID is set in the current thread scope.
      *
-     * @return {@link true} if so, otherwise {@literal false}
+     * @return {@literal true} if so, otherwise {@literal false}
      */
     public static boolean hasRequestID() {
         return holder.get() != null;

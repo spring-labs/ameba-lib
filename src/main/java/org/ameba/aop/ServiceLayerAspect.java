@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -34,7 +35,6 @@ import java.util.stream.Stream;
  * exceptions around the service layer.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
  * @since 1.2
  */
 @Aspect
@@ -53,16 +53,22 @@ public class ServiceLayerAspect {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
     }
 
-    /** Constructor with some loginfo and considering the root cause. */
+    /**
+     * Constructor with some loginfo and considering the root cause.
+     *
+     * @param withRootCause Whether the root cause shall be preserved or not
+     */
     public ServiceLayerAspect(boolean withRootCause) {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
         this.withRootCause = withRootCause;
     }
 
     /**
-     * Around intercepted methods do some logging and exception translation. <p> <ul> <li> Set log level of {@link
-     * LoggingCategories#SERVICE_LAYER_ACCESS} to INFO to enable method tracing. <li>Set log level of {@link
-     * LoggingCategories#SERVICE_LAYER_EXCEPTION} to ERROR to enable exception logging. </ul> </p>
+     * Around intercepted methods do some logging and exception translation.
+     * <ul>
+     *     <li> Set log level of {@link LoggingCategories#SERVICE_LAYER_ACCESS} to INFO to enable method tracing.</li>
+     *     <li>Set log level of {@link LoggingCategories#SERVICE_LAYER_EXCEPTION} to ERROR to enable exception logging.
+     * </ul>
      *
      * @param pjp The joinpoint
      * @return Method return value
@@ -104,7 +110,7 @@ public class ServiceLayerAspect {
             BusinessRuntimeException bre = (BusinessRuntimeException) ex;
             MDC.put(LoggingCategories.MSGKEY, bre.getMessageKey());
             if (bre.getData() != null) {
-                MDC.put(LoggingCategories.MSGDATA, String.join(",", Stream.of(bre.getData()).map(Object::toString).toArray(String[]::new)));
+                MDC.put(LoggingCategories.MSGDATA, String.join(",", Stream.of(bre.getData()).filter(Objects::nonNull).map(Object::toString).toArray(String[]::new)));
             }
             // cleanup of context is done in SLF4JMappedDiagnosticContextFilter
             return bre;

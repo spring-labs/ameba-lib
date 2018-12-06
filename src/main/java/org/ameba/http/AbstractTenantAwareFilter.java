@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,20 @@
  */
 package org.ameba.http;
 
+import org.ameba.Constants;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import org.ameba.Constants;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.filter.OncePerRequestFilter;
-
 /**
  * A AbstractTenantAwareFilter is a super class that handles resolution and validation of the current tenant from the incoming request.
  * <p>
- * The tenant information is expected to be present as http header attribute with name {@value Constants#HEADER_VALUE_TENANT}. The behavior
+ * The tenant information is expected to be present as http header attribute with name {@value Constants#HEADER_VALUE_X_TENANT}. The behavior
  * of the validation of attribute existence can be configured via two properties: <ul> <li>{@value
  * Constants#PARAM_MULTI_TENANCY_ENABLED}: If {@literal true}, the filter expects the tenant attribute set in the current request and goes
  * further with validation and processing the tenant information.</li> <li>{@value Constants#PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT}: If

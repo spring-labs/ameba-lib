@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,17 @@
  */
 package org.ameba.http;
 
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.ameba.LoggingCategories;
 import org.ameba.tenancy.TenantHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.FilterChain;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
- * A MultiTenantSessionFilter set the current tenant value ({@value org.ameba.Constants#HEADER_VALUE_TENANT} in the
+ * A MultiTenantSessionFilter set the current tenant value ({@value org.ameba.Constants#HEADER_VALUE_X_TENANT} in the
  * {@link TenantHolder TenantHolder}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>

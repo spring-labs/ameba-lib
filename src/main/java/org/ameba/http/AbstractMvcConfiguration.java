@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,6 @@
  */
 package org.ameba.http;
 
-import java.util.List;
-import java.util.Properties;
-
 import org.ameba.system.NestedReloadableResourceBundleMessageSource;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +22,9 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+
+import java.util.List;
+import java.util.Properties;
 
 /**
  * An AbstractMvcConfiguration class can be extended to inherit a pre-configured {@code MessageSource} and ressource handlers

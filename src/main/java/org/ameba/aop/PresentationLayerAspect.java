@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import org.springframework.core.annotation.Order;
  * A PresentationLayerAspect.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
  * @since 1.2
  */
 @Aspect
@@ -47,8 +46,9 @@ public class PresentationLayerAspect {
 
     /**
      * Around intercepted methods do some logging and exception translation.
-     * <p>
-     * <ul> <li>Set log level of {@link LoggingCategories#PRESENTATION_LAYER_EXCEPTION} to ERROR to enable exception logging. </ul>
+     * <ul>
+     *     <li>Set log level of {@link LoggingCategories#PRESENTATION_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
+     * </ul>
      *
      * @param pjp The joinpoint
      * @return Method return value

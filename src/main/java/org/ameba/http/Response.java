@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,23 +30,20 @@ import java.util.Map;
 import static com.jayway.jsonpath.JsonPath.read;
 
 /**
- * An instance of Response is a transfer object that is used to encapsulate a server response to the client application. It contains an
- * array of items specific to the request. Compare to the concept of SIREN.
+ * An instance of Response is a transfer object that is used to encapsulate a server response to the client application.
+ * It contains an array of items specific to the request. Compare to the concept of SIREN.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.1
  * @since 0.1
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Response<T extends Serializable> extends ResourceSupport implements Serializable {
+public class Response<T> extends ResourceSupport implements Serializable {
 
-    /**
-     * Shortcut if the server responds with only one item.
-     */
     /** A text message to transfer as server response. */
     private String message = "";
     /**
-     * A unique key to identify a particular message. Note that this key can relate to the wrapped <tt>message</tt>, but it might not.
+     * A unique key to identify a particular message. Note that this key can relate to the wrapped <tt>message</tt>, but
+     * it might not.
      */
     private String messageKey = "";
     /**
@@ -82,7 +79,8 @@ public class Response<T extends Serializable> extends ResourceSupport implements
     }
 
     /**
-     * Checks whether all mandatory fields are set on the String passed as {@literal s} and parses this String into a valid instance.
+     * Checks whether all mandatory fields are set on the String passed as {@literal s} and parses this String into a
+     * valid instance.
      *
      * @param s The String to get the mandatory fields from
      * @return The instance
@@ -95,14 +93,14 @@ public class Response<T extends Serializable> extends ResourceSupport implements
                 s.contains("class")) {
             Object d = Configuration.defaultConfiguration().jsonProvider().parse(s);
             String[] obj = read(d, "$.obj");
-            Response<?> r = new Response<>(read(d, "$.message"), read(d, "$.messageKey"), read(d, "$.httpStatus"), obj );
+            Response<?> r = new Response<>(read(d, "$.message"), read(d, "$.messageKey"), read(d, "$.httpStatus"), obj);
             r.any();
         }
         throw new ParseException(String.format("String does not contain mandatory fields. [%s]", s), -1);
     }
 
-    public static <T extends Serializable> Builder<T> newBuilder() {
-        return new Builder<T>();
+    public static <T> Builder<T> newBuilder() {
+        return new Builder<>();
     }
 
     @JsonAnyGetter
@@ -192,7 +190,7 @@ public class Response<T extends Serializable> extends ResourceSupport implements
     /**
      * {@code Response} builder static inner class.
      */
-    public static final class Builder<T extends Serializable> {
+    public static final class Builder<T> {
         private String message;
         private String messageKey;
         private T[] obj;
@@ -231,7 +229,8 @@ public class Response<T extends Serializable> extends ResourceSupport implements
          * @param val the {@code obj} to set
          * @return a reference to this Builder
          */
-        public Builder<T> withObj(T... val) {
+        @SafeVarargs
+        public final Builder<T> withObj(T... val) {
             obj = val;
             return this;
         }

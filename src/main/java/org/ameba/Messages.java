@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,6 +33,10 @@ public final class Messages {
     public static final String BAD_CREDENTIALS = "server.bad.credentials";
     /** Expresses a successful authentication. */
     public static final String AUTHENTICATED = "server.authenticated";
+    /** Expresses a unsuccessful authentication. */
+    public static final String UNAUTHENTICATED = "server.unauthenticated";
+    /** Not allowed to access a resource. */
+    public static final String UNAUTHORIZED = "server.unauthorized";
     /** Signals that a logout attempt has failed. */
     public static final String LOGOUT_FAILED = "server.logout.failed";
 

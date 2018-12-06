@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ package org.ameba;
  * A Constants class to collect common used constants.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.1
  * @since 0.9
  */
 public final class Constants {
@@ -29,8 +28,8 @@ public final class Constants {
      */
     public static final String HEADER_VALUE_X_TENANT = "X-Tenant";
     /**
-     * Name of servlet context param to enable multitenancy support, expected to be set as {@code true} or {@code false}
-     * .
+     * Name of servlet context param to enable multitenancy support, expected to be set as {@code true} or {@code
+     * false}.
      */
     public static final String PARAM_MULTI_TENANCY_ENABLED = "multitenancy.enabled";
     /**
@@ -42,6 +41,18 @@ public final class Constants {
      * Name of the custome http X- attribute used to store an unique request ID.
      */
     public static final String HEADER_VALUE_X_REQUESTID = "X-RequestID";
+    /**
+     * Standard date time format for APIs.
+     */
+    public static final String API_DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    /**
+     * Standard date time format for APIs.
+     */
+    public static final String API_DATE_FORMAT = "yyyy-MM-dd";
+    /**
+     * Standard date time format for APIs.
+     */
+    public static final String API_TIME_FORMAT = "hh:mm:ss";
 
     /**
      * Hide constructor.

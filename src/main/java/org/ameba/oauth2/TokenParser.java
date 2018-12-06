@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2018 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ public interface TokenParser<T extends Issuer, U extends Jwt> {
     /**
      * Returns the signing algorithm that is supported by the parser.
      *
-     * @return As shortcut, see <a href="https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-31#section-4.1.1">
+     * @return As shortcut, see <a href="https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-31#section-4.1.1"></a>
      */
     String supportAlgorithm();
 
