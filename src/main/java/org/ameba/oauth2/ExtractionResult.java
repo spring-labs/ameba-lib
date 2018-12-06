@@ -37,6 +37,8 @@ public final class ExtractionResult {
 
     /**
      * Extraction was possible with the given result {@code jwt}
+     *
+     * @param jwt The JWT
      */
     public ExtractionResult(Jwt<?,?> jwt) {
         this();

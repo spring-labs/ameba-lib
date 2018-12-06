@@ -33,6 +33,10 @@ public final class Messages {
     public static final String BAD_CREDENTIALS = "server.bad.credentials";
     /** Expresses a successful authentication. */
     public static final String AUTHENTICATED = "server.authenticated";
+    /** Expresses a unsuccessful authentication. */
+    public static final String UNAUTHENTICATED = "server.unauthenticated";
+    /** Not allowed to access a resource. */
+    public static final String UNAUTHORIZED = "server.unauthorized";
     /** Signals that a logout attempt has failed. */
     public static final String LOGOUT_FAILED = "server.logout.failed";
 

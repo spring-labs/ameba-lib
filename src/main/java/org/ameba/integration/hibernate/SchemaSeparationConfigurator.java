@@ -25,7 +25,6 @@ import java.util.Map;
  * A SchemaSeparationConfigurator is a Spring Boot recognized class type to customize Hibernate properties
  * programmatically at application startup (when the EntityManagerFactory and SessionFactory are bootstrapped). In fact
  * this implementation configures Hibernate to use a schema-based data separation.
- * <p />
  * The tenant resolution strategy may change between projects and can be defined as an attribute of the {@code EnableMultiTenancy}
  * annotation.
  *

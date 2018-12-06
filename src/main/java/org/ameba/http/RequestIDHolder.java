@@ -50,7 +50,7 @@ public class RequestIDHolder {
     /**
      * Checks whether a request ID is set in the current thread scope.
      *
-     * @return {@link true} if so, otherwise {@literal false}
+     * @return {@literal true} if so, otherwise {@literal false}
      */
     public static boolean hasRequestID() {
         return holder.get() != null;

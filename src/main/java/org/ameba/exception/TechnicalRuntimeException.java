@@ -22,12 +22,11 @@ import java.io.Serializable;
  * message text
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.3
  */
 public class TechnicalRuntimeException extends RuntimeException {
 
-    private String msgKey;
+    private String messageKey;
     private Serializable[] data;
 
     /** Default constructor. */
@@ -62,7 +61,7 @@ public class TechnicalRuntimeException extends RuntimeException {
      */
     public TechnicalRuntimeException(String message, String messageKey) {
         super(message);
-        this.msgKey = messageKey;
+        this.messageKey = messageKey;
     }
 
     /**
@@ -74,7 +73,7 @@ public class TechnicalRuntimeException extends RuntimeException {
      */
     public TechnicalRuntimeException(String message, String messageKey, Serializable[] data) {
         super(message);
-        this.msgKey = messageKey;
+        this.messageKey = messageKey;
         this.data = data;
     }
 
@@ -86,7 +85,7 @@ public class TechnicalRuntimeException extends RuntimeException {
      */
     public TechnicalRuntimeException(String messageKey, Serializable[] data) {
         super();
-        this.msgKey = messageKey;
+        this.messageKey = messageKey;
         this.data = data;
     }
 
@@ -99,11 +98,11 @@ public class TechnicalRuntimeException extends RuntimeException {
      */
     public TechnicalRuntimeException(String message, String messageKey, Throwable cause) {
         super(message, cause);
-        this.msgKey = messageKey;
+        this.messageKey = messageKey;
     }
 
     private TechnicalRuntimeException(Builder builder) {
-        msgKey = builder.msgKey;
+        messageKey = builder.messageKey;
         data = builder.data;
     }
 
@@ -117,7 +116,7 @@ public class TechnicalRuntimeException extends RuntimeException {
      * @return The message key
      */
     public String getMessageKey() {
-        return msgKey;
+        return messageKey;
     }
 
     /**
@@ -131,14 +130,14 @@ public class TechnicalRuntimeException extends RuntimeException {
 
 
     public static final class Builder {
-        private String msgKey;
+        private String messageKey;
         private Serializable[] data;
 
         private Builder() {
         }
 
-        public Builder withMsgKey(String val) {
-            msgKey = val;
+        public Builder withMessageKey(String val) {
+            messageKey = val;
             return this;
         }
 

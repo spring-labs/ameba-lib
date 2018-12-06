@@ -15,8 +15,6 @@
  */
 package org.ameba.aop;
 
-import java.util.Optional;
-
 import org.ameba.LoggingCategories;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.IntegrationLayerException;
@@ -30,11 +28,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.util.StopWatch;
 
+import java.util.Optional;
+
 /**
  * An IntegrationLayerAspect is used to measure time consumption of method calls in the integration layer.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
  * @since 1.2
  */
 @Aspect
@@ -53,16 +52,23 @@ public class IntegrationLayerAspect {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
     }
 
-    /** Constructor with some loginfo and considering the root cause. */
+    /**
+     * Constructor with some loginfo and considering the root cause.
+     *
+     * @param withRootCause Whether the root cause shall be preserved or not
+     */
     public IntegrationLayerAspect(boolean withRootCause) {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
         this.withRootCause = withRootCause;
     }
 
     /**
-     * Around intercepted methods do some logging and exception translation. <p> <ul> <li> Set log level of {@link
-     * LoggingCategories#INTEGRATION_LAYER_ACCESS} to INFO to enable method tracing. <li>Set log level of {@link
-     * LoggingCategories#INTEGRATION_LAYER_EXCEPTION} to ERROR to enable exception logging. </ul> </p>
+     * Around intercepted methods do some logging and exception translation.
+     *
+     * <ul>
+     *     <li> Set log level of {@link LoggingCategories#INTEGRATION_LAYER_ACCESS} to INFO to enable method tracing.</li>
+     *     <li>Set log level of {@link LoggingCategories#INTEGRATION_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
+     * </ul>
      *
      * @param pjp The joinpoint
      * @return Method return value

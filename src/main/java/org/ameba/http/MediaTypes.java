@@ -25,7 +25,7 @@ import java.io.Serializable;
 public class MediaTypes implements Serializable {
 
     /**
-     * RFC7807 see <href src="https://tools.ietf.org/html/rfc7807"></href>
+     * see <a href="https://tools.ietf.org/html/rfc7807">RFC7807</a>
      */
     public static final String APPLICATION_PROBLEM_JSON_VALUE = "application/problem+json";
 }

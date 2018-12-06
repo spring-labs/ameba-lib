@@ -15,11 +15,11 @@
  */
 package org.ameba.exception;
 
-import java.io.Serializable;
-
 import org.ameba.Messages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.io.Serializable;
 
 /**
  * A ResourceExistsException is used to signal a conflicting behavior in case a resource exists whereas its existence
@@ -58,7 +58,7 @@ public class ResourceExistsException extends BehaviorAwareException {
 	/**
 	 * {@inheritDoc}
 	 */
-	protected ResourceExistsException(String message, String msgKey, Serializable... data) {
+	public ResourceExistsException(String message, String msgKey, Serializable... data) {
 		super(message, msgKey, data);
 	}
 
