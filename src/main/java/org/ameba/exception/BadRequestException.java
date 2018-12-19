@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.Serializable;
 
 /**
- * A BadRequestException signals an error, caused by a invalid client request that can be corrected by the client.
+ * A BadRequestException signals an error, caused by a invalid client request that can be
+ * corrected by the client.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */

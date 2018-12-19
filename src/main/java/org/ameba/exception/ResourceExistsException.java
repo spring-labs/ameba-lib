@@ -22,12 +22,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.Serializable;
 
 /**
- * A ResourceExistsException is used to signal a conflicting behavior in case a resource exists whereas its existence
- * was not expected.
+ * A ResourceExistsException is used to signal a conflicting behavior in case a resource
+ * exists whereas its existence was not expected.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.3
- * @since 0.2
  * @see org.springframework.web.bind.annotation.ResponseStatus
  * @see org.springframework.http.HttpStatus#CONFLICT
  */
