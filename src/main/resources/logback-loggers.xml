@@ -4,6 +4,8 @@
     <logger name="org.ameba" level="WARN"/>
     <logger name="ch.qos" level="OFF"/>
 
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+
     <!-- Specialized loggers -->
     <logger name="PRESENTATION_LAYER_ACCESS" level="DEBUG" additivity="false">
         <appender-ref ref="TSL"/>
