@@ -15,14 +15,14 @@
  */
 package org.ameba.annotation;
 
+import org.springframework.context.annotation.AspectsSelector;
+import org.springframework.context.annotation.Import;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.springframework.context.annotation.AspectsSelector;
-import org.springframework.context.annotation.Import;
 
 /**
  * An EnableAspects annotation is used to include Ameba aspects for exception translation, logging and method execution consumption
@@ -42,6 +42,8 @@ public @interface EnableAspects {
      * <p>
      * Usually root cause exceptions are omitted when translating them. This switch enables to pass the root cause (and the exception stack)
      * to the caller.
+     *
+     * @return Whether exception root causes shall be propagated and logged or not
      */
     boolean propagateRootCause() default false;
 }
