@@ -21,10 +21,7 @@
         </filter>
     </appender>
     <appender name="LOGFILE" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>Tenant</key>
-            <defaultValue>BOOT</defaultValue>
-        </discriminator>
+        <discriminator class="org.ameba.logging.TenantDiscriminator" />
         <sift>
             <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>${LOG_PATH}/${Tenant}-${MODULE_NAME}.log</file>
@@ -45,10 +42,7 @@
         </sift>
     </appender>
     <appender name="EXCFILE" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>Tenant</key>
-            <defaultValue>BOOT</defaultValue>
-        </discriminator>
+        <discriminator class="org.ameba.logging.TenantDiscriminator" />
         <sift>
             <appender name="EXCFILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>${LOG_PATH}/${Tenant}-${MODULE_NAME}.exlog</file>
@@ -71,10 +65,7 @@
         </sift>
     </appender>
     <appender name="TSL" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>Tenant</key>
-            <defaultValue>BOOT</defaultValue>
-        </discriminator>
+        <discriminator class="org.ameba.logging.TenantDiscriminator" />
         <sift>
             <appender name="TSL-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>${LOG_PATH}/${Tenant}-${MODULE_NAME}.tslog</file>
