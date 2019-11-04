@@ -20,7 +20,7 @@ import javax.persistence.Entity;
 /**
  * A TestApplicationEntity.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.6
  */

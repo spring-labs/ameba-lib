@@ -18,7 +18,7 @@ package org.ameba.tenancy;
 /**
  * A TenantHolder stores a tenant inside a thread local variable.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.2
  * @since 1.0
  */

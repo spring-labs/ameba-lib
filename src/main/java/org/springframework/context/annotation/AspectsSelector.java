@@ -24,7 +24,7 @@ import org.springframework.core.type.AnnotationMetadata;
 /**
  * A AspectsSelector does the programatic configuration based on the {@link EnableMultiTenancy} counterpart.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.7
  */
 public class AspectsSelector implements ImportSelector {

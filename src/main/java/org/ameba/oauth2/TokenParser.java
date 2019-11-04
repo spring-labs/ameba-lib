@@ -20,7 +20,7 @@ import io.jsonwebtoken.Jwt;
 /**
  * A TokenParser is able to parse tokens as Strings into JWT types.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface TokenParser<T extends Issuer, U extends Jwt> {
 

@@ -19,7 +19,7 @@ package org.ameba.exception;
  * A IntegrationLayerException is used to signal exceptions around the integration layer. This type of exception might be caught by an AOP
  * aspect.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.1
  * @since 0.2
  */

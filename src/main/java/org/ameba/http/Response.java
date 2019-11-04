@@ -33,7 +33,7 @@ import static com.jayway.jsonpath.JsonPath.read;
  * An instance of Response is a transfer object that is used to encapsulate a server response to the client application.
  * It contains an array of items specific to the request. Compare to the concept of SIREN.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 0.1
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)

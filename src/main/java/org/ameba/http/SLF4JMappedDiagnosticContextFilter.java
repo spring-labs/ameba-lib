@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * A SLF4JMappedDiagnosticContextFilter adds the current tenant to SLF4J's Mapped Diagnostics Context.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @see org.slf4j.MDC
  * @since 0.9
  */

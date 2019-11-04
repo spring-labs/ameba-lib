@@ -18,7 +18,7 @@ package org.ameba.http;
 /**
  * A RequestHolder stores a requestID inside a thread local variable.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.7
  */
 public class RequestIDHolder {

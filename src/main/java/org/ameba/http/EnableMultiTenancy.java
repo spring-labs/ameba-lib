@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
 /**
  * A EnableMultiTenancy is able to enable Spring configuration for multi-tenancy.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.7
  */
 @Target(ElementType.TYPE)

@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  * A MultiTenantSessionFilter set the current tenant value ({@value org.ameba.Constants#HEADER_VALUE_X_TENANT} in the
  * {@link TenantHolder TenantHolder}.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @see TenantHolder
  * @since 1.0

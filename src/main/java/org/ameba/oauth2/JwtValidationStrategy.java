@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
  * A JwtValidationStrategy may be used as Servlet Filter to extract a JWT from an
  * authorization header and validates the JWT.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class JwtValidationStrategy implements FilterStrategy {
 

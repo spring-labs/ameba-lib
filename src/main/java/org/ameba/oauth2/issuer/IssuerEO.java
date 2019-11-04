@@ -30,7 +30,7 @@ import static org.ameba.oauth2.issuer.IssuerEO.TABLE_NAME;
 /**
  * An IssuerEO is a persistent entity class to store information about Token Issuers.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Entity
 @Table(name = TABLE_NAME)

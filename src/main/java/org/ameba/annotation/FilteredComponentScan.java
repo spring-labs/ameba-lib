@@ -15,12 +15,6 @@
  */
 package org.ameba.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
 import org.springframework.beans.factory.support.BeanNameGenerator;
 import org.springframework.context.annotation.AnnotationScopeMetadataResolver;
 import org.springframework.context.annotation.ComponentScan;
@@ -28,11 +22,17 @@ import org.springframework.context.annotation.ScopeMetadataResolver;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.core.annotation.AliasFor;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
 /**
  * A FilteredComponentScan is an extension to Spring's {@link ComponentScan ComponentScan} annotation, in that it uses a preset default
  * exclusion filter, for types annotated with {@link ExcludeFromScan ExcludeFromScan}.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.4
  */

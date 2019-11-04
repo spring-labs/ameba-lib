@@ -20,7 +20,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 /**
  * A TestDocument.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.0
  */

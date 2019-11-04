@@ -15,16 +15,16 @@
  */
 package org.ameba.http;
 
-import java.io.Serializable;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.hateoas.ResourceSupport;
 
+import java.io.Serializable;
+
 /**
  * Abstract base class adds Spring HATEOS support.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0.0
  * @since 1.0.0
  */

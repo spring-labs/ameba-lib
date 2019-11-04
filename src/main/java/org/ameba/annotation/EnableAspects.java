@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * An EnableAspects annotation is used to include Ameba aspects for exception translation, logging and method execution consumption
  * logging.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.0
  */
 @Target(ElementType.TYPE)

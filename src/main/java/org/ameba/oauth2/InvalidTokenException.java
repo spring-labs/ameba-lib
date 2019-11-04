@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * A InvalidTokenException.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InvalidTokenException extends RuntimeException {

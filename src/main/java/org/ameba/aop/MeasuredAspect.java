@@ -29,7 +29,7 @@ import org.springframework.util.StopWatch;
  * annotated with {@link org.ameba.annotation.Measured Measured}. The order of the aspect
  * is {@literal 18}.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.10
  */
 @Aspect

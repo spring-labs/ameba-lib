@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * A MediaTypes definition class for currently not standardized but widely used http media types.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class MediaTypes implements Serializable {
 

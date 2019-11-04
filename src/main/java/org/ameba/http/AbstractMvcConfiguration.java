@@ -29,7 +29,7 @@ import java.util.Properties;
 /**
  * An AbstractMvcConfiguration class can be extended to inherit a pre-configured {@code MessageSource} and ressource handlers
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.4.1
  */

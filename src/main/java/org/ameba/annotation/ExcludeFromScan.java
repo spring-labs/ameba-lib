@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * Some application that defines the {@link org.springframework.context.annotation.ComponentScan ComponentScan}
  * annotation may define a filter that excludes all types annotated with {@link ExcludeFromScan}.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.3
  */

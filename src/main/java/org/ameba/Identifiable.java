@@ -21,7 +21,7 @@ import java.io.Serializable;
  * An Identifiable provides a type unique identifier. This identifier is at least unique in scope of the implementing
  * class.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.8
  */
 public interface Identifiable<T extends Serializable> {

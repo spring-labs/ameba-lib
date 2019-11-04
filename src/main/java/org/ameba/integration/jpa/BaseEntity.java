@@ -35,7 +35,7 @@ import java.util.Date;
  * A BaseEntity is a base superclass for JPA entities that comes with a mandatory primary key field, an application assign id and an
  * optimistic locking field.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.7
  * @since 1.4
  */

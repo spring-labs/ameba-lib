@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *     &lt;/appender&gt;
  * </pre>
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.7
  */
 public class ThreadIdProvider extends ClassicConverter {

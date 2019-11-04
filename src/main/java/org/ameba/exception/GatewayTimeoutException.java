@@ -24,7 +24,7 @@ import java.io.Serializable;
 /**
  * A GatewayTimeoutException signals an error due to a backend system does not respond in appropriate time.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @ResponseStatus(HttpStatus.GATEWAY_TIMEOUT)
 public class GatewayTimeoutException extends BusinessRuntimeException {

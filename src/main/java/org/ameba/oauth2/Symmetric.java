@@ -18,7 +18,7 @@ package org.ameba.oauth2;
 /**
  * A Symmetric Issuer provides a secret signing key to validate token signatures.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface Symmetric extends Issuer {
 

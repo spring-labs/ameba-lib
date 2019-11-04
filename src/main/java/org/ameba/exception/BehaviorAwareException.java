@@ -25,7 +25,7 @@ import java.io.Serializable;
 /**
  * A BehaviorAwareException is used to group exceptions that express a kind of behavior, like 'an entity to look up was not found'.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 0.2
  */
 public abstract class BehaviorAwareException extends BusinessRuntimeException {

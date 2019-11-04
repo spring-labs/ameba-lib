@@ -15,18 +15,18 @@
  */
 package org.ameba.exception;
 
-import java.io.Serializable;
-
 import org.ameba.Messages;
 import org.ameba.i18n.Translator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.io.Serializable;
+
 /**
  * A NotFoundException is used to signal an entity, expected to exist but was not found. This class is annotated with Springs {@link
  * ResponseStatus} and results in a HTTP response with status {@link org.springframework.http.HttpStatus#NOT_FOUND}
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 0.4
  * @see org.springframework.web.bind.annotation.ResponseStatus
  * @see org.springframework.http.HttpStatus#NOT_FOUND

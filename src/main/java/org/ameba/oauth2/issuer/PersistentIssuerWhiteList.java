@@ -25,7 +25,7 @@ import java.net.URL;
 /**
  * A PersistentIssuerWhiteList.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class PersistentIssuerWhiteList implements IssuerWhiteList {
 

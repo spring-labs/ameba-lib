@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * A JwtValidator validates JWT.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface JwtValidator {
 

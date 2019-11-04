@@ -20,7 +20,7 @@ import io.jsonwebtoken.Jwt;
 /**
  * A ExtractionResult is an encapsulation of a token extraction process.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public final class ExtractionResult {
 

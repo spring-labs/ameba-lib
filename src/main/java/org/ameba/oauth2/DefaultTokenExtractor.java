@@ -34,7 +34,7 @@ import static java.lang.String.format;
  * A DefaultTokenExtractor validates the issuer of a JWT against a whitelist, parses the
  * JWT using the proper algorithm to validate the signature.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class DefaultTokenExtractor implements TokenExtractor {
 

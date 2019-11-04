@@ -24,7 +24,7 @@ import java.time.LocalDate;
  * but a type converter must be configured within Dozer, to accept Java 1.8 types. As soon as issue #172 https://github.com/DozerMapper/dozer/issues/172
  * is closed, this implementation can be deleted.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.3.0
  */

@@ -22,7 +22,7 @@ import java.util.Optional;
 /**
  * A TenantRepository.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface TenantRepository extends JpaRepository<TenantEO, Long> {
 

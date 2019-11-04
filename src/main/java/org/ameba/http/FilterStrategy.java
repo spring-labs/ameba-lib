@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  * used independent from the actual filter implementation. A filter may inherit from
  * Spring Frameworks filter classes or be a plain http servlet filter.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface FilterStrategy {
 

@@ -36,7 +36,7 @@ import static java.lang.String.format;
 /**
  * A RSA256TokenParser uses a SHA-256 Public Key to verify signature.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
 

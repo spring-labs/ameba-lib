@@ -18,7 +18,7 @@ package org.ameba.oauth2;
 /**
  * A IssuerWhiteList manages and stores all allowed Issuers.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface IssuerWhiteList<T extends Issuer> {
 

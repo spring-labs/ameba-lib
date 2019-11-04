@@ -23,7 +23,7 @@ import java.util.Optional;
 /**
  * A IssuerRepository.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface IssuerRepository {
 

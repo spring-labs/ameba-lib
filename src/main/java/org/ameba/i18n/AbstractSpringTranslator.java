@@ -25,7 +25,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
  *
  * Requested by: https://github.com/abraxas-labs/ameba-lib/issues/124
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public abstract class AbstractSpringTranslator extends AbstractTranslator {
 
