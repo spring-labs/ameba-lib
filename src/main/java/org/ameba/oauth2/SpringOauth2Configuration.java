@@ -37,7 +37,7 @@ import java.util.List;
  *
  * Required bean definitions: JwkProvider
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @ExcludeFromScan
 @Configuration

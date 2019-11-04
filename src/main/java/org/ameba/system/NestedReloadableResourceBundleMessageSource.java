@@ -25,7 +25,7 @@ import java.util.Properties;
 /**
  * A NestedReloadableResourceBundleMessageSource.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class NestedReloadableResourceBundleMessageSource extends ReloadableResourceBundleMessageSource {
 

@@ -34,7 +34,7 @@ import java.util.stream.Stream;
  * A ServiceLayerAspect is spawned around all public API methods and is responsible to log method execution time and log occurring
  * exceptions around the service layer.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.2
  */
 @Aspect

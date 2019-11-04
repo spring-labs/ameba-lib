@@ -21,7 +21,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 /**
  * A SecurityConfigurers class is a collector of interfaces that provide a configuration option for security related topics.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.1
  * @since 1.4
  */

@@ -26,7 +26,7 @@ import java.util.UUID;
  * An ApplicationEntity adds a secondary key column that is an application assigned key that remains the same after database migrations. An
  * unique not-null constraint is placed on the column.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.6
  */

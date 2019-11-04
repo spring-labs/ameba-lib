@@ -32,7 +32,7 @@ import java.lang.annotation.Target;
 /**
  * A TxService is a stereotype annotation to define transactional Spring managed services.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.1
  * @since 1.0
  */

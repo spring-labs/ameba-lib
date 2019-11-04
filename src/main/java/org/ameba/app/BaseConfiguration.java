@@ -22,7 +22,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 /**
  * A BaseConfiguration enables instantiates a JSR-303 ValidatorFactory.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.1
  * @since 1.0
  */

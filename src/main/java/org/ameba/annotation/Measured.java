@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * A Measured is a marker annotation for classes and public methods of classes to indicate that all public methods of
  * the annotated class or the annotated public method itself are being tracked in terms of execution time consumption.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.8
  */
 @Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.METHOD})

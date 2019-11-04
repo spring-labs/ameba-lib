@@ -18,7 +18,7 @@ package org.ameba.test.categories;
 /**
  * A UnitTests is a marker interface that is used to group and run unit tests with JUnits {@code @Category} feature.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 0.1
  * @since 0.3
  * @see <a href="http://junit.org/apidocs/org/junit/experimental/categories/Category.html">Category</a>

@@ -31,7 +31,7 @@ import static org.mockito.Mockito.mock;
 /**
  * A MockitoExtension.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class MockitoExtension implements TestInstancePostProcessor, ParameterResolver {
 

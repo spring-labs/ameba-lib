@@ -20,7 +20,7 @@ import java.net.URL;
 /**
  * An Issuer is authorized to issue OAuth2 tokens.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface Issuer {
 

@@ -18,7 +18,7 @@ package org.ameba;
 /**
  * A Constants class to collect common used constants.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 0.9
  */
 public final class Constants {

@@ -20,7 +20,7 @@ import java.util.UUID;
 /**
  * A JdkIDGenerator using {@link UUID}.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.7
  */
 public class JdkIDGenerator implements IDGenerator<String>{

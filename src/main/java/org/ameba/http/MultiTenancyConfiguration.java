@@ -26,7 +26,7 @@ import javax.servlet.DispatcherType;
  * A MultiTenancyConfiguration is not meant to be scanned by applications, therefor it is {@link ExcludeFromScan} and not in the {@literal
  * app} package. It is responsible to setup support for multi-tenancy.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.7
  */

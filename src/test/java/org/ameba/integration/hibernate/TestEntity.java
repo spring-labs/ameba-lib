@@ -26,7 +26,7 @@ import javax.persistence.NamedQuery;
 /**
  * A TestEntity.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Entity
 @NamedQueries({@NamedQuery(name="sn", query = "select t from TestEntity t where t.schema = :sn")})

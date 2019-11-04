@@ -18,7 +18,7 @@ package org.ameba.app;
 /**
  * SpringProfiles is a definition of profiles used to configure the Spring ApplicationContexts.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.1
  * @since 0.x
  */

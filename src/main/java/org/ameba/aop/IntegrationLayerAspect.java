@@ -33,7 +33,7 @@ import java.util.Optional;
 /**
  * An IntegrationLayerAspect is used to measure time consumption of method calls in the integration layer.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.2
  */
 @Aspect

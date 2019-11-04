@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * A BusinessRuntimeException expresses a business error with some useful business information.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 0.3
  */
 public class BusinessRuntimeException extends RuntimeException {

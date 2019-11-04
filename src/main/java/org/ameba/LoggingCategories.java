@@ -20,7 +20,7 @@ package org.ameba;
  * to write log messages not corresponding to Java classes or Java packages, but specific to application layer (as an
  * example).
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 0.3
  */
 public final class LoggingCategories {

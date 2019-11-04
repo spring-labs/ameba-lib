@@ -15,18 +15,18 @@
  */
 package org.ameba.mapping;
 
-import static java.util.Arrays.asList;
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
+import static java.util.Arrays.asList;
 
 /**
  * A DozerMapperImpl uses the Open Source Dozer project to automatically map between bean classes.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 0.7
  */

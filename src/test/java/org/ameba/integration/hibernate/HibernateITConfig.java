@@ -24,7 +24,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * A HibernateITConfig.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Configuration
 @EnableMultiTenancy(separationStrategy = SeparationStrategy.SCHEMA)

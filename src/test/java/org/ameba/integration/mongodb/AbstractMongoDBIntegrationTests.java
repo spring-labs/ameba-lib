@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * A AbstractMongoDBIntegrationTests.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {AbstractMongoDBIntegrationTests.TestConfig.class, BaseConfiguration.class})

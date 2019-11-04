@@ -15,18 +15,18 @@
  */
 package org.ameba.exception;
 
-import java.io.Serializable;
-
 import org.ameba.Messages;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.io.Serializable;
 
 /**
  * A ResourceChangedException signals that a resource cannot be changed, because it has been updated in the meantime. Similar what a
  * java.persistence.OptimisticLockException expresses on the persistence layer, this type of exception is more generic and useful at the
  * presentation layer.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 0.3
  * @see org.springframework.web.bind.annotation.ResponseStatus
  * @see org.springframework.http.HttpStatus#CONFLICT

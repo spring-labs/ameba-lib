@@ -25,7 +25,7 @@ import java.io.Serializable;
  * A BadRequestException signals an error, caused by a invalid client request that can be
  * corrected by the client.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class BadRequestException extends BusinessRuntimeException {

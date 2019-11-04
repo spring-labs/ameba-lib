@@ -18,7 +18,7 @@ package org.ameba.oauth2;
 /**
  * A TokenExtractor is able to extract a structure token format from a String.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface TokenExtractor {
 

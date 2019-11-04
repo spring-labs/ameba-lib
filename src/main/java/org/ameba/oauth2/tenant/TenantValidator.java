@@ -33,7 +33,7 @@ import static org.ameba.Constants.HEADER_VALUE_X_TENANT;
  * A TenantValidator validates the Tenant is known, it belongs to the configured Realm and
  * it is foreseen as the token audience, that said the receiver of the token.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class TenantValidator implements JwtValidator {
 

@@ -30,7 +30,7 @@ import java.util.Date;
  * and timestamps for last change or insertion date. To active the latter feature the Spring application context need to enable Spring Data
  * MongoDB MongoAuditingRegistrar. One approach to do this is to add {@code @EnableMongoAuditing} on a Spring configuration class.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.6
  */

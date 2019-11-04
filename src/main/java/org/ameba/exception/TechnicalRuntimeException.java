@@ -21,7 +21,7 @@ import java.io.Serializable;
  * A TechnicalRuntimeException keeps the message text of the superclass together with a message key (used for translation) and a translated
  * message text
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.3
  */
 public class TechnicalRuntimeException extends RuntimeException {

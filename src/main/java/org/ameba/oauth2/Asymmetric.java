@@ -20,7 +20,7 @@ import java.net.URL;
 /**
  * An Asymmetric Issuer can provide the Public Key to validate token signatures.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface Asymmetric extends Issuer {
 

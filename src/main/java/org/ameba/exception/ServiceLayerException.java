@@ -18,7 +18,7 @@ package org.ameba.exception;
 /**
  * A ServiceLayerException is used to signal exceptions around the service layer. This type of exception might be caught by an AOP aspect.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.2
  * @since 0.2
  */

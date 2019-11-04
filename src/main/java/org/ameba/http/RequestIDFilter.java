@@ -15,20 +15,20 @@
  */
 package org.ameba.http;
 
+import org.ameba.Constants;
+import org.ameba.IDGenerator;
+import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import org.ameba.Constants;
-import org.ameba.IDGenerator;
-import org.springframework.web.filter.OncePerRequestFilter;
-
 /**
  * A RequestIDFilter.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.7
  */
 public class RequestIDFilter extends OncePerRequestFilter {

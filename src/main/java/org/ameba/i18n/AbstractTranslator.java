@@ -21,7 +21,7 @@ import org.springframework.context.MessageSource;
  * A AbstractTranslator expects to translate messages from a {@link MessageSource}. Subclasses may
  * provide their own {@link MessageSource}s that way.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public abstract class AbstractTranslator implements Translator {
 

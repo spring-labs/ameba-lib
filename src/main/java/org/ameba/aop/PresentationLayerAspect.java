@@ -27,7 +27,7 @@ import org.springframework.core.annotation.Order;
 /**
  * A PresentationLayerAspect.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.2
  */
 @Aspect

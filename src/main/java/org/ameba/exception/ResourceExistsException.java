@@ -25,7 +25,7 @@ import java.io.Serializable;
  * A ResourceExistsException is used to signal a conflicting behavior in case a resource
  * exists whereas its existence was not expected.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @see org.springframework.web.bind.annotation.ResponseStatus
  * @see org.springframework.http.HttpStatus#CONFLICT
  */

@@ -39,7 +39,7 @@ import java.io.IOException;
  * Those properties can be either set as {@code ServletContext} attributes or as {@link javax.servlet.FilterConfig} parameters whereas the
  * latter take precedence.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @see org.springframework.web.filter.OncePerRequestFilter
  * @since 1.0
  */

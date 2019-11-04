@@ -18,7 +18,7 @@ package org.ameba.i18n;
 /**
  * A Translator resolves an unique message by key, interpolates and translates into String message.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 0.1
  * @since 0.3
  */

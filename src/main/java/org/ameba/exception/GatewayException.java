@@ -24,7 +24,7 @@ import java.io.Serializable;
 /**
  * A GatewayException is a general exception to signal that a depending backend service did not respond as expected.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @ResponseStatus(HttpStatus.BAD_GATEWAY)
 public class GatewayException extends BusinessRuntimeException {

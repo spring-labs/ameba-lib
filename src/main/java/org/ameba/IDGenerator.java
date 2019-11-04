@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * A IDGenerator.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @since 1.7
  */
 public interface IDGenerator <T extends Serializable> {

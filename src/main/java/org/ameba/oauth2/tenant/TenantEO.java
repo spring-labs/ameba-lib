@@ -25,7 +25,7 @@ import javax.persistence.Table;
  * A TenantEO is the persistent representation of a Tenant in a multi-tenancy system. It
  * is implemented as JPA entity class and is mapped onto a table with name {@value TABLE_NAME}.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Entity
 @Table(name = TenantEO.TABLE_NAME)

@@ -15,12 +15,12 @@
  */
 package org.ameba.http;
 
-import static java.util.Arrays.*;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
+import static java.util.Arrays.asList;
 
 /**
  * A PermitAllCorsConfigurationSource pre-configures and returns an {@link CorsConfiguration CorsConfiguration} instance to
@@ -44,7 +44,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
  *  }
  * </pre>
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @version 1.0
  * @since 1.5
  */

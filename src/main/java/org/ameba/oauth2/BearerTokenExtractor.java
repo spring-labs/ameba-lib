@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * A BearerTokenExtractor tries to extract the Bearer token from an authorization header.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class BearerTokenExtractor extends DefaultTokenExtractor {
 
