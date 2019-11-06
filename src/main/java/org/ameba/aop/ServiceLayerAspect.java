@@ -16,6 +16,7 @@
 package org.ameba.aop;
 
 import org.ameba.LoggingCategories;
+import org.ameba.annotation.NotLogged;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.ServiceLayerException;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -87,16 +88,26 @@ public class ServiceLayerAspect {
             obj = pjp.proceed();
         } catch (Exception ex) {
             Exception e = translateException(ex);
-            if (EXC_LOGGER.isErrorEnabled()) {
+            if (EXC_LOGGER.isErrorEnabled() && !hasNotLogged(ex)) {
                 EXC_LOGGER.error(e.getLocalizedMessage(), e);
             }
             throw e;
         } finally {
             if (SRV_LOGGER.isDebugEnabled()) {
-                SRV_LOGGER.debug("[S]<< {} took {} [ms]", pjp.toShortString(), (System.currentTimeMillis() - startMillis));
+                SRV_LOGGER.debug("[S]<< {} took [{}] (ms)", pjp.toShortString(), (System.currentTimeMillis() - startMillis));
             }
         }
         return obj;
+    }
+
+    private boolean hasNotLogged(Throwable ex) {
+        if (ex.getClass().getAnnotation(NotLogged.class) != null) {
+            return true;
+        }
+        if (ex.getCause() != null) {
+            return hasNotLogged(ex.getCause());
+        }
+        return false;
     }
 
     /**

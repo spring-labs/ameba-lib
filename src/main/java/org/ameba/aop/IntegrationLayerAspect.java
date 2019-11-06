@@ -16,6 +16,7 @@
 package org.ameba.aop;
 
 import org.ameba.LoggingCategories;
+import org.ameba.annotation.NotLogged;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.IntegrationLayerException;
 import org.ameba.exception.ResourceExistsException;
@@ -89,7 +90,7 @@ public class IntegrationLayerAspect {
         } finally {
             if (P_LOGGER.isInfoEnabled() && sw != null) {
                 sw.stop();
-                P_LOGGER.info("[I]<< {}#{} took {} [ms]", pjp.getTarget().getClass().getSimpleName(), pjp.getSignature().getName(), sw.getTotalTimeMillis());
+                P_LOGGER.info("[I]<< {}#{} took [{}] (ms)", pjp.getTarget().getClass().getSimpleName(), pjp.getSignature().getName(), sw.getTotalTimeMillis());
             }
         }
     }
@@ -101,7 +102,7 @@ public class IntegrationLayerAspect {
      * @return Returns the exception to be thrown
      */
     public Exception translateException(Exception ex) {
-        if (EXC_LOGGER.isErrorEnabled()) {
+        if (EXC_LOGGER.isErrorEnabled() && ex.getClass().getAnnotation(NotLogged.class) != null) {
             EXC_LOGGER.error(ex.getLocalizedMessage(), ex);
         }
 

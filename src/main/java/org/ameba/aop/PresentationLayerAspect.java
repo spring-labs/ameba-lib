@@ -16,6 +16,7 @@
 package org.ameba.aop;
 
 import org.ameba.LoggingCategories;
+import org.ameba.annotation.NotLogged;
 import org.ameba.exception.BusinessRuntimeException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -60,9 +61,13 @@ public class PresentationLayerAspect {
             return pjp.proceed();
         } catch (Exception ex) {
             if (ex instanceof BusinessRuntimeException) {
-                EXC_LOGGER.error(ex.getMessage(), ex, ((BusinessRuntimeException)ex).getData());
+                if (EXC_LOGGER.isErrorEnabled() && ex.getClass().getAnnotation(NotLogged.class) != null) {
+                    EXC_LOGGER.error(ex.getMessage(), ex, ((BusinessRuntimeException)ex).getData());
+                }
             } else {
-                EXC_LOGGER.error(ex.getMessage(), ex);
+                if (EXC_LOGGER.isErrorEnabled() && ex.getClass().getAnnotation(NotLogged.class) != null) {
+                    EXC_LOGGER.error(ex.getMessage(), ex);
+                }
             }
             throw ex;
         }
