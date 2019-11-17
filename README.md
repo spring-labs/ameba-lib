@@ -2,7 +2,6 @@
 
 [![Build status][travis-image]][travis-url]
 [![License][license-image]][license-url]
-[![Quality][codacy-image]][codacy-url]
 [![Gitter][gitter-image]][gitter-url]
 
 Ameba Lib is a collection of utils, exceptions, constants and other helpers used across projects and solutions. All dependencies are defined
@@ -19,12 +18,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>2.1-SNAPSHOT</version>
+                <version>2.2</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>2.1-SNAPSHOT</version>
+                <version>2.2</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>
@@ -82,6 +81,7 @@ annotation on a custom `@Configuration` class. Furthermore `org.springframework:
 | MeasuredAspect               | MEASURED                        | --                     | --                           |
 
 For method tracing the SLF4J loglevel has to be configured to `INFO`, exception logging need to be configured to level `ERROR` instead.
+Since 2.2 logging of exception stack traces can be turned off for specific exception types that are marked with `org.ameba.annotation.NotLogged`.
 
 ### Common exception classes (0.2+)
 
@@ -199,12 +199,12 @@ log message. To get the full power of Ameba log extensions just include the `log
 
 The following appender names are defined: 
 
-| Appender name | Outputs to                         | Description                              |
-| ------------ |:---------------------------------- |:---------------------------------------- |
-| STDOUT       | stdout                             | Print sto stdout. Useful for test output |
-| LOGFILE      | java.io.tmpdir/BOOT-<MODULE_NAME>.log   | Standard program or trace logging        |
-| EXCFILE      | java.io.tmpdir/BOOT-<MODULE_NAME>.exlog | Exception logs                           |
-| TSL          | java.io.tmpdir/BOOT-<MODULE_NAME>.tslog | Technical service logging. Logs method execution consumption |
+| Appender name | Outputs to                              | Description                              |
+| ------------- |:--------------------------------------- |:---------------------------------------- |
+| STDOUT        | stdout                                  | Print sto stdout. Useful for test output |
+| LOGFILE       | java.io.tmpdir/BOOT-<MODULE_NAME>.log   | Standard program or trace logging        |
+| EXCFILE       | java.io.tmpdir/BOOT-<MODULE_NAME>.exlog | Exception logs                           |
+| TSL           | java.io.tmpdir/BOOT-<MODULE_NAME>.tslog | Technical service logging. Logs method execution consumption |
 
 The module name can be configured as logback property:
 
@@ -261,7 +261,7 @@ Extension Points:
  /**
   * A SecurityConfigurers class is a collector of interfaces that provides a configuration option for security related topics.
   *
-  * @author <a href="mailto:scherrer@openvms.org">Heiko Scherrer</a>
+  * @author Heiko Scherrer
   */
  ````
 
@@ -299,8 +299,6 @@ Extension Points:
 [travis-url]: https://travis-ci.org/abraxas-labs/ameba-lib
 [license-image]: http://img.shields.io/:license-Apache2.0-blue.svg?style=flat-square
 [license-url]: LICENSE
-[codacy-image]: https://www.codacy.com/project/badge/1acf14eee0824d97b9eb54d956c404fe
-[codacy-url]: https://www.codacy.com/app/openwms/ameba-lib
 [gitter-image]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/abraxas-labs/ameba-lib?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [logstashconf]: src/main/resources/logstash.conf
