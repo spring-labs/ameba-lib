@@ -17,6 +17,7 @@ package org.ameba.integration.hibernate;
 
 import org.ameba.app.BaseConfiguration;
 import org.ameba.tenancy.TenantHolder;
+import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,11 @@ public class HibernateSchemaBasedTenancyConfigurationTest {
 
     @Autowired
     private TransactionalService service;
+
+    @AfterClass
+    public static void clearContext() {
+        TenantHolder.destroy();
+    }
 
     public
     @Test
