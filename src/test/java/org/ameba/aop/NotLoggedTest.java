@@ -29,8 +29,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
@@ -38,7 +36,7 @@ import static org.junit.Assert.fail;
  *
  * @author Heiko Scherrer
  */
-@EnableAspects
+@EnableAspects(propagateRootCause = true)
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = NotLoggedTest.TestConfig.class)
 public class NotLoggedTest {
@@ -63,9 +61,14 @@ public class NotLoggedTest {
         try {
             service.notLogged();
         } catch (ServiceLayerException e) {
-            while (LogCaptureAppender.getEvents().iterator().hasNext()) {
-                ILoggingEvent next = LogCaptureAppender.getEvents().iterator().next();
-                assertFalse(next.getMessage().contains("Should not appear"));
+            boolean notFound = true;
+            for (ILoggingEvent next : LogCaptureAppender.getEvents()) {
+                if (next.getMessage().contains("Should not appear")) {
+                    notFound = false;
+                }
+            }
+            if (!notFound) {
+                fail("Unexpected logged");
             }
         } catch (Exception e) {
             fail("Unexpected exception");
@@ -77,12 +80,15 @@ public class NotLoggedTest {
         try {
             service.logged();
         } catch (ServiceLayerException e) {
-            while (LogCaptureAppender.getEvents().iterator().hasNext()) {
-                ILoggingEvent next = LogCaptureAppender.getEvents().iterator().next();
-                assertTrue(next.getMessage().contains("Must be logged"));
-                return;
+            boolean found = false;
+            for (ILoggingEvent next : LogCaptureAppender.getEvents()) {
+                if (next.getMessage().contains("Must be logged")) {
+                    found = true;
+                }
             }
-            fail("No logs captured");
+            if (!found) {
+                fail("No logs captured");
+            }
         } catch (Exception e) {
             fail("Unexpected exception");
             e.printStackTrace();
