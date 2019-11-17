@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * @author Heiko Scherrer
  * @since 2.2
  */
-@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE})
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface NotLogged {

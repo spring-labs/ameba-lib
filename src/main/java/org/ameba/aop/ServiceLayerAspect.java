@@ -67,8 +67,8 @@ public class ServiceLayerAspect {
     /**
      * Around intercepted methods do some logging and exception translation.
      * <ul>
-     *     <li> Set log level of {@link LoggingCategories#SERVICE_LAYER_ACCESS} to INFO to enable method tracing.</li>
-     *     <li>Set log level of {@link LoggingCategories#SERVICE_LAYER_EXCEPTION} to ERROR to enable exception logging.
+     *     <li>Set log level of {@link LoggingCategories#SERVICE_LAYER_ACCESS} to INFO to enable method tracing.</li>
+     *     <li>Set log level of {@link LoggingCategories#SERVICE_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
      * </ul>
      *
      * @param pjp The joinpoint
