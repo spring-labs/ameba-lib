@@ -37,7 +37,7 @@ import static org.junit.Assert.assertTrue;
  * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
  */
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@DataJpaTest(showSql = false, properties = "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect")
 @ContextConfiguration(classes = HibernateITConfig.class)
 @ComponentScan(basePackageClasses = {HibernateSchemaBasedTenancyConfigurationTest.class, BaseConfiguration.class})
 public class HibernateSchemaBasedTenancyConfigurationTest {

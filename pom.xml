@@ -35,33 +35,33 @@
         <project.scm.id>github</project.scm.id> <!-- Used to release and tag on GitHub -->
 
         <!-- Dependency versions -->
-        <cdi-api.version>2.0</cdi-api.version>
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
-        <h2.version>1.4.197</h2.version> <!-- in line with boot -->
-        <hibernate-validator.version>6.0.13.Final</hibernate-validator.version> <!-- in line with boot -->
-        <jackson.version>2.9.7</jackson.version> <!-- in line with boot -->
-        <javax-persistence.version>2.1.1</javax-persistence.version> <!-- in line with Spring Data release train and org.eclipse.persistence:org.eclipse.persistence.jpa -->
-        <javax.validation-api.version>2.0.1.Final</javax.validation-api.version> <!-- in line with hibernate-validator-parent -->
+        <h2.version>1.4.200</h2.version> <!-- in line with boot -->
+        <hibernate-validator.version>6.0.18.Final</hibernate-validator.version> <!-- in line with boot -->
+        <jackson.version>2.10.0</jackson.version> <!-- in line with boot -->
+        <jakarta.enterprise.cdi-api.version>2.0.2</jakarta.enterprise.cdi-api.version>
+        <jakarta-persistence.version>2.2.3</jakarta-persistence.version> <!-- in line with Spring Data release train and org.eclipse.persistence:org.eclipse.persistence.jpa -->
+        <jakarta.validation-api.version>2.0.1</jakarta.validation-api.version> <!-- in line with hibernate-validator-parent -->
         <json-path.version>2.4.0</json-path.version> <!-- in line with boot -->
-        <jjwt.version>0.9.0</jjwt.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <junit.version>4.12</junit.version> <!-- in line with boot -->
         <junit5.version>5.2.0</junit5.version>
         <junit5-platform.version>1.2.0</junit5-platform.version>
-        <jwks-rsa.version>0.3.0</jwks-rsa.version>
-        <servlet-api.version>3.1.0</servlet-api.version> <!-- in line with boot -->
-        <spring-hateoas.version>0.25.0.RELEASE</spring-hateoas.version> <!-- in line with boot -->
-        <spring-security.version>5.0.9.RELEASE</spring-security.version> <!-- in line with boot -->
-        <spring.version>5.0.10.RELEASE</spring.version> <!-- in line with boot -->
-        <spring-boot-dependencies.version>2.0.6.RELEASE</spring-boot-dependencies.version>
-        <spring-data-releasetrain.version>Kay-SR11</spring-data-releasetrain.version> <!-- in line with boot -->
+        <jwks-rsa.version>0.9.0</jwks-rsa.version>
+        <servlet-api.version>4.0.1</servlet-api.version> <!-- in line with boot -->
+        <spring-hateoas.version>1.0.1.RELEASE</spring-hateoas.version> <!-- in line with boot -->
+        <spring-security.version>5.2.1.RELEASE</spring-security.version> <!-- in line with boot -->
+        <spring-framework.version>5.2.1.RELEASE</spring-framework.version> <!-- in line with boot -->
+        <spring-boot-dependencies.version>2.2.1.RELEASE</spring-boot-dependencies.version>
+        <spring-data-releasetrain.version>Moore-SR1</spring-data-releasetrain.version> <!-- in line with boot -->
 
         <!-- Plugin versions -->
-        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+        <maven-jar-plugin.version>3.1.2</maven-jar-plugin.version>
+        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
-        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.1.1</maven-source-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
     </properties>
 
@@ -177,18 +177,18 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.persistence</groupId>
-            <artifactId>javax.persistence</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -227,6 +227,11 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -344,26 +349,26 @@
                 <version>${servlet-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${javax.validation-api.version}</version>
+                <groupId>jakarta.validation</groupId>
+                <artifactId>jakarta.validation-api</artifactId>
+                <version>${jakarta.validation-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.eclipse.persistence</groupId>
-                <artifactId>javax.persistence</artifactId>
-                <version>${javax-persistence.version}</version>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>${jakarta-persistence.version}</version>
             </dependency>
 
             <!-- Spring Framework -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aspects</artifactId>
-                <version>${spring.version}</version>
+                <version>${spring-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
+                <version>${spring-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>
@@ -384,13 +389,18 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
                 <artifactId>spring-tx</artifactId>
-                <version>${spring.version}</version>
+                <version>${spring-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
-                <version>${spring.version}</version>
+                <version>${spring-framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -412,9 +422,9 @@
 
             <!-- 3rd party -->
             <dependency>
-                <groupId>javax.enterprise</groupId>
-                <artifactId>cdi-api</artifactId>
-                <version>${cdi-api.version}</version>
+                <groupId>jakarta.enterprise</groupId>
+                <artifactId>jakarta.enterprise.cdi-api</artifactId>
+                <version>${jakarta.enterprise.cdi-api.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>

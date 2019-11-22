@@ -20,7 +20,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.Properties;
  * @version 1.0
  * @since 1.4.1
  */
-public abstract class AbstractMvcConfiguration extends WebMvcConfigurerAdapter {
+public abstract class AbstractMvcConfiguration implements WebMvcConfigurer {
 
     /**
      * Initializes a {@link MessageSource MessageSource} bean with the given set of basenames.

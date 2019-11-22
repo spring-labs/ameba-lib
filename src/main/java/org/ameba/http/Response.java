@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jayway.jsonpath.Configuration;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -37,7 +37,7 @@ import static com.jayway.jsonpath.JsonPath.read;
  * @since 0.1
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Response<T> extends ResourceSupport implements Serializable {
+public class Response<T> extends RepresentationModel implements Serializable {
 
     /** A text message to transfer as server response. */
     private String message = "";

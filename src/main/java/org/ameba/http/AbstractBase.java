@@ -17,7 +17,7 @@ package org.ameba.http;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 
@@ -30,6 +30,6 @@ import java.io.Serializable;
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
-public abstract class AbstractBase extends ResourceSupport implements Serializable {
+public abstract class AbstractBase extends RepresentationModel implements Serializable {
 
 }
