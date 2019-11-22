@@ -41,26 +41,16 @@ public class Response<T> extends RepresentationModel implements Serializable {
 
     /** A text message to transfer as server response. */
     private String message = "";
-    /**
-     * A unique key to identify a particular message. Note that this key can relate to the wrapped <tt>message</tt>, but
-     * it might not.
-     */
+    /** A unique key to identify a particular message. Note that this key can relate to the wrapped {@literal message}, but it might not. */
     private String messageKey = "";
-    /**
-     * An array ob objects that can be passed to the client to identify failure items.
-     */
+    /** An array ob objects that can be passed to the client to identify failure items. */
     //@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
     private T obj[];
-    /**
-     * A http status code for this item.
-     */
+    /** A http status code for this item. */
     private String httpStatus;
 
     private Map<String, String> other = new HashMap<>();
 
-    /**
-     * Constructor used for deserialization.
-     */
     protected Response() {
     }
 
