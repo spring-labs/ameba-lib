@@ -44,6 +44,6 @@ public class BaseEntityTest extends AbstractMongoDBIntegrationTests {
         assertThat(all.get(0).getPk()).isNotNull();
         assertThat(all.get(0).getCreateDt()).isNotNull();
         assertThat(all.get(0).getLastModifiedDt()).isNotNull();
-        assertThat(all.get(0)).extracting("ol").contains(0L);
+        assertThat(all.get(0)).extracting("ol").isEqualTo(1L);
     }
 }

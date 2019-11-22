@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @since 1.0
  */
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@DataJpaTest(showSql = false)
 @ContextConfiguration(classes = JPAITConfig.class)
 @ComponentScan(basePackageClasses = BaseEntityTest.class)
 public class ApplicationEntityTest {
