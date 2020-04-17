@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,7 @@ public class BadRequestException extends BusinessRuntimeException {
      * Constructs with a message key and a message
      *
      * @param messageKey Message key
-     * @param data    Additional implicit data passed to the caller
+     * @param data Additional implicit data passed to the caller
      */
     public BadRequestException(String messageKey, Serializable[] data) {
         super(messageKey, data);
@@ -54,9 +54,9 @@ public class BadRequestException extends BusinessRuntimeException {
      *
      * @param message Message text
      * @param messageKey Message key
-     * @param data    Additional implicit data passed to the caller
+     * @param data Additional implicit data passed to the caller
      */
-    public BadRequestException(String message, String messageKey, Serializable[] data) {
+    public BadRequestException(String message, String messageKey, Serializable... data) {
         super(message, messageKey, data);
     }
 

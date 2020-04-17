@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,40 +32,40 @@ import java.io.Serializable;
 @ResponseStatus(HttpStatus.CONFLICT)
 public class ResourceExistsException extends BehaviorAwareException {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public ResourceExistsException() {
+    /**
+     * {@inheritDoc}
+     */
+    public ResourceExistsException() {
         super(Messages.ALREADY_EXISTS, Messages.ALREADY_EXISTS);
-	}
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public ResourceExistsException(String message) {
-		super(message, Messages.ALREADY_EXISTS);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public ResourceExistsException(String message) {
+        super(message, Messages.ALREADY_EXISTS);
+    }
 
-	/**
+    /**
      * {@inheritDoc}
      */
     public ResourceExistsException(String message, String msgKey) {
-		super(message, msgKey);
-	}
+        super(message, msgKey);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public ResourceExistsException(String message, String msgKey, Serializable... data) {
-		super(message, msgKey, data);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public ResourceExistsException(String message, String msgKey, Serializable... data) {
+        super(message, msgKey, data);
+    }
 
-	/**
-	 * {@link HttpStatus#CONFLICT}.
-	 *
-	 * @return {@link HttpStatus#CONFLICT}
-	 */
-	@Override
+    /**
+     * {@link HttpStatus#CONFLICT}.
+     *
+     * @return {@link HttpStatus#CONFLICT}
+     */
+    @Override
     public HttpStatus getStatus() {
         return HttpStatus.CONFLICT;
     }

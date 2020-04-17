@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,9 +30,7 @@ import java.io.Serializable;
  */
 public abstract class BehaviorAwareException extends BusinessRuntimeException {
 
-    /**
-     * Default constructor.
-     */
+    /** Default constructor. */
     public BehaviorAwareException() {
         super();
     }
@@ -50,21 +48,21 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      * Construct with a message and a message key.
      *
      * @param message The message
-     * @param msgKey  The message key
+     * @param messageKey The message key
      */
-    public BehaviorAwareException(String message, String msgKey) {
-        super(message, msgKey);
+    public BehaviorAwareException(String message, String messageKey) {
+        super(message, messageKey);
     }
 
     /**
      * Construct with a message, a message key and parameters stored with the exception.
      *
      * @param message The message
-     * @param msgKey  The message key
-     * @param data    Data passed to clients
+     * @param messageKey The message key
+     * @param data Data passed to clients
      */
-    protected BehaviorAwareException(String message, String msgKey, Serializable... data) {
-        super(message, msgKey, data);
+    protected BehaviorAwareException(String message, String messageKey, Serializable... data) {
+        super(message, messageKey, data);
     }
 
     /**

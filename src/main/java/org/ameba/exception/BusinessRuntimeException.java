@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import java.io.Serializable;
  */
 public class BusinessRuntimeException extends RuntimeException {
 
-    private String msgKey;
+    private String messageKey;
     private Serializable[] data;
 
     /** Default constructor. */
@@ -59,7 +59,7 @@ public class BusinessRuntimeException extends RuntimeException {
      */
     public BusinessRuntimeException(String message, String messageKey) {
         super(message);
-        this.msgKey = messageKey;
+        this.messageKey = messageKey;
     }
 
     /**
@@ -71,7 +71,7 @@ public class BusinessRuntimeException extends RuntimeException {
      */
     public BusinessRuntimeException(String message, String messageKey, Serializable[] data) {
         super(message);
-        this.msgKey = messageKey;
+        this.messageKey = messageKey;
         this.data = data;
     }
 
@@ -83,7 +83,7 @@ public class BusinessRuntimeException extends RuntimeException {
      */
     public BusinessRuntimeException(String messageKey, Serializable[] data) {
         super();
-        this.msgKey = messageKey;
+        this.messageKey = messageKey;
         this.data = data;
     }
 
@@ -93,7 +93,7 @@ public class BusinessRuntimeException extends RuntimeException {
      * @return The message key
      */
     public String getMessageKey() {
-        return msgKey;
+        return messageKey;
     }
 
     /**

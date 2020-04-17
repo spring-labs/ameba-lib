@@ -16,8 +16,8 @@
 package org.ameba.system;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
-import javax.validation.ValidationException;
 import javax.validation.Validator;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,13 +34,13 @@ public final class ValidationUtil {
     public static <T> T validate(Validator validator, T obj, Class<?>... clazz) {
         Set<ConstraintViolation<T>> violations = validator.validate(obj, clazz);
         if (!violations.isEmpty()) {
-            throw new ValidationException(format("Validation error. Invalid fields [%s]",
+            throw new ConstraintViolationException(format("Validation error. Invalid fields [%s]",
                     violations
                             .stream()
                             .map(ConstraintViolation::getPropertyPath)
                             .map(Path::toString)
-                            .collect(Collectors.joining(",")))
-            );
+                            .collect(Collectors.joining(","))),
+            violations);
         }
         return obj;
     }

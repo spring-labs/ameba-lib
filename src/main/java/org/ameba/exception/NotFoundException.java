@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2018 the original author or authors.
+ * Copyright 2015-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,15 +52,15 @@ public class NotFoundException extends BehaviorAwareException {
     /**
      * {@inheritDoc}
      */
-    public NotFoundException(String message, String msgKey) {
-        super(message, msgKey);
+    public NotFoundException(String message, String messageKey) {
+        super(message, messageKey);
     }
 
     /**
      * {@inheritDoc}
      */
-    public NotFoundException(String message, String msgKey, Serializable... data) {
-        super(message, msgKey, data);
+    public NotFoundException(String message, String messageKey, Serializable... data) {
+        super(message, messageKey, data);
     }
 
     /**
@@ -73,15 +73,15 @@ public class NotFoundException extends BehaviorAwareException {
     /**
      * {@inheritDoc}
      */
-    public NotFoundException(Translator translator, String msgKey, Object... param) {
-        super(translator.translate(msgKey, param), msgKey);
+    public NotFoundException(Translator translator, String messageKey, Object... param) {
+        super(translator.translate(messageKey, param), messageKey);
     }
 
     /**
      * {@inheritDoc}
      */
-    public NotFoundException(Translator translator, String msgKey, Serializable[] data, Object... param) {
-        super(translator.translate(msgKey, param), msgKey, data);
+    public NotFoundException(Translator translator, String messageKey, Serializable[] data, Object... param) {
+        super(translator.translate(messageKey, param), messageKey, data);
     }
 
     /*~ factory methods */
@@ -90,12 +90,12 @@ public class NotFoundException extends BehaviorAwareException {
      *
      * @param obj The instance to check
      * @param translator A Translator instance
-     * @param msgKey The message key
+     * @param messageKey The message key
      * @param param Message parameters
      */
-    public static void throwIfNull(Object obj, Translator translator, String msgKey, Object... param) {
+    public static void throwIfNull(Object obj, Translator translator, String messageKey, Object... param) {
         if (obj == null) {
-            throw new NotFoundException(translator, msgKey, param);
+            throw new NotFoundException(translator, messageKey, param);
         }
     }
 
