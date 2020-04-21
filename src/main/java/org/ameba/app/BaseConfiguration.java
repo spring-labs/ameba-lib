@@ -15,6 +15,8 @@
  */
 package org.ameba.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -31,11 +33,16 @@ public class BaseConfiguration {
 
     /**
      * Provides a bean instance to get a JSR-303 validator from.
-     *
+     * 
+     * @param messageSource (Optional) messageSource to inject
      * @return The factory bean
      */
     @Bean
-    public LocalValidatorFactoryBean validatorFactoryBean() {
-        return new LocalValidatorFactoryBean();
+    public LocalValidatorFactoryBean validatorFactoryBean(@Autowired(required = false) MessageSource messageSource) {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        if (messageSource != null) {
+            bean.setValidationMessageSource(messageSource);
+        }
+        return bean;
     }
 }

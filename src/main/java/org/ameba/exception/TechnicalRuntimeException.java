@@ -102,6 +102,7 @@ public class TechnicalRuntimeException extends RuntimeException {
     }
 
     private TechnicalRuntimeException(Builder builder) {
+        super(builder.message, builder.cause);
         messageKey = builder.messageKey;
         data = builder.data;
     }
@@ -128,16 +129,27 @@ public class TechnicalRuntimeException extends RuntimeException {
         return data;
     }
 
-
     public static final class Builder {
+        private String message;
         private String messageKey;
+        private Throwable cause;
         private Serializable[] data;
 
         private Builder() {
         }
 
+        public Builder withMessage(String val) {
+            message = val;
+            return this;
+        }
+
         public Builder withMessageKey(String val) {
             messageKey = val;
+            return this;
+        }
+
+        public Builder withCause(Throwable val) {
+            cause = val;
             return this;
         }
 
