@@ -48,8 +48,8 @@ public class MultiTenancyConfiguration {
      */
     public
     @Bean
-    FilterRegistrationBean multiTenantSessionFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean(new MultiTenantSessionFilter());
+    FilterRegistrationBean<MultiTenantSessionFilter> multiTenantSessionFilter() {
+        FilterRegistrationBean<MultiTenantSessionFilter> registration = new FilterRegistrationBean<>(new MultiTenantSessionFilter());
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         if (urlPatterns != null) {
             registration.addUrlPatterns(urlPatterns);
@@ -66,8 +66,8 @@ public class MultiTenancyConfiguration {
      */
     public
     @Bean
-    FilterRegistrationBean slf4JMappedDiagnosticContextFilter() {
-        FilterRegistrationBean registration = new FilterRegistrationBean(new SLF4JMappedDiagnosticContextFilter());
+    FilterRegistrationBean<SLF4JMappedDiagnosticContextFilter> slf4JMappedDiagnosticContextFilter() {
+        FilterRegistrationBean<SLF4JMappedDiagnosticContextFilter> registration = new FilterRegistrationBean<>(new SLF4JMappedDiagnosticContextFilter());
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         if (urlPatterns != null) {
             registration.addUrlPatterns(urlPatterns);
