@@ -32,4 +32,6 @@ public final class SpringProfiles {
 	public static final String UAT_PROFILE = "UAT";
 	/** Activate this profile in production environment. */
 	public static final String PRODUCTION_PROFILE = "PROD";
+	/** Activate this profile to enable asynchronous messaging capabilities. */
+	public static final String ASYNCHRONOUS_PROFILE ="ASYNCHRONOUS";
 }
