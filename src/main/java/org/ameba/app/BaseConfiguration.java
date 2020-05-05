@@ -21,6 +21,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
+import javax.validation.Validator;
+
 /**
  * A BaseConfiguration enables instantiates a JSR-303 ValidatorFactory.
  *
@@ -38,7 +40,7 @@ public class BaseConfiguration {
      * @return The factory bean
      */
     @Bean
-    public LocalValidatorFactoryBean validatorFactoryBean(@Autowired(required = false) MessageSource messageSource) {
+    public Validator messageSourceAwareValidator(@Autowired(required = false) MessageSource messageSource) {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         if (messageSource != null) {
             bean.setValidationMessageSource(messageSource);
