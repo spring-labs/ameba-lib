@@ -37,6 +37,7 @@
         <!-- Dependency versions -->
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
+        <feign.version>10.4.0</feign.version> <!-- in line with boot -->
         <h2.version>1.4.200</h2.version> <!-- in line with boot -->
         <hibernate-validator.version>6.0.18.Final</hibernate-validator.version> <!-- in line with boot -->
         <jackson.version>2.10.0</jackson.version> <!-- in line with boot -->
@@ -257,6 +258,12 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>${feign.version}</version>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
