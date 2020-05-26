@@ -50,7 +50,7 @@ public class IdentityFilter extends OncePerRequestFilter {
                 throw new IllegalArgumentException(String.format("No identity information available in http header. Expected header [%s] attribute not set", HEADER_VALUE_X_IDENTITY));
             }
         } else {
-            IdentityContextHolder.setCurrentTenant(identity);
+            IdentityContextHolder.setCurrentIdentity(identity);
         }
         try {
             filterChain.doFilter(request, response);

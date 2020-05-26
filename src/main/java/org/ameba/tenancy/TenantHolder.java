@@ -15,6 +15,8 @@
  */
 package org.ameba.tenancy;
 
+import java.util.function.Consumer;
+
 /**
  * A TenantHolder stores a tenant inside a thread local variable.
  *
@@ -47,6 +49,17 @@ public class TenantHolder {
      */
     public static void setCurrentTenant(String tenant) {
         tenantHolder.set(tenant);
+    }
+
+    /**
+     * Set current Tenant.
+     *
+     * @param consumer A Tenant's id consumer function
+     */
+    public static void setCurrentTenant(Consumer<String> consumer) {
+        if (tenantHolder.get() != null && !tenantHolder.get().isEmpty()) {
+            consumer.accept(tenantHolder.get());
+        }
     }
 
     /**

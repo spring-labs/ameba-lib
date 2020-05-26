@@ -15,6 +15,8 @@
  */
 package org.ameba.http;
 
+import java.util.function.Consumer;
+
 /**
  * A IdentityContextHolder stores keeps the current users identity for the current thread context.
  *
@@ -41,8 +43,19 @@ public class IdentityContextHolder {
      *
      * @param identity User's identity to set
      */
-    public static void setCurrentTenant(String identity) {
+    public static void setCurrentIdentity(String identity) {
         identityHolder.set(identity);
+    }
+
+    /**
+     * Set current Identity.
+     *
+     * @param consumer A User's identity consumer function
+     */
+    public static void setCurrentIdentity(Consumer<String> consumer) {
+        if (identityHolder.get() != null && !identityHolder.get().isEmpty()) {
+            consumer.accept(identityHolder.get());
+        }
     }
 
     /** Cleanup thread local. */
