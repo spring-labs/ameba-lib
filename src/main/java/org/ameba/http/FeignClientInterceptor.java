@@ -18,6 +18,7 @@ package org.ameba.http;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.ameba.Constants;
+import org.ameba.http.identity.IdentityContextHolder;
 import org.ameba.tenancy.TenantHolder;
 
 /**

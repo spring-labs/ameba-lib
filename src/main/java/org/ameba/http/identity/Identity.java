@@ -13,19 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http;
+package org.ameba.http.identity;
+
+import java.util.Map;
 
 /**
- * An IdentityResolverStrategy is able to resolve the human identity at runtime.
+ * An Identity represents the human user's identity.
  *
  * @author Heiko Scherrer
  */
-public interface IdentityResolverStrategy {
+public interface Identity {
 
     /**
-     * Resolve and return Identity from current context.
+     * Get the unique identifier of the Identity instance.
      *
-     * @return The Identity instance
+     * @return As String
      */
-    Identity getIdentity();
+    String getId();
+
+    /**
+     * Get a map of attributes that belong to the Identity.
+     *
+     * @return A key-value structure of details
+     */
+    Map<String, String> getDetails();
 }

@@ -16,6 +16,7 @@
 package org.ameba.http;
 
 import org.ameba.Constants;
+import org.ameba.http.identity.IdentityContextHolder;
 import org.ameba.tenancy.TenantHolder;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
