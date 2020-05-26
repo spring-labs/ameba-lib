@@ -22,7 +22,7 @@ import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
  * A TenantResolverTenancyStrategy is the adapter between the Hibernate {@link CurrentTenantIdentifierResolver}
  * entry point and the Ameba {@link TenantHolder} implementation.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class TenantResolverTenancyStrategy implements CurrentTenantIdentifierResolver {
 
