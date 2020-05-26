@@ -15,26 +15,19 @@
  */
 package org.ameba.http;
 
-import java.util.Map;
-
 /**
- * An Identity represents the human user's identity.
+ * A HeaderAttributeResolverStrategy.
  *
  * @author Heiko Scherrer
  */
-public interface Identity {
+public class HeaderAttributeResolverStrategy implements IdentityResolverStrategy {
 
     /**
-     * Get the unique identifier of the Identity instance.
-     *
-     * @return As String
+     * {@inheritDoc}
      */
-    String getId();
-
-    /**
-     * Get a map of attributes that belong to the Identity.
-     *
-     * @return A key-value structure of details
-     */
-    Map<String, String> getDetails();
+    @Override
+    public Identity getIdentity() {
+        String asString = IdentityContextHolder.getCurrentIdentity();
+        return new SimpleIdentity(asString);
+    }
 }

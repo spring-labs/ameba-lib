@@ -18,23 +18,46 @@ package org.ameba.http;
 import java.util.Map;
 
 /**
- * An Identity represents the human user's identity.
+ * A SimpleIdentity.
  *
  * @author Heiko Scherrer
  */
-public interface Identity {
+public final class SimpleIdentity implements Identity {
+
+    private final String id;
+    private Map<String, String> details;
+
+    public SimpleIdentity(String id) {
+        this.id = id;
+    }
+
+    public SimpleIdentity(String id, Map<String, String> details) {
+        this.id = id;
+        this.details = details;
+    }
 
     /**
-     * Get the unique identifier of the Identity instance.
-     *
-     * @return As String
+     * {@inheritDoc}
      */
-    String getId();
+    @Override
+    public String getId() {
+        return null;
+    }
 
     /**
-     * Get a map of attributes that belong to the Identity.
-     *
-     * @return A key-value structure of details
+     * {@inheritDoc}
      */
-    Map<String, String> getDetails();
+    @Override
+    public Map<String, String> getDetails() {
+        return null;
+    }
+
+    /**
+     * Set the details of the Identity.
+     *
+     * @param details As a Map
+     */
+    public void setDetails(Map<String, String> details) {
+        this.details = details;
+    }
 }

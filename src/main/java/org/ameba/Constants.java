@@ -23,40 +23,31 @@ package org.ameba;
  */
 public final class Constants {
 
-    /**
-     * Name of http X- header attribute used to carry tenant identifier from client to server.
-     */
+    /** Name of http header attribute used to carry tenant identifier from client to server. */
     public static final String HEADER_VALUE_X_TENANT = "X-Tenant";
-    /**
-     * Name of servlet context param to enable multitenancy support, expected to be set as {@code true} or {@code
-     * false}.
-     */
+    /** Name of servlet context param to enable multi-tenancy support, expected to be set as {@code true} or {@code false}. */
     public static final String PARAM_MULTI_TENANCY_ENABLED = "multitenancy.enabled";
     /**
-     * Name of servlet context param to define whether an exception shall be thrown in case the tenant identifier is not
-     * present in the http header.
+     * Name of servlet context param to define whether an exception shall be thrown in case the tenant identifier is not present in the
+     * http header.
      */
     public static final String PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT = "multitenancy.throw";
-    /**
-     * Name of the custome http X- attribute used to store an unique request ID.
-     */
+    /** Name of the http attribute used to store an unique request ID. */
     public static final String HEADER_VALUE_X_REQUESTID = "X-RequestID";
-    /**
-     * Standard date time format for APIs.
-     */
+
+    /** Name of the http attribute used to carry the human user's identity information. */
+    public static final String HEADER_VALUE_X_IDENTITY = "X-Identity";
+    /** Name of servlet context param to define whether an exception shall be thrown in case the identity header is not present. */
+    public static final String PARAM_IDENTITY_THROW_IF_NOT_PRESENT = "identity.throw";
+
+    /** Standard date time format for APIs. */
     public static final String API_DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
-    /**
-     * Standard date time format for APIs.
-     */
+    /** Standard date time format for APIs. */
     public static final String API_DATE_FORMAT = "yyyy-MM-dd";
-    /**
-     * Standard date time format for APIs.
-     */
+    /** Standard date time format for APIs. */
     public static final String API_TIME_FORMAT = "hh:mm:ss";
 
-    /**
-     * Hide constructor.
-     */
+    /** Hide constructor. */
     private Constants() {
     }
 }
