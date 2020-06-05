@@ -21,6 +21,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import javax.servlet.http.HttpServletRequest;
 
 import static java.util.Arrays.asList;
+import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
+import static org.ameba.Constants.HEADER_VALUE_X_REQUESTID;
+import static org.ameba.Constants.HEADER_VALUE_X_TENANT;
 
 /**
  * A PermitAllCorsConfigurationSource pre-configures and returns an {@link CorsConfiguration CorsConfiguration} instance to
@@ -60,7 +63,7 @@ public class PermitAllCorsConfigurationSource implements CorsConfigurationSource
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.setAllowedMethods(asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        corsConfiguration.setAllowedHeaders(asList("Content-Type", "X-REQUESTED-WITH", "Authorization"));
+        corsConfiguration.setAllowedHeaders(asList("Content-Type", "X-REQUESTED-WITH", "Authorization", HEADER_VALUE_X_TENANT, HEADER_VALUE_X_REQUESTID, HEADER_VALUE_X_IDENTITY));
         corsConfiguration.setMaxAge(1800L);
         return corsConfiguration;
     }
