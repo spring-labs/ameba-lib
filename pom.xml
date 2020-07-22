@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.interface21</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>2.4</version>
+    <version>2.5-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <url>https://github.com/openwms/ameba-lib</url>
@@ -527,7 +527,7 @@
         <connection>scm:git:git@github.com:openwms/ameba-lib.git</connection>
         <developerConnection>scm:git:git@github.com:openwms/ameba-lib.git</developerConnection>
         <url>scm:git:git@github.com:openwms/ameba-lib.git</url>
-        <tag>2.4</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
