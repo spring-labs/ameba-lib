@@ -15,11 +15,12 @@
  */
 package org.springframework.context.annotation;
 
-import org.ameba.http.EnableMultiTenancy;
 import org.ameba.http.MultiTenancyConfiguration;
+import org.ameba.http.identity.EnableIdentityAwareness;
+import org.ameba.http.identity.IdentityConfiguration;
+import org.ameba.http.identity.IdentityResolverStrategy;
 import org.ameba.integration.hibernate.DefaultMultiTenantConnectionProvider;
 import org.ameba.integration.hibernate.SchemaBasedTenancyConfiguration;
-import org.ameba.integration.hibernate.SchemaSeparationConfigurator;
 import org.ameba.integration.jpa.SeparationStrategy;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -28,28 +29,27 @@ import org.springframework.core.type.AnnotationMetadata;
 import java.lang.reflect.Constructor;
 
 /**
- * A MultiTenancySelector does the programmatic configuration based on the {@link EnableMultiTenancy} counterpart.
+ * A IdentitySelector does the programmatic configuration based on the {@link org.ameba.http.identity.EnableIdentityAwareness} counterpart.
  *
  * @author Heiko Scherrer
- * @since 1.7
  */
-public class MultiTenancySelector implements ImportSelector {
+public class IdentitySelector implements ImportSelector {
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String[] selectImports(AnnotationMetadata importingClassMetadata) {
-        Class<?> annoType = EnableMultiTenancy.class;
+        Class<?> annoType = EnableIdentityAwareness.class;
         AnnotationAttributes attributes = AnnotationConfigUtils.attributesFor(importingClassMetadata, annoType);
         if (attributes.getBoolean("enabled")) {
-            MultiTenancyConfiguration.urlPatterns = attributes.getStringArray("urlPatterns");
-            MultiTenancyConfiguration.enabled = attributes.getBoolean("enabled");
-            MultiTenancyConfiguration.throwIfNotPresent = attributes.getBoolean("throwIfNotPresent");
+            IdentityConfiguration.urlPatterns = attributes.getStringArray("urlPatterns");
+            IdentityConfiguration.enabled = attributes.getBoolean("enabled");
+            IdentityConfiguration.throwIfNotPresent = attributes.getBoolean("throwIfNotPresent");
             try {
-                Class<?> resolverStrategyClass = attributes.getClass("tenantResolverStrategy");
-                Constructor<?> ctor = resolverStrategyClass.getConstructor(String.class);
-                SchemaSeparationConfigurator.tenantResolver = ctor.newInstance(attributes.getString("defaultDatabaseSchema"));
+                Class<? extends IdentityResolverStrategy> resolverStrategyClass = attributes.getClass("identityResolverStrategy");
+                Constructor<? extends IdentityResolverStrategy> ctor = resolverStrategyClass.getConstructor();
+                IdentityConfiguration.strategy = ctor.newInstance();
             } catch (Exception e) {
                 throw new ApplicationContextException("Cannot instantiate a TenantResolverStrategy class to support multi-tenancy, please check @EnableMutliTenancy", e);
             }

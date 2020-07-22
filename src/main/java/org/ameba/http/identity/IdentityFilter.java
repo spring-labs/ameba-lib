@@ -34,6 +34,12 @@ import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
  */
 public class IdentityFilter extends OncePerRequestFilter {
 
+    private final IdentityResolverStrategy strategy;
+
+    public IdentityFilter(IdentityResolverStrategy strategy) {
+        this.strategy = strategy;
+    }
+
     /**
      * {@inheritDoc$}
      */
@@ -41,16 +47,22 @@ public class IdentityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
             HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String identity = request.getHeader(HEADER_VALUE_X_IDENTITY);
-        if (null == identity || identity.isEmpty()) {
-            String throwParam = (String) request.getServletContext().getAttribute(Constants.PARAM_IDENTITY_THROW_IF_NOT_PRESENT);
-            boolean throwIfNotPresent = Boolean.valueOf(throwParam == null ? getFilterConfig().getInitParameter(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT) : throwParam);
-            if (throwIfNotPresent) {
-                response.setStatus(HttpStatus.BAD_REQUEST.value());
-                throw new IllegalArgumentException(String.format("No identity information available in http header. Expected header [%s] attribute not set", HEADER_VALUE_X_IDENTITY));
+        String fromSC = (String) request.getServletContext().getAttribute(Constants.PARAM_IDENTITY_ENABLED);
+        boolean identityEnabled = Boolean.valueOf(fromSC == null ? getFilterConfig().getInitParameter(Constants.PARAM_IDENTITY_ENABLED) : fromSC);
+        if (identityEnabled) {
+
+            Identity identity = strategy.getIdentity();
+            if (null == identity) {
+                String identHeader = request.getHeader(HEADER_VALUE_X_IDENTITY);
+                String throwParam = (String) request.getServletContext().getAttribute(Constants.PARAM_IDENTITY_THROW_IF_NOT_PRESENT);
+                boolean throwIfNotPresent = Boolean.valueOf(throwParam == null ? getFilterConfig().getInitParameter(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT) : throwParam);
+                if (throwIfNotPresent) {
+                    response.setStatus(HttpStatus.BAD_REQUEST.value());
+                    throw new IllegalArgumentException(String.format("No identity information available in http header. Expected header [%s] attribute not set", HEADER_VALUE_X_IDENTITY));
+                }
+            } else {
+                IdentityContextHolder.setCurrentIdentity(identity.getId());
             }
-        } else {
-            IdentityContextHolder.setCurrentIdentity(identity);
         }
         try {
             filterChain.doFilter(request, response);

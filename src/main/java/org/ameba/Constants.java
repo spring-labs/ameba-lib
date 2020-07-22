@@ -32,13 +32,18 @@ public final class Constants {
      * http header.
      */
     public static final String PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT = "multitenancy.throw";
+
     /** Name of the http attribute used to store an unique request ID. */
     public static final String HEADER_VALUE_X_REQUESTID = "X-RequestID";
 
     /** Name of the http attribute used to carry the human user's identity information. */
     public static final String HEADER_VALUE_X_IDENTITY = "X-Identity";
+    /** Name of servlet context param to enable identity propagation support, expected to be set as {@code true} or {@code false}. */
+    public static final String PARAM_IDENTITY_ENABLED = "identity.enabled";
     /** Name of servlet context param to define whether an exception shall be thrown in case the identity header is not present. */
     public static final String PARAM_IDENTITY_THROW_IF_NOT_PRESENT = "identity.throw";
+    /** */
+    public static final String PARAM_IDENTITY_STRATEGY = "identity.strategy";
 
     /** Standard date time format for APIs. */
     public static final String API_DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
