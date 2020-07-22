@@ -524,9 +524,9 @@
     </dependencyManagement>
 
     <scm>
-        <connection>scm:git:git@github.com:openwms/ameba-lib.git</connection>
-        <developerConnection>scm:git:git@github.com:openwms/ameba-lib.git</developerConnection>
-        <url>scm:git:git@github.com:openwms/ameba-lib.git</url>
+        <connection>scm:git:git@github.com:spring-labs/ameba-lib.git</connection>
+        <developerConnection>scm:git:git@github.com:spring-labs/ameba-lib.git</developerConnection>
+        <url>scm:git:git@github.com:spring-labs/ameba-lib.git</url>
         <tag>HEAD</tag>
     </scm>
 
