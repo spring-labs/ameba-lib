@@ -61,6 +61,7 @@ public class PermitAllCorsConfigurationSource implements CorsConfigurationSource
         corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.setAllowedMethods(asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(asList("Content-Type", "X-REQUESTED-WITH", "Authorization"));
+        corsConfiguration.addExposedHeader("Location");
         corsConfiguration.setMaxAge(1800L);
         return corsConfiguration;
     }
