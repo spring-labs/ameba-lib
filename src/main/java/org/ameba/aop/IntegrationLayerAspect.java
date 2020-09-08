@@ -17,18 +17,21 @@ package org.ameba.aop;
 
 import org.ameba.LoggingCategories;
 import org.ameba.annotation.NotLogged;
+import org.ameba.annotation.NotTransformed;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.IntegrationLayerException;
 import org.ameba.exception.ResourceExistsException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.util.StopWatch;
 
+import java.lang.reflect.Method;
 import java.util.Optional;
 
 /**
@@ -86,7 +89,12 @@ public class IntegrationLayerAspect {
         try {
             return pjp.proceed();
         } catch (Exception ex) {
-            throw translateException(ex);
+            Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+            NotTransformed notTransformed = method.getAnnotation(NotTransformed.class);
+            if (notTransformed == null) {
+                throw translateException(ex);
+            }
+            throw ex;
         } finally {
             if (P_LOGGER.isInfoEnabled() && sw != null) {
                 sw.stop();
