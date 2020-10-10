@@ -46,7 +46,7 @@ public class BaseEntity implements TypedEntity<Long> {
     /** Primary key, assigned by the underlying database or persistence strategy, shouldn't be used on API level. */
     @Id
     @Column(name = "C_PK")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "generator")
     private Long pk;
 
     /** Optimistic locking field (Property name {@code version} might be used differently, hence lets call it {@code ol}). */

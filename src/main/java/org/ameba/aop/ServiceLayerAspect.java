@@ -17,16 +17,19 @@ package org.ameba.aop;
 
 import org.ameba.LoggingCategories;
 import org.ameba.annotation.NotLogged;
+import org.ameba.annotation.NotTransformed;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.ServiceLayerException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 
+import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -83,15 +86,20 @@ public class ServiceLayerAspect {
             startMillis = System.currentTimeMillis();
         }
 
-        Object obj = null;
+        Object obj;
         try {
             obj = pjp.proceed();
         } catch (Exception ex) {
-            Exception e = translateException(ex);
-            if (EXC_LOGGER.isErrorEnabled() && !hasNotLogged(ex)) {
-                EXC_LOGGER.error(e.getLocalizedMessage(), e);
+            Method method = ((MethodSignature) pjp.getSignature()).getMethod();
+            NotTransformed notTransformed = method.getAnnotation(NotTransformed.class);
+            if (notTransformed == null) {
+                Exception e = translateException(ex);
+                if (EXC_LOGGER.isErrorEnabled() && !hasNotLogged(ex)) {
+                    EXC_LOGGER.error(e.getLocalizedMessage(), e);
+                }
+                throw e;
             }
-            throw e;
+            throw ex;
         } finally {
             if (SRV_LOGGER.isDebugEnabled()) {
                 SRV_LOGGER.debug("[S]<< {} took [{}] (ms)", pjp.toShortString(), (System.currentTimeMillis() - startMillis));

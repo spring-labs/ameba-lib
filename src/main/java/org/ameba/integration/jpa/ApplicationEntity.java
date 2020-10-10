@@ -20,6 +20,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -27,8 +28,6 @@ import java.util.UUID;
  * unique not-null constraint is placed on the column.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 1.6
  */
 @MappedSuperclass
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {ApplicationEntity.C_ID})})
@@ -61,11 +60,32 @@ public class ApplicationEntity extends BaseEntity {
         this.pKey = pKey;
     }
 
-    /**
-     * JPA lifecycle method sets a random UUID before insertion.
-     */
+    /** JPA lifecycle method sets a random UUID before insertion. */
     @PrePersist
     protected void onPersist() {
         this.pKey = UUID.randomUUID().toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Use the pKey for comparison.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ApplicationEntity that = (ApplicationEntity) o;
+        return Objects.equals(pKey, that.pKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Use the pKey for calculation.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(pKey);
     }
 }
