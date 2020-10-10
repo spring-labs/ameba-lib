@@ -36,7 +36,7 @@ import java.util.Date;
  * optimistic locking field.
  *
  * @author Heiko Scherrer
- * @version 1.7
+ * @version 1.8
  * @since 1.4
  */
 @MappedSuperclass
