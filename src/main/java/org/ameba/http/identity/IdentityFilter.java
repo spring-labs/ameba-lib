@@ -41,7 +41,7 @@ public class IdentityFilter extends OncePerRequestFilter {
     }
 
     /**
-     * {@inheritDoc$}
+     * {@inheritDoc}
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
