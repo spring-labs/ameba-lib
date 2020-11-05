@@ -61,7 +61,7 @@ public class TenantValidator implements JwtValidator {
             throw new InvalidTokenException("Tenant not registered");
         }
 
-        String realm = issuer.substring(issuer.lastIndexOf("/")+1, issuer.length());
+        String realm = issuer.substring(issuer.lastIndexOf("/")+1);
         if (!tenantEO.get().sameRealm(realm)) {
             throw new InvalidTokenException("The issue does not match the configured REALM for the Tenant");
         }

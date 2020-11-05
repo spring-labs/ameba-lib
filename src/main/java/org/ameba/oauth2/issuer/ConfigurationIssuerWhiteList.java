@@ -15,6 +15,7 @@
  */
 package org.ameba.oauth2.issuer;
 
+import org.ameba.oauth2.InvalidTokenException;
 import org.ameba.oauth2.Issuer;
 import org.ameba.oauth2.IssuerWhiteList;
 import org.springframework.boot.context.properties.source.InvalidConfigurationPropertyValueException;
@@ -67,6 +68,9 @@ public class ConfigurationIssuerWhiteList implements IssuerWhiteList {
      */
     @Override
     public Issuer getIssuer(String issuerId) {
+        if (!this.issuerId.equals(issuerId)) {
+            throw new InvalidTokenException("Token issuer not accepted");
+        }
         return new ConfiguredIssuer(this.issuerId, skewSeconds, baseURL, signingKey, jwkURL, kid);
     }
 }

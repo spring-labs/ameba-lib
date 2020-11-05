@@ -15,6 +15,11 @@
  */
 package org.ameba.http.identity;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 /**
  * An IdentityResolverStrategy is able to resolve the human identity at runtime.
  *
@@ -23,9 +28,22 @@ package org.ameba.http.identity;
 public interface IdentityResolverStrategy {
 
     /**
-     * Resolve and return Identity from current context.
+     * Resolve and return Identity from the request headers.
      *
+     * @param headers Header attributes
      * @return The Identity instance
      */
-    Identity getIdentity();
+    default Optional<Identity> getIdentity(Map<String, List<String>> headers) {
+        return getIdentity(headers, Collections.emptyMap(), Collections.emptyMap());
+    }
+
+    /**
+     * Resolve and return Identity from the request.
+     *
+     * @param headers Header attributes
+     * @param bodyParts Request body parts
+     * @param queryParams Request query parameters
+     * @return The Identity instance
+     */
+    Optional<Identity> getIdentity(Map<String, List<String>> headers, Map<String, String> bodyParts, Map<String, String> queryParams);
 }

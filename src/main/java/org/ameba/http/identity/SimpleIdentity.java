@@ -28,11 +28,14 @@ public final class SimpleIdentity implements Identity {
     private Map<String, String> details;
 
     public SimpleIdentity(String id) {
+        if (id == null || id.isEmpty()) {
+            throw new IllegalArgumentException("ID of SimpleIdentity must not be null");
+        }
         this.id = id;
     }
 
     public SimpleIdentity(String id, Map<String, String> details) {
-        this.id = id;
+        this(id);
         this.details = details;
     }
 
@@ -41,7 +44,7 @@ public final class SimpleIdentity implements Identity {
      */
     @Override
     public String getId() {
-        return null;
+        return id;
     }
 
     /**
@@ -49,7 +52,7 @@ public final class SimpleIdentity implements Identity {
      */
     @Override
     public Map<String, String> getDetails() {
-        return null;
+        return details;
     }
 
     /**

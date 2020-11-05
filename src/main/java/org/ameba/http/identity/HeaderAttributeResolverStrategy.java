@@ -15,6 +15,19 @@
  */
 package org.ameba.http.identity;
 
+import io.jsonwebtoken.Claims;
+import org.ameba.oauth2.DefaultTokenExtractor;
+import org.ameba.oauth2.ExtractionResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
+
 /**
  * A HeaderAttributeResolverStrategy.
  *
@@ -22,12 +35,29 @@ package org.ameba.http.identity;
  */
 public class HeaderAttributeResolverStrategy implements IdentityResolverStrategy {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HeaderAttributeResolverStrategy.class);
+    private final DefaultTokenExtractor tokenExtractor;
+
+    public HeaderAttributeResolverStrategy(DefaultTokenExtractor tokenExtractor) {
+        this.tokenExtractor = tokenExtractor;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public Identity getIdentity() {
-        String asString = IdentityContextHolder.getCurrentIdentity();
-        return new SimpleIdentity(asString);
+    public Optional<Identity> getIdentity(Map<String, List<String>> headers, Map<String, String> bodyParts, Map<String, String> queryParams) {
+        List<String> identity = headers.get(HEADER_VALUE_X_IDENTITY);
+        if (identity == null || identity.size() != 1) {
+            return Optional.empty();
+        }
+        ExtractionResult extract = tokenExtractor.extract(identity.get(0));
+        Map<String, Object> map = new HashMap<>();
+        ((Claims) extract.getJwt().getBody()).entrySet().iterator().forEachRemaining(a -> map.put(a.getKey(), a.getValue()));
+        Object name = map.get(Claims.SUBJECT);
+        if (name == null) {
+            return Optional.empty();
+        }
+        return Optional.of(new SimpleIdentity(name.toString()));
     }
 }

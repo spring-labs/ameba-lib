@@ -24,6 +24,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 
@@ -51,17 +57,16 @@ public class IdentityFilter extends OncePerRequestFilter {
         boolean identityEnabled = Boolean.valueOf(fromSC == null ? getFilterConfig().getInitParameter(Constants.PARAM_IDENTITY_ENABLED) : fromSC);
         if (identityEnabled) {
 
-            Identity identity = strategy.getIdentity();
-            if (null == identity) {
-                String identHeader = request.getHeader(HEADER_VALUE_X_IDENTITY);
+            Optional<Identity> identity = strategy.getIdentity(getHeaders(request));
+            if (identity.isPresent()) {
+                IdentityContextHolder.setCurrentIdentity(identity.get().getId());
+            } else {
                 String throwParam = (String) request.getServletContext().getAttribute(Constants.PARAM_IDENTITY_THROW_IF_NOT_PRESENT);
-                boolean throwIfNotPresent = Boolean.valueOf(throwParam == null ? getFilterConfig().getInitParameter(Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT) : throwParam);
+                boolean throwIfNotPresent = Boolean.valueOf(throwParam == null ? getFilterConfig().getInitParameter(Constants.PARAM_IDENTITY_THROW_IF_NOT_PRESENT) : throwParam);
                 if (throwIfNotPresent) {
                     response.setStatus(HttpStatus.BAD_REQUEST.value());
                     throw new IllegalArgumentException(String.format("No identity information available in http header. Expected header [%s] attribute not set", HEADER_VALUE_X_IDENTITY));
                 }
-            } else {
-                IdentityContextHolder.setCurrentIdentity(identity.getId());
             }
         }
         try {
@@ -69,5 +74,14 @@ public class IdentityFilter extends OncePerRequestFilter {
         } finally {
             IdentityContextHolder.destroy();
         }
+    }
+
+    Map<String, List<String>> getHeaders(HttpServletRequest request) {
+        return Collections.list(request.getHeaderNames())
+                .stream()
+                .collect(Collectors.toMap(
+                        Function.identity(),
+                        h -> Collections.list(request.getHeaders(h))
+                ));
     }
 }
