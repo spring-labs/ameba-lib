@@ -9,7 +9,7 @@ in Maven `provided` scope to cut transitive dependencies.
 
 ## Usage
 
-**Notice: For releases compatible with Spring Boot 1.5.x checkout ameba-lib version 1.x, the current development branch is tested with Spring Boot 2.0.x**
+**Notice: For releases compatible with Spring Boot 1.5.x checkout ameba-lib version 1.x, the current development branch is tested against Spring Boot 2.2.x**
 
 Add as Maven dependency
 ```
@@ -18,12 +18,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>2.5</version>
+                <version>2.6</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>2.5</version>
+                <version>2.6</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>
@@ -295,8 +295,8 @@ Extension Points:
  [3]: https://github.com/abraxas-labs/ameba-lib/issues/79
  [4]: src/site/resources/exceptions.png
 
-[travis-image]: https://img.shields.io/travis/abraxas-labs/ameba-lib.svg?style=flat-square
-[travis-url]: https://travis-ci.org/abraxas-labs/ameba-lib
+[travis-image]: https://img.shields.io/travis/spring-labs/ameba-lib.svg?style=flat-square
+[travis-url]: https://travis-ci.com/spring-labs/ameba-lib
 [license-image]: http://img.shields.io/:license-Apache2.0-blue.svg?style=flat-square
 [license-url]: LICENSE
 [gitter-image]: https://badges.gitter.im/Join%20Chat.svg
