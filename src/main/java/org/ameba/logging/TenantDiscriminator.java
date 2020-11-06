@@ -30,26 +30,41 @@ public class TenantDiscriminator implements Discriminator<ILoggingEvent> {
 
     private boolean started;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDiscriminatingValue(ILoggingEvent iLoggingEvent) {
         return TenantHolder.getCurrentTenant() == null ? BOOT : TenantHolder.getCurrentTenant();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getKey() {
         return "Tenant";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start() {
         started = true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void stop() {
         started = false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isStarted() {
         return started;

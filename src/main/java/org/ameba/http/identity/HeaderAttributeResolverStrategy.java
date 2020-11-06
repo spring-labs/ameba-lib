@@ -35,7 +35,6 @@ import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
  */
 public class HeaderAttributeResolverStrategy implements IdentityResolverStrategy {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HeaderAttributeResolverStrategy.class);
     private final DefaultTokenExtractor tokenExtractor;
 
     public HeaderAttributeResolverStrategy(DefaultTokenExtractor tokenExtractor) {
@@ -51,11 +50,20 @@ public class HeaderAttributeResolverStrategy implements IdentityResolverStrategy
         if (identity == null || identity.size() != 1) {
             return Optional.empty();
         }
-        ExtractionResult extract = tokenExtractor.extract(identity.get(0));
+        ExtractionResult extract;
+        try {
+            extract = tokenExtractor.extract(identity.get(0));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
         Map<String, Object> map = new HashMap<>();
         ((Claims) extract.getJwt().getBody()).entrySet().iterator().forEachRemaining(a -> map.put(a.getKey(), a.getValue()));
         Object name = map.get(Claims.SUBJECT);
         if (name == null) {
+            return Optional.empty();
+        }
+        Integer exp = (Integer) map.get(Claims.EXPIRATION);
+        if (exp == null || exp < (System.currentTimeMillis()/1000)) {
             return Optional.empty();
         }
         return Optional.of(new SimpleIdentity(name.toString()));
