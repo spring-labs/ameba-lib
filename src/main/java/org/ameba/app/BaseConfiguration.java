@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.validation.Validator;
@@ -39,6 +40,7 @@ public class BaseConfiguration {
      * @param messageSource (Optional) messageSource to inject
      * @return The factory bean
      */
+    @Primary
     @Bean
     public Validator messageSourceAwareValidator(@Autowired(required = false) MessageSource messageSource) {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
