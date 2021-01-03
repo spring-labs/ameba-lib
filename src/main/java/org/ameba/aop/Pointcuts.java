@@ -48,12 +48,12 @@ public class Pointcuts extends SpringPointcuts {
     /** Map classes with Validated. */
     @Pointcut("@within(org.springframework.validation.annotation.Validated)")
     public void isValidated() {
-
+        // intended to kept empty because it is just the definition of the AOP pointcut
     }
 
     /** Map methods with Measured. */
-    @Pointcut("@annotation(org.ameba.annotation.Measured)")
+    @Pointcut("@within(org.ameba.http.MeasuredRestController) || @annotation(org.ameba.annotation.Measured)")
     public void isMeasured() {
-
+        // intended to kept empty because it is just the definition of the AOP pointcut
     }
 }
