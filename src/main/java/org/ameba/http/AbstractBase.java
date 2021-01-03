@@ -22,7 +22,7 @@ import org.springframework.hateoas.RepresentationModel;
 import java.io.Serializable;
 
 /**
- * Abstract base class adds Spring HATEOS support.
+ * Abstract base class adds Spring HATEOAS support.
  *
  * @author Heiko Scherrer
  * @version 1.0.0
@@ -30,6 +30,6 @@ import java.io.Serializable;
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
-public abstract class AbstractBase extends RepresentationModel implements Serializable {
+public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends RepresentationModel<T> implements Serializable {
 
 }
