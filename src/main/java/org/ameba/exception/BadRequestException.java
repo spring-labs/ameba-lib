@@ -16,6 +16,7 @@
 package org.ameba.exception;
 
 import org.ameba.Messages;
+import org.ameba.i18n.Translator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -45,7 +46,7 @@ public class BadRequestException extends BusinessRuntimeException {
      * @param messageKey Message key
      * @param data Additional implicit data passed to the caller
      */
-    public BadRequestException(String messageKey, Serializable[] data) {
+    protected BadRequestException(String messageKey, Serializable[] data) {
         super(messageKey, data);
     }
 
@@ -56,8 +57,12 @@ public class BadRequestException extends BusinessRuntimeException {
      * @param messageKey Message key
      * @param data Additional implicit data passed to the caller
      */
-    public BadRequestException(String message, String messageKey, Serializable... data) {
+    protected BadRequestException(String message, String messageKey, Serializable... data) {
         super(message, messageKey, data);
+    }
+
+    protected BadRequestException(Translator translator, String messageKey, Serializable[] data, Object... param) {
+        super(translator.translate(messageKey, param), messageKey, data);
     }
 
     /**
@@ -69,5 +74,17 @@ public class BadRequestException extends BusinessRuntimeException {
      */
     public static BadRequestException createFrom(String message, Serializable... data) {
         return new BadRequestException(message, Messages.REQ_GENERIC, data);
+    }
+
+    /**
+     * Create and return an instance with the given parameters and the message key.
+     *
+     * @param translator A Translator instance
+     * @param messageKey Message key
+     * @param data Additional implicit data passed to the caller
+     * @return The instance
+     */
+    public static BadRequestException createFromKey(Translator translator, String messageKey, Serializable[] data, Object... param) {
+        return new BadRequestException(translator.translate(messageKey, param), messageKey, data);
     }
 }

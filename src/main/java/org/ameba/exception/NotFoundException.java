@@ -42,44 +42,26 @@ public class NotFoundException extends BehaviorAwareException {
         super(Messages.NOT_FOUND, Messages.NOT_FOUND);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public NotFoundException(String message) {
         super(message,  Messages.NOT_FOUND);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public NotFoundException(String message, String messageKey) {
         super(message, messageKey);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public NotFoundException(String message, String messageKey, Serializable... data) {
         super(message, messageKey, data);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public NotFoundException(Translator translator) {
         super(translator.translate(Messages.NOT_FOUND), Messages.NOT_FOUND);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public NotFoundException(Translator translator, String messageKey, Object... param) {
         super(translator.translate(messageKey, param), messageKey);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public NotFoundException(Translator translator, String messageKey, Serializable[] data, Object... param) {
         super(translator.translate(messageKey, param), messageKey, data);
     }
