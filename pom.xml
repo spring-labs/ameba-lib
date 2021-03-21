@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.interface21</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>2.7-SNAPSHOT</version>
+    <version>3.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <url>https://github.com/openwms/ameba-lib</url>
@@ -35,7 +35,7 @@
         <project.scm.id>github</project.scm.id> <!-- Used to release and tag on GitHub -->
 
         <!-- Dependency versions -->
-        <dozer.version>5.5.1</dozer.version>
+        <dozer.version>6.5.0</dozer.version>
         <el-impl.version>2.2</el-impl.version>
         <feign.version>10.4.0</feign.version> <!-- in line with boot -->
         <h2.version>1.4.200</h2.version> <!-- in line with boot -->
@@ -312,8 +312,8 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
+            <groupId>com.github.dozermapper</groupId>
+            <artifactId>dozer-core</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -478,8 +478,8 @@
                 <version>${json-path.version}</version>
             </dependency>
             <dependency>
-                <groupId>net.sf.dozer</groupId>
-                <artifactId>dozer</artifactId>
+                <groupId>com.github.dozermapper</groupId>
+                <artifactId>dozer-core</artifactId>
                 <version>${dozer.version}</version>
             </dependency>
             <dependency>
