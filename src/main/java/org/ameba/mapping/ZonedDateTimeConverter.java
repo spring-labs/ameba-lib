@@ -15,9 +15,9 @@
  */
 package org.ameba.mapping;
 
-import java.time.ZonedDateTime;
+import com.github.dozermapper.core.DozerConverter;
 
-import org.dozer.DozerConverter;
+import java.time.ZonedDateTime;
 
 /**
  * A ZonedDateTimeConverter is a Dozer converter to recognize java.time.ZonedDateTime types. No conversion is applied,
@@ -25,8 +25,7 @@ import org.dozer.DozerConverter;
  * As soon as these types are included into Dozer this implementation can be deleted.
  *
  * @author <a href="mailto:admin@ice3ider.de">Ice3ider</a>
- * @version 1.0
- * @since 1.3.0
+ * @author Heiko Scherrer
  */
 public class ZonedDateTimeConverter extends DozerConverter<ZonedDateTime, ZonedDateTime> {
 
