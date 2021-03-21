@@ -2,7 +2,7 @@
 
 [![Build status](https://github.com/spring-labs/ameba-lib/actions/workflows/master-build.yml/badge.svg)](https://github.com/spring-labs/ameba-lib/actions/workflows/master-build.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Maven central](https://img.shields.io/maven-central/v/interface21.io/ameba-lib)](https://search.maven.org/search?q=a:ameba-lib)
+[![Maven central](https://img.shields.io/maven-central/v/io.interface21/ameba-lib)](https://search.maven.org/search?q=a:ameba-lib)
 [![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Ameba Lib is a collection of utils, exceptions, constants and other helpers used across projects and solutions. All dependencies are defined
