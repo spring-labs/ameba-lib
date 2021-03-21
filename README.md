@@ -1,8 +1,9 @@
 # ameba-lib
 
-[![Build status][travis-image]][travis-url]
-[![License][license-image]][license-url]
-[![Gitter][gitter-image]][gitter-url]
+[![Build status](https://github.com/spring-labs/ameba-lib/actions/workflows/master-build.yml/badge.svg)](https://github.com/spring-labs/ameba-lib/actions/workflows/master-build.yml)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![Maven central](https://img.shields.io/maven-central/v/interface21.io/ameba-lib)](https://search.maven.org/search?q=a:ameba-lib)
+[![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Ameba Lib is a collection of utils, exceptions, constants and other helpers used across projects and solutions. All dependencies are defined
 in Maven `provided` scope to cut transitive dependencies.
@@ -18,12 +19,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>2.6</version>
+                <version>3.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>2.6</version>
+                <version>3.0-SNAPSHOT</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>
@@ -295,10 +296,4 @@ Extension Points:
  [3]: https://github.com/abraxas-labs/ameba-lib/issues/79
  [4]: src/site/resources/exceptions.png
 
-[travis-image]: https://img.shields.io/travis/spring-labs/ameba-lib.svg?style=flat-square
-[travis-url]: https://travis-ci.com/spring-labs/ameba-lib
-[license-image]: http://img.shields.io/:license-Apache2.0-blue.svg?style=flat-square
-[license-url]: LICENSE
-[gitter-image]: https://badges.gitter.im/Join%20Chat.svg
-[gitter-url]: https://gitter.im/abraxas-labs/ameba-lib?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 [logstashconf]: src/main/resources/logstash.conf
