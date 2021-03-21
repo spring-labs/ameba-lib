@@ -15,8 +15,8 @@
  */
 package org.ameba.mapping;
 
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import com.github.dozermapper.core.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +27,6 @@ import static java.util.Arrays.asList;
  * A DozerMapperImpl uses the Open Source Dozer project to automatically map between bean classes.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 0.7
  */
 public class DozerMapperImpl implements BeanMapper {
 
@@ -46,7 +44,7 @@ public class DozerMapperImpl implements BeanMapper {
     /**
      * Constructor of this Bean takes a couple of Dozer mapping files that are used to instantiate the underlying Dozer mapper. The first
      * one ({@literal mappingFile}) in the essential mapping file that is required to have and that is added to the front of the list of all
-     * mapping files when the {@link DozerBeanMapper#DozerBeanMapper(List)} is created.
+     * mapping files when the {@link Mapper} is created.
      *
      * @param mappingFile The essential to have Dozer mapping file
      * @param additionalMappingFiles Dozer mapping files
@@ -55,7 +53,7 @@ public class DozerMapperImpl implements BeanMapper {
         List<String> list = new ArrayList<>();
         list.add(mappingFile);
         list.addAll(asList(additionalMappingFiles));
-        this.mapper = new DozerBeanMapper(list);
+        this.mapper = DozerBeanMapperBuilder.create().withMappingFiles(list).build();
     }
 
     /**

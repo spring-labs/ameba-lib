@@ -19,8 +19,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.io.Serializable;
-
 /**
  * Abstract base class adds Spring HATEOAS support.
  *
@@ -30,6 +28,6 @@ import java.io.Serializable;
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
-public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends RepresentationModel<T> implements Serializable {
+public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends RepresentationModel<T> {
 
 }

@@ -15,7 +15,7 @@
  */
 package org.ameba.mapping;
 
-import org.dozer.DozerConverter;
+import com.github.dozermapper.core.DozerConverter;
 
 import java.time.LocalDateTime;
 
@@ -25,8 +25,6 @@ import java.time.LocalDateTime;
  * is closed, this implementation can be deleted.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 0.8
  */
 public class LocalDateTimeConverter extends DozerConverter<LocalDateTime, LocalDateTime> {
 

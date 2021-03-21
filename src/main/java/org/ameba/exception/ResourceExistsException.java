@@ -16,6 +16,7 @@
 package org.ameba.exception;
 
 import org.ameba.Messages;
+import org.ameba.i18n.Translator;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -32,32 +33,32 @@ import java.io.Serializable;
 @ResponseStatus(HttpStatus.CONFLICT)
 public class ResourceExistsException extends BehaviorAwareException {
 
-    /**
-     * {@inheritDoc}
-     */
     public ResourceExistsException() {
         super(Messages.ALREADY_EXISTS, Messages.ALREADY_EXISTS);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public ResourceExistsException(String message) {
         super(message, Messages.ALREADY_EXISTS);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public ResourceExistsException(String message, String msgKey) {
         super(message, msgKey);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public ResourceExistsException(String message, String msgKey, Serializable... data) {
         super(message, msgKey, data);
+    }
+
+    public ResourceExistsException(Translator translator) {
+        super(translator.translate(Messages.NOT_FOUND), Messages.NOT_FOUND);
+    }
+
+    public ResourceExistsException(Translator translator, String messageKey, Object... param) {
+        super(translator.translate(messageKey, param), messageKey);
+    }
+
+    public ResourceExistsException(Translator translator, String messageKey, Serializable[] data, Object... param) {
+        super(translator.translate(messageKey, param), messageKey, data);
     }
 
     /**
