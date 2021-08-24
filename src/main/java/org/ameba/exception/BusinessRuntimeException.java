@@ -15,6 +15,8 @@
  */
 package org.ameba.exception;
 
+import org.ameba.i18n.Translator;
+
 import java.io.Serializable;
 
 /**
@@ -85,6 +87,18 @@ public class BusinessRuntimeException extends RuntimeException {
         super();
         this.messageKey = messageKey;
         this.data = data;
+    }
+
+    /**
+     * Use a {@link Translator} instance to resolve the {@code message} from the {@code messageKey}.
+     *
+     * @param translator A Translator instance to use
+     * @param messageKey The key to resolve the i18n aware message text from
+     * @param data Arbitrary data used in the message text
+     * @param param Additional implicit data passed to the caller
+     */
+    public BusinessRuntimeException(Translator translator, String messageKey, Serializable[] data, Object... param) {
+        this(translator.translate(messageKey, param), messageKey, data);
     }
 
     /**
