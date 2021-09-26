@@ -34,7 +34,8 @@ import java.util.stream.Collectors;
 import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 
 /**
- * An IdentityFilter expects and reads the identity information from a HTTP header and puts it into the current context variable.
+ * An IdentityFilter expects and reads the identity information from an HTTP header and puts it into the current context
+ * variable.
  *
  * @author Heiko Scherrer
  */

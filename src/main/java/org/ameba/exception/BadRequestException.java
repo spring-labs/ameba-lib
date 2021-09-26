@@ -82,6 +82,7 @@ public class BadRequestException extends BusinessRuntimeException {
      * @param translator A Translator instance
      * @param messageKey Message key
      * @param data Additional implicit data passed to the caller
+     * @param param Additional implicit data passed to the caller
      * @return The instance
      */
     public static BadRequestException createFromKey(Translator translator, String messageKey, Serializable[] data, Object... param) {

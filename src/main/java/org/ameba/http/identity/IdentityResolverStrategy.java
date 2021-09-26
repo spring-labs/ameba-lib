@@ -45,5 +45,6 @@ public interface IdentityResolverStrategy {
      * @param queryParams Request query parameters
      * @return The Identity instance
      */
-    Optional<Identity> getIdentity(Map<String, List<String>> headers, Map<String, String> bodyParts, Map<String, String> queryParams);
+    Optional<Identity> getIdentity(Map<String, List<String>> headers, Map<String, String> bodyParts,
+                                   Map<String, String> queryParams);
 }
