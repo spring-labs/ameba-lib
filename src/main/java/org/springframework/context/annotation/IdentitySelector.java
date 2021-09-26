@@ -15,13 +15,9 @@
  */
 package org.springframework.context.annotation;
 
-import org.ameba.http.MultiTenancyConfiguration;
 import org.ameba.http.identity.EnableIdentityAwareness;
 import org.ameba.http.identity.IdentityConfiguration;
 import org.ameba.http.identity.IdentityResolverStrategy;
-import org.ameba.integration.hibernate.DefaultMultiTenantConnectionProvider;
-import org.ameba.integration.hibernate.SchemaBasedTenancyConfiguration;
-import org.ameba.integration.jpa.SeparationStrategy;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
@@ -51,12 +47,9 @@ public class IdentitySelector implements ImportSelector {
                 Constructor<? extends IdentityResolverStrategy> ctor = resolverStrategyClass.getConstructor();
                 IdentityConfiguration.strategy = ctor.newInstance();
             } catch (Exception e) {
-                throw new ApplicationContextException("Cannot instantiate a TenantResolverStrategy class to support multi-tenancy, please check @EnableMutliTenancy", e);
+                throw new ApplicationContextException("Cannot instantiate a IdentityResolverStrategy class to support identity resolution, please check @EnableIdentityAwareness", e);
             }
-            DefaultMultiTenantConnectionProvider.defaultSchema = attributes.getString("defaultDatabaseSchema");
-            return attributes.getEnum("separationStrategy").equals(SeparationStrategy.SCHEMA) ?
-                    new String[]{MultiTenancyConfiguration.class.getName(), SchemaBasedTenancyConfiguration.class.getName()} :
-                    new String[]{MultiTenancyConfiguration.class.getName()};
+            return new String[]{IdentityConfiguration.class.getName()};
         }
         return new String[]{};
     }

@@ -16,7 +16,6 @@
 package org.ameba.http.identity;
 
 import org.ameba.annotation.ExcludeFromScan;
-import org.ameba.http.MultiTenantSessionFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,26 +38,24 @@ public class IdentityConfiguration {
     public static boolean throwIfNotPresent = false;
     /** Set by selector! */
     public static String[] urlPatterns;
-    /** */
+    /** Set by selector! */
     public static IdentityResolverStrategy strategy;
 
     /**
-     * Registers the MultiTenantSessionFilter filter.
+     * Registers the IdentityFilter filter.
      *
      * @return The registration bean instance
      */
     public
     @Bean
-    FilterRegistrationBean mvcClientInterceptor() {
-        FilterRegistrationBean<MultiTenantSessionFilter> registration = new FilterRegistrationBean<>(new MultiTenantSessionFilter());
+    FilterRegistrationBean identityFilterRegistrationBean() {
+        FilterRegistrationBean<IdentityFilter> registration = new FilterRegistrationBean<>(new IdentityFilter(strategy));
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         if (urlPatterns != null) {
             registration.addUrlPatterns(urlPatterns);
         }
-        // FIXME [openwms]: 27.05.20
-//        registration.addInitParameter(org.ameba.Constants.PARAM_IDENTITY_STRATEGY, strategy);
-        registration.addInitParameter(org.ameba.Constants.PARAM_MULTI_TENANCY_ENABLED, String.valueOf(enabled));
-        registration.addInitParameter(org.ameba.Constants.PARAM_MULTI_TENANCY_THROW_IF_NOT_PRESENT, String.valueOf(throwIfNotPresent));
+        registration.addInitParameter(org.ameba.Constants.PARAM_IDENTITY_ENABLED, String.valueOf(enabled));
+        registration.addInitParameter(org.ameba.Constants.PARAM_IDENTITY_THROW_IF_NOT_PRESENT, String.valueOf(throwIfNotPresent));
         return registration;
     }
 
