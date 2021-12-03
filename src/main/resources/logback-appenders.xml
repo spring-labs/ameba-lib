@@ -27,13 +27,13 @@
             <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>${LOG_PATH}/${Tenant}-${MODULE_NAME}.log</file>
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.log.gz</fileNamePattern>
-                    <MinIndex>1</MinIndex>
-                    <MaxIndex>10</MaxIndex>
+                    <fileNamePattern>${LOG_PATH}/${Tenant}-${MODULE_NAME}.%i.log.gz</fileNamePattern>
+                    <minIndex>1</minIndex>
+                    <maxIndex>10</maxIndex>
                 </rollingPolicy>
 
                 <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                    <MaxFileSize>10MB</MaxFileSize>
+                    <maxFileSize>10MB</maxFileSize>
                 </triggeringPolicy>
 
                 <encoder>
@@ -50,13 +50,13 @@
                 <!--prudent>false</prudent-->
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.exlog.gz</fileNamePattern>
-                    <MinIndex>1</MinIndex>
-                    <MaxIndex>10</MaxIndex>
+                    <fileNamePattern>${LOG_PATH}/${Tenant}-${MODULE_NAME}.%i.exlog.gz</fileNamePattern>
+                    <minIndex>1</minIndex>
+                    <maxIndex>10</maxIndex>
                 </rollingPolicy>
 
                 <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                    <MaxFileSize>10MB</MaxFileSize>
+                    <maxFileSize>10MB</maxFileSize>
                 </triggeringPolicy>
 
                 <encoder>
@@ -73,13 +73,13 @@
                 <!--prudent>false</prudent-->
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.tslog.gz</fileNamePattern>
-                    <MinIndex>1</MinIndex>
-                    <MaxIndex>10</MaxIndex>
+                    <fileNamePattern>${LOG_PATH}/${Tenant}-${MODULE_NAME}.%i.tslog.gz</fileNamePattern>
+                    <minIndex>1</minIndex>
+                    <maxIndex>10</maxIndex>
                 </rollingPolicy>
 
                 <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                    <MaxFileSize>10MB</MaxFileSize>
+                    <maxFileSize>10MB</maxFileSize>
                 </triggeringPolicy>
 
                 <encoder>
