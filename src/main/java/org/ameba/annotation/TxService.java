@@ -22,6 +22,7 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -36,6 +37,7 @@ import java.lang.annotation.Target;
  * @version 1.1
  * @since 1.0
  */
+@Validated
 @Transactional
 @Service
 @Target({ElementType.TYPE})
