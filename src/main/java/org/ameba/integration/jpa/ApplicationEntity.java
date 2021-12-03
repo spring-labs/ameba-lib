@@ -64,7 +64,10 @@ public class ApplicationEntity extends BaseEntity {
     @PrePersist
     protected void onPersist() {
         this.pKey = UUID.randomUUID().toString();
+        onEntityPersist();
     }
+
+    protected void onEntityPersist() {}
 
     /**
      * {@inheritDoc}

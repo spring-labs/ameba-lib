@@ -40,9 +40,7 @@ public class BaseConfiguration {
      * @param messageSource (Optional) messageSource to inject
      * @return The factory bean
      */
-    @Primary
-    @Bean
-    public Validator messageSourceAwareValidator(@Autowired(required = false) MessageSource messageSource) {
+    @Primary public @Bean Validator messageSourceAwareValidator(@Autowired(required = false) MessageSource messageSource) {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         if (messageSource != null) {
             bean.setValidationMessageSource(messageSource);
