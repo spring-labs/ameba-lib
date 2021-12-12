@@ -35,8 +35,8 @@ public class ApplicationEntity extends BaseEntity {
 
     public static final String C_ID = "C_PID";
     /**
-     * Technical or persisted key field, independent from the underlying database, assigned from application layer, remains the same over
-     * database migrations. An unique constraint or limitation to not-null is explicitly not defined here, because it is a matter of
+     * Technical or persisted key field, independently from the underlying database, assigned from application layer, remains the same over
+     * database migrations. A unique constraint or limitation to not-null is explicitly not defined here, because it is a matter of
      * subclasses to defines those, if required.
      */
     @Column(name = ApplicationEntity.C_ID, nullable = false)
