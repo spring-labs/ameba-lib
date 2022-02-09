@@ -45,6 +45,9 @@ public final class Constants {
     /** */
     public static final String PARAM_IDENTITY_STRATEGY = "identity.strategy";
 
+    /** Name of the http attribute to propagate a client identifying name. */
+    public static final String HEADER_VALUE_X_CALLERID = "X-CallerID";
+
     /** Standard date time format for APIs. */
     public static final String API_DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
     /** Standard date time format for APIs. */

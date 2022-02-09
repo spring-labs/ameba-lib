@@ -51,6 +51,7 @@ public class ServiceLayerAspect {
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
     private boolean withRootCause = false;
+    private ExceptionTranslator exceptionTranslator;
 
     /** Default constructor with some loginfo. */
     public ServiceLayerAspect() {
@@ -62,9 +63,10 @@ public class ServiceLayerAspect {
      *
      * @param withRootCause Whether the root cause shall be preserved or not
      */
-    public ServiceLayerAspect(boolean withRootCause) {
+    public ServiceLayerAspect(boolean withRootCause, ExceptionTranslator exceptionTranslator) {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
         this.withRootCause = withRootCause;
+        this.exceptionTranslator = exceptionTranslator;
     }
 
     /**
@@ -152,6 +154,9 @@ public class ServiceLayerAspect {
      * @return An empty Optional to use the default exception handling or an Exception to skip default handling
      */
     protected Optional<Exception> doTranslateException(Exception ex) {
-        return Optional.empty();
+        if (exceptionTranslator == null) {
+            return Optional.empty();
+        }
+        return exceptionTranslator.translate(ex);
     }
 }

@@ -15,10 +15,12 @@
  */
 package org.ameba.annotation;
 
+import org.ameba.aop.ExceptionTranslator;
 import org.ameba.aop.IntegrationLayerAspect;
 import org.ameba.aop.MeasuredAspect;
 import org.ameba.aop.PresentationLayerAspect;
 import org.ameba.aop.ServiceLayerAspect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -39,8 +41,8 @@ public class AspectsConfiguration {
     public static boolean withRootCause = false;
 
     @Bean(name = ServiceLayerAspect.COMPONENT_NAME)
-    public ServiceLayerAspect serviceLayerAspect() {
-        return new ServiceLayerAspect(withRootCause);
+    public ServiceLayerAspect serviceLayerAspect(@Autowired(required = false) ExceptionTranslator exceptionTranslator) {
+        return new ServiceLayerAspect(withRootCause, exceptionTranslator);
     }
 
     @Bean(name = MeasuredAspect.COMPONENT_NAME)
