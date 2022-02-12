@@ -15,9 +15,14 @@
  */
 package org.ameba.http.ctx;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.Base64;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -30,6 +35,11 @@ public final class CallContextHolder {
     private static final Logger LOGGER = LoggerFactory.getLogger(CallContextHolder.class);
     private static final InheritableThreadLocal<CallContext> callContext = new InheritableThreadLocal<>();
 
+    /**
+     * Retrieve the current {@link CallContext}.
+     *
+     * @return The thread-bound instance
+     */
     public static CallContext getCallContext() {
         if (callContext.get() == null) {
             callContext.set(new CallContext());
@@ -37,6 +47,11 @@ public final class CallContextHolder {
         return callContext.get();
     }
 
+    /**
+     * Populate the {@link CallContext} with the callerId.
+     *
+     * @param caller The callerId
+     */
     public static void setCaller(Supplier<String> caller) {
         if (caller == null || caller.get() == null || caller.get().isEmpty()) {
             return;
@@ -47,6 +62,49 @@ public final class CallContextHolder {
         getCallContext().setCaller(caller.get());
     }
 
+    /**
+     * Get the {@link CallContext} as base64 encoded String.
+     *
+     * @return Base64 encoded String
+     */
+    public static Optional<String> getCallContextEncoded() {
+        if (callContext.get() == null) {
+            return Optional.empty();
+        }
+        try {
+            var om = new ObjectMapper();
+            return Optional.of(Base64.getEncoder().encodeToString(om.writeValueAsBytes(callContext.get())));
+        } catch (JsonProcessingException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * Initialize the {@link CallContext} with the given base64 encoded {@code callContextString}.
+     *
+     * @param callContextString The base64 encoded CallContext as String
+     */
+    public static void setCallContext(Supplier<String> callContextString) {
+        if (callContextString == null || callContextString.get() == null || callContextString.get().isEmpty()) {
+            return;
+        }
+        var binaryCallContext = Base64.getDecoder().decode(callContextString.get());
+        try {
+            var om = new ObjectMapper();
+            var ctx = om.readValue(binaryCallContext, CallContext.class);
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("Decoded CallContext [{}]", ctx);
+            }
+            callContext.set(ctx);
+        } catch (IOException e) {
+            LOGGER.error("Decoded CallContext does not match the current CallContext version of the receiver. " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Destroy the thread-bound {@link CallContext}.
+     */
     public static void destroy() {
         callContext.remove();
     }

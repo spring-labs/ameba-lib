@@ -22,20 +22,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static org.ameba.Constants.HEADER_VALUE_X_CALLERID;
+import static org.ameba.Constants.HEADER_VALUE_X_CALL_CONTEXT;
 
 /**
- * A CallContextInterceptor.
+ * A CallContextInterceptor resolves the CallContext from a request and initializes the current CallContext.
  *
  * @author Heiko Scherrer
  */
 class CallContextInterceptor implements HandlerInterceptor {
 
+    /**
+     * {@inheritDoc}
+     *
+     * <ul>
+     *     <li>Resolve the CallContext header</li>
+     *     <li>Resolve the CallerId header</li>
+     * </ul>
+     */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        CallContextHolder.setCallContext(() -> request.getHeader(HEADER_VALUE_X_CALL_CONTEXT));
         CallContextHolder.setCaller(() -> request.getHeader(HEADER_VALUE_X_CALLERID));
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Destroy the initialized CallContext.
+     */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         CallContextHolder.destroy();

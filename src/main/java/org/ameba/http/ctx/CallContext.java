@@ -26,7 +26,9 @@ import java.util.Map;
  */
 public final class CallContext {
 
+    /** The name or ID of the calling process. */
     private String caller;
+    /** Arbitrary details populated as part of the {@link CallContext}. */
     private Map<String, Serializable> details = new HashMap<>();
 
     public String getCaller() {

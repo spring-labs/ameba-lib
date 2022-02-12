@@ -47,6 +47,8 @@ public final class Constants {
 
     /** Name of the http attribute to propagate a client identifying name. */
     public static final String HEADER_VALUE_X_CALLERID = "X-CallerID";
+    /** Name of the http attribute to propagate the CallContext. */
+    public static final String HEADER_VALUE_X_CALL_CONTEXT = "X-CallContext";
 
     /** Standard date time format for APIs. */
     public static final String API_DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";

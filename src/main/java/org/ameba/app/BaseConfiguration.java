@@ -15,10 +15,12 @@
  */
 package org.ameba.app;
 
+import org.ameba.http.ctx.CallContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
@@ -28,10 +30,11 @@ import javax.validation.Validator;
  * A BaseConfiguration enables instantiates a JSR-303 ValidatorFactory.
  *
  * @author Heiko Scherrer
- * @version 1.1
+ * @version 1.2
  * @since 1.0
  */
 @Configuration
+@Import(CallContextConfiguration.class)
 public class BaseConfiguration {
 
     /**
