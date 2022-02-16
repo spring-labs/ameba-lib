@@ -56,6 +56,7 @@
         <spring-security.version>5.2.1.RELEASE</spring-security.version> <!-- in line with boot -->
         <spring-framework.version>5.2.1.RELEASE</spring-framework.version> <!-- in line with boot -->
         <spring-boot-dependencies.version>2.2.1.RELEASE</spring-boot-dependencies.version>
+        <spring-cloud-sleuth-api.version>3.1.0</spring-cloud-sleuth-api.version>
         <spring-data-releasetrain.version>Moore-SR1</spring-data-releasetrain.version> <!-- in line with boot -->
 
         <!-- Plugin versions -->
@@ -368,6 +369,11 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <scope>provided</scope>
@@ -620,6 +626,11 @@
                 <groupId>com.auth0</groupId>
                 <artifactId>jwks-rsa</artifactId>
                 <version>${jwks-rsa.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-sleuth-api</artifactId>
+                <version>${spring-cloud-sleuth-api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

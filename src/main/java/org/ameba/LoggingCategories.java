@@ -45,4 +45,6 @@ public final class LoggingCategories {
 	public static final String MSGKEY = "MSGKEY";
 	/** Key used to store additional message data in MDC. */
 	public static final String MSGDATA = "MSGDATA";
+	/** Category to log call context handling and propagation. */
+	public static final String CALL_CONTEXT = "CALLCONTEXT";
 }

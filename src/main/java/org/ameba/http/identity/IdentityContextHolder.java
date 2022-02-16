@@ -15,6 +15,7 @@
  */
 package org.ameba.http.identity;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -36,6 +37,18 @@ public class IdentityContextHolder {
      */
     public static String getCurrentIdentity() {
         return identityHolder.get();
+    }
+
+    /**
+     * Get the current Identity.
+     *
+     * @return Identity as String
+     */
+    public static Optional<String> currentIdentity() {
+        if (identityHolder.get() == null || identityHolder.get().isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(identityHolder.get());
     }
 
     /**
