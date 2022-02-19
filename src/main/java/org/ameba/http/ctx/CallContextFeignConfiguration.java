@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * A CallContextConfiguration enables CallContext propagation.
+ * A CallContextConfiguration enables CallContext propagation with the Feign client.
  *
  * @author Heiko Scherrer
  * @since 3.0

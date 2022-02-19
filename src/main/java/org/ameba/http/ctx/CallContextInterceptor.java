@@ -32,7 +32,7 @@ import static org.ameba.LoggingCategories.CALL_CONTEXT;
  *
  * @author Heiko Scherrer
  */
-class CallContextInterceptor implements HandlerInterceptor {
+public class CallContextInterceptor implements HandlerInterceptor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CALL_CONTEXT);
     private final CallContextProvider callContextProvider;

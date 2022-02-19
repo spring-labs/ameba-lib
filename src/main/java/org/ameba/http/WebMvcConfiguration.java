@@ -23,11 +23,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 import static java.util.Arrays.asList;
 
@@ -36,26 +35,24 @@ import static java.util.Arrays.asList;
  *
  * @author Heiko Scherrer
  */
-@ConditionalOnClass(org.springframework.web.servlet.HandlerInterceptor.class)
 @Configuration
-@Import(CallContextConfiguration.class)
-public class WebMvcConfiguration {
+@Import({
+        CallContextConfiguration.class,
+        RestTemplateConfiguration.class,
+        LoadBalancedRestTemplateConfiguration.class
+})
+public class WebMvcConfiguration implements WebMvcConfigurer {
 
+    /**
+     * {@inheritDoc}
+     *
+     * Propagate context information with the RestTemplate.
+     */
     public @Bean
-    Supplier<List<BaseClientHttpRequestInterceptor>> baseRestTemplateInterceptors() {
-        return () -> new ArrayList<>(asList(
+    List<BaseClientHttpRequestInterceptor> baseRestTemplateInterceptors() {
+        return new ArrayList<>(asList(
                 new CallContextClientRequestInterceptor(),
                 new IdentityClientRequestInterceptor()
         ));
     }
-
-    @LoadBalanced
-    @Bean
-    RestTemplate aLoadBalanced(List<BaseClientHttpRequestInterceptor> baseInterceptors) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getInterceptors().addAll(baseInterceptors);
-        return restTemplate;
-    }
-
-
 }

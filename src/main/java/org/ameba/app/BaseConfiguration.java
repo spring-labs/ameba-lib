@@ -15,18 +15,11 @@
  */
 package org.ameba.app;
 
-import org.ameba.http.WebMvcConfiguration;
+import org.ameba.http.WebMvcConfigurationAdapter;
 import org.ameba.http.ctx.DefaultCallContextProviderConfiguration;
 import org.ameba.http.ctx.TraceableCallContextConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
-import javax.validation.Validator;
 
 /**
  * A BaseConfiguration bootstraps all sliced features of the ameba module.
@@ -39,21 +32,7 @@ import javax.validation.Validator;
 @Import({
         TraceableCallContextConfiguration.class,
         DefaultCallContextProviderConfiguration.class,
-        WebMvcConfiguration.class
+        WebMvcConfigurationAdapter.class,
+        ValidationConfiguration.class
 })
-public class BaseConfiguration {
-
-    /**
-     * Provides a bean instance to get a JSR-303 validator from.
-     * 
-     * @param messageSource (Optional) messageSource to inject
-     * @return The factory bean
-     */
-    @Primary public @Bean Validator messageSourceAwareValidator(@Autowired(required = false) MessageSource messageSource) {
-        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-        if (messageSource != null) {
-            bean.setValidationMessageSource(messageSource);
-        }
-        return bean;
-    }
-}
+public class BaseConfiguration { }

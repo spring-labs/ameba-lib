@@ -30,7 +30,6 @@ import java.util.StringJoiner;
  *
  * @author Heiko Scherrer
  */
-@JsonInclude(JsonInclude.Include.NON_ABSENT)
 public class CallContext implements Serializable {
 
     /** The name or ID of the calling process. */
@@ -40,18 +39,33 @@ public class CallContext implements Serializable {
     /** Arbitrary details populated as part of the {@link CallContext}. */
     private Map<String, Serializable> details = new HashMap<>();
 
+    /**
+     * Get the name of the business transaction.
+     *
+     * @return As String
+     */
     public String getCaller() {
         return caller;
     }
 
-    public void setCaller(String caller) {
+    void setCaller(String caller) {
         this.caller = caller;
     }
 
+    /**
+     * Get the current traceId.
+     *
+     * @return As String
+     */
     public String getTraceId() {
         return traceId;
     }
 
+    /**
+     * Get the current traceId.
+     *
+     * @return Optional String
+     */
     @JsonIgnore
     public Optional<String> getOptionalTraceId() {
         return Optional.ofNullable(traceId);
@@ -61,14 +75,24 @@ public class CallContext implements Serializable {
         this.traceId = traceId;
     }
 
+    /**
+     * Get a map with arbitrary details bound to the current call context thread.
+     *
+     * @return As Map
+     */
     public Map<String, Serializable> getDetails() {
         return details;
     }
 
-    public void setDetails(Map<String, Serializable> details) {
+    void setDetails(Map<String, Serializable> details) {
         this.details = details;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,11 +101,21 @@ public class CallContext implements Serializable {
         return Objects.equals(caller, that.caller) && Objects.equals(traceId, that.traceId) && Objects.equals(details, that.details);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(caller, traceId, details);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
     @Override
     public String toString() {
         return new StringJoiner(", ", CallContext.class.getSimpleName() + "[", "]")

@@ -13,41 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.ctx;
+package org.ameba.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.context.annotation.Primary;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import javax.validation.Validator;
 
 /**
- * A CallContextConfiguration enables CallContext handling and propagation.
+ * A ValidationConfiguration bootstraps the JSR-303 Validator.
  *
  * @author Heiko Scherrer
  * @since 3.0
  */
-@ConditionalOnClass(org.springframework.web.servlet.HandlerInterceptor.class)
+@ConditionalOnClass(LocalValidatorFactoryBean.class)
 @Configuration
-@Import(CallContextFeignConfiguration.class)
-public class CallContextConfiguration implements WebMvcConfigurer {
-
-    @Autowired
-    private CallContextProvider callContextProvider;
+public class ValidationConfiguration {
 
     /**
-     * {@inheritDoc}
-     *
-     * Activate interceptor to receive the CallContext
+     * Provides a bean instance to get a JSR-303 validator from.
+     * 
+     * @param messageSource (Optional) messageSource to inject
+     * @return The factory bean
      */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(callContextInterceptor());
-    }
-
-    public @Bean CallContextInterceptor callContextInterceptor() {
-        return new CallContextInterceptor(callContextProvider);
+    @Primary public @Bean Validator messageSourceAwareValidator(@Autowired(required = false) MessageSource messageSource) {
+        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        if (messageSource != null) {
+            bean.setValidationMessageSource(messageSource);
+        }
+        return bean;
     }
 }

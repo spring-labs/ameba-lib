@@ -24,7 +24,7 @@ import org.springframework.http.client.ClientHttpResponse;
 import java.io.IOException;
 
 /**
- * A IdentityClientRequestInterceptor propagates the Identity when the RestTemplate is used
+ * A IdentityClientRequestInterceptor propagates the Identity with the RestTemplate.
  *
  * @author Heiko Scherrer
  */

@@ -56,7 +56,7 @@
         <spring-security.version>5.2.1.RELEASE</spring-security.version> <!-- in line with boot -->
         <spring-framework.version>5.2.1.RELEASE</spring-framework.version> <!-- in line with boot -->
         <spring-boot-dependencies.version>2.2.1.RELEASE</spring-boot-dependencies.version>
-        <spring-cloud-sleuth-api.version>3.1.0</spring-cloud-sleuth-api.version>
+        <spring-cloud-commons.version>3.1.0</spring-cloud-commons.version>
         <spring-data-releasetrain.version>Moore-SR1</spring-data-releasetrain.version> <!-- in line with boot -->
 
         <!-- Plugin versions -->
@@ -370,6 +370,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-commons</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-api</artifactId>
             <optional>true</optional>
         </dependency>
@@ -629,8 +634,13 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-commons</artifactId>
+                <version>${spring-cloud-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-sleuth-api</artifactId>
-                <version>${spring-cloud-sleuth-api.version}</version>
+                <version>${spring-cloud-commons.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

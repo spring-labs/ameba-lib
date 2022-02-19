@@ -18,7 +18,7 @@ package org.ameba.http.ctx;
 import org.springframework.cloud.sleuth.Tracer;
 
 /**
- * A TraceableCallContextInterceptor.
+ * A TraceableCallContextInterceptor returns a {@link CallContext} instance that contains the current {@code traceId}.
  *
  * @author Heiko Scherrer
  */
@@ -30,10 +30,15 @@ class TraceableCallContextProvider implements CallContextProvider {
         this.tracer = tracer;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * The traceId is included if a {@link org.springframework.cloud.sleuth.TraceContext TraceContext} is available.
+     */
     @Override
     public CallContext getInitialCallContext() {
         var ctx = new CallContext();
-        if (tracer != null || tracer.currentSpan() != null) {
+        if (tracer != null && tracer.currentSpan() != null) {
             ctx.setTraceId(tracer.currentSpan().context().traceId());
         }
         return ctx;

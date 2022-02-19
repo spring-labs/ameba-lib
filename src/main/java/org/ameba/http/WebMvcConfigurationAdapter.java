@@ -13,19 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.ctx;
+package org.ameba.http;
+
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
- * A CallContextProvider.
+ * A WebMvcConfigurationAdapter.
  *
  * @author Heiko Scherrer
  */
-public interface CallContextProvider {
-
-    /**
-     * Return a new {@link CallContext} instance.
-     *
-     * @return Never {@literal null}
-     */
-    CallContext getInitialCallContext();
-}
+@ConditionalOnClass(org.springframework.web.servlet.HandlerInterceptor.class)
+@Configuration
+@Import(WebMvcConfiguration.class)
+public class WebMvcConfigurationAdapter { }

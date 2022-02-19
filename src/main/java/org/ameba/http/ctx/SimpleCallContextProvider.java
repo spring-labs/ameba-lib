@@ -16,12 +16,15 @@
 package org.ameba.http.ctx;
 
 /**
- * A CallContextProviderImpl.
+ * A SimpleCallContextProvider just returns a new instance of the {@link CallContext} class.
  *
  * @author Heiko Scherrer
  */
-class CallContextProviderImpl implements CallContextProvider {
+class SimpleCallContextProvider implements CallContextProvider {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public CallContext getInitialCallContext() {
         return new CallContext();

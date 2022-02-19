@@ -28,7 +28,7 @@ import java.io.IOException;
 import static org.ameba.LoggingCategories.CALL_CONTEXT;
 
 /**
- * A CallContextClientRequestInterceptor propagates the CallContext when the RestTemplate is used.
+ * A CallContextClientRequestInterceptor propagates the CallContext with the RestTemplate.
  *
  * @author Heiko Scherrer
  */
@@ -36,6 +36,9 @@ public class CallContextClientRequestInterceptor implements BaseClientHttpReques
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CALL_CONTEXT);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         var ctx = CallContextHolder.getCallContextEncoded();
