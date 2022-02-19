@@ -15,7 +15,9 @@
  */
 package org.ameba.app;
 
-import org.ameba.http.ctx.CallContextConfiguration;
+import org.ameba.http.WebMvcConfiguration;
+import org.ameba.http.ctx.DefaultCallContextProviderConfiguration;
+import org.ameba.http.ctx.TraceableCallContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -27,14 +29,18 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import javax.validation.Validator;
 
 /**
- * A BaseConfiguration enables instantiates a JSR-303 ValidatorFactory.
+ * A BaseConfiguration bootstraps all sliced features of the ameba module.
  *
  * @author Heiko Scherrer
  * @version 1.2
  * @since 1.0
  */
 @Configuration
-@Import(CallContextConfiguration.class)
+@Import({
+        TraceableCallContextConfiguration.class,
+        DefaultCallContextProviderConfiguration.class,
+        WebMvcConfiguration.class
+})
 public class BaseConfiguration {
 
     /**

@@ -17,15 +17,20 @@ package org.ameba.http.ctx;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.ameba.Constants.HEADER_VALUE_X_CALL_CONTEXT;
+import static org.ameba.LoggingCategories.CALL_CONTEXT;
 
 /**
- * A CallContextRequestInterceptor is a Feign interceptor to populate the CallContext.
+ * A CallContextRequestInterceptor is a Feign interceptor to propagate the CallContext.
  *
  * @author Heiko Scherrer
  */
 class CallContextRequestInterceptor implements RequestInterceptor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CALL_CONTEXT);
 
     /**
      * {@inheritDoc}
@@ -34,6 +39,16 @@ class CallContextRequestInterceptor implements RequestInterceptor {
      */
     @Override
     public void apply(RequestTemplate template) {
-        CallContextHolder.getCallContextEncoded().ifPresent(s -> template.header(HEADER_VALUE_X_CALL_CONTEXT, s));
+        var ctx = CallContextHolder.getCallContextEncoded();
+        if (ctx.isPresent()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Feign: CallContext to propagate is available [{}]", CallContextHolder.getCallContext());
+            }
+            template.header(HEADER_VALUE_X_CALL_CONTEXT, ctx.get());
+        } else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Feign: No CallContext to propagate available");
+            }
+        }
     }
 }

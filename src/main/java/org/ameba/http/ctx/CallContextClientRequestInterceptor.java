@@ -16,24 +16,35 @@
 package org.ameba.http.ctx;
 
 import org.ameba.Constants;
+import org.ameba.app.BaseClientHttpRequestInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
 
 import java.io.IOException;
 
+import static org.ameba.LoggingCategories.CALL_CONTEXT;
+
 /**
- * A CallContextClientRequestInterceptor.
+ * A CallContextClientRequestInterceptor propagates the CallContext when the RestTemplate is used.
  *
  * @author Heiko Scherrer
  */
-public class CallContextClientRequestInterceptor implements ClientHttpRequestInterceptor {
+public class CallContextClientRequestInterceptor implements BaseClientHttpRequestInterceptor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CALL_CONTEXT);
 
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-        ClientHttpResponse response = execution.execute(request, body);
-        CallContextHolder.getCallContextEncoded().ifPresent(s -> response.getHeaders().add(Constants.HEADER_VALUE_X_CALL_CONTEXT, s));
-        return response;
+        var ctx = CallContextHolder.getCallContextEncoded();
+        if (ctx.isPresent()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("CTXClientRequestInterceptor: Add encoded CallContext to outgoing request [{}]", ctx.get());
+            }
+            request.getHeaders().add(Constants.HEADER_VALUE_X_CALL_CONTEXT, ctx.get());
+        }
+        return execution.execute(request, body);
     }
 }

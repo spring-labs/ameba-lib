@@ -46,9 +46,7 @@ public class IdentityConfiguration {
      *
      * @return The registration bean instance
      */
-    public
-    @Bean
-    FilterRegistrationBean identityFilterRegistrationBean() {
+    public @Bean FilterRegistrationBean identityFilterRegistrationBean() {
         FilterRegistrationBean<IdentityFilter> registration = new FilterRegistrationBean<>(new IdentityFilter(strategy));
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         if (urlPatterns != null) {
@@ -58,5 +56,4 @@ public class IdentityConfiguration {
         registration.addInitParameter(org.ameba.Constants.PARAM_IDENTITY_THROW_IF_NOT_PRESENT, String.valueOf(throwIfNotPresent));
         return registration;
     }
-
 }

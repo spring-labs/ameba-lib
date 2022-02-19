@@ -15,6 +15,8 @@
  */
 package org.ameba.http.ctx;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static org.ameba.Constants.HEADER_VALUE_X_CALLERID;
 import static org.ameba.Constants.HEADER_VALUE_X_CALL_CONTEXT;
+import static org.ameba.LoggingCategories.CALL_CONTEXT;
 
 /**
  * A CallContextInterceptor resolves the CallContext from a request and initializes the current CallContext.
@@ -30,6 +33,13 @@ import static org.ameba.Constants.HEADER_VALUE_X_CALL_CONTEXT;
  * @author Heiko Scherrer
  */
 class CallContextInterceptor implements HandlerInterceptor {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CALL_CONTEXT);
+    private final CallContextProvider callContextProvider;
+
+    public CallContextInterceptor(CallContextProvider callContextProvider) {
+        this.callContextProvider = callContextProvider;
+    }
 
     /**
      * {@inheritDoc}
@@ -41,7 +51,10 @@ class CallContextInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        CallContextHolder.setCallContext(() -> request.getHeader(HEADER_VALUE_X_CALL_CONTEXT));
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("CTXInterceptor: Enter preHandle");
+        }
+        CallContextHolder.setCallContext(() -> request.getHeader(HEADER_VALUE_X_CALL_CONTEXT), callContextProvider.getInitialCallContext());
         CallContextHolder.setCaller(() -> request.getHeader(HEADER_VALUE_X_CALLERID));
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
@@ -53,6 +66,9 @@ class CallContextInterceptor implements HandlerInterceptor {
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("CTXInterceptor: Enter postHandle");
+        }
         CallContextHolder.destroy();
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }

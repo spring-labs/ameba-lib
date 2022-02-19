@@ -25,6 +25,8 @@ import java.util.Base64;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import static org.ameba.LoggingCategories.CALL_CONTEXT;
+
 /**
  * A CallContextHolder provides access to the {@link CallContext} of the current request execution.
  *
@@ -32,7 +34,8 @@ import java.util.function.Supplier;
  */
 public final class CallContextHolder {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CallContextHolder.class);
+    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(CallContextHolder.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CALL_CONTEXT);
     private static final InheritableThreadLocal<CallContext> callContext = new InheritableThreadLocal<>();
 
     /**
@@ -54,10 +57,13 @@ public final class CallContextHolder {
      */
     public static void setCaller(Supplier<String> caller) {
         if (caller == null || caller.get() == null || caller.get().isEmpty()) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("CTXHolder: No caller to set in context");
+            }
             return;
         }
-        if (LOGGER.isTraceEnabled()) {
-            LOGGER.trace("Populating context with caller [{}]", caller.get());
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("CTXHolder: Populating context with caller [{}]", caller.get());
         }
         getCallContext().setCaller(caller.get());
     }
@@ -75,7 +81,7 @@ public final class CallContextHolder {
             var om = new ObjectMapper();
             return Optional.of(Base64.getEncoder().encodeToString(om.writeValueAsBytes(callContext.get())));
         } catch (JsonProcessingException e) {
-            LOGGER.error(e.getMessage(), e);
+            EXC_LOGGER.error(e.getMessage(), e);
         }
         return Optional.empty();
     }
@@ -85,20 +91,24 @@ public final class CallContextHolder {
      *
      * @param callContextString The base64 encoded CallContext as String
      */
-    public static void setCallContext(Supplier<String> callContextString) {
+    public static void setCallContext(Supplier<String> callContextString, CallContext defaultCallContext) {
         if (callContextString == null || callContextString.get() == null || callContextString.get().isEmpty()) {
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("CTXHolder: Initialized CallContext [{}] with default", defaultCallContext);
+            }
+            callContext.set(defaultCallContext);
             return;
         }
         var binaryCallContext = Base64.getDecoder().decode(callContextString.get());
         try {
             var om = new ObjectMapper();
             var ctx = om.readValue(binaryCallContext, CallContext.class);
-            if (LOGGER.isTraceEnabled()) {
-                LOGGER.trace("Decoded CallContext [{}]", ctx);
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("CTXHolder: Decoded CallContext [{}]", ctx);
             }
             callContext.set(ctx);
         } catch (IOException e) {
-            LOGGER.error("Decoded CallContext does not match the current CallContext version of the receiver. " + e.getMessage(), e);
+            EXC_LOGGER.error("Decoded CallContext does not match the current CallContext version of the receiver. " + e.getMessage(), e);
         }
     }
 
