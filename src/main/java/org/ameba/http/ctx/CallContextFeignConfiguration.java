@@ -15,6 +15,7 @@
  */
 package org.ameba.http.ctx;
 
+import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Heiko Scherrer
  * @since 3.0
  */
+@ExcludeFromScan
 @ConditionalOnClass(feign.RequestInterceptor.class)
 @Configuration
 public class CallContextFeignConfiguration {

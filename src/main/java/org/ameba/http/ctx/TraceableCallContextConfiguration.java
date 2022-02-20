@@ -15,6 +15,7 @@
  */
 package org.ameba.http.ctx;
 
+import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.context.annotation.Bean;
@@ -26,10 +27,12 @@ import org.springframework.context.annotation.Configuration;
  * @author Heiko Scherrer
  * @since 3.0
  */
-@ConditionalOnClass(Tracer.class)
+@ExcludeFromScan
+@ConditionalOnClass(name = "org.springframework.cloud.sleuth.Tracer")
 @Configuration
 public class TraceableCallContextConfiguration {
 
+    @ConditionalOnClass(name = "org.springframework.cloud.sleuth.Tracer")
     @Bean(name = "traceableCallContextProvider")
     public CallContextProvider traceableCallContextProvider(Tracer tracer) {
         return new TraceableCallContextProvider(tracer);

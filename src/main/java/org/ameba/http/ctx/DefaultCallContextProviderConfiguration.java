@@ -15,6 +15,7 @@
  */
 package org.ameba.http.ctx;
 
+import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Heiko Scherrer
  * @since 3.0
  */
+@ExcludeFromScan
 @ConditionalOnMissingClass("org.springframework.cloud.sleuth.Tracer")
 @Configuration
 public class DefaultCallContextProviderConfiguration {

@@ -15,6 +15,7 @@
  */
 package org.ameba.http.ctx;
 
+import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author Heiko Scherrer
  * @since 3.0
  */
+@ExcludeFromScan
 @ConditionalOnClass(org.springframework.web.servlet.HandlerInterceptor.class)
 @Configuration
 @Import(CallContextFeignConfiguration.class)

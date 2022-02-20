@@ -30,8 +30,8 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({
-        TraceableCallContextConfiguration.class,
         DefaultCallContextProviderConfiguration.class,
+        TraceableCallContextConfiguration.class,
         WebMvcConfigurationAdapter.class,
         ValidationConfiguration.class
 })

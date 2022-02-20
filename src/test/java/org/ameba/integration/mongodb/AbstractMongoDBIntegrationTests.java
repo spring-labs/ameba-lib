@@ -33,6 +33,8 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
@@ -58,6 +60,8 @@ public abstract class AbstractMongoDBIntegrationTests {
     static final String DATABASE = "database";
     @Autowired
     MongoOperations template;
+    @MockBean
+    private Tracer tracer;
 
     @EnableMongoAuditing
     @Configuration
