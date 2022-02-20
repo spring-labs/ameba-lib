@@ -43,11 +43,8 @@ public final class CallContextHolder {
      *
      * @return The thread-bound instance
      */
-    public static CallContext getCallContext() {
-        if (callContext.get() == null) {
-            callContext.set(new CallContext());
-        }
-        return callContext.get();
+    public static Optional<CallContext> getOptionalCallContext() {
+        return Optional.ofNullable(callContext.get());
     }
 
     /**
@@ -55,7 +52,7 @@ public final class CallContextHolder {
      *
      * @param caller The callerId
      */
-    public static void setCaller(Supplier<String> caller) {
+    static void setCaller(Supplier<String> caller) {
         if (caller == null || caller.get() == null || caller.get().isEmpty()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("CTXHolder: No caller to set in context");
@@ -65,7 +62,7 @@ public final class CallContextHolder {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("CTXHolder: Populating context with caller [{}]", caller.get());
         }
-        getCallContext().setCaller(caller.get());
+        getOptionalCallContext().ifPresent(cc -> cc.setCaller(caller.get()));
     }
 
     /**
@@ -73,7 +70,7 @@ public final class CallContextHolder {
      *
      * @return Base64 encoded String
      */
-    public static Optional<String> getCallContextEncoded() {
+    public static Optional<String> getEncodedCallContext() {
         if (callContext.get() == null) {
             return Optional.empty();
         }
@@ -91,7 +88,7 @@ public final class CallContextHolder {
      *
      * @param callContextString The base64 encoded CallContext as String
      */
-    public static void setCallContext(Supplier<String> callContextString, CallContext defaultCallContext) {
+    static void setCallContext(Supplier<String> callContextString, CallContext defaultCallContext) {
         if (callContextString == null || callContextString.get() == null || callContextString.get().isEmpty()) {
             if (LOGGER.isTraceEnabled()) {
                 LOGGER.trace("CTXHolder: Initialized CallContext [{}] with default", defaultCallContext);
@@ -115,7 +112,7 @@ public final class CallContextHolder {
     /**
      * Destroy the thread-bound {@link CallContext}.
      */
-    public static void destroy() {
+    static void destroy() {
         callContext.remove();
     }
 }

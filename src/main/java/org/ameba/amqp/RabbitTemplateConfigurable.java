@@ -13,18 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http;
+package org.ameba.amqp;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 /**
- * A WebMvcConfigurationAdapter.
+ * A RabbitTemplateConfigurable is used in custom code to configure the {@link RabbitTemplate} after the SpringBoot configuration.
  *
  * @author Heiko Scherrer
  */
-@ConditionalOnWebApplication
-@Configuration
-@Import(WebMvcConfiguration.class)
-public class WebMvcConfigurationAdapter { }
+public interface RabbitTemplateConfigurable {
+
+    /**
+     * Configure the given instance of the {@link RabbitTemplate}.
+     *
+     * @param rabbitTemplate The instance to configure
+     */
+    void configure(RabbitTemplate rabbitTemplate);
+}

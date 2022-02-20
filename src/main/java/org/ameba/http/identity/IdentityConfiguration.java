@@ -15,7 +15,10 @@
  */
 package org.ameba.http.identity;
 
+import org.ameba.amqp.MessageHeaderEnhancer;
+import org.ameba.amqp.RabbitListenerContainerFactoryDecorator;
 import org.ameba.annotation.ExcludeFromScan;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +43,16 @@ public class IdentityConfiguration {
     public static String[] urlPatterns;
     /** Set by selector! */
     public static IdentityResolverStrategy strategy;
+
+    @ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
+    public @Bean RabbitListenerContainerFactoryDecorator IdentityCFDecorator() {
+        return new IdentityCFDecorator();
+    }
+
+    @ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
+    public @Bean MessageHeaderEnhancer identityEnhancer() {
+        return new IdentityEnhancer();
+    }
 
     /**
      * Registers the IdentityFilter filter.

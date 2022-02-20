@@ -39,10 +39,10 @@ class CallContextRequestInterceptor implements RequestInterceptor {
      */
     @Override
     public void apply(RequestTemplate template) {
-        var ctx = CallContextHolder.getCallContextEncoded();
+        var ctx = CallContextHolder.getEncodedCallContext();
         if (ctx.isPresent()) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Feign: CallContext to propagate is available [{}]", CallContextHolder.getCallContext());
+                LOGGER.debug("Feign: CallContext to propagate is available [{}]", CallContextHolder.getOptionalCallContext().get());
             }
             template.header(HEADER_VALUE_X_CALL_CONTEXT, ctx.get());
         } else {

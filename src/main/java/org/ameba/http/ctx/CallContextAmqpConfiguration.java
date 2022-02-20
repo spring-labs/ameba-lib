@@ -15,41 +15,29 @@
  */
 package org.ameba.http.ctx;
 
+import org.ameba.amqp.MessageHeaderEnhancer;
+import org.ameba.amqp.RabbitListenerContainerFactoryDecorator;
 import org.ameba.annotation.ExcludeFromScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * A CallContextConfiguration enables CallContext handling and propagation.
+ * A CallContextAmqpConfiguration enables CallContext handling and propagation.
  *
  * @author Heiko Scherrer
  * @since 3.0
  */
 @ExcludeFromScan
-@ConditionalOnClass(org.springframework.web.servlet.HandlerInterceptor.class)
+@ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
 @Configuration
-@Import(CallContextFeignConfiguration.class)
-public class CallContextConfiguration implements WebMvcConfigurer {
+public class CallContextAmqpConfiguration {
 
-    @Autowired
-    private CallContextProvider callContextProvider;
-
-    /**
-     * {@inheritDoc}
-     *
-     * Activate interceptor to receive the CallContext
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(callContextInterceptor());
+    public @Bean RabbitListenerContainerFactoryDecorator callContextCFDecorator(CallContextProvider callContextProvider) {
+        return new CallContextCFDecorator(callContextProvider);
     }
 
-    public @Bean CallContextInterceptor callContextInterceptor() {
-        return new CallContextInterceptor(callContextProvider);
+    public @Bean MessageHeaderEnhancer callContextEnhancer() {
+        return new CallContextEnhancer();
     }
 }

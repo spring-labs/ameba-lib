@@ -1,0 +1,12 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.ameba.app.BaseConfiguration, \
+org.ameba.app.ValidationConfiguration, \
+org.ameba.amqp.AmqpConfiguration, \
+org.ameba.http.ctx.DefaultCallContextProviderConfiguration, \
+org.ameba.http.ctx.TraceableCallContextConfiguration, \
+org.ameba.http.WebMvcConfiguration, \
+org.ameba.http.ctx.CallContextAmqpConfiguration, \
+org.ameba.http.ctx.CallContextWebMvcConfiguration, \
+org.ameba.http.RestTemplateConfiguration, \
+org.ameba.http.LoadBalancedRestTemplateConfiguration

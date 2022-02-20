@@ -17,6 +17,7 @@ package org.ameba.http;
 
 import org.ameba.app.BaseClientHttpRequestInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,7 @@ import java.util.List;
 @Configuration
 class LoadBalancedRestTemplateConfiguration {
 
+    @ConditionalOnMissingBean(name = "aLoadBalanced")
     @LoadBalanced
     @Bean(name = "aLoadBalanced")
     RestTemplate aLoadBalanced(List<BaseClientHttpRequestInterceptor> baseInterceptors) {

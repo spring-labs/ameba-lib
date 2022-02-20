@@ -1,11 +1,11 @@
 /*
- * Copyright 2015-2020 the original author or authors.
+ * Copyright 2005-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.app;
+package org.ameba.amqp;
 
-import org.springframework.context.annotation.Configuration;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 /**
- * A BaseConfiguration bootstraps all sliced features of the ameba module.
+ * A MessageHeaderEnhancer enhances the headers of a {@link RabbitTemplate}.
  *
  * @author Heiko Scherrer
- * @version 1.2
- * @since 1.0
  */
-@Configuration
-/*
-@Import({
-        DefaultCallContextProviderConfiguration.class,
-        TraceableCallContextConfiguration.class,
-        WebMvcConfigurationAdapter.class,
-        ValidationConfiguration.class
-})
-*/
-public class BaseConfiguration { }
+public interface MessageHeaderEnhancer {
+
+    /**
+     * Enhance the headers of the given {@link RabbitTemplate}.
+     *
+     * @param rabbitTemplate The instance to enhance
+     */
+    void enhance(RabbitTemplate rabbitTemplate);
+}

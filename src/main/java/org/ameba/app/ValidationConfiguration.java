@@ -17,10 +17,10 @@ package org.ameba.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.validation.Validator;
@@ -41,7 +41,8 @@ public class ValidationConfiguration {
      * @param messageSource (Optional) messageSource to inject
      * @return The factory bean
      */
-    @Primary public @Bean Validator messageSourceAwareValidator(@Autowired(required = false) MessageSource messageSource) {
+    @ConditionalOnMissingBean
+    public @Bean Validator messageSourceAwareValidator(@Autowired(required = false) MessageSource messageSource) {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         if (messageSource != null) {
             bean.setValidationMessageSource(messageSource);

@@ -41,7 +41,7 @@ public class CallContextClientRequestInterceptor implements BaseClientHttpReques
      */
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-        var ctx = CallContextHolder.getCallContextEncoded();
+        var ctx = CallContextHolder.getEncodedCallContext();
         if (ctx.isPresent()) {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("CTXClientRequestInterceptor: Add encoded CallContext to outgoing request [{}]", ctx.get());
