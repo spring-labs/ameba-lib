@@ -15,14 +15,19 @@
  */
 package org.ameba.amqp;
 
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.core.MessagePostProcessor;
 
 /**
- * A RabbitListenerContainerFactoryDecorator.
+ * A MessagePostProcessorProvider provides a {@link MessagePostProcessor} to enhance the container factory.
  *
  * @author Heiko Scherrer
  */
-public interface RabbitListenerContainerFactoryDecorator {
+public interface MessagePostProcessorProvider {
 
-    void setAfterReceivePostProcessors(SimpleRabbitListenerContainerFactory factory);
+    /**
+     * Return a {@link MessagePostProcessor} to add to the ContainerFactory in order to post-prosess incoming AMQP messages.
+     *
+     * @return The instance
+     */
+    MessagePostProcessor getMessagePostProcessor();
 }

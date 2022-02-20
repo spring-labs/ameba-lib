@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.ctx;
+package org.ameba.http.ctx.sleuth;
 
+import org.ameba.http.ctx.CallContext;
+import org.ameba.http.ctx.CallContextProvider;
 import org.springframework.cloud.sleuth.Tracer;
 
 /**

@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.ctx;
+package org.ameba.http.ctx.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.ameba.http.ctx.CallContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

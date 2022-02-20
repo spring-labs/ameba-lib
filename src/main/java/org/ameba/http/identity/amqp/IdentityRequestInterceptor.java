@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.identity;
+package org.ameba.http.identity.amqp;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.ameba.http.identity.IdentityContextHolder;
 
 import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 

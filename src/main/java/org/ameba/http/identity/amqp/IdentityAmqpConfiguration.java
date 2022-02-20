@@ -13,31 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.ctx;
+package org.ameba.http.identity.amqp;
 
 import org.ameba.amqp.MessageHeaderEnhancer;
-import org.ameba.amqp.RabbitListenerContainerFactoryDecorator;
+import org.ameba.amqp.MessagePostProcessorProvider;
 import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * A CallContextAmqpConfiguration enables CallContext handling and propagation.
+ * A IdentityConfiguration is not meant to be scanned by applications, therefor it is {@link ExcludeFromScan} and not in the {@literal app}
+ * package. It is responsible to setup support for identity propagation.
  *
  * @author Heiko Scherrer
- * @since 3.0
  */
 @ExcludeFromScan
-@ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
 @Configuration
-public class CallContextAmqpConfiguration {
+public class IdentityAmqpConfiguration {
 
-    public @Bean RabbitListenerContainerFactoryDecorator callContextCFDecorator(CallContextProvider callContextProvider) {
-        return new CallContextCFDecorator(callContextProvider);
+    @ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
+    public @Bean MessagePostProcessorProvider IdentityCFDecorator() {
+        return new IdentityHeaderResolver();
     }
 
-    public @Bean MessageHeaderEnhancer callContextEnhancer() {
-        return new CallContextEnhancer();
+    @ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
+    public @Bean MessageHeaderEnhancer identityEnhancer() {
+        return new IdentityEnhancer();
     }
 }

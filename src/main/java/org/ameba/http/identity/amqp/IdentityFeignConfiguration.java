@@ -13,28 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.ctx;
+package org.ameba.http.identity.amqp;
 
+import feign.RequestInterceptor;
 import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * A TraceableCallContextConfiguration provides a CallContextProvider suitable for traceable environments.
+ * A IdentityFeignConfiguration.
  *
  * @author Heiko Scherrer
- * @since 3.0
  */
 @ExcludeFromScan
-@ConditionalOnClass(name = "org.springframework.cloud.sleuth.Tracer")
+@ConditionalOnClass(feign.RequestInterceptor.class)
 @Configuration
-public class TraceableCallContextConfiguration {
+public class IdentityFeignConfiguration {
 
-    @ConditionalOnClass(name = "org.springframework.cloud.sleuth.Tracer")
-    @Bean(name = "traceableCallContextProvider")
-    public CallContextProvider traceableCallContextProvider(Tracer tracer) {
-        return new TraceableCallContextProvider(tracer);
+    public @Bean RequestInterceptor identityRequestInterceptor() {
+        return new IdentityRequestInterceptor();
     }
 }

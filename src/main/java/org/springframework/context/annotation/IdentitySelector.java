@@ -17,8 +17,9 @@ package org.springframework.context.annotation;
 
 import org.ameba.http.identity.EnableIdentityAwareness;
 import org.ameba.http.identity.IdentityConfiguration;
-import org.ameba.http.identity.IdentityFeignConfiguration;
+import org.ameba.http.identity.amqp.IdentityFeignConfiguration;
 import org.ameba.http.identity.IdentityResolverStrategy;
+import org.ameba.http.identity.amqp.IdentityAmqpConfiguration;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
@@ -50,7 +51,7 @@ public class IdentitySelector implements ImportSelector {
             } catch (Exception e) {
                 throw new ApplicationContextException("Cannot instantiate a IdentityResolverStrategy class to support identity resolution, please check @EnableIdentityAwareness", e);
             }
-            return new String[]{IdentityConfiguration.class.getName(), IdentityFeignConfiguration.class.getName()};
+            return new String[]{IdentityConfiguration.class.getName(), IdentityAmqpConfiguration.class.getName(), IdentityFeignConfiguration.class.getName()};
         }
         return new String[]{};
     }

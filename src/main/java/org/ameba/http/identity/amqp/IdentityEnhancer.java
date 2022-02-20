@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.ctx;
+package org.ameba.http.identity.amqp;
 
 import org.ameba.amqp.MessageHeaderEnhancer;
+import org.ameba.http.identity.IdentityContextHolder;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 /**
- * A CallContextEnhancer enhances AMQP messages about a header ({@code owms_callcontext}) to propagate the {@code CallContext}.
+ * A IdentityEnhancer enhances AMQP messages about a header ({@code owms_identity}) to propagate the {@code Identity}.
  *
  * @author Heiko Scherrer
  */
-public class CallContextEnhancer implements MessageHeaderEnhancer {
+class IdentityEnhancer implements MessageHeaderEnhancer {
 
     @Override
     public void enhance(final RabbitTemplate rabbitTemplate) {
         rabbitTemplate.addBeforePublishPostProcessors(
             m -> {
-                if (CallContextHolder.getEncodedCallContext().isPresent()) {
-                    m.getMessageProperties().getHeaders().put("owms_callcontext", CallContextHolder.getEncodedCallContext().get());
+                if (IdentityContextHolder.currentIdentity().isPresent()) {
+                    m.getMessageProperties().getHeaders().put("owms_identity", IdentityContextHolder.getCurrentIdentity());
                 }
                 return m;
             }

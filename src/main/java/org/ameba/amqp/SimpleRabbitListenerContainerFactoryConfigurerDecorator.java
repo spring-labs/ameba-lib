@@ -15,6 +15,7 @@
  */
 package org.ameba.amqp;
 
+import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,15 @@ public class SimpleRabbitListenerContainerFactoryConfigurerDecorator
     @Autowired
     private SimpleRabbitListenerContainerFactoryConfigurer simpleRabbitListenerContainerFactoryConfigurer;
     @Autowired(required = false)
-    private List<RabbitListenerContainerFactoryDecorator> decorators;
+    private List<MessagePostProcessorProvider> messagePostProcessorProviders;
 
     @Override
     public void configure(SimpleRabbitListenerContainerFactory factory, ConnectionFactory connectionFactory) {
-        if (decorators != null) {
-            decorators.forEach(decorator -> decorator.setAfterReceivePostProcessors(factory));
+        if (messagePostProcessorProviders != null) {
+            factory.setAfterReceivePostProcessors(messagePostProcessorProviders.stream()
+                    .map(MessagePostProcessorProvider::getMessagePostProcessor)
+                    .toArray(MessagePostProcessor[]::new)
+            );
         }
         simpleRabbitListenerContainerFactoryConfigurer.configure(factory, connectionFactory);
     }

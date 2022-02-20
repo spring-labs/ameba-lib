@@ -71,7 +71,7 @@ public class CallContext implements Serializable {
         return Optional.ofNullable(traceId);
     }
 
-    void setTraceId(String traceId) {
+    public void setTraceId(String traceId) {
         this.traceId = traceId;
     }
 

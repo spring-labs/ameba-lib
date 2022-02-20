@@ -13,21 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.identity;
+package org.ameba.http.identity.amqp;
 
-import org.ameba.amqp.RabbitListenerContainerFactoryDecorator;
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.ameba.amqp.MessagePostProcessorProvider;
+import org.ameba.http.identity.IdentityContextHolder;
+import org.springframework.amqp.core.MessagePostProcessor;
 
 /**
  * A IdentityCFDecorator.
  *
  * @author Heiko Scherrer
  */
-class IdentityCFDecorator implements RabbitListenerContainerFactoryDecorator {
+class IdentityHeaderResolver implements MessagePostProcessorProvider {
 
     @Override
-    public void setAfterReceivePostProcessors(SimpleRabbitListenerContainerFactory factory) {
-        factory.setAfterReceivePostProcessors(m -> {
+    public MessagePostProcessor getMessagePostProcessor() {
+        return (m -> {
             if (m.getMessageProperties().getHeaders().containsKey("owms_identity")) {
                 IdentityContextHolder.setCurrentIdentity((String) m.getMessageProperties().getHeaders().get("owms_identity"));
             }

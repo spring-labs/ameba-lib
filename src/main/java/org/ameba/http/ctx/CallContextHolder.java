@@ -88,7 +88,7 @@ public final class CallContextHolder {
      *
      * @param callContextString The base64 encoded CallContext as String
      */
-    static void setCallContext(Supplier<String> callContextString, CallContext defaultCallContext) {
+    public static void setCallContext(Supplier<String> callContextString, CallContext defaultCallContext) {
         if (callContextString == null || callContextString.get() == null || callContextString.get().isEmpty()) {
             if (LOGGER.isTraceEnabled()) {
                 LOGGER.trace("CTXHolder: Initialized CallContext [{}] with default", defaultCallContext);

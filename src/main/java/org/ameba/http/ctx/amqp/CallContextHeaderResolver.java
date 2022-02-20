@@ -13,27 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.ctx;
+package org.ameba.http.ctx.amqp;
 
-import org.ameba.amqp.RabbitListenerContainerFactoryDecorator;
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.ameba.amqp.MessagePostProcessorProvider;
+import org.ameba.http.ctx.CallContextHolder;
+import org.ameba.http.ctx.CallContextProvider;
+import org.springframework.amqp.core.MessagePostProcessor;
 
 /**
- * A CallContextCFDecorator.
+ * A CallContextHeaderResolver.
  *
  * @author Heiko Scherrer
  */
-class CallContextCFDecorator implements RabbitListenerContainerFactoryDecorator {
+class CallContextHeaderResolver implements MessagePostProcessorProvider {
 
     private final CallContextProvider callContextProvider;
 
-    CallContextCFDecorator(CallContextProvider callContextProvider) {
+    CallContextHeaderResolver(CallContextProvider callContextProvider) {
         this.callContextProvider = callContextProvider;
     }
 
     @Override
-    public void setAfterReceivePostProcessors(SimpleRabbitListenerContainerFactory factory) {
-        factory.setAfterReceivePostProcessors(m -> {
+    public MessagePostProcessor getMessagePostProcessor() {
+        return (m -> {
             if (m.getMessageProperties().getHeaders().containsKey("owms_callcontext")) {
                 CallContextHolder.setCallContext(
                         () -> (String) m.getMessageProperties().getHeaders().get("owms_callcontext"),
