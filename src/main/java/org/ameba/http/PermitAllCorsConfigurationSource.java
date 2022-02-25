@@ -21,6 +21,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import javax.servlet.http.HttpServletRequest;
 
 import static java.util.Arrays.asList;
+import static org.ameba.Constants.HEADER_VALUE_X_CALLERID;
+import static org.ameba.Constants.HEADER_VALUE_X_CALL_CONTEXT;
 import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 import static org.ameba.Constants.HEADER_VALUE_X_REQUESTID;
 import static org.ameba.Constants.HEADER_VALUE_X_TENANT;
@@ -63,8 +65,8 @@ public class PermitAllCorsConfigurationSource implements CorsConfigurationSource
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.setAllowedMethods(asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        corsConfiguration.setAllowedHeaders(asList("Content-Type", "X-REQUESTED-WITH", "Authorization", HEADER_VALUE_X_TENANT, HEADER_VALUE_X_REQUESTID, HEADER_VALUE_X_IDENTITY));
-        corsConfiguration.setExposedHeaders(asList("Location", HEADER_VALUE_X_TENANT, HEADER_VALUE_X_REQUESTID, HEADER_VALUE_X_IDENTITY));
+        corsConfiguration.setAllowedHeaders(asList("Content-Type", "X-REQUESTED-WITH", "Authorization", HEADER_VALUE_X_TENANT, HEADER_VALUE_X_REQUESTID, HEADER_VALUE_X_IDENTITY, HEADER_VALUE_X_CALLERID, HEADER_VALUE_X_CALL_CONTEXT));
+        corsConfiguration.setExposedHeaders(asList("Location", HEADER_VALUE_X_TENANT, HEADER_VALUE_X_REQUESTID, HEADER_VALUE_X_IDENTITY, HEADER_VALUE_X_CALLERID, HEADER_VALUE_X_CALL_CONTEXT));
         corsConfiguration.setMaxAge(1800L);
         return corsConfiguration;
     }

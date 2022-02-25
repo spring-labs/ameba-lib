@@ -17,7 +17,7 @@ package org.springframework.context.annotation;
 
 import org.ameba.http.identity.EnableIdentityAwareness;
 import org.ameba.http.identity.IdentityConfiguration;
-import org.ameba.http.identity.amqp.IdentityFeignConfiguration;
+import org.ameba.http.identity.feign.IdentityFeignConfiguration;
 import org.ameba.http.identity.IdentityResolverStrategy;
 import org.ameba.http.identity.amqp.IdentityAmqpConfiguration;
 import org.springframework.context.ApplicationContextException;

@@ -54,8 +54,8 @@ public final class CallContextHolder {
      */
     static void setCaller(Supplier<String> caller) {
         if (caller == null || caller.get() == null || caller.get().isEmpty()) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("CTXHolder: No caller to set in context");
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("CTXHolder: No caller to set in context");
             }
             return;
         }
