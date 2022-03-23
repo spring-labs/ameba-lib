@@ -15,6 +15,7 @@
  */
 package org.ameba.http;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -26,6 +27,10 @@ import static org.ameba.Constants.HEADER_VALUE_X_CALL_CONTEXT;
 import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 import static org.ameba.Constants.HEADER_VALUE_X_REQUESTID;
 import static org.ameba.Constants.HEADER_VALUE_X_TENANT;
+import static org.springframework.http.HttpHeaders.ACCEPT_LANGUAGE;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.HttpHeaders.LOCATION;
 
 /**
  * A PermitAllCorsConfigurationSource pre-configures and returns an {@link CorsConfiguration CorsConfiguration} instance to
@@ -64,9 +69,26 @@ public class PermitAllCorsConfigurationSource implements CorsConfigurationSource
     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
-        corsConfiguration.setAllowedMethods(asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        corsConfiguration.setAllowedHeaders(asList("Content-Type", "X-REQUESTED-WITH", "Authorization", HEADER_VALUE_X_TENANT, HEADER_VALUE_X_REQUESTID, HEADER_VALUE_X_IDENTITY, HEADER_VALUE_X_CALLERID, HEADER_VALUE_X_CALL_CONTEXT));
-        corsConfiguration.setExposedHeaders(asList("Location", HEADER_VALUE_X_TENANT, HEADER_VALUE_X_REQUESTID, HEADER_VALUE_X_IDENTITY, HEADER_VALUE_X_CALLERID, HEADER_VALUE_X_CALL_CONTEXT));
+        corsConfiguration.setAllowedMethods(asList(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
+                HttpMethod.PATCH.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name()));
+        corsConfiguration.setAllowedHeaders(asList("X-REQUESTED-WITH",
+                ACCEPT_LANGUAGE,
+                CONTENT_TYPE,
+                AUTHORIZATION,
+                HEADER_VALUE_X_TENANT,
+                HEADER_VALUE_X_REQUESTID,
+                HEADER_VALUE_X_IDENTITY,
+                HEADER_VALUE_X_CALLERID,
+                HEADER_VALUE_X_CALL_CONTEXT
+        ));
+        corsConfiguration.setExposedHeaders(asList(
+                LOCATION,
+                HEADER_VALUE_X_TENANT,
+                HEADER_VALUE_X_REQUESTID,
+                HEADER_VALUE_X_IDENTITY,
+                HEADER_VALUE_X_CALLERID,
+                HEADER_VALUE_X_CALL_CONTEXT
+        ));
         corsConfiguration.setMaxAge(1800L);
         return corsConfiguration;
     }
