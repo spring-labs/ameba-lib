@@ -87,6 +87,7 @@ public final class CallContextHolder {
      * Initialize the {@link CallContext} with the given base64 encoded {@code callContextString}.
      *
      * @param callContextString The base64 encoded CallContext as String
+     * @param defaultCallContext The default CallContext used when no CallContext is provided by callContextString
      */
     public static void setCallContext(Supplier<String> callContextString, CallContext defaultCallContext) {
         if (callContextString == null || callContextString.get() == null || callContextString.get().isEmpty()) {

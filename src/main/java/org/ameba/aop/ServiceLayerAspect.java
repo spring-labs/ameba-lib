@@ -62,6 +62,7 @@ public class ServiceLayerAspect {
      * Constructor with some loginfo and considering the root cause.
      *
      * @param withRootCause Whether the root cause shall be preserved or not
+     * @param exceptionTranslator An instance used to translate exceptions
      */
     public ServiceLayerAspect(boolean withRootCause, ExceptionTranslator exceptionTranslator) {
         BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
