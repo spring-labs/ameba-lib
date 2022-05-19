@@ -10,4 +10,5 @@ org.ameba.http.ctx.amqp.CallContextAmqpConfiguration, \
 org.ameba.http.ctx.CallContextWebMvcConfiguration, \
 org.ameba.http.RestTemplateConfiguration, \
 org.ameba.http.LoadBalancedRestTemplateConfiguration, \
-org.ameba.http.ctx.feign.CallContextFeignConfiguration
+org.ameba.http.ctx.feign.CallContextFeignConfiguration, \
+org.ameba.integration.jpa.BaseJpaConfiguration
