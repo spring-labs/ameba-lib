@@ -23,7 +23,7 @@ import java.util.Optional;
 /**
  * A JpaIssuerRepository.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface JpaIssuerRepository extends JpaRepository<IssuerEO, Long> {
 

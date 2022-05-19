@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * A TransactionalServic.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface TransactionalService {
 

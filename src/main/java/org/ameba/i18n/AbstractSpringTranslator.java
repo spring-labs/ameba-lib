@@ -23,7 +23,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
  * Locale, this class uses Spring's {@link LocaleContextHolder} to resolve the current
  * Locale. This can be handy in a web environment.
  *
- * Requested by: https://github.com/abraxas-labs/ameba-lib/issues/124
+ * Requested by: https://github.com/spring-labs/ameba-lib/issues/124
  *
  * @author Heiko Scherrer
  */

@@ -30,7 +30,7 @@ import java.sql.SQLException;
  * A DefaultMultiTenantConnectionProvider extends the abstract Hibernate type to provide the actual {@link ConnectionProvider}
  * from a cache. The implementation is taken untouched from the Hibernate reference documentation.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class DefaultMultiTenantConnectionProvider implements MultiTenantConnectionProvider {
 

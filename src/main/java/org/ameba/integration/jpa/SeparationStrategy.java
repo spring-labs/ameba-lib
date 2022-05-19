@@ -19,7 +19,7 @@ package org.ameba.integration.jpa;
  * A SeparationStrategy defines all possible data separation strategies in relation to multi-tenancy and relational
  * databases.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public enum SeparationStrategy {
 

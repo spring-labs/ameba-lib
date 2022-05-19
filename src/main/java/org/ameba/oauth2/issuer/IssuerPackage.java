@@ -18,7 +18,7 @@ package org.ameba.oauth2.issuer;
 /**
  * A IssuerPackage is a stereotype used for package scanning.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public final class IssuerPackage {
 

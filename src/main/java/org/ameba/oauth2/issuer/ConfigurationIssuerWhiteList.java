@@ -26,7 +26,7 @@ import java.net.URL;
 /**
  * A ConfigurationIssuerWhiteList.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ConfigurationIssuerWhiteList implements IssuerWhiteList {
 

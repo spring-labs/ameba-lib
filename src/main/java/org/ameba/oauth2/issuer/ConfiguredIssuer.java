@@ -24,7 +24,7 @@ import java.net.URL;
 /**
  * A ConfiguredIssuer.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ConfiguredIssuer implements Symmetric, Asymmetric, Issuer {
 

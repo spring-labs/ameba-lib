@@ -54,8 +54,7 @@ public interface JpaRepositoryOperations<T extends TypedEntity<ID>, ID extends S
          */
         @Override
         default Collection<T> findAll() {
-            Collection<T> all = getRepository().findAll();
-            return null == all || all.isEmpty() ? Collections.emptyList() : all;
+            return getRepository().findAll();
         }
 
         /**

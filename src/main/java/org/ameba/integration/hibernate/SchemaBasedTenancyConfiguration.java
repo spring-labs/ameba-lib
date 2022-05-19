@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  * A SchemaBasedTenancyConfiguration is a Spring configuration file, excluded from component scanning to bootstrap beans
  * according to the multi-tenancy database separation based on the {@code SeparationStrategy.SCHEMA}.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @ExcludeFromScan
 @Configuration

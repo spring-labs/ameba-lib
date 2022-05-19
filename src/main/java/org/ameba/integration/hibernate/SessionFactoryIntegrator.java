@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * {@link Integrator} instance and a {@code MultiTenantConnectionProvider} instance in one class, therefore we need this
  * configuration mechanism.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class SessionFactoryIntegrator implements Integrator {
 

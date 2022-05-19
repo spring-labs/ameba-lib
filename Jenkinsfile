@@ -3,7 +3,7 @@
 node {
    def mvnHome
    stage('Preparation') {
-      git 'git@github.com:abraxas-labs/ameba-lib.git'
+      git 'git@github.com:spring-labs/ameba-lib.git'
       mvnHome = tool 'M3'
    }
    parallel (

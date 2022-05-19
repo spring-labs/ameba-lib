@@ -28,7 +28,7 @@ import java.util.Optional;
  * A TransactionalServiceImpl is a helper class, transactional, managed by Spring to ensure transactions around public
  * service methods and that connections are put back into the pool, with tx commit/rollback.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Transactional(propagation = Propagation.REQUIRES_NEW)
 @Service

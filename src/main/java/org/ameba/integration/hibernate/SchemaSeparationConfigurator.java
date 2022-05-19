@@ -28,7 +28,7 @@ import java.util.Map;
  * The tenant resolution strategy may change between projects and can be defined as an attribute of the {@code EnableMultiTenancy}
  * annotation.
  *
- * @author <a href="mailto:hscherrer@interface21.io">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class SchemaSeparationConfigurator implements HibernatePropertiesCustomizer {
 

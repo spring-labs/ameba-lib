@@ -37,13 +37,6 @@ import static java.util.Arrays.asList;
 @ExcludeFromScan
 @ConditionalOnWebApplication
 @Configuration
-/*
-@Import({
-        CallContextConfiguration.class,
-        RestTemplateConfiguration.class,
-        LoadBalancedRestTemplateConfiguration.class
-})
-*/
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     /**

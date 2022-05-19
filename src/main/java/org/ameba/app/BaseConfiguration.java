@@ -25,12 +25,4 @@ import org.springframework.context.annotation.Configuration;
  * @since 1.0
  */
 @Configuration
-/*
-@Import({
-        DefaultCallContextProviderConfiguration.class,
-        TraceableCallContextConfiguration.class,
-        WebMvcConfigurationAdapter.class,
-        ValidationConfiguration.class
-})
-*/
 public class BaseConfiguration { }
