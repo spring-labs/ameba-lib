@@ -17,6 +17,7 @@ package org.ameba.http;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.RepresentationModel;
 
 /**
@@ -30,4 +31,25 @@ import org.springframework.hateoas.RepresentationModel;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
 public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends RepresentationModel<T> {
 
+    /** The current version of the Value Object (VO) usually derived from the version of the Entity Object (EO). */
+    @JsonProperty("ol")
+    private Long ol;
+
+    /**
+     * Get the current version.
+     *
+     * @return As Long
+     */
+    public Long getOl() {
+        return ol;
+    }
+
+    /**
+     * Set the current version.
+     *
+     * @param ol As Long
+     */
+    public void setOl(Long ol) {
+        this.ol = ol;
+    }
 }
