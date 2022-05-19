@@ -74,9 +74,9 @@ the `jar`.
 
 ### Spring Data extensions (1.4+)
 
-Since version 1.4+ Ameba provides base classes for JPA entities ([#69][2]) as well as for Spring Data MongoDB entity classes ([#79][3]).
-These common used types provide unique key definitions, version fields and timestamp fields to store date created and modified. An
-additional feature is the abstraction of Spring Data repositories. All this is put in package `org.ameba.integration`.
+Since version 1.4+ Ameba provides base classes for JPA entities ([#69][2], [#166][5]) as well as for Spring Data MongoDB entity classes
+([#79][3]). These common used types provide unique key definitions, version fields and timestamp fields to store date created and modified.
+An additional feature is the abstraction of Spring Data repositories. All this is put in package `org.ameba.integration`.
 
 ### Useful AOP aspects (1.2+)
 
@@ -106,9 +106,9 @@ Since 2.2 logging of exception stack traces can be turned off for specific excep
 
 ![Exception hierarchy][4]
 
-Referenced issues: [#1](https://github.com/abraxas-labs/ameba-lib/issues/1), [#2](https://github.com/abraxas-labs/ameba-lib/issues/2),
-[#8](https://github.com/abraxas-labs/ameba-lib/issues/8), [#21](https://github.com/abraxas-labs/ameba-lib/issues/21),
-[#37](https://github.com/abraxas-labs/ameba-lib/issues/37)
+Referenced issues: [#1](https://github.com/spring-labs/ameba-lib/issues/1), [#2](https://github.com/spring-labs/ameba-lib/issues/2),
+[#8](https://github.com/spring-labs/ameba-lib/issues/8), [#21](https://github.com/spring-labs/ameba-lib/issues/21),
+[#37](https://github.com/spring-labs/ameba-lib/issues/37)
 
 ### Web & MVC extensions
 
@@ -185,8 +185,8 @@ supported and by default database separation is turned off (`SeparationStrategy.
 - Database schema must already exist and cannot be created with Hibernate creation strategies on the fly
 
 Referenced issues:
-- [#102](https://github.com/abraxas-labs/ameba-lib/issues/102)
-- [#141](https://github.com/abraxas-labs/ameba-lib/issues/141)
+- [#102](https://github.com/spring-labs/ameba-lib/issues/102)
+- [#141](https://github.com/spring-labs/ameba-lib/issues/141)
 
 ### Logging extensions (1.7+)
 
@@ -306,8 +306,9 @@ Extension Points:
 
 
  [1]: https://apr.apache.org/versioning.html#strategy
- [2]: https://github.com/abraxas-labs/ameba-lib/issues/69
- [3]: https://github.com/abraxas-labs/ameba-lib/issues/79
+ [2]: https://github.com/spring-labs/ameba-lib/issues/69
+ [3]: https://github.com/spring-labs/ameba-lib/issues/79
  [4]: src/site/resources/exceptions.png
+ [5]: https://github.com/spring-labs/ameba-lib/issues/166
 
 [logstashconf]: src/main/resources/logstash.conf

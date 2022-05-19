@@ -16,7 +16,9 @@
 package org.ameba.integration.jpa;
 
 import org.ameba.integration.TypedEntity;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -49,7 +51,7 @@ public class BaseEntity implements TypedEntity<Long> {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "generator")
     private Long pk;
 
-    /** Optimistic locking field (Property name {@code version} might be used differently, hence lets call it {@code ol}). */
+    /** Optimistic locking field (Property name {@code version} might be used differently, hence this is named {@code ol}). */
     @Version
     @Column(name = "C_OL")
     private long ol;
@@ -60,11 +62,21 @@ public class BaseEntity implements TypedEntity<Long> {
     @CreatedDate
     private Date createDt;
 
+    /** User name who created the entity. */
+    @Column(name = "C_CREATED_BY")
+    @CreatedBy
+    private String createdBy;
+
     /** Timestamp when the database record was updated the last time. */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_UPDATED")
     @LastModifiedDate
     private Date lastModifiedDt;
+
+    /** User name who modified the entity. */
+    @Column(name = "C_UPDATED_BY")
+    @LastModifiedBy
+    private String lastModifiedBy;
 
     /** Dear JPA ... */
     protected BaseEntity() {
@@ -120,11 +132,29 @@ public class BaseEntity implements TypedEntity<Long> {
     }
 
     /**
+     * Get the user who created this entity.
+     *
+     * @return The users name
+     */
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    /**
      * Get the date when the entity was modified.
      *
      * @return last modified date
      */
     public Date getLastModifiedDt() {
         return lastModifiedDt;
+    }
+
+    /**
+     * Get the user who modified this entity the last time.
+     *
+     * @return The users name
+     */
+    public String getLastModifiedBy() {
+        return lastModifiedBy;
     }
 }
