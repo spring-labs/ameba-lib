@@ -6,7 +6,7 @@
     <version>3.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
-    <url>https://github.com/openwms/ameba-lib</url>
+    <url>https://github.com/spring-labs/ameba-lib</url>
     <licenses>
         <license>
             <name>Apache-2.0</name>
@@ -50,6 +50,7 @@
         <junit5.version>5.2.0</junit5.version>
         <junit5-platform.version>1.2.0</junit5-platform.version>
         <jwks-rsa.version>0.9.0</jwks-rsa.version>
+        <logback.version>1.2.11</logback.version>
         <querydsl.version>5.0.0</querydsl.version>
         <servlet-api.version>4.0.1</servlet-api.version> <!-- in line with boot -->
         <spring-rabbit.version>2.4.2</spring-rabbit.version>
@@ -547,6 +548,11 @@
             </dependency>
 
             <!-- 3rd party -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-apt</artifactId>
