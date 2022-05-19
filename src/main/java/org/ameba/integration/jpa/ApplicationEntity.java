@@ -18,8 +18,6 @@ package org.ameba.integration.jpa;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -30,7 +28,6 @@ import java.util.UUID;
  * @author Heiko Scherrer
  */
 @MappedSuperclass
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {ApplicationEntity.C_ID})})
 public class ApplicationEntity extends BaseEntity {
 
     public static final String C_ID = "C_PID";
@@ -39,7 +36,7 @@ public class ApplicationEntity extends BaseEntity {
      * database migrations. A unique constraint or limitation to not-null is explicitly not defined here, because it is a matter of
      * subclasses to defines those, if required.
      */
-    @Column(name = ApplicationEntity.C_ID, nullable = false)
+    @Column(name = ApplicationEntity.C_ID, nullable = false, unique = true)
     private String pKey;
 
     /**
@@ -49,6 +46,15 @@ public class ApplicationEntity extends BaseEntity {
      */
     public String getPersistentKey() {
         return pKey;
+    }
+
+    /**
+     * Check whether the entity has a persistent key set or not.
+     *
+     * @return {@literal true} if the persistent key is set, otherwise {@literal false}
+     */
+    public boolean hasPersistentKey() {
+        return pKey != null && !pKey.isEmpty();
     }
 
     /**
