@@ -26,10 +26,11 @@ import org.springframework.context.annotation.Configuration;
  * @author Heiko Scherrer
  */
 @ExcludeFromScan
+@ConditionalOnClass(name = "org.springframework.data.domain.AuditorAware")
 @Configuration
 public class BaseJpaConfiguration {
 
-    @ConditionalOnClass(org.springframework.data.domain.AuditorAware.class)
+    @ConditionalOnClass(name = "org.springframework.data.domain.AuditorAware")
     @Bean
     public org.springframework.data.domain.AuditorAware<String> auditorProvider() {
       return new PrincipalProvider();
