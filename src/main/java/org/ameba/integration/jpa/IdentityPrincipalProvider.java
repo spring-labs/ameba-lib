@@ -17,31 +17,27 @@ package org.ameba.integration.jpa;
 
 import org.ameba.http.identity.IdentityContextHolder;
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
 /**
- * A PrincipalProvider is an adapter class used to propagate the current principal to the Spring Data context in order to be used for
- * auditing modifications on entity classes. It is used in environments with Spring Security on the classpath.
+ * A IdentityPrincipalProvider is an adapter class used to propagate the current principal to the Spring Data context in order to be used
+ * for auditing modifications on entity classes. It is used if Spring Security is not on the classpath and resolves the current principal
+ * only from the Ameba Identity Context.
  *
  * @author Heiko Scherrer
- * @see IdentityPrincipalProvider for another implementation without Spring Security
  */
-class PrincipalProvider implements AuditorAware<String> {
+class IdentityPrincipalProvider implements AuditorAware<String> {
 
     /**
      * {@inheritDoc}
      *
-     * First try to resolve the principal from the {@code IdentityContext}, afterwards from Spring's {@code SecurityContext}.
+     * Only try to resolve the principal from the {@code IdentityContext}.
      */
     @Override
     public Optional<String> getCurrentAuditor() {
         if (IdentityContextHolder.getCurrentIdentity() != null) {
             return Optional.of(IdentityContextHolder.getCurrentIdentity());
-        } else if (SecurityContextHolder.getContext() != null &&
-                SecurityContextHolder.getContext().getAuthentication() != null) {
-            return Optional.of(SecurityContextHolder.getContext().getAuthentication().getName());
         }
         return Optional.empty();
     }

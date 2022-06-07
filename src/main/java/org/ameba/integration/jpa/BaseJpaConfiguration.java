@@ -17,6 +17,7 @@ package org.ameba.integration.jpa;
 
 import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,9 +31,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BaseJpaConfiguration {
 
-    @ConditionalOnClass(name = "org.springframework.data.domain.AuditorAware")
+    @ConditionalOnClass(name = {
+            "org.springframework.data.domain.AuditorAware",
+            "org.springframework.security.core.context.SecurityContextHolder"
+    })
     @Bean
     public org.springframework.data.domain.AuditorAware<String> auditorProvider() {
       return new PrincipalProvider();
+    }
+
+    @ConditionalOnClass(name = {
+            "org.springframework.data.domain.AuditorAware"
+    })
+    @ConditionalOnMissingClass("org.springframework.security.core.context.SecurityContextHolder")
+    @Bean
+    public org.springframework.data.domain.AuditorAware<String> identityAuditorProvider() {
+        return new IdentityPrincipalProvider();
     }
 }
