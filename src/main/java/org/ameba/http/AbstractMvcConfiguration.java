@@ -16,6 +16,7 @@
 package org.ameba.http;
 
 import org.ameba.system.NestedReloadableResourceBundleMessageSource;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.HandlerExceptionResolver;
@@ -33,6 +34,7 @@ import java.util.Properties;
  * @version 1.0
  * @since 1.4.1
  */
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public abstract class AbstractMvcConfiguration implements WebMvcConfigurer {
 
     /**

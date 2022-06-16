@@ -35,7 +35,7 @@ import static java.util.Arrays.asList;
  * @author Heiko Scherrer
  */
 @ExcludeFromScan
-@ConditionalOnWebApplication
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 

@@ -30,7 +30,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @since 3.0
  */
 @ExcludeFromScan
-@ConditionalOnWebApplication
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @Configuration
 public class CallContextWebMvcConfiguration implements WebMvcConfigurer {
 
