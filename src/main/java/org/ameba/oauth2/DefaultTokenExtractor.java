@@ -63,7 +63,10 @@ public class DefaultTokenExtractor implements TokenExtractor {
     public ExtractionResult extract(final String token) {
         // we do not trust the signature so first parse the token an check the issuer
         String[] splitToken = token.split("\\.");
-        Jwt<Header, Claims> jwt = null;
+        if (splitToken.length < 2) {
+            throw new InvalidTokenException("Token is not a JWT");
+        }
+        Jwt<Header, Claims> jwt;
         try {
             jwt = Jwts.parser()
                     .setAllowedClockSkewSeconds(Issuer.DEFAULT_MAX_SKEW_SECONDS)
