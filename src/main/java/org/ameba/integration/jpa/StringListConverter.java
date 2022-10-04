@@ -18,8 +18,8 @@ package org.ameba.integration.jpa;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -66,7 +66,7 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
         if (attribute == null) {
             return null;
         }
-        String join = String.join(getSeparator(), attribute);
+        var join = String.join(getSeparator(), attribute);
         if (join.length() > getListLength()) {
             throw new PersistenceException(format("Length of column exceeded, actual length is [%d], allowed is [%d]", join.length(),
                     getListLength()));
@@ -80,8 +80,8 @@ public class StringListConverter implements AttributeConverter<List<String>, Str
     @Override
     public List<String> convertToEntityAttribute(String dbData) {
         if (dbData == null || dbData.isEmpty()) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
-        return Arrays.asList(dbData.split(getSeparator()));
+        return new ArrayList<>(Arrays.asList(dbData.split(getSeparator())));
     }
 }
