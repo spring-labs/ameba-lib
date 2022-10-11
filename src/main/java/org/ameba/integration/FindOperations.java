@@ -15,6 +15,7 @@
  */
 package org.ameba.integration;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -32,7 +33,7 @@ public interface FindOperations<T extends TypedEntity<ID>, ID extends Serializab
      *
      * @return All entities or an empty collection, never {@literal null}
      */
-    Collection<T> findAll();
+    @NotNull Collection<T> findAll();
 
     /**
      * Find an entity instance by the given technical key {@code id},
@@ -41,5 +42,5 @@ public interface FindOperations<T extends TypedEntity<ID>, ID extends Serializab
      * @return The instance
      * @throws org.ameba.exception.NotFoundException may be thrown if no entity found
      */
-    T findById(ID id);
+    @NotNull T findById(@NotNull ID id);
 }

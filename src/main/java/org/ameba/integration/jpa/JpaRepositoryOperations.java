@@ -20,9 +20,9 @@ import org.ameba.integration.FindOperations;
 import org.ameba.integration.TypedEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * A GenericJpaRepositories.
@@ -53,7 +53,7 @@ public interface JpaRepositoryOperations<T extends TypedEntity<ID>, ID extends S
          * Returns an empty {@link java.util.ArrayList} in case of null or empty
          */
         @Override
-        default Collection<T> findAll() {
+        default @NotNull Collection<T> findAll() {
             return getRepository().findAll();
         }
 
@@ -63,7 +63,7 @@ public interface JpaRepositoryOperations<T extends TypedEntity<ID>, ID extends S
          * Find and return the instance, throw a NotFoundException if no entity was found
          */
         @Override
-        default T findById(ID id) {
+        default @NotNull T findById(@NotNull ID id) {
             return getRepository().findById(id).orElseThrow(() -> new NotFoundException(String.format("No entity with id %s found", id)));
         }
     }

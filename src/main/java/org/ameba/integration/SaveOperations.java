@@ -15,13 +15,13 @@
  */
 package org.ameba.integration;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
  * A SaveOperations.
  *
  * @author Heiko Scherrer
- * @version 1.0
  * @since 1.6
  */
 public interface SaveOperations<T extends TypedEntity<ID>, ID extends Serializable> {
@@ -32,5 +32,5 @@ public interface SaveOperations<T extends TypedEntity<ID>, ID extends Serializab
      * @param entity The instance to save
      * @return The saved instance
      */
-    T save(T entity);
+    @NotNull T save(@NotNull T entity);
 }

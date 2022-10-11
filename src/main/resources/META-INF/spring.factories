@@ -1,6 +1,5 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.ameba.app.BaseConfiguration, \
 org.ameba.app.ValidationConfiguration, \
 org.ameba.amqp.AmqpConfiguration, \
 org.ameba.http.ctx.DefaultCallContextProviderConfiguration, \
