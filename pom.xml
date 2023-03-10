@@ -39,6 +39,7 @@
         <el-impl.version>2.2</el-impl.version>
         <feign.version>10.4.0</feign.version> <!-- in line with boot -->
         <h2.version>1.4.200</h2.version> <!-- in line with boot -->
+        <hibernate-jpamodelgen.version>5.4.8.Final</hibernate-jpamodelgen.version>
         <hibernate-validator.version>6.0.18.Final</hibernate-validator.version> <!-- in line with boot -->
         <jackson.version>2.10.0</jackson.version> <!-- in line with boot -->
         <jakarta.enterprise.cdi-api.version>2.0.2</jakarta.enterprise.cdi-api.version>
@@ -167,6 +168,14 @@
                         <version>${querydsl.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArguments>
+                        <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+                    </compilerArguments>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
@@ -333,6 +342,12 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>${hibernate-jpamodelgen.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
