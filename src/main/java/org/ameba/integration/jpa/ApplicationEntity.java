@@ -69,7 +69,9 @@ public class ApplicationEntity extends BaseEntity {
     /** JPA lifecycle method sets a random UUID before insertion. */
     @PrePersist
     protected void onPersist() {
-        this.pKey = UUID.randomUUID().toString();
+        if (this.pKey == null) {
+            this.pKey = UUID.randomUUID().toString();
+        }
         onEntityPersist();
     }
 
