@@ -34,7 +34,7 @@ jobs:
       - uses: s4u/maven-settings-action@v2.8.0
         with:
           servers: |
-            {
+            [{
               "id": "sonatype-nexus-snapshots",
               "username": "${{ secrets.OSS_USERNAME }}",
               "password": "${{ secrets.OSS_PASSWORD }}"
