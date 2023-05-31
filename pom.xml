@@ -53,7 +53,7 @@
         <spring-rabbit.version>2.4.12</spring-rabbit.version>
         <spring-hateoas.version>1.5.4</spring-hateoas.version> <!-- in line with boot -->
         <spring-security.version>5.7.8</spring-security.version> <!-- in line with boot -->
-        <spring-framework.version>5.3.27</spring-framework.version> <!-- in line with boot -->
+        <spring-framework.version>6.0.0</spring-framework.version> <!-- in line with boot -->
         <spring-boot-dependencies.version>2.7.12</spring-boot-dependencies.version>
         <spring-cloud-commons.version>3.1.6</spring-cloud-commons.version> <!-- in line with spring-cloud-dependencies -->
         <spring-data-bom.version>2021.2.12</spring-data-bom.version> <!-- in line with boot -->
