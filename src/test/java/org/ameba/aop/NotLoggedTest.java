@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2019 the original author or authors.
+ * Copyright 2005-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,15 +21,15 @@ import org.ameba.annotation.NotLogged;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.ServiceLayerException;
 import org.ameba.test.LogCaptureAppender;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * A NotLoggedTest.
@@ -37,9 +37,9 @@ import static org.junit.Assert.fail;
  * @author Heiko Scherrer
  */
 @EnableAspects(propagateRootCause = true)
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = NotLoggedTest.TestConfig.class)
-public class NotLoggedTest {
+class NotLoggedTest {
 
     static class TestConfig {
         @Bean
@@ -51,13 +51,12 @@ public class NotLoggedTest {
     @Autowired
     MyService service;
 
-    @Before
+    @BeforeEach
     public void clearLoggingStatements() {
         LogCaptureAppender.clearEvents();
     }
 
-    @Test
-    public void testNotLogged() {
+    @Test void testNotLogged() {
         try {
             service.notLogged();
         } catch (ServiceLayerException e) {
@@ -75,8 +74,7 @@ public class NotLoggedTest {
         }
     }
 
-    @Test
-    public void testPlain() {
+    @Test void testPlain() {
         try {
             service.logged();
         } catch (ServiceLayerException e) {

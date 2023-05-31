@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2020 the original author or authors.
+ * Copyright 2015-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,10 @@
 package org.ameba.integration.mongodb;
 
 import org.ameba.app.BaseConfiguration;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.List;
 
@@ -33,8 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ComponentScan(basePackageClasses = {BaseEntityTest.class, BaseConfiguration.class})
 public class BaseEntityTest extends AbstractMongoDBIntegrationTests {
 
-    @Test
-    public void testPk() {
+    @Test void testPk(@Autowired MongoTemplate template) {
         TestDocument td = new TestDocument();
         template.insert(td);
 

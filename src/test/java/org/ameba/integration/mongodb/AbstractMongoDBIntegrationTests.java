@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2020 the original author or authors.
+ * Copyright 2015-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,20 @@
 package org.ameba.integration.mongodb;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
 import de.flapdoodle.embed.mongo.MongodExecutable;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.IMongodConfig;
-import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
-import de.flapdoodle.embed.mongo.config.Net;
-import de.flapdoodle.embed.mongo.distribution.Version;
-import de.flapdoodle.embed.process.runtime.Network;
 import org.ameba.app.BaseConfiguration;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.sleuth.Tracer;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
-import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,8 +38,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Heiko Scherrer
  */
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {AbstractMongoDBIntegrationTests.TestConfig.class, BaseConfiguration.class})
+@DataMongoTest
+@EnableMongoAuditing
+@EnableMongoRepositories(basePackageClasses = AbstractMongoDBIntegrationTests.class, considerNestedRepositories = true)
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {BaseConfiguration.class})
 public abstract class AbstractMongoDBIntegrationTests {
 
     static final String HOST = "localhost";
@@ -59,31 +50,10 @@ public abstract class AbstractMongoDBIntegrationTests {
     private static MongodExecutable mongodExecutable;
     static final String DATABASE = "database";
     @Autowired
-    MongoOperations template;
+    MongoTemplate template;
     @MockBean
     private Tracer tracer;
-
-    @EnableMongoAuditing
-    @Configuration
-    @EnableMongoRepositories(basePackageClasses = AbstractMongoDBIntegrationTests.class, considerNestedRepositories = true)
-    static class TestConfig extends AbstractMongoConfiguration {
-
-        @Value("#{systemProperties['MONGO.URI'] ?: 'mongodb://" + HOST + "'}")
-        private String uri;
-        @Value("#{systemProperties['MONGO.DB'] ?: '" + DATABASE + "'}")
-        private String database;
-
-        @Override
-        protected String getDatabaseName() {
-            return database;
-        }
-
-        @Override
-        public MongoClient mongoClient() {
-            return new MongoClient(new MongoClientURI(uri));
-        }
-    }
-
+    /*
     @BeforeClass
     public static void beforeClass() throws Exception {
         MongodStarter starter = MongodStarter.getDefaultInstance();
@@ -101,9 +71,9 @@ public abstract class AbstractMongoDBIntegrationTests {
             mongodExecutable.stop();
         }
     }
-
-    @After
-    @Before
+*/
+    @AfterEach
+    @BeforeEach
     public void aroundTests() throws Exception {
         cleanUp();
     }
