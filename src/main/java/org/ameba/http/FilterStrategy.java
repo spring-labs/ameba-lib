@@ -15,8 +15,8 @@
  */
 package org.ameba.http;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * A FilterStrategy encapsulates filter logic that may be used by servlet filters to

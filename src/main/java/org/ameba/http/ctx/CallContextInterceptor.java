@@ -20,8 +20,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import static org.ameba.Constants.HEADER_VALUE_X_CALLERID;
 import static org.ameba.Constants.HEADER_VALUE_X_CALL_CONTEXT;

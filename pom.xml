@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.interface21</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>3.1-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <url>https://github.com/spring-labs/ameba-lib</url>
@@ -42,6 +42,7 @@
         <hibernate-validator.version>6.0.18.Final</hibernate-validator.version> <!-- in line with boot -->
         <jackson.version>2.13.5</jackson.version> <!-- in line with boot -->
         <jakarta.enterprise.cdi-api.version>2.0.2</jakarta.enterprise.cdi-api.version>
+        <jakarta-servlet.version>6.0.0</jakarta-servlet.version> <!-- in line with boot -->
         <javax.persistence-api.version>2.2</javax.persistence-api.version> <!-- in line with hibernate -->
         <jakarta.validation-api.version>2.0.2</jakarta.validation-api.version> <!-- in line with hibernate-validator-parent -->
         <json-path.version>2.7.0</json-path.version> <!-- in line with boot -->
@@ -49,12 +50,11 @@
         <jwks-rsa.version>0.9.0</jwks-rsa.version>
         <logback.version>1.2.12</logback.version>
         <querydsl.version>5.0.0</querydsl.version>
-        <servlet-api.version>4.0.1</servlet-api.version> <!-- in line with boot -->
         <spring-rabbit.version>2.4.12</spring-rabbit.version>
         <spring-hateoas.version>1.5.4</spring-hateoas.version> <!-- in line with boot -->
-        <spring-security.version>5.7.8</spring-security.version> <!-- in line with boot -->
-        <spring-framework.version>5.3.27</spring-framework.version> <!-- in line with boot -->
-        <spring-boot-dependencies.version>2.7.12</spring-boot-dependencies.version>
+        <spring-security.version>6.1.0</spring-security.version> <!-- in line with boot -->
+        <spring-framework.version>6.0.9</spring-framework.version> <!-- in line with boot -->
+        <spring-boot-dependencies.version>3.1.0</spring-boot-dependencies.version>
         <spring-cloud-commons.version>3.1.6</spring-cloud-commons.version> <!-- in line with spring-cloud-dependencies -->
         <spring-data-bom.version>2021.2.12</spring-data-bom.version> <!-- in line with boot -->
 
@@ -214,8 +214,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -336,7 +336,7 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
@@ -393,7 +393,7 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
@@ -408,7 +408,8 @@
         <!-- Test dependencies -->
         <dependency>
             <groupId>de.flapdoodle.embed</groupId>
-            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <artifactId>de.flapdoodle.embed.mongo.spring30x</artifactId>
+            <version>4.7.0</version>
             <scope>test</scope>
             <optional>true</optional>
         </dependency>
@@ -448,9 +449,9 @@
         <dependencies>
             <!-- JavaEE dependencies -->
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet-api.version}</version>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>${jakarta-servlet.version}</version>
             </dependency>
             <dependency>
                 <groupId>jakarta.validation</groupId>
