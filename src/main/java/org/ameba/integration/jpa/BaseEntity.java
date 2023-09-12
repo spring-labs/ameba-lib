@@ -38,7 +38,6 @@ import java.util.Date;
  * optimistic locking field.
  *
  * @author Heiko Scherrer
- * @version 1.8
  * @since 1.4
  */
 @MappedSuperclass
@@ -62,7 +61,7 @@ public class BaseEntity implements TypedEntity<Long> {
     @CreatedDate
     private Date createDt;
 
-    /** User name who created the entity. */
+    /** Username who created the entity. */
     @Column(name = "C_CREATED_BY")
     @CreatedBy
     private String createdBy;
@@ -73,7 +72,7 @@ public class BaseEntity implements TypedEntity<Long> {
     @LastModifiedDate
     private Date lastModifiedDt;
 
-    /** User name who modified the entity. */
+    /** Username who modified the entity. */
     @Column(name = "C_UPDATED_BY")
     @LastModifiedBy
     private String lastModifiedBy;
@@ -132,12 +131,34 @@ public class BaseEntity implements TypedEntity<Long> {
     }
 
     /**
+     * Set the date when the entity was persisted.
+     *
+     * @param createDt Creation date - not {@literal null}
+     * @throws IllegalArgumentException if the given {@code createDt} is {@literal null}
+     */
+    protected void setCreateDt(Date createDt) {
+        if (createDt == null) {
+            throw new IllegalArgumentException("CreateDt must not be null");
+        }
+        this.createDt = createDt;
+    }
+
+    /**
      * Get the user who created this entity.
      *
-     * @return The users name
+     * @return The username
      */
     public String getCreatedBy() {
         return createdBy;
+    }
+
+    /**
+     * Set who has created the entity.
+     *
+     * @param createdBy The username
+     */
+    protected void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     /**
@@ -150,11 +171,33 @@ public class BaseEntity implements TypedEntity<Long> {
     }
 
     /**
+     * Set the date when the entity was modified.
+     *
+     * @param lastModifiedDt When the entity was modified the last time - not {@literal null}
+     * @throws IllegalArgumentException if the given {@code createDt} is {@literal null}
+     */
+    protected void setLastModifiedDt(Date lastModifiedDt) {
+        if (lastModifiedDt == null) {
+            throw new IllegalArgumentException("LastModifiedDt must not be null");
+        }
+        this.lastModifiedDt = lastModifiedDt;
+    }
+
+    /**
      * Get the user who modified this entity the last time.
      *
      * @return The users name
      */
     public String getLastModifiedBy() {
         return lastModifiedBy;
+    }
+
+    /**
+     * Set who created the entity.
+     *
+     * @param lastModifiedBy The username
+     */
+    protected void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
     }
 }
