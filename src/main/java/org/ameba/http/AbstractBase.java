@@ -20,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.RepresentationModel;
 
+import java.util.Date;
+
 /**
  * Abstract base class adds Spring HATEOAS support.
  *
@@ -34,6 +36,14 @@ public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends 
     /** The current version of the Value Object (VO) usually derived from the version of the Entity Object (EO). */
     @JsonProperty("ol")
     private Long ol;
+
+    /** Timestamp when the entity has been inserted. */
+    @JsonProperty("createDt")
+    private Date createDt;
+
+    /** Timestamp when the entity has been updated the last time. */
+    @JsonProperty("lastModifiedDt")
+    private Date lastModifiedDt;
 
     /**
      * Get the current version.
@@ -51,5 +61,41 @@ public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends 
      */
     public void setOl(Long ol) {
         this.ol = ol;
+    }
+
+    /**
+     * Get the creation date.
+     *
+     * @return The createDt
+     */
+    public Date getCreateDt() {
+        return createDt;
+    }
+
+    /**
+     * Set the creation date.
+     *
+     * @param createDt The createDt
+     */
+    public void setCreateDt(Date createDt) {
+        this.createDt = createDt;
+    }
+
+    /**
+     * Get the last modification date.
+     *
+     * @return The lastModifiedDt
+     */
+    public Date getLastModifiedDt() {
+        return lastModifiedDt;
+    }
+
+    /**
+     * Set the last modification date.
+     *
+     * @param lastModifiedDt The lastModifiedDt
+     */
+    public void setLastModifiedDt(Date lastModifiedDt) {
+        this.lastModifiedDt = lastModifiedDt;
     }
 }
