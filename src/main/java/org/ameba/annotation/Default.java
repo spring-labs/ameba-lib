@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  *
  * @author Heiko Scherrer
  */
-@Target(ElementType.CONSTRUCTOR)
+@Target({ElementType.CONSTRUCTOR, ElementType.METHOD})
 @Retention(RetentionPolicy.CLASS)
 public @interface Default {
 
