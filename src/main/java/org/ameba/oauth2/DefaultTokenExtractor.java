@@ -75,8 +75,9 @@ public class DefaultTokenExtractor implements TokenExtractor {
             LOGGER.error(e.getMessage(), e);
             throw new InvalidTokenException("Token cannot be parsed");
         }
-
-        Issuer issuer = whiteList.getIssuer(jwt.getBody().getIssuer());
+        Issuer issuer = jwt.getHeader().containsKey("kid")
+                ? whiteList.getIssuer(jwt.getBody().getIssuer(), ""+jwt.getHeader().get("kid"))
+                : whiteList.getIssuer(jwt.getBody().getIssuer());
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Issuer accepted [{}]", issuer.getIssuerId());
         }

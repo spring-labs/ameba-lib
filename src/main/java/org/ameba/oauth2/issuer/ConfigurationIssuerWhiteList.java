@@ -28,14 +28,14 @@ import java.net.URL;
  *
  * @author Heiko Scherrer
  */
-public class ConfigurationIssuerWhiteList implements IssuerWhiteList {
+public class ConfigurationIssuerWhiteList implements IssuerWhiteList<Issuer> {
 
     private final String issuerId;
     private final int skewSeconds;
     private final URL baseURL;
-    private String signingKey;
-    private URL jwkURL;
-    private String kid;
+    private final String signingKey;
+    private final URL jwkURL;
+    private final String kid;
 
     public ConfigurationIssuerWhiteList(String issuerId, int skewSeconds, String baseURL, String signingKey, URL jwkURL, String kid) {
         this.issuerId = issuerId;
@@ -71,6 +71,20 @@ public class ConfigurationIssuerWhiteList implements IssuerWhiteList {
         if (!this.issuerId.equals(issuerId)) {
             throw new InvalidTokenException("Token issuer not accepted");
         }
-        return new ConfiguredIssuer(this.issuerId, skewSeconds, baseURL, signingKey, jwkURL, kid);
+        return new ConfiguredIssuer(issuerId, skewSeconds, baseURL, signingKey, jwkURL, kid);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Issuer getIssuer(String issuerId, String kid) {
+        if (!this.issuerId.equals(issuerId)) {
+            throw new InvalidTokenException("Token issuer not accepted");
+        }
+        if (!this.kid.equals(kid)) {
+            throw new InvalidTokenException("Token kid not accepted");
+        }
+        return new ConfiguredIssuer(issuerId, skewSeconds, baseURL, signingKey, jwkURL, kid);
     }
 }

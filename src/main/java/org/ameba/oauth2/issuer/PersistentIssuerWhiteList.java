@@ -27,7 +27,7 @@ import java.net.URL;
  *
  * @author Heiko Scherrer
  */
-public class PersistentIssuerWhiteList implements IssuerWhiteList {
+public class PersistentIssuerWhiteList implements IssuerWhiteList<Issuer> {
 
     private final IssuerRepository repository;
 
@@ -42,6 +42,18 @@ public class PersistentIssuerWhiteList implements IssuerWhiteList {
     public Issuer getIssuer(String issuerId) {
         try {
             return repository.findByIssUrl(new URL(issuerId)).orElseThrow(() -> new InvalidTokenException("Token issuer is not known and therefor rejected"));
+        } catch (MalformedURLException e) {
+            throw new InvalidTokenException("Format of issuer not supported. The current implementation supports URL formats only");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Issuer getIssuer(String issuerId, String kid) {
+        try {
+            return repository.findByIssUrlAndKid(new URL(issuerId), kid).orElseThrow(() -> new InvalidTokenException("Token issuer is not known and therefor rejected"));
         } catch (MalformedURLException e) {
             throw new InvalidTokenException("Format of issuer not supported. The current implementation supports URL formats only");
         }

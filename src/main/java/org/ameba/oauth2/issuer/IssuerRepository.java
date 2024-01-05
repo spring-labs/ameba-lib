@@ -27,5 +27,20 @@ import java.util.Optional;
  */
 public interface IssuerRepository {
 
+    /**
+     * The URL of the issuing party.
+     *
+     * @param issUrl As a URL object
+     * @return The issuer instance
+     */
     Optional<Issuer> findByIssUrl(URL issUrl);
+
+    /**
+     * The URL of the issuing party.
+     *
+     * @param issUrl As a URL object
+     * @param kid The Key ID of the JWT header
+     * @return The issuer instance
+     */
+    Optional<Issuer> findByIssUrlAndKid(URL issUrl, String kid);
 }

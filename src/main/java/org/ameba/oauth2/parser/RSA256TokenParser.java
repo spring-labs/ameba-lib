@@ -17,6 +17,7 @@ package org.ameba.oauth2.parser;
 
 import com.auth0.jwk.Jwk;
 import com.auth0.jwk.JwkProvider;
+import com.auth0.jwk.UrlJwkProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -41,11 +42,13 @@ import static java.lang.String.format;
 public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RSA256TokenParser.class);
-    private final JwkProvider jwkProvider;
+    private JwkProvider jwkProvider;
 
     public RSA256TokenParser(JwkProvider jwkProvider) {
         this.jwkProvider = jwkProvider;
     }
+
+    public RSA256TokenParser() { }
 
     /**
      * {@inheritDoc}
@@ -71,7 +74,9 @@ public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
             if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug(format("Checking issuer with KID [%s]", issuer.getKID()));
             }
-            Jwk jwk = jwkProvider.get(issuer.getKID());
+            Jwk jwk = jwkProvider == null
+                    ? new UrlJwkProvider(issuer.getJWKURL(), 60000, 60000).get(issuer.getKID())
+                    : jwkProvider.get(issuer.getKID());
             byte[] publicKeyBytes = jwk.getPublicKey().getEncoded();
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");

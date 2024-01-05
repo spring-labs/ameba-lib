@@ -30,4 +30,14 @@ public interface IssuerWhiteList<T extends Issuer> {
      * @throws InvalidTokenException in case the Issuer can not be resolved
      */
     T getIssuer(String issuerId);
+
+    /**
+     * Resolve the Issuer by the given {@code issuerId}.
+     *
+     * @param issuerId The unique ID of the Issuer, see {@link Issuer#getIssuerId()}
+     * @param kid The key ID of the token
+     * @return The Issuer instance
+     * @throws InvalidTokenException in case the Issuer can not be resolved
+     */
+    T getIssuer(String issuerId, String kid);
 }

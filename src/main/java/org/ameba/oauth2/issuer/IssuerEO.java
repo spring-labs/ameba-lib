@@ -40,7 +40,7 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
     /** An unique name of the issuer. */
     @Column(name = "C_NAME", nullable = false, unique = true)
     private String name;
-    /** The unique ID of the issuer, this may be an URL. */
+    /** The unique ID of the issuer, this may be a URL. */
     @Column(name = "C_ISS_URL", nullable = false, unique = true, length = 512)
     private URL issUrl;
     /** The .wellknown endpoint URL where to get the JWK cert from. */
@@ -62,8 +62,7 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
     /**
      * Dear JPA...
      */
-    IssuerEO() {
-    }
+    protected IssuerEO() { }
 
     /**
      * Create an Issuer with the business key.
