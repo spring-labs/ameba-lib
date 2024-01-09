@@ -31,7 +31,7 @@ public interface TokenExtractor {
     ExtractionResult canExtract(String token);
 
     /**
-     * Extract a token from the given {@code token} String.
+     * Extract valuable information from the given {@code token} String.
      *
      * @param token The String
      * @return The result

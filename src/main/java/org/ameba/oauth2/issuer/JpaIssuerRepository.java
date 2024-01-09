@@ -18,6 +18,7 @@ package org.ameba.oauth2.issuer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -27,5 +28,7 @@ import java.util.Optional;
  */
 public interface JpaIssuerRepository extends JpaRepository<IssuerEO, Long> {
 
-    Optional<IssuerEO> findByIssUrl(URL issUrl);
+    List<IssuerEO> findByIssUrl(URL issUrl);
+
+    Optional<IssuerEO> findByIssUrlAndKid(URL issUrl, String kid);
 }

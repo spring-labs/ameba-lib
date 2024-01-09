@@ -18,6 +18,7 @@ package org.ameba.oauth2.issuer;
 import org.ameba.oauth2.Issuer;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -31,9 +32,9 @@ public interface IssuerRepository {
      * The URL of the issuing party.
      *
      * @param issUrl As a URL object
-     * @return The issuer instance
+     * @return All issuer instances, never {@literal null}
      */
-    Optional<Issuer> findByIssUrl(URL issUrl);
+    List<Issuer> findByIssUrl(URL issUrl);
 
     /**
      * The URL of the issuing party.

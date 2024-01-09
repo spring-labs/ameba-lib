@@ -15,12 +15,18 @@
  */package org.ameba.oauth2.issuer;
 
 import com.auth0.jwk.Jwk;
+import com.auth0.jwk.SigningKeyNotFoundException;
 import com.auth0.jwk.UrlJwkProvider;
 import org.ameba.exception.TechnicalRuntimeException;
 import org.ameba.oauth2.Issuer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * A JwksUrlRepository.
@@ -29,6 +35,7 @@ import java.util.Optional;
  */
 public class JwksUrlRepository implements IssuerRepository {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwksUrlRepository.class);
     private final JpaIssuerRepository jpaIssuerRepository;
 
     public JwksUrlRepository(JpaIssuerRepository jpaIssuerRepository) {
@@ -39,8 +46,23 @@ public class JwksUrlRepository implements IssuerRepository {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Issuer> findByIssUrl(URL issUrl) {
-        return jpaIssuerRepository.findByIssUrl(issUrl).map(e -> e);
+    public List<Issuer> findByIssUrl(URL issUrl) {
+        return jpaIssuerRepository.findByIssUrl(issUrl).stream().map(eo ->  new Issuer() {
+            @Override
+            public String getIssuerId() {
+                return eo.getIssuerId();
+            }
+
+            @Override
+            public long getSkewSeconds() {
+                return eo.getSkewSeconds();
+            }
+
+            @Override
+            public URL getBaseURL() {
+                return eo.getBaseURL();
+            }
+        }).collect(Collectors.toList());
     }
 
     /**
@@ -48,21 +70,44 @@ public class JwksUrlRepository implements IssuerRepository {
      */
     @Override
     public Optional<Issuer> findByIssUrlAndKid(URL issUrl, String kid) {
-        var issuerOpt = jpaIssuerRepository.findByIssUrl(issUrl);
-        if (issuerOpt.isPresent()) {
+        var issuers = jpaIssuerRepository.findByIssUrl(issUrl);
+        if (!issuers.isEmpty()) {
             Jwk jwk;
             try {
-                jwk = new UrlJwkProvider(issuerOpt.get().getJWKURL(), 60000, 60000).get(kid);
+                IssuerEO result = null;
+                jwk = new UrlJwkProvider(issuers.get(0).getJWKURL(), 60000, 60000).get(kid);
+                for (var issuer : issuers) {
+                    if (issuer.getKID().equals(jwk.getId())) {
+                        result = issuer;
+                        LOGGER.trace("Resolved Issuer with KID [{}]", result);
+                        break;
+                    }
+                }
+                if (result == null) {
+
+                    // New Kids, save it!
+                    result = saveNewIssuer(kid, issuers.get(0));
+                }
+                return Optional.of(result);
+            } catch (SigningKeyNotFoundException sknfe) {
+
+                // Kid has been removed - rolling kid
+                return Optional.of(saveNewIssuer(kid, issuers.get(0)));
             } catch (Exception e) {
                 throw new TechnicalRuntimeException(e.getMessage(), e);
             }
-            var issuer = issuerOpt.get();
-            if (!issuer.getKID().equals(jwk.getId())) {
-                // think about saving a new issuer with this kid and a new generated name
-            }
-            issuer.setKID(jwk.getId());
-            return Optional.of(issuer);
         }
+        LOGGER.warn("Token issuer is not accepted");
         return Optional.empty();
+    }
+
+    private IssuerEO saveNewIssuer(String kid, IssuerEO issuer) {
+        var newIssuer = new IssuerEO(UUID.randomUUID().toString(), issuer.getIssUrl());
+        newIssuer.setKID(kid);
+        newIssuer.setBaseURL(issuer.getBaseURL());
+        newIssuer.setJWKURL(issuer.getJWKURL());
+        newIssuer.setSkwSeconds(issuer.getSkewSeconds());
+        LOGGER.debug("Saving new Issuer entry with new KID: [{}]", newIssuer);
+        return jpaIssuerRepository.save(newIssuer);
     }
 }

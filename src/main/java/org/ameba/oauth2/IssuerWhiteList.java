@@ -15,6 +15,8 @@
  */
 package org.ameba.oauth2;
 
+import java.util.List;
+
 /**
  * A IssuerWhiteList manages and stores all allowed Issuers.
  *
@@ -27,9 +29,9 @@ public interface IssuerWhiteList<T extends Issuer> {
      *
      * @param issuerId The unique ID of the Issuer, see {@link Issuer#getIssuerId()}
      * @return The Issuer instance
-     * @throws InvalidTokenException in case the Issuer can not be resolved
+     * @throws InvalidTokenException in case the Issuer can not be resolved or is not accepted
      */
-    T getIssuer(String issuerId);
+    List<T> getIssuers(String issuerId);
 
     /**
      * Resolve the Issuer by the given {@code issuerId}.
@@ -37,7 +39,7 @@ public interface IssuerWhiteList<T extends Issuer> {
      * @param issuerId The unique ID of the Issuer, see {@link Issuer#getIssuerId()}
      * @param kid The key ID of the token
      * @return The Issuer instance
-     * @throws InvalidTokenException in case the Issuer can not be resolved
+     * @throws InvalidTokenException in case the Issuer can not be resolved or is not accepted
      */
     T getIssuer(String issuerId, String kid);
 }

@@ -22,6 +22,8 @@ import org.springframework.boot.context.properties.source.InvalidConfigurationPr
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A ConfigurationIssuerWhiteList.
@@ -67,11 +69,13 @@ public class ConfigurationIssuerWhiteList implements IssuerWhiteList<Issuer> {
      * {@inheritDoc}
      */
     @Override
-    public Issuer getIssuer(String issuerId) {
+    public List<Issuer> getIssuers(String issuerId) {
         if (!this.issuerId.equals(issuerId)) {
             throw new InvalidTokenException("Token issuer not accepted");
         }
-        return new ConfiguredIssuer(issuerId, skewSeconds, baseURL, signingKey, jwkURL, kid);
+        var result = new ArrayList<Issuer>(1);
+        result.add(new ConfiguredIssuer(issuerId, skewSeconds, baseURL, signingKey, jwkURL, kid));
+        return result;
     }
 
     /**

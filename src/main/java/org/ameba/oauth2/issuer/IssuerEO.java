@@ -24,6 +24,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.net.URL;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 import static org.ameba.oauth2.issuer.IssuerEO.TABLE_NAME;
 
@@ -41,7 +43,7 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
     @Column(name = "C_NAME", nullable = false, unique = true)
     private String name;
     /** The unique ID of the issuer, this may be a URL. */
-    @Column(name = "C_ISS_URL", nullable = false, unique = true, length = 512)
+    @Column(name = "C_ISS_URL", nullable = false, length = 512)
     private URL issUrl;
     /** The .wellknown endpoint URL where to get the JWK cert from. */
     @Column(name = "C_JWK_URL", length = 512)
@@ -206,5 +208,46 @@ public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric
      */
     public void setJWKURL(URL jwkUrl) {
         this.jwkUrl = jwkUrl;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", IssuerEO.class.getSimpleName() + "[", "]")
+                .add("name='" + name + "'")
+                .add("issUrl=" + issUrl)
+                .add("jwkUrl=" + jwkUrl)
+                .add("kid='" + kid + "'")
+                .add("signingKey='" + signingKey + "'")
+                .add("tokenLifetime=" + tokenLifetime)
+                .toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof IssuerEO)) return false;
+        if (!super.equals(o)) return false;
+        IssuerEO issuerEO = (IssuerEO) o;
+        return tokenLifetime == issuerEO.tokenLifetime && Objects.equals(name, issuerEO.name) && Objects.equals(issUrl, issuerEO.issUrl) && Objects.equals(jwkUrl, issuerEO.jwkUrl) && Objects.equals(kid, issuerEO.kid) && Objects.equals(signingKey, issuerEO.signingKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, issUrl, jwkUrl, kid, signingKey, tokenLifetime);
     }
 }

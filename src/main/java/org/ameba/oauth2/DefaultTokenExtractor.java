@@ -18,6 +18,7 @@ package org.ameba.oauth2;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
@@ -61,7 +62,7 @@ public class DefaultTokenExtractor implements TokenExtractor {
      */
     @Override
     public ExtractionResult extract(final String token) {
-        // we do not trust the signature so first parse the token an check the issuer
+        // we do not trust the signature so first parse the token and check the issuer
         String[] splitToken = token.split("\\.");
         if (splitToken.length < 2) {
             throw new InvalidTokenException("Token is not a JWT");
@@ -71,15 +72,34 @@ public class DefaultTokenExtractor implements TokenExtractor {
             jwt = Jwts.parser()
                     .setAllowedClockSkewSeconds(Issuer.DEFAULT_MAX_SKEW_SECONDS)
                     .parse(splitToken[0] + "." + splitToken[1] + ".");
+        } catch (ExpiredJwtException e) {
+            LOGGER.error(e.getMessage(), e);
+            throw new InvalidTokenException("Token has expired");
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw new InvalidTokenException("Token cannot be parsed");
         }
-        Issuer issuer = jwt.getHeader().containsKey("kid")
-                ? whiteList.getIssuer(jwt.getBody().getIssuer(), ""+jwt.getHeader().get("kid"))
-                : whiteList.getIssuer(jwt.getBody().getIssuer());
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Issuer accepted [{}]", issuer.getIssuerId());
+
+        Issuer issuer;
+        if (jwt.getHeader().containsKey("kid")) {
+
+            issuer = whiteList.getIssuer(jwt.getBody().getIssuer(), ""+jwt.getHeader().get("kid"));
+        } else {
+
+            List<Issuer> issuers = whiteList.getIssuers(jwt.getBody().getIssuer());
+            // Okay, the issuer seems to have multiple kids for the same issuer ID, so take the first one...
+            issuer = issuers.isEmpty() ? null : issuers.get(0);
+        }
+
+        if (issuer == null) {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Issuer not accepted");
+            }
+            throw new InvalidTokenException("Issuer not accepted");
+        } else {
+            if (LOGGER.isDebugEnabled()) {
+                LOGGER.debug("Issuer accepted [{}]", issuer.getIssuerId());
+            }
         }
 
         // Now check with Signature

@@ -21,6 +21,7 @@ import org.ameba.oauth2.IssuerWhiteList;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 /**
  * A PersistentIssuerWhiteList.
@@ -39,9 +40,13 @@ public class PersistentIssuerWhiteList implements IssuerWhiteList<Issuer> {
      * {@inheritDoc}
      */
     @Override
-    public Issuer getIssuer(String issuerId) {
+    public List<Issuer> getIssuers(String issuerId) {
         try {
-            return repository.findByIssUrl(new URL(issuerId)).orElseThrow(() -> new InvalidTokenException("Token issuer is not known and therefor rejected"));
+            var issuers = repository.findByIssUrl(new URL(issuerId));
+            if (issuers.isEmpty()) {
+                throw new InvalidTokenException("Token issuer is not known and therefor rejected");
+            }
+            return issuers;
         } catch (MalformedURLException e) {
             throw new InvalidTokenException("Format of issuer not supported. The current implementation supports URL formats only");
         }
@@ -53,7 +58,11 @@ public class PersistentIssuerWhiteList implements IssuerWhiteList<Issuer> {
     @Override
     public Issuer getIssuer(String issuerId, String kid) {
         try {
-            return repository.findByIssUrlAndKid(new URL(issuerId), kid).orElseThrow(() -> new InvalidTokenException("Token issuer is not known and therefor rejected"));
+            var issuer = repository.findByIssUrlAndKid(new URL(issuerId), kid);
+            if (issuer.isEmpty()) {
+                throw new InvalidTokenException("Token issuer is not known and therefor rejected");
+            }
+            return issuer.get();
         } catch (MalformedURLException e) {
             throw new InvalidTokenException("Format of issuer not supported. The current implementation supports URL formats only");
         }
