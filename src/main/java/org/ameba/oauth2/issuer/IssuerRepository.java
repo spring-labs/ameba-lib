@@ -39,8 +39,8 @@ public interface IssuerRepository {
     /**
      * The URL of the issuing party.
      *
-     * @param issUrl As a URL object
-     * @param kid The Key ID of the JWT header
+     * @param issUrl As a URL object, never {@literal null}
+     * @param kid The Key ID of the JWT header, never {@literal null}
      * @return The issuer instance
      */
     Optional<Issuer> findByIssUrlAndKid(URL issUrl, String kid);

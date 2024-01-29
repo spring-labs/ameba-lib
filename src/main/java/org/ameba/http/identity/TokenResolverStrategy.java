@@ -16,9 +16,10 @@
 package org.ameba.http.identity;
 
 import io.jsonwebtoken.Claims;
-import org.ameba.oauth2.DefaultTokenExtractor;
 import org.ameba.oauth2.ExtractionResult;
 import org.ameba.oauth2.TokenExtractor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +30,13 @@ import java.util.ServiceLoader;
 import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 
 /**
- * A HeaderAttributeResolverStrategy.
+ * A TokenResolverStrategy.
  *
  * @author Heiko Scherrer
  */
 public class TokenResolverStrategy implements IdentityResolverStrategy {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TokenResolverStrategy.class);
     private ServiceLoader<TokenExtractor> tokenExtractorServiceLoader = ServiceLoader.load(TokenExtractor.class);
     private TokenExtractor tokenExtractor;
 
@@ -53,23 +55,30 @@ public class TokenResolverStrategy implements IdentityResolverStrategy {
     public Optional<Identity> getIdentity(Map<String, List<String>> headers, Map<String, String> bodyParts, Map<String, String> queryParams) {
         List<String> identity = headers.get(HEADER_VALUE_X_IDENTITY);
         if (identity == null || identity.size() != 1) {
+            LOGGER.debug("No [{}] header set", HEADER_VALUE_X_IDENTITY);
             return Optional.empty();
         }
         ExtractionResult extract;
         try {
             extract = tokenExtractor.extract(identity.get(0));
         } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
             return Optional.empty();
         }
         Map<String, Object> map = new HashMap<>();
         ((Claims) extract.getJwt().getBody()).entrySet().iterator().forEachRemaining(a -> map.put(a.getKey(), a.getValue()));
         Object name = map.get(Claims.SUBJECT);
         if (name == null) {
+            LOGGER.warn("No subject claim found in token");
             return Optional.empty();
         }
         Integer exp = (Integer) map.get(Claims.EXPIRATION);
         if (exp == null || exp < (System.currentTimeMillis()/1000)) {
+            LOGGER.error("Token expired, claim exp = [{}]", exp);
             return Optional.empty();
+        }
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Extracted identity [{}] from token", name);
         }
         return Optional.of(new SimpleIdentity(name.toString()));
     }

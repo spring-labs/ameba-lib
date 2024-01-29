@@ -70,6 +70,9 @@ public class JwksUrlRepository implements IssuerRepository {
      */
     @Override
     public Optional<Issuer> findByIssUrlAndKid(URL issUrl, String kid) {
+        if (issUrl == null || kid == null) {
+            throw new IllegalArgumentException("Arguments cannot be null");
+        }
         var issuers = jpaIssuerRepository.findByIssUrl(issUrl);
         if (!issuers.isEmpty()) {
             Jwk jwk;
