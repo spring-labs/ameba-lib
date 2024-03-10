@@ -55,7 +55,7 @@
         <spring-security.version>5.7.11</spring-security.version> <!-- in line with boot -->
         <spring-framework.version>5.3.31</spring-framework.version> <!-- in line with boot -->
         <spring-boot-dependencies.version>2.7.18</spring-boot-dependencies.version>
-        <spring-cloud-commons.version>4.0.2</spring-cloud-commons.version> <!-- in line with spring-cloud-dependencies -->
+        <spring-cloud-commons.version>3.1.8</spring-cloud-commons.version> <!-- in line with spring-cloud-dependencies -->
         <spring-cloud-sleuth-api.version>3.1.11</spring-cloud-sleuth-api.version>
         <spring-data-bom.version>2021.2.18</spring-data-bom.version> <!-- in line with boot -->
 
