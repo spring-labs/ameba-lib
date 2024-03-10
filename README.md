@@ -1,5 +1,4 @@
 # ameba-lib
-
 [![Build status](https://github.com/spring-labs/ameba-lib/actions/workflows/master-build.yml/badge.svg)](https://github.com/spring-labs/ameba-lib/actions/workflows/master-build.yml)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Maven central](https://img.shields.io/maven-central/v/io.interface21/ameba-lib)](https://search.maven.org/search?q=a:ameba-lib)
@@ -9,9 +8,8 @@ Ameba Lib is a collection of utils, exceptions, constants and other helpers used
 in Maven `provided` scope to cut transitive dependencies.
 
 ## Usage
-
 **Notice: For releases compatible with Spring Boot 1.5.x checkout ameba-lib version 1.x. The latest release and the current development
-branch are tested against Spring Boot 2.7.12**
+branch are tested against Spring Boot 2.7.18**
 
 Add as Maven dependency
 ```
@@ -265,7 +263,6 @@ Extension Points:
  - Implement your own `JwtValidator`
 
 ## Development process
-
  Contribution welcome. The development process is kept lean, without the need to apply any IDE formatter templates. Just a few rules to
  follow:
 
@@ -284,7 +281,6 @@ Extension Points:
   - Public API methods have to be documented
 
 ### How to release
-
  A release is built from the `master` branch. At first all required feature branches need to be merged into the `master` branch. Only if
  the `master` branch builds successfully the release can be done. We follow the simple [Feature branch principle](https://de.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow) 
 
