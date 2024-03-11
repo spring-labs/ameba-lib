@@ -15,7 +15,8 @@
  */
 package org.ameba.integration.jpa;
 
-import javax.persistence.Entity;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
 
 /**
  * A TestApplicationEntity.
@@ -25,7 +26,17 @@ import javax.persistence.Entity;
  * @since 1.6
  */
 @Entity
-class TestApplicationEntity extends TestEntity {
+class TestApplicationEntity extends ApplicationEntity {
+
+    @Basic
+    private int i = 0;
+
+    public TestApplicationEntity() {
+    }
+
+    public void inc() {
+        i++;
+    }
 
     /**
      * JPA lifecycle method to set a random UUID before insertion.

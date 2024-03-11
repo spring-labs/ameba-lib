@@ -15,14 +15,13 @@
  */
 package org.ameba.http;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.ameba.LoggingCategories;
 import org.ameba.tenancy.TenantHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * A MultiTenantSessionFilter set the current tenant value ({@value org.ameba.Constants#HEADER_VALUE_X_TENANT} in the

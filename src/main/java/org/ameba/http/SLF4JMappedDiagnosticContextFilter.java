@@ -15,15 +15,14 @@
  */
 package org.ameba.http;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.ameba.Constants;
 import org.ameba.LoggingCategories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * A SLF4JMappedDiagnosticContextFilter adds the current tenant to SLF4J's Mapped Diagnostics Context.

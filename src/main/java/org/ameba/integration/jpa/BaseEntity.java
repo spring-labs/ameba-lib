@@ -15,6 +15,13 @@
  */
 package org.ameba.integration.jpa;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
 import org.ameba.integration.TypedEntity;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -22,44 +29,34 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
- * A BaseEntity is a base superclass for JPA entities that comes with a mandatory primary key field, an application assign id and an
- * optimistic locking field.
+ * A BaseEntity is a base superclass for JPA entities that comes with a mandatory primary key field, an optimistic locking field and
+ * properties for auditing purpose. The id property refers to one single generator of name {@literal generator}.
  *
  * @author Heiko Scherrer
- * @since 1.4
  */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity implements TypedEntity<Long> {
+public class BaseEntity implements TypedEntity<Long>, Serializable {
 
-    /** Primary key, assigned by the underlying database or persistence strategy, shouldn't be used on API level. */
+    /** Primary key, assigned by the database or persistence strategy, shouldn't be used nor exposed in public API. */
     @Id
     @Column(name = "C_PK")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "generator")
     private Long pk;
 
-    /** Optimistic locking field (Property name {@code version} might be used differently, hence this is named {@code ol}). */
+    /** Optimistic locking field (property name {@code version} might be used differently, hence this is named {@code ol}). */
     @Version
     @Column(name = "C_OL")
     private long ol;
 
     /** Timestamp when the database record was inserted. */
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_CREATED")
     @CreatedDate
-    private Date createDt;
+    private LocalDateTime createDt;
 
     /** Username who created the entity. */
     @Column(name = "C_CREATED_BY")
@@ -67,10 +64,9 @@ public class BaseEntity implements TypedEntity<Long> {
     private String createdBy;
 
     /** Timestamp when the database record was updated the last time. */
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_UPDATED")
     @LastModifiedDate
-    private Date lastModifiedDt;
+    private LocalDateTime lastModifiedDt;
 
     /** Username who modified the entity. */
     @Column(name = "C_UPDATED_BY")
@@ -82,7 +78,7 @@ public class BaseEntity implements TypedEntity<Long> {
     }
 
     /**
-     * Checks whether this entity is a transient one or not.
+     * Checks whether this entity is a transient instance.
      *
      * @return {@literal true} if transient, {@literal false} if detached or managed but not transient
      */
@@ -93,7 +89,7 @@ public class BaseEntity implements TypedEntity<Long> {
     /**
      * Get the primary key value.
      *
-     * @return The primary key, may be {@literal null} for transient entities.
+     * @return The primary key, might be {@literal null} for transient entities.
      */
     public Long getPk() {
         return pk;
@@ -111,13 +107,13 @@ public class BaseEntity implements TypedEntity<Long> {
     /**
      * Set the optimistic locking field.
      * <p>
-     * <strong>CAUTION: This method is meant to be called by framework code only, like JPA ORM or mapping libraries, but
-     * not from application code.</strong>
+     * <strong>CAUTION: This method is meant to be called by framework code only, like JPA ORM or mapping libraries, but not from
+     * application code.</strong>
      * </p>
      *
      * @param ol The optimistic locking field
      */
-    public void setOl(long ol) {
+    protected void setOl(long ol) {
         this.ol = ol;
     }
 
@@ -126,7 +122,7 @@ public class BaseEntity implements TypedEntity<Long> {
      *
      * @return creation date
      */
-    public Date getCreateDt() {
+    public LocalDateTime getCreateDt() {
         return createDt;
     }
 
@@ -136,7 +132,7 @@ public class BaseEntity implements TypedEntity<Long> {
      * @param createDt Creation date - not {@literal null}
      * @throws IllegalArgumentException if the given {@code createDt} is {@literal null}
      */
-    protected void setCreateDt(Date createDt) {
+    protected void setCreateDt(LocalDateTime createDt) {
         if (createDt == null) {
             throw new IllegalArgumentException("CreateDt must not be null");
         }
@@ -166,7 +162,7 @@ public class BaseEntity implements TypedEntity<Long> {
      *
      * @return last modified date
      */
-    public Date getLastModifiedDt() {
+    public LocalDateTime getLastModifiedDt() {
         return lastModifiedDt;
     }
 
@@ -176,7 +172,7 @@ public class BaseEntity implements TypedEntity<Long> {
      * @param lastModifiedDt When the entity was modified the last time - not {@literal null}
      * @throws IllegalArgumentException if the given {@code createDt} is {@literal null}
      */
-    protected void setLastModifiedDt(Date lastModifiedDt) {
+    protected void setLastModifiedDt(LocalDateTime lastModifiedDt) {
         if (lastModifiedDt == null) {
             throw new IllegalArgumentException("LastModifiedDt must not be null");
         }

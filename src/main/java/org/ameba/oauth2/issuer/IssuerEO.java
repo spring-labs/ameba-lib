@@ -15,14 +15,14 @@
  */
 package org.ameba.oauth2.issuer;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import org.ameba.integration.jpa.ApplicationEntity;
 import org.ameba.oauth2.Asymmetric;
 import org.ameba.oauth2.Issuer;
 import org.ameba.oauth2.Symmetric;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.net.URL;
 import java.util.Objects;
 import java.util.StringJoiner;

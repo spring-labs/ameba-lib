@@ -15,14 +15,14 @@
  */
 package org.ameba.http;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.ameba.Constants;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -36,7 +36,7 @@ import java.io.IOException;
  * exception. If set to {@literal false} the filter ignores the missing attribute and goes further in the {@code filterChain} without
  * calling the subclasses {@link #doBefore(HttpServletRequest, HttpServletResponse, FilterChain, String)} method</li> </ul>
  *
- * Those properties can be either set as {@code ServletContext} attributes or as {@link javax.servlet.FilterConfig} parameters whereas the
+ * Those properties can be either set as {@code ServletContext} attributes or as {@link jakarta.servlet.FilterConfig} parameters whereas the
  * latter take precedence.
  *
  * @author Heiko Scherrer

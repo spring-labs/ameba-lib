@@ -40,9 +40,7 @@ public class BaseJpaConfiguration {
       return new PrincipalProvider();
     }
 
-    @ConditionalOnClass(name = {
-            "org.springframework.data.domain.AuditorAware"
-    })
+    @ConditionalOnClass(name = {"org.springframework.data.domain.AuditorAware"})
     @ConditionalOnMissingClass("org.springframework.security.core.context.SecurityContextHolder")
     @Bean
     public org.springframework.data.domain.AuditorAware<String> identityAuditorProvider() {

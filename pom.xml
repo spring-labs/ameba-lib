@@ -27,7 +27,7 @@
         </developer>
     </developers>
     <properties>
-        <java.version>11</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -35,39 +35,40 @@
         <project.scm.id>github</project.scm.id> <!-- Used to release and tag on GitHub -->
 
         <!-- Dependency versions -->
+        <de.flapdoodle.embed.mongo.version>4.12.2</de.flapdoodle.embed.mongo.version>
         <dozer.version>6.5.2</dozer.version>
-        <el-impl.version>2.2.1-b05</el-impl.version>
-        <feign.version>10.4.0</feign.version> <!-- in line with boot -->
-        <h2.version>2.1.214</h2.version> <!-- in line with boot -->
-        <hibernate-validator.version>6.2.5.Final</hibernate-validator.version> <!-- in line with boot -->
-        <jackson.version>2.13.5</jackson.version> <!-- in line with boot -->
-        <jakarta.enterprise.cdi-api.version>2.0.2</jakarta.enterprise.cdi-api.version>
-        <javax.persistence-api.version>2.2</javax.persistence-api.version> <!-- in line with hibernate-core -->
-        <jakarta.validation-api.version>2.0.2</jakarta.validation-api.version> <!-- in line with hibernate-validator-parent -->
-        <json-path.version>2.7.0</json-path.version> <!-- in line with boot -->
-        <jjwt.version>0.9.1</jjwt.version>
-        <jwks-rsa.version>0.9.0</jwks-rsa.version>
-        <logback.version>1.2.12</logback.version> <!-- in line with boot -->
-        <querydsl.version>5.0.0</querydsl.version>
-        <servlet-api.version>4.0.1</servlet-api.version> <!-- in line with boot -->
-        <spring-rabbit.version>2.4.17</spring-rabbit.version>
-        <spring-hateoas.version>1.5.6</spring-hateoas.version> <!-- in line with boot -->
-        <spring-security.version>5.7.11</spring-security.version> <!-- in line with boot -->
-        <spring-framework.version>5.3.31</spring-framework.version> <!-- in line with boot -->
-        <spring-boot-dependencies.version>2.7.18</spring-boot-dependencies.version>
-        <spring-cloud-commons.version>3.1.8</spring-cloud-commons.version> <!-- in line with spring-cloud-dependencies -->
+        <feign.version>13.1</feign.version> <!-- in line with spring-cloud-openfeign-core -->
+        <h2.version>2.2.224</h2.version> <!-- in line with boot -->
+        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version> <!-- in line with boot -->
+        <jackson.version>2.15.4</jackson.version> <!-- in line with boot -->
+        <jakarta.enterprise.cdi-api.version>4.0.1</jakarta.enterprise.cdi-api.version>
+        <jakarta-servlet.version>6.0.0</jakarta-servlet.version> <!-- in line with boot -->
+        <jakarta.persistence-api.version>3.1.0</jakarta.persistence-api.version> <!-- in line with hibernate-core -->
+        <jakarta.validation-api.version>3.0.2</jakarta.validation-api.version> <!-- in line with hibernate-validator-parent -->
+        <json-path.version>2.9.0</json-path.version> <!-- in line with boot -->
+        <jjwt.version>0.12.5</jjwt.version>
+        <jwks-rsa.version>0.22.1</jwks-rsa.version>
+        <logback.version>1.4.14</logback.version> <!-- in line with boot -->
+        <querydsl.version>5.1.0</querydsl.version>
+        <spring-rabbit.version>3.1.2</spring-rabbit.version>
+        <spring-hateoas.version>2.2.0</spring-hateoas.version> <!-- in line with boot -->
+        <spring-security.version>6.2.2</spring-security.version> <!-- in line with boot -->
+        <spring-framework.version>6.1.4</spring-framework.version> <!-- in line with boot -->
+        <spring-boot-dependencies.version>3.2.3</spring-boot-dependencies.version>
+        <spring-cloud-commons.version>4.1.0</spring-cloud-commons.version> <!-- in line with spring-cloud-dependencies -->
         <spring-cloud-sleuth-api.version>3.1.11</spring-cloud-sleuth-api.version>
-        <spring-data-bom.version>2021.2.18</spring-data-bom.version> <!-- in line with boot -->
+        <spring-data-bom.version>2023.1.3</spring-data-bom.version> <!-- in line with boot -->
 
         <!-- Plugin versions -->
         <apt-maven-plugin.version>1.1.3</apt-maven-plugin.version>
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version> <!-- in line with boot -->
-        <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
-        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version> <!-- in line with boot -->
-        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version> <!-- in line with boot -->
-        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
-        <maven-source-plugin.version>3.2.1</maven-source-plugin.version> <!-- in line with boot -->
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version> <!-- in line with boot -->
+        <maven-gpg-plugin.version>3.2.0</maven-gpg-plugin.version>
+        <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version> <!-- in line with boot -->
+        <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version> <!-- in line with boot -->
+        <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
+        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
+        <maven-source-plugin.version>3.3.0</maven-source-plugin.version> <!-- in line with boot -->
+        <jakarta.el.version>4.0.2</jakarta.el.version>
     </properties>
 
     <profiles>
@@ -158,6 +159,7 @@
                         <groupId>com.querydsl</groupId>
                         <artifactId>querydsl-apt</artifactId>
                         <version>${querydsl.version}</version>
+                        <classifier>jakarta</classifier>
                     </dependency>
                     <dependency>
                         <groupId>com.querydsl</groupId>
@@ -215,14 +217,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -309,7 +311,7 @@
         <dependency>
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-core</artifactId>
-            <version>${feign.version}</version>
+            <scope>provided</scope>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -337,12 +339,6 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-jpamodelgen</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
             <scope>provided</scope>
@@ -351,6 +347,7 @@
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-apt</artifactId>
+            <classifier>jakarta</classifier>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -369,6 +366,7 @@
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>
+            <classifier>jakarta</classifier>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -394,8 +392,20 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.el</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -437,21 +447,15 @@
             <scope>test</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>el-impl</artifactId>
-            <scope>test</scope>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
-            <!-- JavaEE dependencies -->
+            <!-- Jakarta dependencies -->
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${servlet-api.version}</version>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>${jakarta-servlet.version}</version>
             </dependency>
             <dependency>
                 <groupId>jakarta.validation</groupId>
@@ -459,9 +463,9 @@
                 <version>${jakarta.validation-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>javax.persistence</groupId>
-                <artifactId>javax.persistence-api</artifactId>
-                <version>${javax.persistence-api.version}</version>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>${jakarta.persistence-api.version}</version>
             </dependency>
 
             <!-- Spring Framework -->
@@ -529,6 +533,16 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-commons</artifactId>
+                <version>${spring-cloud-commons.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-sleuth-api</artifactId>
+                <version>${spring-cloud-sleuth-api.version}</version>
+            </dependency>
 
             <!-- 3rd party -->
             <dependency>
@@ -565,6 +579,7 @@
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-apt</artifactId>
                 <version>${querydsl.version}</version>
+                <classifier>jakarta</classifier>
                 <exclusions>
                     <exclusion>
                         <groupId>org.javassist</groupId>
@@ -592,6 +607,12 @@
                 <groupId>com.querydsl</groupId>
                 <artifactId>querydsl-jpa</artifactId>
                 <version>${querydsl.version}</version>
+                <classifier>jakarta</classifier>
+            </dependency>
+            <dependency>
+                <groupId>de.flapdoodle.embed</groupId>
+                <artifactId>de.flapdoodle.embed.mongo</artifactId>
+                <version>${de.flapdoodle.embed.mongo.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
@@ -609,24 +630,14 @@
                 <version>${jakarta.enterprise.cdi-api.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.glassfish.web</groupId>
-                <artifactId>el-impl</artifactId>
-                <version>${el-impl.version}</version>
+                <groupId>org.glassfish</groupId>
+                <artifactId>jakarta.el</artifactId>
+                <version>${jakarta.el.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.validator</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-commons</artifactId>
-                <version>${spring-cloud-commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-sleuth-api</artifactId>
-                <version>${spring-cloud-sleuth-api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

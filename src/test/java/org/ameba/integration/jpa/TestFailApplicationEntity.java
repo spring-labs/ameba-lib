@@ -13,43 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.integration.hibernate;
+package org.ameba.integration.jpa;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.NamedQueries;
-import jakarta.persistence.NamedQuery;
 
 /**
- * A TestEntity.
+ * A TestFailApplicationEntity.
  *
  * @author Heiko Scherrer
  */
 @Entity
-@NamedQueries({@NamedQuery(name="sn", query = "select t from TestEntity t where t.schema = :sn")})
-public class TestEntity {
+class TestFailApplicationEntity extends ApplicationEntity {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id
-    private Long id;
     @Basic
-    private String schema;
+    private int i = 0;
 
-    TestEntity() {
+    public TestFailApplicationEntity() {
     }
 
-    TestEntity(String schema) {
-        this.schema = schema;
+    @Override
+    protected void onEntityPersist() {
+        super.setPersistentKey(null);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getSchema() {
-        return schema;
+    public void inc() {
+        i++;
     }
 }

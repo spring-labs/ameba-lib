@@ -15,12 +15,11 @@
  */
 package org.ameba.http.identity;
 
+import jakarta.servlet.DispatcherType;
 import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.servlet.DispatcherType;
 
 /**
  * A IdentityConfiguration is not meant to be scanned by applications, therefor it is {@link ExcludeFromScan} and not in the {@literal app}

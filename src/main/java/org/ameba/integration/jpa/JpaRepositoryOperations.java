@@ -15,12 +15,12 @@
  */
 package org.ameba.integration.jpa;
 
+import jakarta.validation.constraints.NotNull;
 import org.ameba.exception.NotFoundException;
 import org.ameba.integration.FindOperations;
 import org.ameba.integration.TypedEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
 

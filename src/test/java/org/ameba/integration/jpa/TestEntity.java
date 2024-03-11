@@ -15,8 +15,8 @@
  */
 package org.ameba.integration.jpa;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
 
 /**
  * A TestEntity.
@@ -26,7 +26,7 @@ import javax.persistence.Entity;
  * @since 1.6
  */
 @Entity
-class TestEntity extends ApplicationEntity {
+class TestEntity extends BaseEntity {
 
     @Basic
     private int i = 0;

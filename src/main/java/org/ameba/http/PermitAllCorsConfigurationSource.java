@@ -15,11 +15,10 @@
  */
 package org.ameba.http;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static java.util.Arrays.asList;
 import static org.ameba.Constants.HEADER_VALUE_X_CALLERID;

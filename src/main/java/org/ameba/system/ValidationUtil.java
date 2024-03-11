@@ -15,10 +15,11 @@
  */
 package org.ameba.system;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Path;
-import javax.validation.Validator;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Path;
+import jakarta.validation.Validator;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
