@@ -20,7 +20,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import java.util.List;
 
 /**
- * A RabbitTemplateConfigurerAdapter is using {@link MessageHeaderEnhancer} to configure the {@link RabbitTemplate}.
+ * A RabbitTemplateConfigurerAdapter is using {@link MessageHeaderEnhancer} instances to configure the {@link RabbitTemplate}.
  *
  * @author Heiko Scherrer
  */

@@ -25,7 +25,7 @@ import org.springframework.amqp.core.MessagePostProcessor;
 public interface MessagePostProcessorProvider {
 
     /**
-     * Return a {@link MessagePostProcessor} to add to the ContainerFactory in order to post-prosess incoming AMQP messages.
+     * Return a {@link MessagePostProcessor} to add to the {@code ContainerFactory} in order to post-process AMQP messages.
      *
      * @return The instance
      */
