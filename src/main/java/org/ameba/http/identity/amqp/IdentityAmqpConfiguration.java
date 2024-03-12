@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * A IdentityConfiguration is not meant to be scanned by applications, therefor it is {@link ExcludeFromScan} and not in the {@literal app}
+ * A IdentityAmqpConfiguration is not meant to be scanned by application code, therefor it is {@link ExcludeFromScan} and not in the {@literal app}
  * package. It is responsible to setup support for identity propagation.
  *
  * @author Heiko Scherrer
@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Configuration;
 public class IdentityAmqpConfiguration {
 
     @ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
-    public @Bean MessagePostProcessorProvider IdentityCFDecorator() {
+    public @Bean MessagePostProcessorProvider identityCFDecorator() {
         return new IdentityHeaderResolver();
     }
 

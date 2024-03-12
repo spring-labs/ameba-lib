@@ -18,12 +18,9 @@ package org.ameba.i18n;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 /**
- * In contrast to the {@code AbstractTranslator} an AbstractSpringTranslator is more
- * flexible in the resolution of Locales. Instead of relying on the platform default
- * Locale, this class uses Spring's {@link LocaleContextHolder} to resolve the current
- * Locale. This can be handy in a web environment.
- *
- * Requested by: https://github.com/spring-labs/ameba-lib/issues/124
+ * In contrast to the {@code AbstractTranslator} an AbstractSpringTranslator is more flexible in the resolution of Locales. Instead of
+ * relying on the platform default Locale, this class uses Spring's {@link LocaleContextHolder} to resolve the Locale from the current
+ * thread.
  *
  * @author Heiko Scherrer
  */
@@ -37,6 +34,6 @@ public abstract class AbstractSpringTranslator extends AbstractTranslator {
      */
     @Override
     public String translate(String key, Object... objects) {
-        return getMessageSource().getMessage(key, objects, LocaleContextHolder.getLocale());
+        return getMessageSource().getMessage(key,  objects == null ? new Object[0] : objects, LocaleContextHolder.getLocale());
     }
 }

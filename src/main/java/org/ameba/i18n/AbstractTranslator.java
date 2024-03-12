@@ -17,9 +17,10 @@ package org.ameba.i18n;
 
 import org.springframework.context.MessageSource;
 
+import java.util.Locale;
+
 /**
- * A AbstractTranslator expects to translate messages from a {@link MessageSource}. Subclasses may
- * provide their own {@link MessageSource}s that way.
+ * A AbstractTranslator is able to translate messages from a {@link MessageSource}. Subclasses may provide their own {@link MessageSource}s.
  *
  * @author Heiko Scherrer
  */
@@ -30,13 +31,13 @@ public abstract class AbstractTranslator implements Translator {
      */
     @Override
     public String translate(String key, Object... objects) {
-        return getMessageSource().getMessage(key, objects, null);
+        return getMessageSource().getMessage(key, objects == null ? new Object[0] : objects, Locale.getDefault());
     }
 
 	/**
-	 * Provide a {@code MessageSource} that is used to translate the message.
+	 * Provide a {@link MessageSource} that is used to translate the message.
 	 *
-	 * @return The {@code MessageSource}
+	 * @return The {@link MessageSource}
 	 */
     protected abstract MessageSource getMessageSource();
 }

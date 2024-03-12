@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * A IdentityConfiguration is not meant to be scanned by applications, therefor it is {@link ExcludeFromScan} and not in the {@literal app}
+ * A IdentityConfiguration is not meant to be scanned by application code, therefor it is {@link ExcludeFromScan} and not in the {@literal app}
  * package. It is responsible to setup support for identity propagation.
  *
  * @author Heiko Scherrer
@@ -46,7 +46,7 @@ public class IdentityConfiguration {
      * @return The registration bean instance
      */
     public @Bean FilterRegistrationBean identityFilterRegistrationBean() {
-        FilterRegistrationBean<IdentityFilter> registration = new FilterRegistrationBean<>(new IdentityFilter(strategy));
+        var registration = new FilterRegistrationBean<>(new IdentityFilter(strategy));
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         if (urlPatterns != null) {
             registration.addUrlPatterns(urlPatterns);

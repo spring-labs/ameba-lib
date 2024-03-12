@@ -22,7 +22,7 @@ import org.ameba.http.identity.IdentityContextHolder;
 import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 
 /**
- * A IdentityRequestInterceptor is a Feign interceptor to propagate the Identity.
+ * A IdentityRequestInterceptor is a Feign interceptor to propagate the {@code Identity} over Feign calls.
  *
  * @author Heiko Scherrer
  */

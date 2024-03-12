@@ -25,7 +25,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * An EnableIdentityAwareness stereotyped application expects to retrieve and work with representations of human identities.
+ * An EnableIdentityAwareness stereotyped application expects to retrieve and work with human identities.
  *
  * @author Heiko Scherrer
  */
@@ -36,7 +36,7 @@ import java.lang.annotation.Target;
 public @interface EnableIdentityAwareness {
 
     /**
-     * Turn Access Protection by Identity on or off. Default is {@literal true}.
+     * Enable Access Protection by Identity. Default is {@literal true}.
      *
      * @return Set to {@literal false}, to disable
      */

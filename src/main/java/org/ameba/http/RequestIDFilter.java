@@ -21,21 +21,26 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.ameba.Constants;
 import org.ameba.IDGenerator;
+import org.ameba.LoggingCategories;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
 /**
- * A RequestIDFilter.
+ * A RequestIDFilter is responsible to attach a unique id to every incoming request. If the request has already an id assigned it is taken
+ * over, otherwise a new id is generated (using an instance of {@link IDGenerator}) and attached to the current context.
  *
  * @author Heiko Scherrer
- * @since 1.7
  */
 public class RequestIDFilter extends OncePerRequestFilter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
     private final IDGenerator<String> generator;
 
     public RequestIDFilter(IDGenerator<String> generator) {
+        LOGGER.info("Initialized filter {}", this.getClass().getSimpleName());
         this.generator = generator;
     }
 

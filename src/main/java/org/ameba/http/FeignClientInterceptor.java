@@ -36,7 +36,7 @@ public class FeignClientInterceptor implements RequestInterceptor {
      */
     @Override
     public void apply(RequestTemplate template) {
-        TenantHolder.setCurrentTenant((d) -> template.header(Constants.HEADER_VALUE_X_TENANT, d));
-        IdentityContextHolder.setCurrentIdentity((d) ->  template.header(Constants.HEADER_VALUE_X_IDENTITY, d));
+        TenantHolder.setCurrentTenant(tenant -> template.header(Constants.HEADER_VALUE_X_TENANT, tenant));
+        IdentityContextHolder.setCurrentIdentity(tenant ->  template.header(Constants.HEADER_VALUE_X_IDENTITY, tenant));
     }
 }

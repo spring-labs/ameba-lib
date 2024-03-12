@@ -32,7 +32,7 @@ import java.sql.SQLException;
  *
  * @author Heiko Scherrer
  */
-public class DefaultMultiTenantConnectionProvider implements MultiTenantConnectionProvider {
+public class DefaultMultiTenantConnectionProvider implements MultiTenantConnectionProvider<String> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultMultiTenantConnectionProvider.class);
     SessionFactoryImplementor sessionFactory;

@@ -21,6 +21,7 @@ import org.springframework.context.ApplicationEvent;
 /**
  * Created by axbsi01 on 07.05.2015.
  */
+@Deprecated(forRemoval = true)
 public class EntityCreatedEvent<T extends AbstractBase> extends ApplicationEvent {
 
     /**

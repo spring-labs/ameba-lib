@@ -16,18 +16,16 @@
 package org.ameba.http;
 
 /**
- * A RequestHolder stores a requestID inside a thread local variable.
+ * A RequestHolder stores a requestID inside an inheritable thread local variable.
  *
  * @author Heiko Scherrer
- * @since 1.7
  */
-public class RequestIDHolder {
+public final class RequestIDHolder {
 
     private static final InheritableThreadLocal<String> holder = new InheritableThreadLocal<>();
 
     /** Private Constructor. */
-    private RequestIDHolder() {
-    }
+    private RequestIDHolder() { }
 
     /**
      * Get the current request ID as String.

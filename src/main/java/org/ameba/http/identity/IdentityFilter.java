@@ -20,6 +20,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.ameba.Constants;
+import org.ameba.LoggingCategories;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -41,9 +44,11 @@ import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
  */
 public class IdentityFilter extends OncePerRequestFilter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
     private final IdentityResolverStrategy strategy;
 
     public IdentityFilter(IdentityResolverStrategy strategy) {
+        LOGGER.info("Initialized filter {}", this.getClass().getSimpleName());
         this.strategy = strategy;
     }
 

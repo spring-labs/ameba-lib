@@ -16,22 +16,17 @@
 package org.ameba.i18n;
 
 /**
- * A Translator resolves an unique message by key, interpolates and translates into String message.
+ * A Translator resolves an unique message by key, interpolates and translates into a String message.
  *
  * @author Heiko Scherrer
- * @version 0.1
- * @since 0.3
  */
 public interface Translator {
 
     /**
-     * Resolve a message by {@literal key}, interpolate with arguments {@literal objects} and return the translated
-	 * message.
+     * Resolve a message by {@literal key}, interpolate with arguments {@literal objects} and return the translated message.
      *
-     * @param key
-     *            The error code to search the message text for
-     * @param objects
-     *            Any arguments that are passed into the message text
+     * @param key The error code to search the message text for
+     * @param objects Any arguments that are passed into the message text
      * @return The message as String
      */
     String translate(String key, Object... objects);
