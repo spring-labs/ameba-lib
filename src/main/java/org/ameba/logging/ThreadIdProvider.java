@@ -21,7 +21,7 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * A ThreadIdProvider tracks a sequence number that gets increased per created thread. This class may be used to log the an unique thread id.
+ * A ThreadIdProvider tracks a sequence number that gets increased per created thread. This class is used to log an unique id per thread.
  *
  * Logback:
  * <pre>
@@ -35,20 +35,11 @@ import java.util.concurrent.atomic.AtomicLong;
  * </pre>
  *
  * @author Heiko Scherrer
- * @since 1.7
  */
 public class ThreadIdProvider extends ClassicConverter {
 
-    private AtomicLong nextId = new AtomicLong();
-    private final ThreadLocal<String> threadId = new ThreadLocal<String>() {
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected String initialValue() {
-            return "" + nextId.incrementAndGet();
-        }
-    };
+    private final AtomicLong nextId = new AtomicLong();
+    private final ThreadLocal<String> threadId = ThreadLocal.withInitial(() -> "" + nextId.incrementAndGet());
 
     /**
      * {@inheritDoc}

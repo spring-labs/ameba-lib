@@ -15,9 +15,11 @@
  */
 package org.ameba.system;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -29,13 +31,15 @@ import java.util.Properties;
  */
 public class NestedReloadableResourceBundleMessageSource extends ReloadableResourceBundleMessageSource {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(NestedReloadableResourceBundleMessageSource.class);
     private static final String PROPERTIES_SUFFIX = ".properties";
-    private PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+    private final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
     /**
      * Create a new instance without any {@code basenames} set.
      */
     public NestedReloadableResourceBundleMessageSource() {
+        super();
     }
 
     /**
@@ -55,7 +59,7 @@ public class NestedReloadableResourceBundleMessageSource extends ReloadableResou
      */
     @Override
     protected PropertiesHolder refreshProperties(String filename, PropertiesHolder propHolder) {
-        if (filename.startsWith(PathMatchingResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX)) {
+        if (filename.startsWith(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX)) {
             return refreshClassPathProperties(filename, propHolder);
         } else {
             return super.refreshProperties(filename, propHolder);
@@ -63,18 +67,19 @@ public class NestedReloadableResourceBundleMessageSource extends ReloadableResou
     }
 
     private PropertiesHolder refreshClassPathProperties(String filename, PropertiesHolder propHolder) {
-        Properties properties = new Properties();
+        var properties = new Properties();
         long lastModified = -1;
         try {
-            Resource[] resources = resolver.getResources(filename + PROPERTIES_SUFFIX);
-            for (Resource resource : resources) {
-                String sourcePath = resource.getURI().toString().replace(PROPERTIES_SUFFIX, "");
-                PropertiesHolder holder = super.refreshProperties(sourcePath, propHolder);
+            var resources = resolver.getResources(filename + PROPERTIES_SUFFIX);
+            for (var resource : resources) {
+                var sourcePath = resource.getURI().toString().replace(PROPERTIES_SUFFIX, "");
+                var holder = super.refreshProperties(sourcePath, propHolder);
                 properties.putAll(holder.getProperties());
                 if (lastModified < resource.lastModified())
                     lastModified = resource.lastModified();
             }
-        } catch (IOException ignored) {
+        } catch (IOException ioe) {
+            LOGGER.error("Failed to refresh classpath properties", ioe);
         }
         return new PropertiesHolder(properties, lastModified);
     }

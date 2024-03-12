@@ -21,12 +21,10 @@ import java.util.function.Consumer;
  * A TenantHolder stores a tenant inside a thread local variable.
  *
  * @author Heiko Scherrer
- * @version 1.2
- * @since 1.0
  */
 public class TenantHolder {
 
-    private static final InheritableThreadLocal<String> tenantHolder = new InheritableThreadLocal<>();
+    private static final InheritableThreadLocal<String> TENANT_HOLDER = new InheritableThreadLocal<>();
 
     /**
      * Private Constructor.
@@ -39,7 +37,7 @@ public class TenantHolder {
      * @return Tenant as String
      */
     public static String getCurrentTenant() {
-        return tenantHolder.get();
+        return TENANT_HOLDER.get();
     }
 
     /**
@@ -48,7 +46,7 @@ public class TenantHolder {
      * @param tenant Tenant's id to set
      */
     public static void setCurrentTenant(String tenant) {
-        tenantHolder.set(tenant);
+        TENANT_HOLDER.set(tenant);
     }
 
     /**
@@ -57,8 +55,8 @@ public class TenantHolder {
      * @param consumer A Tenant's id consumer function
      */
     public static void setCurrentTenant(Consumer<String> consumer) {
-        if (tenantHolder.get() != null && !tenantHolder.get().isEmpty()) {
-            consumer.accept(tenantHolder.get());
+        if (TENANT_HOLDER.get() != null && !TENANT_HOLDER.get().isEmpty()) {
+            consumer.accept(TENANT_HOLDER.get());
         }
     }
 
@@ -66,6 +64,6 @@ public class TenantHolder {
      * Cleanup thread local.
      */
     public static void destroy() {
-        tenantHolder.remove();
+        TENANT_HOLDER.remove();
     }
 }

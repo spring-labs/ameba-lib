@@ -19,9 +19,8 @@ package org.ameba.tenancy;
  * A TenantValidator validates the current tenant against a set of valid tenant names.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 1.3
  */
+@Deprecated
 public interface TenantValidator {
 
     /**
