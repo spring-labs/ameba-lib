@@ -29,7 +29,6 @@ import java.lang.annotation.Target;
  * logging.
  *
  * @author Heiko Scherrer
- * @since 1.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -38,10 +37,10 @@ import java.lang.annotation.Target;
 public @interface EnableAspects {
 
     /**
-     * Switch to enable root cause propagation. Default is {@literal true}.
+     * Enable root cause propagation. Default is {@literal true}.
      * <p>
-     * Usually root cause exceptions are omitted when translating them. This switch enables to pass the root cause (and the exception stack)
-     * to the caller.
+     * Usually root cause exceptions are omitted when translating them to protect the caller from {@code NoClassDefFoundError}s. This switch
+     * enables to pass the root cause (and the exception stack) to the caller.
      *
      * @return Whether exception root causes shall be propagated and logged or not
      */

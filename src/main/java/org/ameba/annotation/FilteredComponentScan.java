@@ -29,12 +29,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A FilteredComponentScan is an extension to Spring's {@link ComponentScan ComponentScan} annotation, in that it uses a preset default
- * exclusion filter, for types annotated with {@link ExcludeFromScan ExcludeFromScan}.
+ * A FilteredComponentScan is an extension to Spring's {@link ComponentScan} annotation, in that it uses a preset default exclusion filter,
+ * for types annotated with {@link ExcludeFromScan ExcludeFromScan}.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 1.4
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

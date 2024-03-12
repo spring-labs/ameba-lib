@@ -25,6 +25,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
  * @version 1.1
  * @since 1.4
  */
+@Deprecated(forRemoval = true)
 public final class SecurityConfigurers {
 
     /**

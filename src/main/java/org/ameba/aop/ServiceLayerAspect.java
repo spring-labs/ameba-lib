@@ -29,17 +29,15 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 
-import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * A ServiceLayerAspect is spawned around all public API methods and is responsible to log method execution time and log occurring
- * exceptions around the service layer.
+ * A ServiceLayerAspect is spawned around the business service layer and is responsible to log method execution time and occurring
+ * exceptions. The order of the aspect is {@literal 15}.
  *
  * @author Heiko Scherrer
- * @since 1.2
  */
 @Aspect
 @Order(15)
@@ -61,7 +59,7 @@ public class ServiceLayerAspect {
     /**
      * Constructor with some loginfo and considering the root cause.
      *
-     * @param withRootCause Whether the root cause shall be preserved or not
+     * @param withRootCause Whether the root cause shall be preserved
      * @param exceptionTranslator An instance used to translate exceptions
      */
     public ServiceLayerAspect(boolean withRootCause, ExceptionTranslator exceptionTranslator) {
@@ -71,7 +69,7 @@ public class ServiceLayerAspect {
     }
 
     /**
-     * Around intercepted methods do some logging and exception translation.
+     * Logging and exception translation happens for intercepted methods.
      * <ul>
      *     <li>Set log level of {@link LoggingCategories#SERVICE_LAYER_ACCESS} to INFO to enable method tracing.</li>
      *     <li>Set log level of {@link LoggingCategories#SERVICE_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
@@ -93,8 +91,8 @@ public class ServiceLayerAspect {
         try {
             obj = pjp.proceed();
         } catch (Exception ex) {
-            Method method = ((MethodSignature) pjp.getSignature()).getMethod();
-            NotTransformed notTransformed = method.getAnnotation(NotTransformed.class);
+            var method = ((MethodSignature) pjp.getSignature()).getMethod();
+            var notTransformed = method.getAnnotation(NotTransformed.class);
             if (notTransformed == null) {
                 Exception e = translateException(ex);
                 if (EXC_LOGGER.isErrorEnabled() && !hasNotLogged(ex)) {

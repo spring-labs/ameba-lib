@@ -18,11 +18,17 @@ package org.ameba.aop;
 import java.util.Optional;
 
 /**
- * A ExceptionTranslator.
+ * A ExceptionTranslator is able to translate a given Exception type.
  *
  * @author Heiko Scherrer
  */
 public interface ExceptionTranslator {
 
+    /**
+     * Translates the given exception.
+     *
+     * @param ex The exception to be translated
+     * @return An optional containing the translated exception, or empty if translation is not possible
+     */
     Optional<Exception> translate(Exception ex);
 }

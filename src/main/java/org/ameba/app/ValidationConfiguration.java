@@ -28,7 +28,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * A ValidationConfiguration bootstraps the JSR-303 Validator.
  *
  * @author Heiko Scherrer
- * @since 3.0
  */
 @ConditionalOnClass(LocalValidatorFactoryBean.class)
 @Configuration
@@ -42,7 +41,7 @@ public class ValidationConfiguration {
      */
     @ConditionalOnMissingBean
     public @Bean Validator messageSourceAwareValidator(@Autowired(required = false) MessageSource messageSource) {
-        LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+        var bean = new LocalValidatorFactoryBean();
         if (messageSource != null) {
             bean.setValidationMessageSource(messageSource);
         }

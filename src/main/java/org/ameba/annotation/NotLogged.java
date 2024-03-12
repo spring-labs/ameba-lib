@@ -22,10 +22,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A NotLogged is a marker annotation for application exception types to indicate that the occurrence of the exception should not be logged.
+ * A NotLogged is a marker annotation for application exception types to not log them with the logging framework.
  *
  * @author Heiko Scherrer
- * @since 2.2
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

@@ -18,10 +18,9 @@ package org.ameba;
 import java.util.UUID;
 
 /**
- * A JdkIDGenerator using {@link UUID}.
+ * A JdkIDGenerator uses {@link java.util.UUID} to generate String ids.
  *
  * @author Heiko Scherrer
- * @since 1.7
  */
 public class JdkIDGenerator implements IDGenerator<String>{
 

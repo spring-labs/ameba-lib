@@ -19,11 +19,9 @@ import org.aspectj.lang.annotation.Pointcut;
 
 /**
  * A Pointcuts class encapsulates AOP pointcut definitions that are specific to the application architecture. Because pointcuts can not be
- * extended, they must be patched by projects by putting the same class on the projects classpath.
+ * extended, they must be patched in projects by putting the same class on the projects classpath.
  *
  * @author Heiko Scherrer
- * @version 1.2
- * @since 1.0
  */
 public class Pointcuts extends SpringPointcuts {
 

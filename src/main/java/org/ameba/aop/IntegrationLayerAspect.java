@@ -31,14 +31,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.util.StopWatch;
 
-import java.lang.reflect.Method;
 import java.util.Optional;
 
 /**
- * An IntegrationLayerAspect is used to measure time consumption of method calls in the integration layer.
+ * An IntegrationLayerAspect is used to measure time consumption of method calls around the integration layer. The order of the aspect is {@literal 10}.
  *
  * @author Heiko Scherrer
- * @since 1.2
  */
 @Aspect
 @Order(10)
@@ -67,10 +65,10 @@ public class IntegrationLayerAspect {
     }
 
     /**
-     * Around intercepted methods do some logging and exception translation.
+     * Logging and exception translation happens for intercepted methods.
      *
      * <ul>
-     *     <li> Set log level of {@link LoggingCategories#INTEGRATION_LAYER_ACCESS} to INFO to enable method tracing.</li>
+     *     <li>Set log level of {@link LoggingCategories#INTEGRATION_LAYER_ACCESS} to INFO to enable method tracing.</li>
      *     <li>Set log level of {@link LoggingCategories#INTEGRATION_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
      * </ul>
      *
@@ -89,8 +87,8 @@ public class IntegrationLayerAspect {
         try {
             return pjp.proceed();
         } catch (Exception ex) {
-            Method method = ((MethodSignature) pjp.getSignature()).getMethod();
-            NotTransformed notTransformed = method.getAnnotation(NotTransformed.class);
+            var method = ((MethodSignature) pjp.getSignature()).getMethod();
+            var notTransformed = method.getAnnotation(NotTransformed.class);
             if (notTransformed == null) {
                 throw translateException(ex);
             }
@@ -104,7 +102,9 @@ public class IntegrationLayerAspect {
     }
 
     /**
-     * Called after an exception is thrown by classes of the integration layer. <p> Set log level to ERROR to log the root cause. </p>
+     * Called after an exception is thrown by classes of the integration layer.
+     *
+     * <p> Set log level to ERROR to log the root cause. </p>
      *
      * @param ex The root exception that is thrown
      * @return Returns the exception to be thrown
