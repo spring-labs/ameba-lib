@@ -15,9 +15,9 @@
  */
 package org.springframework.context.annotation;
 
-import org.ameba.annotation.AspectsConfiguration;
 import org.ameba.annotation.EnableAspects;
-import org.ameba.http.EnableMultiTenancy;
+import org.ameba.aop.AspectsConfiguration;
+import org.ameba.integration.EnableMultiTenancy;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 

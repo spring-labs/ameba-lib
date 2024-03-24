@@ -33,6 +33,9 @@ class CallContextHeaderResolver implements MessagePostProcessorProvider {
         this.callContextProvider = callContextProvider;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public MessagePostProcessor getMessagePostProcessor() {
         return (m -> {

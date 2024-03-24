@@ -27,7 +27,6 @@ import org.springframework.context.annotation.Configuration;
  * A CallContextAmqpConfiguration enables CallContext handling and propagation.
  *
  * @author Heiko Scherrer
- * @since 3.0
  */
 @ExcludeFromScan
 @ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)

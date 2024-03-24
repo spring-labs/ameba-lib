@@ -27,15 +27,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * A CallContextWebMvcConfiguration enables CallContext handling and propagation.
  *
  * @author Heiko Scherrer
- * @since 3.0
  */
 @ExcludeFromScan
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @Configuration
 public class CallContextWebMvcConfiguration implements WebMvcConfigurer {
 
-    @Autowired
     private CallContextProvider callContextProvider;
+
+    @Autowired
+    public void setCallContextProvider(CallContextProvider callContextProvider) {
+        this.callContextProvider = callContextProvider;
+    }
 
     /**
      * {@inheritDoc}

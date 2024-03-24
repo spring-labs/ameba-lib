@@ -21,7 +21,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.TextCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,11 +66,11 @@ public class DefaultTokenExtractor implements TokenExtractor {
         if (splitToken.length < 2) {
             throw new InvalidTokenException("Token is not a JWT");
         }
-        Jwt<Header, Claims> jwt;
+        Jwt<Header, Claims> jwt =null;
         try {
-            jwt = Jwts.parser()
-                    .setAllowedClockSkewSeconds(Issuer.DEFAULT_MAX_SKEW_SECONDS)
-                    .parse(splitToken[0] + "." + splitToken[1] + ".");
+//            jwt = Jwts.parser()
+//                    .setAllowedClockSkewSeconds(Issuer.DEFAULT_MAX_SKEW_SECONDS)
+//                    .parse(splitToken[0] + "." + splitToken[1] + ".");
         } catch (ExpiredJwtException e) {
             LOGGER.error(e.getMessage(), e);
             throw new InvalidTokenException("Token has expired");

@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http;
+package org.ameba.integration;
 
 import org.ameba.integration.hibernate.TenantResolverTenancyStrategy;
-import org.ameba.integration.jpa.SeparationStrategy;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.MultiTenancySelector;
 
@@ -30,7 +29,6 @@ import java.lang.annotation.Target;
  * A EnableMultiTenancy is able to enable Spring configuration for multi-tenancy.
  *
  * @author Heiko Scherrer
- * @since 1.7
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -38,7 +36,7 @@ import java.lang.annotation.Target;
 @Import(MultiTenancySelector.class)
 public @interface EnableMultiTenancy {
 
-    public static final String DEFAULT_SCHEMA = "public";
+    String DEFAULT_SCHEMA = "public";
 
     /**
      * Turn multi-tenancy support on or off. Default is {@literal true}.
@@ -70,12 +68,12 @@ public @interface EnableMultiTenancy {
     SeparationStrategy separationStrategy() default SeparationStrategy.NONE;
 
     /**
-     * Implementation class used to resolve the current tenant from. In case of Hibernate, the class must implement
+     * Implementation class used to resolve the current tenant. In case of Hibernate, the class must implement
      * {@code CurrentTenantIdentifierResolver}.
      *
      * @return implementation class;
      */
-    Class tenantResolverStrategy() default TenantResolverTenancyStrategy.class;
+    Class<?> tenantResolverStrategy() default TenantResolverTenancyStrategy.class;
 
     /**
      * Define the name of the default database schema that is used when no tenant information is available. Default is

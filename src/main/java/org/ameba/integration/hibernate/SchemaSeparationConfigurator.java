@@ -15,18 +15,16 @@
  */
 package org.ameba.integration.hibernate;
 
-import org.hibernate.MultiTenancyStrategy;
-import org.hibernate.cfg.AvailableSettings;
+import org.hibernate.cfg.MultiTenancySettings;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 
 import java.util.Map;
 
 /**
- * A SchemaSeparationConfigurator is a Spring Boot recognized class type to customize Hibernate properties
- * programmatically at application startup (when the EntityManagerFactory and SessionFactory are bootstrapped). In fact
- * this implementation configures Hibernate to use a schema-based data separation.
- * The tenant resolution strategy may change between projects and can be defined as an attribute of the {@code EnableMultiTenancy}
- * annotation.
+ * A SchemaSeparationConfigurator is a Spring recognized class type to customize Hibernate properties programmatically at application
+ * startup (when the EntityManagerFactory and SessionFactory are bootstrapped). In fact this implementation configures Hibernate to use a
+ * schema-based data separation. The tenant resolution strategy may change between projects and can be defined as an attribute of the
+ * {@code EnableMultiTenancy} annotation.
  *
  * @author Heiko Scherrer
  */
@@ -41,8 +39,7 @@ public class SchemaSeparationConfigurator implements HibernatePropertiesCustomiz
      */
     @Override
     public void customize(Map<String, Object> hibernateProperties) {
-        hibernateProperties.put(AvailableSettings.MULTI_TENANT, MultiTenancyStrategy.SCHEMA);
-        hibernateProperties.put(AvailableSettings.MULTI_TENANT_CONNECTION_PROVIDER, DefaultMultiTenantConnectionProvider.class);
-        hibernateProperties.put(AvailableSettings.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantResolver);
+        hibernateProperties.put(MultiTenancySettings.MULTI_TENANT_CONNECTION_PROVIDER, DefaultMultiTenantConnectionProvider.class);
+        hibernateProperties.put(MultiTenancySettings.MULTI_TENANT_IDENTIFIER_RESOLVER, tenantResolver);
     }
 }

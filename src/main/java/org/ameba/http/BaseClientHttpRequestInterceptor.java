@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.app;
+package org.ameba.http;
 
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 
 /**
- * A BaseClientHttpRequestInterceptor.
+ * A BaseClientHttpRequestInterceptor can modify outgoing http requests and/or incoming responses.
  *
  * @author Heiko Scherrer
  */

@@ -15,12 +15,12 @@
  */
 package org.springframework.context.annotation;
 
-import org.ameba.http.EnableMultiTenancy;
-import org.ameba.http.MultiTenancyConfiguration;
+import org.ameba.http.multitenancy.MultiTenancyConfiguration;
+import org.ameba.integration.EnableMultiTenancy;
+import org.ameba.integration.SeparationStrategy;
 import org.ameba.integration.hibernate.DefaultMultiTenantConnectionProvider;
 import org.ameba.integration.hibernate.SchemaBasedTenancyConfiguration;
 import org.ameba.integration.hibernate.SchemaSeparationConfigurator;
-import org.ameba.integration.jpa.SeparationStrategy;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;

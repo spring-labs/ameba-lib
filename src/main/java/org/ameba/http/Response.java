@@ -31,25 +31,26 @@ import static com.jayway.jsonpath.JsonPath.read;
 
 /**
  * An instance of Response is a transfer object that is used to encapsulate a server response to the client application.
- * It contains an array of items specific to the request. Compare to the concept of SIREN.
+ * It contains an array of items specific to the request. Refer to the concept of <a href="https://github.com/kevinswiber/siren">SIREN</a>.
  *
  * @author Heiko Scherrer
- * @since 0.1
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Response<T> extends RepresentationModel implements Serializable {
+public class Response<T extends Serializable> extends RepresentationModel<Response<T>> implements Serializable {
 
     /** A text message to transfer as server response. */
     private String message = "";
-    /** A unique key to identify a particular message. Note that this key can relate to the wrapped {@literal message}, but it might not. */
+
+    /** A unique key to identify a message. */
     private String messageKey = "";
+
     /** An array ob objects that can be passed to the client to identify failure items. */
-    //@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include=JsonTypeInfo.As.PROPERTY, property="@class")
-    private T obj[];
+    private T[] obj;
+
     /** A http status code for this item. */
     private String httpStatus;
 
-    private Map<String, String> other = new HashMap<>();
+    private final Map<String, String> other = new HashMap<>();
 
     protected Response() {
     }
@@ -74,22 +75,22 @@ public class Response<T> extends RepresentationModel implements Serializable {
      *
      * @param s The String to get the mandatory fields from
      * @return The instance
-     * @throws ParseException In case the passen String didn't match
+     * @throws ParseException In case the given String didn't match
      */
-    public static Response<?> parse(String s) throws ParseException {
+    public static <T extends Serializable> Response<T> parse(String s) throws ParseException {
         if (s.contains("message") &&
                 s.contains("messageKey") &&
                 s.contains("httpStatus") &&
                 s.contains("class")) {
-            Object d = Configuration.defaultConfiguration().jsonProvider().parse(s);
+            var d = Configuration.defaultConfiguration().jsonProvider().parse(s);
             String[] obj = read(d, "$.obj");
-            Response<?> r = new Response<>(read(d, "$.message"), read(d, "$.messageKey"), read(d, "$.httpStatus"), obj);
+            var r = new Response<>(read(d, "$.message"), read(d, "$.messageKey"), read(d, "$.httpStatus"), obj);
             r.any();
         }
         throw new ParseException(String.format("String does not contain mandatory fields. [%s]", s), -1);
     }
 
-    public static <T> Builder<T> newBuilder() {
+    public static <T extends Serializable> Builder<T> newBuilder() {
         return new Builder<>();
     }
 
@@ -149,7 +150,7 @@ public class Response<T> extends RepresentationModel implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        Response response = (Response) o;
+        var response = (Response) o;
 
         if (httpStatus != null ? !httpStatus.equals(response.httpStatus) : response.httpStatus != null) return false;
         if (message != null ? !message.equals(response.message) : response.message != null) return false;
@@ -180,7 +181,7 @@ public class Response<T> extends RepresentationModel implements Serializable {
     /**
      * {@code Response} builder static inner class.
      */
-    public static final class Builder<T> {
+    public static final class Builder<T extends Serializable> {
         private String message;
         private String messageKey;
         private T[] obj;

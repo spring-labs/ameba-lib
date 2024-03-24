@@ -34,6 +34,7 @@ import java.util.Properties;
  * @version 1.0
  * @since 1.4.1
  */
+@Deprecated
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public abstract class AbstractMvcConfiguration implements WebMvcConfigurer {
 

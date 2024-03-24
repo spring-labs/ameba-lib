@@ -26,7 +26,6 @@ import org.springframework.context.annotation.Configuration;
  * A TraceableCallContextConfiguration provides a CallContextProvider suitable for traceable environments.
  *
  * @author Heiko Scherrer
- * @since 3.0
  */
 @ExcludeFromScan
 @ConditionalOnClass(name = "org.springframework.cloud.sleuth.Tracer")

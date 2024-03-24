@@ -16,7 +16,7 @@
 package org.ameba.http.ctx;
 
 import org.ameba.Constants;
-import org.ameba.app.BaseClientHttpRequestInterceptor;
+import org.ameba.http.BaseClientHttpRequestInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;

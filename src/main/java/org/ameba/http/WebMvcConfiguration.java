@@ -16,7 +16,6 @@
 package org.ameba.http;
 
 import org.ameba.annotation.ExcludeFromScan;
-import org.ameba.app.BaseClientHttpRequestInterceptor;
 import org.ameba.http.ctx.CallContextClientRequestInterceptor;
 import org.ameba.http.identity.IdentityClientRequestInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -30,7 +29,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 /**
- * A WebMvcConfiguration.
+ * A WebMvcConfiguration configures Servlet environments with the interceptors for CallContext and Identity propagation.
  *
  * @author Heiko Scherrer
  */
@@ -44,8 +43,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
      *
      * Propagate context information with the RestTemplate.
      */
-    public @Bean
-    List<BaseClientHttpRequestInterceptor> baseRestTemplateInterceptors() {
+    public @Bean List<BaseClientHttpRequestInterceptor> baseRestTemplateInterceptors() {
         return new ArrayList<>(asList(
                 new CallContextClientRequestInterceptor(),
                 new IdentityClientRequestInterceptor()

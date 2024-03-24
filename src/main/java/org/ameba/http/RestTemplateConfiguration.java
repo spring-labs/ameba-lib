@@ -15,7 +15,6 @@
  */
 package org.ameba.http;
 
-import org.ameba.app.BaseClientHttpRequestInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +24,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 /**
- * A RestTemplateConfiguration.
+ * A RestTemplateConfiguration instantiates a default {@link RestTemplate} when Spring Cloud is NOT on the classpath and registers a bean
+ * with name {@literal aLoadBalanced}.
  *
  * @author Heiko Scherrer
  */
@@ -36,7 +36,7 @@ class RestTemplateConfiguration {
     @ConditionalOnMissingBean(name = "aLoadBalanced")
     @Bean
     RestTemplate aLoadBalanced(List<BaseClientHttpRequestInterceptor> baseInterceptors) {
-        RestTemplate restTemplate = new RestTemplate();
+        var restTemplate = new RestTemplate();
         restTemplate.getInterceptors().addAll(baseInterceptors);
         return restTemplate;
     }

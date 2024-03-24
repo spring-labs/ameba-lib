@@ -15,8 +15,8 @@
  */
 package org.ameba.integration.hibernate;
 
-import org.ameba.http.EnableMultiTenancy;
-import org.ameba.integration.jpa.SeparationStrategy;
+import org.ameba.integration.EnableMultiTenancy;
+import org.ameba.integration.SeparationStrategy;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;

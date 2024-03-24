@@ -17,6 +17,7 @@ package org.ameba.http.ctx.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.ameba.http.ctx.CallContext;
 import org.ameba.http.ctx.CallContextHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ import static org.ameba.LoggingCategories.CALL_CONTEXT;
  *
  * @author Heiko Scherrer
  */
-class CallContextRequestInterceptor implements RequestInterceptor {
+public class CallContextRequestInterceptor implements RequestInterceptor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CALL_CONTEXT);
 
@@ -43,7 +44,7 @@ class CallContextRequestInterceptor implements RequestInterceptor {
         var ctx = CallContextHolder.getEncodedCallContext();
         if (ctx.isPresent()) {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Feign: CallContext to propagate is available [{}]", CallContextHolder.getOptionalCallContext().get());
+                LOGGER.debug("Feign: CallContext to propagate is available [{}]", CallContextHolder.getOptionalCallContext().orElse(new CallContext()));
             }
             template.header(HEADER_VALUE_X_CALL_CONTEXT, ctx.get());
         } else {

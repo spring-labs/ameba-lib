@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http;
+package org.ameba.oauth2;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,11 +21,12 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * A FilterStrategy encapsulates filter logic that may be used by servlet filters to
  * introduce logic into the filter chain. It is extracted into a strategy in order to be
- * used independent from the actual filter implementation. A filter may inherit from
+ * used independent of the actual filter implementation. A filter may inherit from
  * Spring Frameworks filter classes or be a plain http servlet filter.
  *
  * @author Heiko Scherrer
  */
+@Deprecated
 public interface FilterStrategy {
 
     void doFilter(HttpServletRequest request, HttpServletResponse response);

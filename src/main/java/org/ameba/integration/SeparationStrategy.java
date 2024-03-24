@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.integration.jpa;
+package org.ameba.integration;
 
 /**
  * A SeparationStrategy defines all possible data separation strategies in relation to multi-tenancy and relational

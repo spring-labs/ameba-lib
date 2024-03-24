@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http;
+package org.ameba.http.multitenancy;
 
 import jakarta.servlet.DispatcherType;
 import org.ameba.annotation.ExcludeFromScan;
@@ -22,12 +22,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * A MultiTenancyConfiguration is not meant to be scanned by applications, therefor it is {@link ExcludeFromScan} and not in the {@literal
- * app} package. It is responsible to setup support for multi-tenancy.
+ * A MultiTenancyConfiguration is not meant to be scanned by application code, therefor it is {@link ExcludeFromScan} and not in the
+ * {@literal app} package. It is responsible to setup support for multi-tenancy.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 1.7
  */
 @ExcludeFromScan
 @Configuration
@@ -45,10 +43,8 @@ public class MultiTenancyConfiguration {
      *
      * @return The registration bean instance
      */
-    public
-    @Bean
-    FilterRegistrationBean<MultiTenantSessionFilter> multiTenantSessionFilter() {
-        FilterRegistrationBean<MultiTenantSessionFilter> registration = new FilterRegistrationBean<>(new MultiTenantSessionFilter());
+    public @Bean FilterRegistrationBean<MultiTenantSessionFilter> multiTenantSessionFilter() {
+        var registration = new FilterRegistrationBean<>(new MultiTenantSessionFilter());
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         if (urlPatterns != null) {
             registration.addUrlPatterns(urlPatterns);
@@ -63,10 +59,8 @@ public class MultiTenancyConfiguration {
      *
      * @return The registration bean instance
      */
-    public
-    @Bean
-    FilterRegistrationBean<SLF4JMappedDiagnosticContextFilter> slf4JMappedDiagnosticContextFilter() {
-        FilterRegistrationBean<SLF4JMappedDiagnosticContextFilter> registration = new FilterRegistrationBean<>(new SLF4JMappedDiagnosticContextFilter());
+    public @Bean FilterRegistrationBean<SLF4JMappedDiagnosticContextFilter> slf4JMappedDiagnosticContextFilter() {
+        var registration = new FilterRegistrationBean<>(new SLF4JMappedDiagnosticContextFilter());
         registration.setDispatcherTypes(DispatcherType.REQUEST);
         if (urlPatterns != null) {
             registration.addUrlPatterns(urlPatterns);

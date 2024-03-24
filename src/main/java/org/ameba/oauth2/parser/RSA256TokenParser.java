@@ -84,7 +84,7 @@ public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
             jws = Jwts.parser()
                     .setAllowedClockSkewSeconds(issuer.getSkewSeconds())
                     .setSigningKey(pubKey)
-                    .parseClaimsJws(token);
+                    .build().parseClaimsJws(token);
             return jws;
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);

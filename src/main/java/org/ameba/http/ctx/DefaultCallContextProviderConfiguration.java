@@ -22,10 +22,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * A DefaultCallContextProviderConfiguration provides the default (fallback) CallContextProvider.
+ * A DefaultCallContextProviderConfiguration provides the default (fallback) CallContextProvider if no Sleuth is used.
  *
  * @author Heiko Scherrer
- * @since 3.0
  */
 @ExcludeFromScan
 @ConditionalOnMissingClass("org.springframework.cloud.sleuth.Tracer")
