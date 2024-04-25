@@ -18,7 +18,6 @@ package org.ameba.integration.jpa;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
-import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -39,7 +38,6 @@ public class ApplicationEntity extends BaseEntity implements Serializable {
      * database migrations.
      */
     @Column(name = ApplicationEntity.C_ID, nullable = false, unique = true)
-    @NotBlank
     private String pKey;
 
     /**
