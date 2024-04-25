@@ -16,6 +16,7 @@
 package org.ameba.http;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.RepresentationModel;
@@ -31,16 +32,20 @@ import java.time.LocalDateTime;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
 public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends RepresentationModel<T> {
 
+    public static final String DATETIME_FORMAT_ZULU = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'";
+
     /** The current version of the Value Object (VO) derived from the version of the Entity Object (EO). */
     @JsonProperty("ol")
     private Long ol;
 
     /** Timestamp when the entity has been inserted. */
     @JsonProperty("createDt")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATETIME_FORMAT_ZULU) // required
     private LocalDateTime createDt;
 
     /** Timestamp when the entity has been updated the last time. */
     @JsonProperty("lastModifiedDt")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATETIME_FORMAT_ZULU) // required
     private LocalDateTime lastModifiedDt;
 
     /**
