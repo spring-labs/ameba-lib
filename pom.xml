@@ -27,11 +27,12 @@
         </developer>
     </developers>
     <properties>
+        <additionalparam>-Xdoclint:none</additionalparam> <!-- see: http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html -->
         <java.version>21</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <additionalparam>-Xdoclint:none</additionalparam> <!-- see: http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html -->
+        <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.scm.id>github</project.scm.id> <!-- Used to release and tag on GitHub -->
 
         <!-- Dependency versions -->
