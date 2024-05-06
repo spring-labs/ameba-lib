@@ -18,6 +18,8 @@ package org.springframework.context.annotation;
 import org.ameba.http.multitenancy.MultiTenancyConfiguration;
 import org.ameba.integration.EnableMultiTenancy;
 import org.ameba.integration.SeparationStrategy;
+import org.ameba.integration.hibernate.ColumnBasedTenancyConfiguration;
+import org.ameba.integration.hibernate.ColumnSeparationConfigurator;
 import org.ameba.integration.hibernate.DefaultMultiTenantConnectionProvider;
 import org.ameba.integration.hibernate.SchemaBasedTenancyConfiguration;
 import org.ameba.integration.hibernate.SchemaSeparationConfigurator;
@@ -50,13 +52,17 @@ public class MultiTenancySelector implements ImportSelector {
                 Class<?> resolverStrategyClass = attributes.getClass("tenantResolverStrategy");
                 Constructor<?> ctor = resolverStrategyClass.getConstructor(String.class);
                 SchemaSeparationConfigurator.tenantResolver = ctor.newInstance(attributes.getString("defaultDatabaseSchema"));
+                ColumnSeparationConfigurator.tenantResolver = ctor.newInstance(attributes.getString("defaultDatabaseSchema"));
             } catch (Exception e) {
                 throw new ApplicationContextException("Cannot instantiate a TenantResolverStrategy class to support multi-tenancy, please check @EnableMutliTenancy", e);
             }
             DefaultMultiTenantConnectionProvider.defaultSchema = attributes.getString("defaultDatabaseSchema");
-            return attributes.getEnum("separationStrategy").equals(SeparationStrategy.SCHEMA) ?
-                    new String[]{MultiTenancyConfiguration.class.getName(), SchemaBasedTenancyConfiguration.class.getName()} :
-                    new String[]{MultiTenancyConfiguration.class.getName()};
+            if (attributes.getEnum("separationStrategy").equals(SeparationStrategy.SCHEMA)) {
+                return new String[]{MultiTenancyConfiguration.class.getName(), SchemaBasedTenancyConfiguration.class.getName()};
+            } else if (attributes.getEnum("separationStrategy").equals(SeparationStrategy.DISCRIMINATOR)) {
+                return new String[]{MultiTenancyConfiguration.class.getName(), ColumnBasedTenancyConfiguration.class.getName()};
+            }
+            return new String[]{MultiTenancyConfiguration.class.getName()};
         }
         return new String[]{};
     }
