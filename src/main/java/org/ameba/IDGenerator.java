@@ -21,6 +21,7 @@ import java.io.Serializable;
  * A IDGenerator is able to generate unique id of type {@code <T>}.
  *
  * @author Heiko Scherrer
+ * @param <T> any type
  */
 public interface IDGenerator <T extends Serializable> {
 

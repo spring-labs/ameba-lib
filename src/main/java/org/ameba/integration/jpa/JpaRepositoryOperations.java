@@ -30,6 +30,7 @@ import java.util.Collection;
  * @author Heiko Scherrer
  * @version 1.0
  * @since 1.5
+ * @param <T> any typed entity
  */
 public interface JpaRepositoryOperations<T extends TypedEntity<ID>, ID extends Serializable> {
 

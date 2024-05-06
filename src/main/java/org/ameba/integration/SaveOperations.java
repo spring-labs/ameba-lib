@@ -24,6 +24,7 @@ import java.io.Serializable;
  *
  * @author Heiko Scherrer
  * @since 1.6
+ * @param <T> any serializable type
  */
 public interface SaveOperations<T extends TypedEntity<ID>, ID extends Serializable> {
 

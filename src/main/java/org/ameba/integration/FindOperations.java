@@ -26,6 +26,7 @@ import java.util.Collection;
  * @author Heiko Scherrer
  * @version 1.0
  * @since 1.0
+ * @param <T> any serializable type
  */
 public interface FindOperations<T extends TypedEntity<ID>, ID extends Serializable> {
 
