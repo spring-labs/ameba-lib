@@ -12,9 +12,13 @@ import org.slf4j.MDC;
  */
 public final class TenantMdc {
 
-    private TenantMdc() {
-    }
+    private TenantMdc() {}
 
+    /**
+     * Set the {@literal tenant} into the current MDC context.
+     *
+     * @param tenant The tenant identifier
+     */
     public static void setContext(String tenant) {
         MDC.put(Constants.HEADER_VALUE_X_TENANT, tenant);
         if (RequestIDHolder.hasRequestID()) {
@@ -22,6 +26,9 @@ public final class TenantMdc {
         }
     }
 
+    /**
+     * Clear the whole MDC context.
+     */
     public static void clearContext() {
         MDC.remove(Constants.HEADER_VALUE_X_TENANT);
         MDC.remove(Constants.HEADER_VALUE_X_REQUESTID);

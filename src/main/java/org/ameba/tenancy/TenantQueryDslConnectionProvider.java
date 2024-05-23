@@ -1,5 +1,6 @@
 package org.ameba.tenancy;
 
+import org.ameba.exception.TechnicalRuntimeException;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
@@ -8,7 +9,11 @@ import java.sql.SQLException;
 import java.util.function.Supplier;
 
 /**
- * Based on {@code com.querydsl.sql.spring.SpringConnectionProvider} but also handles the tenant.
+ * A TenantQueryDslConnectionProvider is a connection supplier based on {@code com.querydsl.sql.spring.SpringConnectionProvider} that also
+ * handles the tenant.
+ *
+ * @author matjaz
+ * @author Heiko Scherrer
  */
 public class TenantQueryDslConnectionProvider implements Supplier<Connection> {
 
@@ -22,9 +27,12 @@ public class TenantQueryDslConnectionProvider implements Supplier<Connection> {
         this.dataSource = dataSource;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Connection get() {
-        Connection connection = DataSourceUtils.getConnection(dataSource);
+        var connection = DataSourceUtils.getConnection(dataSource);
         if (!DataSourceUtils.isConnectionTransactional(connection, dataSource)) {
             throw new IllegalStateException("Connection is not transactional");
         }
@@ -37,7 +45,7 @@ public class TenantQueryDslConnectionProvider implements Supplier<Connection> {
                 tenantSchemaPrefix,
                 defaultSchema);
         } catch (SQLException e) {
-            throw new RuntimeException("Failed applying tenant schema to connection", e);
+            throw new TechnicalRuntimeException("Failed applying tenant schema to connection", e);
         }
     }
 }
