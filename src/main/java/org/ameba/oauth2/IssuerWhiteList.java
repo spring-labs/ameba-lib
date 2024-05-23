@@ -21,6 +21,7 @@ import java.util.List;
  * A IssuerWhiteList manages and stores all allowed Issuers.
  *
  * @author Heiko Scherrer
+ * @param <T> any Issuer type
  */
 public interface IssuerWhiteList<T extends Issuer> {
 

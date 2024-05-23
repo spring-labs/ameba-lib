@@ -23,7 +23,7 @@ import java.io.Serializable;
  * @author Heiko Scherrer
  * @version 1.0
  * @since 1.0
- * @param <T> any serializable type
+ * @param <ID> any serializable type
  */
 public interface TypedEntity<ID extends Serializable> {
 

@@ -66,7 +66,7 @@ public class DefaultTokenExtractor implements TokenExtractor {
         if (splitToken.length < 2) {
             throw new InvalidTokenException("Token is not a JWT");
         }
-        Jwt<Header, Claims> jwt =null;
+        Jwt<Header, Claims> jwt = null;
         try {
 //            jwt = Jwts.parser()
 //                    .setAllowedClockSkewSeconds(Issuer.DEFAULT_MAX_SKEW_SECONDS)
