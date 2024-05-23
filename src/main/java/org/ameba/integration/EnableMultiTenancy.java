@@ -81,7 +81,7 @@ public @interface EnableMultiTenancy {
      *
      * @return Name of the default schema
      */
-    String defaultDatabaseSchema() default "";
+    String defaultDatabaseSchema() default DEFAULT_SCHEMA;
 
     /**
      * Prefix used to separate tenant schemas from other schemas. Default ius {@link #DEFAULT_TENANT_SCHEMA_PREFIX}.
