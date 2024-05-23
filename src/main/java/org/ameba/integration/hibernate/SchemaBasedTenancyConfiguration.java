@@ -35,7 +35,7 @@ public class SchemaBasedTenancyConfiguration {
         return new SchemaSeparationConfigurator();
     }
 
-    @Bean DefaultMultiTenantConnectionProvider DefaultMultiTenantConnectionProvider() {
-        return new DefaultMultiTenantConnectionProvider();
-    }
+    // @Bean DefaultMultiTenantConnectionProvider DefaultMultiTenantConnectionProvider() {
+    //     return new DefaultMultiTenantConnectionProvider();
+    // }
 }

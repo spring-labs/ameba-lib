@@ -2,6 +2,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 org.ameba.app.ValidationConfiguration, \
 org.ameba.amqp.AmqpConfiguration, \
+org.ameba.tenancy.amqp.TenantAmqpConfiguration, \
 org.ameba.http.ctx.DefaultCallContextProviderConfiguration, \
 org.ameba.http.ctx.sleuth.TraceableCallContextConfiguration, \
 org.ameba.http.WebMvcConfiguration, \

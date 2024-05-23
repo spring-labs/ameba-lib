@@ -18,7 +18,6 @@ package org.ameba.integration.hibernate;
 import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * A ColumnBasedTenancyConfiguration is a Spring configuration file, excluded from component scanning to bootstrap beans according to the
@@ -27,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Heiko Scherrer
  */
 @ExcludeFromScan
-@Configuration
+//@Configuration
 public class ColumnBasedTenancyConfiguration {
 
     /** Contribute Hibernate properties to use partitioning-based separation. */

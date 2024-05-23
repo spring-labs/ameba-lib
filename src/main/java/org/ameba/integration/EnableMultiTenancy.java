@@ -37,6 +37,7 @@ import java.lang.annotation.Target;
 public @interface EnableMultiTenancy {
 
     String DEFAULT_SCHEMA = "public";
+    String DEFAULT_TENANT_SCHEMA_PREFIX = "t_";
 
     /**
      * Turn multi-tenancy support on or off. Default is {@literal true}.
@@ -76,10 +77,16 @@ public @interface EnableMultiTenancy {
     Class<?> tenantResolverStrategy() default TenantResolverTenancyStrategy.class;
 
     /**
-     * Define the name of the default database schema that is used when no tenant information is available. Default is
-     * {@value DEFAULT_SCHEMA}.
+     * Define the name of the default database schema that is used when no tenant information is available.
      *
      * @return Name of the default schema
      */
-    String defaultDatabaseSchema() default DEFAULT_SCHEMA;
+    String defaultDatabaseSchema() default "";
+
+    /**
+     * Prefix used to separate tenant schemas from other schemas. Default ius {@link #DEFAULT_TENANT_SCHEMA_PREFIX}.
+     *
+     * @return The prefix for tenant schemas
+     */
+    String tenantSchemaPrefix() default DEFAULT_TENANT_SCHEMA_PREFIX;
 }

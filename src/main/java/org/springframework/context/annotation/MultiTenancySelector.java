@@ -23,6 +23,7 @@ import org.ameba.integration.hibernate.ColumnSeparationConfigurator;
 import org.ameba.integration.hibernate.DefaultMultiTenantConnectionProvider;
 import org.ameba.integration.hibernate.SchemaBasedTenancyConfiguration;
 import org.ameba.integration.hibernate.SchemaSeparationConfigurator;
+import org.ameba.tenancy.TenantQueryDslConnectionProvider;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
@@ -48,15 +49,20 @@ public class MultiTenancySelector implements ImportSelector {
             MultiTenancyConfiguration.urlPatterns = attributes.getStringArray("urlPatterns");
             MultiTenancyConfiguration.enabled = attributes.getBoolean("enabled");
             MultiTenancyConfiguration.throwIfNotPresent = attributes.getBoolean("throwIfNotPresent");
+            String defaultDatabaseSchema = attributes.getString("defaultDatabaseSchema");
+            String tenantSchemaPrefix = attributes.getString("tenantSchemaPrefix");
             try {
                 Class<?> resolverStrategyClass = attributes.getClass("tenantResolverStrategy");
                 Constructor<?> ctor = resolverStrategyClass.getConstructor(String.class);
-                SchemaSeparationConfigurator.tenantResolver = ctor.newInstance(attributes.getString("defaultDatabaseSchema"));
-                ColumnSeparationConfigurator.tenantResolver = ctor.newInstance(attributes.getString("defaultDatabaseSchema"));
+                SchemaSeparationConfigurator.tenantResolver = ctor.newInstance(defaultDatabaseSchema);
+                ColumnSeparationConfigurator.tenantResolver = ctor.newInstance(defaultDatabaseSchema);
             } catch (Exception e) {
                 throw new ApplicationContextException("Cannot instantiate a TenantResolverStrategy class to support multi-tenancy, please check @EnableMutliTenancy", e);
             }
-            DefaultMultiTenantConnectionProvider.defaultSchema = attributes.getString("defaultDatabaseSchema");
+            DefaultMultiTenantConnectionProvider.defaultSchema = defaultDatabaseSchema;
+            DefaultMultiTenantConnectionProvider.tenantSchemaPrefix = tenantSchemaPrefix;
+            TenantQueryDslConnectionProvider.defaultSchema = defaultDatabaseSchema;
+            TenantQueryDslConnectionProvider.tenantSchemaPrefix = tenantSchemaPrefix;
             if (attributes.getEnum("separationStrategy").equals(SeparationStrategy.SCHEMA)) {
                 return new String[]{MultiTenancyConfiguration.class.getName(), SchemaBasedTenancyConfiguration.class.getName()};
             } else if (attributes.getEnum("separationStrategy").equals(SeparationStrategy.DISCRIMINATOR)) {

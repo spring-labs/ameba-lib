@@ -43,11 +43,6 @@ class TransactionalServiceImpl implements TransactionalService {
     }
 
     @Override
-    public void createSchema(String schemaName) {
-        entityManager.createNativeQuery("CREATE SCHEMA "+schemaName+" AUTHORIZATION SA");
-    }
-
-    @Override
     public Optional<TestEntity> findBySchemaName(String schemaName) {
         try {
             return Optional.of(entityManager.createNamedQuery("sn", TestEntity.class).setParameter("sn", schemaName).getSingleResult());

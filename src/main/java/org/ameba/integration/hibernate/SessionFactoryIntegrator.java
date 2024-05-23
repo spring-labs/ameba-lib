@@ -44,6 +44,7 @@ public class SessionFactoryIntegrator implements Integrator {
      */
     @Override
     public void integrate(Metadata metadata, SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
+        LOGGER.info("Integrating Hibernate session factory into {}", DefaultMultiTenantConnectionProvider.class.getName());
         try {
             DefaultMultiTenantConnectionProvider service = serviceRegistry.getService(DefaultMultiTenantConnectionProvider.class);
             service.sessionFactory = sessionFactory;

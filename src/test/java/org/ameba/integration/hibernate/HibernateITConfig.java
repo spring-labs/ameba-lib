@@ -27,7 +27,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @author Heiko Scherrer
  */
 @Configuration
-@EnableMultiTenancy(separationStrategy = SeparationStrategy.SCHEMA)
+@EnableMultiTenancy(separationStrategy = SeparationStrategy.SCHEMA,
+    defaultDatabaseSchema = "PUBLIC",
+    tenantSchemaPrefix = "T_") // h2 is case-sensitive
 @EnableJpaRepositories(basePackageClasses = HibernateITConfig.class)
 @EntityScan(basePackageClasses = HibernateITConfig.class)
 public class HibernateITConfig {
