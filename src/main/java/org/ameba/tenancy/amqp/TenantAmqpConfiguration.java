@@ -7,10 +7,10 @@ import org.ameba.tenancy.TenantHolder;
 import org.ameba.tenancy.TenantMdc;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * A TenantAmqpConfiguration is a Spring configuration class that is activated with AMQP support and bootstraps beans to propagate context
@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @ExcludeFromScan
 @ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
-@Configuration
+@AutoConfiguration
 public class TenantAmqpConfiguration {
 
     public static final String TENANT_AMPQ_HEADER = "owms_tenant";

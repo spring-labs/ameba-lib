@@ -16,10 +16,10 @@
 package org.ameba.http.ctx;
 
 import org.ameba.annotation.ExcludeFromScan;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * A DefaultCallContextProviderConfiguration provides the default (fallback) CallContextProvider if no Sleuth is used.
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @ExcludeFromScan
 @ConditionalOnMissingClass("org.springframework.cloud.sleuth.Tracer")
-@Configuration
+@AutoConfiguration
 public class DefaultCallContextProviderConfiguration {
 
     @ConditionalOnMissingBean(name = "traceableCallContextProvider")

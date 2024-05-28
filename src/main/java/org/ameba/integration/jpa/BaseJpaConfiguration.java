@@ -16,10 +16,10 @@
 package org.ameba.integration.jpa;
 
 import org.ameba.annotation.ExcludeFromScan;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * A BaseJpaConfiguration bootstraps all JPA features of the ameba module.
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @ExcludeFromScan
 @ConditionalOnClass(name = "org.springframework.data.domain.AuditorAware")
-@Configuration
+@AutoConfiguration
 public class BaseJpaConfiguration {
 
     @ConditionalOnClass(name = {

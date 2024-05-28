@@ -18,9 +18,9 @@ package org.ameba.http;
 import org.ameba.annotation.ExcludeFromScan;
 import org.ameba.http.ctx.CallContextClientRequestInterceptor;
 import org.ameba.http.identity.IdentityClientRequestInterceptor;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ import static java.util.Arrays.asList;
  */
 @ExcludeFromScan
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@Configuration
+@AutoConfiguration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
     /**

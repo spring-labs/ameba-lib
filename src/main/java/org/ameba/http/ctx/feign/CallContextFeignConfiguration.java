@@ -16,9 +16,9 @@
 package org.ameba.http.ctx.feign;
 
 import org.ameba.annotation.ExcludeFromScan;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * A CallContextConfiguration enables CallContext propagation with the Feign client.
@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @ExcludeFromScan
 @ConditionalOnClass(feign.RequestInterceptor.class)
-@Configuration
+@AutoConfiguration
 public class CallContextFeignConfiguration {
 
     public @Bean CallContextRequestInterceptor callContextRequestInterceptor() {
