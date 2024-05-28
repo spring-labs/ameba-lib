@@ -35,7 +35,7 @@ public class ApplicationEntity extends BaseEntity implements Serializable {
     public static final String C_ID = "C_PID";
     /**
      * Technical persisted key field, independently of the underlying database, assigned by the application layer, remains the same over
-     * database migrations.
+     * database migrations. It is allowed to be {@literal null}, at least when it is passed for creation to the server.
      */
     @Column(name = ApplicationEntity.C_ID, nullable = false, unique = true)
     private String pKey;

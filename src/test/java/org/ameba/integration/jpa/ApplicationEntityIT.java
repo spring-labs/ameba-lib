@@ -15,7 +15,6 @@
  */
 package org.ameba.integration.jpa;
 
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -57,7 +56,8 @@ class ApplicationEntityIT {
             em.flush();
             fail("Expecting a ConstraintViolationException");
         } catch (Exception e) {
-            assertThat(e).isInstanceOf(ConstraintViolationException.class);
+            // We expect an exception when it comes to insertion (hibernate class!)
+            assertThat(e).isInstanceOf(org.hibernate.exception.ConstraintViolationException.class);
         }
     }
 
