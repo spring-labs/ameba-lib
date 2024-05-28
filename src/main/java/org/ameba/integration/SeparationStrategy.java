@@ -22,8 +22,18 @@ package org.ameba.integration;
  */
 public enum SeparationStrategy {
 
+    /**
+     * No strategy selected.
+     */
     NONE,
+    /**
+     * Uses the Hibernate 6 column-based separation strategy with the Hibernate specific {@link org.hibernate.annotations.TenantId @TenantId}
+     * annotation.
+     */
     DISCRIMINATOR,
+    /**
+     * Enables the database schema-based separation strategy.
+     */
     SCHEMA,
     //DATABASE // not supported yet
 }
