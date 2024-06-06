@@ -16,7 +16,7 @@
 package org.ameba.http.identity;
 
 import org.ameba.Constants;
-import org.ameba.app.BaseClientHttpRequestInterceptor;
+import org.ameba.http.BaseClientHttpRequestInterceptor;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpResponse;
@@ -33,7 +33,6 @@ public class IdentityClientRequestInterceptor implements BaseClientHttpRequestIn
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
         IdentityContextHolder.currentIdentity().ifPresent(s -> request.getHeaders().add(Constants.HEADER_VALUE_X_IDENTITY, s));
-        ClientHttpResponse response = execution.execute(request, body);
-        return response;
+        return execution.execute(request, body);
     }
 }

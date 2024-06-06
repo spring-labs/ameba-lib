@@ -35,12 +35,12 @@ public class HeaderAttributeResolverStrategy implements IdentityResolverStrategy
     public Optional<Identity> getIdentity(Map<String, List<String>> headers, Map<String, String> bodyParts,
                                           Map<String, String> queryParams) {
         var identity = headers.entrySet().stream()
-                .filter(e -> e.getKey().toLowerCase().equals(HEADER_VALUE_X_IDENTITY.toLowerCase()))
+                .filter(e -> e.getKey().equalsIgnoreCase(HEADER_VALUE_X_IDENTITY))
                 .findFirst()
                 .map(Map.Entry::getValue);
-        if (identity.isEmpty() || identity.get().size() == 0) {
+        if (identity.isEmpty() || identity.get().isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(new SimpleIdentity(identity.get().get(0)));
+        return Optional.of(new SimpleIdentity(identity.get().getFirst()));
     }
 }

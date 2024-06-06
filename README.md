@@ -18,12 +18,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>3.1</version>
+                <version>4.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>3.1</version>
+                <version>4.0-SNAPSHOT</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>
@@ -252,7 +252,7 @@ Basically Ameba OAuth2 Support works as the follows;
  
  - The filter strategy uses Extractors and Validators to extract tokens from the incoming request and to validate them
  - The `BearerTokenExtractor` extracts a Bearer token from the Authorization header
- - The `DefaultTokenExtractor` uses the unsigned part of the JWT and validates the token issuer against an `IssuerWhiteList` first, afterwards it
+ - The `DefaultTokenExtractor` uses the unsigned part of the JWT and validates the token issuer against an `IssuerWhiteList` first, afterward it
  uses one of the `TokenParsers` to extract and parse the token under consideration of the token signature
  - The `TenantValidator` should be used when a Tenant identifier exists and the Tenant is configured to work with the Token issuer. 
 

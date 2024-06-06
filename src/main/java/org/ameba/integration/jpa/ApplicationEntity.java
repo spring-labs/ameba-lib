@@ -15,9 +15,11 @@
  */
 package org.ameba.integration.jpa;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
+
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -28,13 +30,12 @@ import java.util.UUID;
  * @author Heiko Scherrer
  */
 @MappedSuperclass
-public class ApplicationEntity extends BaseEntity {
+public class ApplicationEntity extends BaseEntity implements Serializable {
 
     public static final String C_ID = "C_PID";
     /**
-     * Technical or persisted key field, independently from the underlying database, assigned from application layer, remains the same over
-     * database migrations. A unique constraint or limitation to not-null is explicitly not defined here, because it is a matter of
-     * subclasses to defines those, if required.
+     * Technical persisted key field, independently of the underlying database, assigned by the application layer, remains the same over
+     * database migrations. It is allowed to be {@literal null}, at least when it is passed for creation to the server.
      */
     @Column(name = ApplicationEntity.C_ID, nullable = false, unique = true)
     private String pKey;
@@ -49,7 +50,7 @@ public class ApplicationEntity extends BaseEntity {
     }
 
     /**
-     * Check whether the entity has a persistent key set or not.
+     * Check whether the persistent key is set.
      *
      * @return {@literal true} if the persistent key is set, otherwise {@literal false}
      */
@@ -75,7 +76,19 @@ public class ApplicationEntity extends BaseEntity {
         onEntityPersist();
     }
 
-    protected void onEntityPersist() {}
+    /**
+     * This method is called during the JPA entity persist operation {@link ApplicationEntity#onPersist()}.
+     * It is intended to be overridden by subclasses of {@link ApplicationEntity} to implement
+     * custom logic to be executed when the entity is persisted.
+     *
+     * Note that the method is marked as protected, which means that it is only accessible within
+     * the class and subclasses. The default implementation of this method does nothing.
+     *
+     * @see ApplicationEntity#onPersist()
+     */
+    protected void onEntityPersist() {
+        // Explicitly kept empty to be overridden by subclasses
+    }
 
     /**
      * {@inheritDoc}
@@ -86,7 +99,7 @@ public class ApplicationEntity extends BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ApplicationEntity that = (ApplicationEntity) o;
+        var that = (ApplicationEntity) o;
         return Objects.equals(pKey, that.pKey);
     }
 

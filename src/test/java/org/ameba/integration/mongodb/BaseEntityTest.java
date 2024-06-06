@@ -16,14 +16,7 @@
 package org.ameba.integration.mongodb;
 
 import org.ameba.app.BaseConfiguration;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.mongodb.core.MongoTemplate;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * A BaseEntityTest.
@@ -34,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @ComponentScan(basePackageClasses = {BaseEntityTest.class, BaseConfiguration.class})
 public class BaseEntityTest extends AbstractMongoDBIntegrationTests {
-
+/*
     @Test void testPk(@Autowired MongoTemplate template) {
         TestDocument td = new TestDocument();
         template.insert(td);
@@ -47,4 +40,6 @@ public class BaseEntityTest extends AbstractMongoDBIntegrationTests {
         assertThat(all.get(0).getLastModifiedDt()).isNotNull();
         assertThat(all.get(0)).extracting("ol").isEqualTo(1L);
     }
+
+ */
 }

@@ -16,7 +16,6 @@
 package org.ameba.integration.mongodb;
 
 import com.mongodb.BasicDBObject;
-import de.flapdoodle.embed.mongo.MongodExecutable;
 import org.ameba.app.BaseConfiguration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +46,6 @@ public abstract class AbstractMongoDBIntegrationTests {
 
     static final String HOST = "localhost";
     private static final int PORT = 27017;
-    private static MongodExecutable mongodExecutable;
     static final String DATABASE = "database";
     @Autowired
     MongoTemplate template;

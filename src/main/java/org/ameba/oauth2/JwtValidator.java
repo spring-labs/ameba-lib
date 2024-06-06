@@ -16,8 +16,7 @@
 package org.ameba.oauth2;
 
 import io.jsonwebtoken.Jwt;
-
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * A JwtValidator validates JWT.

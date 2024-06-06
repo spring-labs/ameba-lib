@@ -25,7 +25,6 @@ import java.lang.annotation.Target;
  * A NotTransformed is a marker annotation applicable on methods to avoid exception translation.
  *
  * @author Heiko Scherrer
- * @since 2.5
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

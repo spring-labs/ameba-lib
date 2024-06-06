@@ -26,7 +26,7 @@ import org.springframework.http.client.ClientHttpResponse;
 import java.io.IOException;
 
 /**
- * A MvcClientInterceptor intercepts outgoing client requests in MVC contexts.
+ * A MvcClientInterceptor intercepts outgoing client requests in a MVC context with the information of tenant and identity.
  *
  * @author Heiko Scherrer
  */
@@ -40,9 +40,9 @@ public class MvcClientInterceptor implements ClientHttpRequestInterceptor {
      */
     @Override
     public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
-        ClientHttpResponse response = execution.execute(request, body);
-        TenantHolder.setCurrentTenant((d) -> response.getHeaders().add(Constants.HEADER_VALUE_X_TENANT, d));
-        IdentityContextHolder.setCurrentIdentity((d) -> response.getHeaders().add(Constants.HEADER_VALUE_X_IDENTITY, d));
+        var response = execution.execute(request, body);
+        TenantHolder.setCurrentTenant(tenant -> response.getHeaders().add(Constants.HEADER_VALUE_X_TENANT, tenant));
+        IdentityContextHolder.setCurrentIdentity(tenant -> response.getHeaders().add(Constants.HEADER_VALUE_X_IDENTITY, tenant));
         return response;
     }
 }

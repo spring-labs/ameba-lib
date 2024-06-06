@@ -21,8 +21,6 @@ import java.util.List;
  * A BeanMapper is used to map Java classes (e.g. JavaBeans) between different domain models.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 0.7
  */
 public interface BeanMapper {
 

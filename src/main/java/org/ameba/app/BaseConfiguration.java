@@ -21,8 +21,7 @@ import org.springframework.context.annotation.Configuration;
  * A BaseConfiguration bootstraps all sliced features of the ameba module.
  *
  * @author Heiko Scherrer
- * @version 1.2
- * @since 1.0
  */
+@Deprecated(forRemoval = true)
 @Configuration
 public class BaseConfiguration { }

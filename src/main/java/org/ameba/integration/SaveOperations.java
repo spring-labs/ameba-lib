@@ -15,7 +15,8 @@
  */
 package org.ameba.integration;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -23,6 +24,8 @@ import java.io.Serializable;
  *
  * @author Heiko Scherrer
  * @since 1.6
+ * @param <ID> any serializable type
+ * @param <T> any TypedEntity type
  */
 public interface SaveOperations<T extends TypedEntity<ID>, ID extends Serializable> {
 

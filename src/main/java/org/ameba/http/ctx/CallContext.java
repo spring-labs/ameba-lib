@@ -16,7 +16,6 @@
 package org.ameba.http.ctx;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -97,7 +96,7 @@ public class CallContext implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CallContext)) return false;
-        CallContext that = (CallContext) o;
+        var that = (CallContext) o;
         return Objects.equals(caller, that.caller) && Objects.equals(traceId, that.traceId) && Objects.equals(details, that.details);
     }
 

@@ -17,6 +17,7 @@ package org.ameba.http;
 
 import io.micrometer.core.annotation.Timed;
 import org.ameba.annotation.Measured;
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.annotation.Documented;
@@ -37,4 +38,13 @@ import java.lang.annotation.Target;
 @Timed
 @RestController
 public @interface MeasuredRestController {
+
+    /**
+     * The value may indicate a suggestion for a logical component name,
+     * to be turned into a Spring bean in case of an autodetected component.
+     * @return the suggested component name, if any (or empty String otherwise)
+     * @since 4.0.1
+     */
+    @AliasFor(annotation = RestController.class)
+    String value() default "";
 }

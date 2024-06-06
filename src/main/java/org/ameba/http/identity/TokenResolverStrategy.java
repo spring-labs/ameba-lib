@@ -37,14 +37,12 @@ import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 public class TokenResolverStrategy implements IdentityResolverStrategy {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TokenResolverStrategy.class);
-    private ServiceLoader<TokenExtractor> tokenExtractorServiceLoader = ServiceLoader.load(TokenExtractor.class);
     private TokenExtractor tokenExtractor;
 
     public TokenResolverStrategy() {
+        var tokenExtractorServiceLoader = ServiceLoader.load(TokenExtractor.class);
         if (tokenExtractorServiceLoader.iterator().hasNext()) {
             this.tokenExtractor = tokenExtractorServiceLoader.iterator().next();
-        } else {
-            //this.tokenExtractor = new DefaultTokenExtractor();
         }
     }
 
@@ -53,27 +51,27 @@ public class TokenResolverStrategy implements IdentityResolverStrategy {
      */
     @Override
     public Optional<Identity> getIdentity(Map<String, List<String>> headers, Map<String, String> bodyParts, Map<String, String> queryParams) {
-        List<String> identity = headers.get(HEADER_VALUE_X_IDENTITY);
+        var identity = headers.get(HEADER_VALUE_X_IDENTITY);
         if (identity == null || identity.size() != 1) {
             LOGGER.debug("No [{}] header set", HEADER_VALUE_X_IDENTITY);
             return Optional.empty();
         }
         ExtractionResult extract;
         try {
-            extract = tokenExtractor.extract(identity.get(0));
+            extract = tokenExtractor.extract(identity.getFirst());
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             return Optional.empty();
         }
-        Map<String, Object> map = new HashMap<>();
-        ((Claims) extract.getJwt().getBody()).entrySet().iterator().forEachRemaining(a -> map.put(a.getKey(), a.getValue()));
-        Object name = map.get(Claims.SUBJECT);
+        var map = new HashMap<String, Object>();
+        ((Claims) extract.getJwt().getPayload()).entrySet().iterator().forEachRemaining(a -> map.put(a.getKey(), a.getValue()));
+        var name = map.get(Claims.SUBJECT);
         if (name == null) {
             LOGGER.warn("No subject claim found in token");
             return Optional.empty();
         }
-        Integer exp = (Integer) map.get(Claims.EXPIRATION);
-        if (exp == null || exp < (System.currentTimeMillis()/1000)) {
+        var exp = (Integer) map.get(Claims.EXPIRATION);
+        if (exp == null || exp < (System.currentTimeMillis() / 1000)) {
             LOGGER.error("Token expired, claim exp = [{}]", exp);
             return Optional.empty();
         }

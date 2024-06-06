@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
- * A IdentityContextHolder stores keeps the current user's identity for the current thread context.
+ * A IdentityContextHolder stores the current user's identity for the current thread context.
  *
  * @author Heiko Scherrer
  */

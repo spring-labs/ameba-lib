@@ -18,16 +18,16 @@ package org.ameba.amqp;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 /**
- * A MessageHeaderEnhancer enhances the headers of a {@link RabbitTemplate}.
+ * A MessageHeaderEnhancer enhances the headers of an AMQP message.
  *
  * @author Heiko Scherrer
  */
 public interface MessageHeaderEnhancer {
 
     /**
-     * Enhance the headers of the given {@link RabbitTemplate}.
+     * Enhance the headers of an AMQP message.
      *
-     * @param rabbitTemplate The instance to enhance
+     * @param rabbitTemplate The rabbitTemplate to add a {@code MessagePostProcessor} to
      */
     void enhance(RabbitTemplate rabbitTemplate);
 }

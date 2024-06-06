@@ -26,7 +26,7 @@ import org.springframework.cloud.sleuth.Tracer;
  */
 class TraceableCallContextProvider implements CallContextProvider {
 
-    private final transient Tracer tracer;
+    private final Tracer tracer;
 
     public TraceableCallContextProvider(Tracer tracer) {
         this.tracer = tracer;

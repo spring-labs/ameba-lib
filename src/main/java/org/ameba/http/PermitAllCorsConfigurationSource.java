@@ -15,11 +15,10 @@
  */
 package org.ameba.http;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static java.util.Arrays.asList;
 import static org.ameba.Constants.HEADER_VALUE_X_CALLERID;
@@ -36,11 +35,10 @@ import static org.springframework.http.HttpHeaders.LOCATION;
  * A PermitAllCorsConfigurationSource pre-configures and returns an {@link CorsConfiguration CorsConfiguration} instance to
  * allow all types of requests from any arbitrary origin domain.
  *
- * <b>This class may not be used in production systems and is foreseen only to be configured in development, test or CI
- * environments.</b>
+ * <b>This class may not be used in production systems and is foreseen only to be configured in development, test or CI environments.</b>
  *
- * The combination of Spring's {@link org.springframework.web.filter.CorsFilter CorsFilter} and this configuration class, replaces
- * the need for the widely used {@code CorsDecorator}.
+ * The combination of Spring's {@link org.springframework.web.filter.CorsFilter CorsFilter} and this configuration class, replaces the need
+ * for the widely used {@code CorsDecorator}.
  *
  * To do so, simply define a Spring bean that returns the configured {@link org.springframework.web.filter.CorsFilter CorsFilter}.
  *
@@ -55,8 +53,6 @@ import static org.springframework.http.HttpHeaders.LOCATION;
  * </pre>
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 1.5
  */
 public class PermitAllCorsConfigurationSource implements CorsConfigurationSource {
 
@@ -67,7 +63,7 @@ public class PermitAllCorsConfigurationSource implements CorsConfigurationSource
      */
     @Override
     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        var corsConfiguration = new CorsConfiguration();
         corsConfiguration.addAllowedOrigin("*");
         corsConfiguration.setAllowedMethods(asList(HttpMethod.GET.name(), HttpMethod.POST.name(), HttpMethod.PUT.name(),
                 HttpMethod.PATCH.name(), HttpMethod.DELETE.name(), HttpMethod.OPTIONS.name()));

@@ -31,11 +31,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A TxService is a stereotype annotation to define transactional Spring managed services.
+ * A TxService is a stereotype annotation to define a transactional Spring managed service.
  *
  * @author Heiko Scherrer
- * @version 1.1
- * @since 1.0
  */
 @Validated
 @Transactional

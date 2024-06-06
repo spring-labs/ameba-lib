@@ -15,12 +15,12 @@
  */
 package org.ameba.integration.jpa;
 
+import jakarta.validation.constraints.NotNull;
 import org.ameba.exception.NotFoundException;
 import org.ameba.integration.FindOperations;
 import org.ameba.integration.TypedEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -30,6 +30,8 @@ import java.util.Collection;
  * @author Heiko Scherrer
  * @version 1.0
  * @since 1.5
+ * @param <ID> any serializable type
+ * @param <T> any TypedEntity type
  */
 public interface JpaRepositoryOperations<T extends TypedEntity<ID>, ID extends Serializable> {
 
@@ -43,7 +45,8 @@ public interface JpaRepositoryOperations<T extends TypedEntity<ID>, ID extends S
     /**
      * Adapter to {@link FindOperations FindOperations}.
      *
-     * @param <T> Any type of {@link TypedEntity}
+     * @param <ID> any serializable type
+     * @param <T> any TypedEntity type
      */
     interface Find<T extends TypedEntity<ID>, ID extends Serializable> extends JpaRepositoryOperations<T, ID>, FindOperations<T, ID> {
 

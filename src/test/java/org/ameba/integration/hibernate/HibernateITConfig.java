@@ -15,8 +15,8 @@
  */
 package org.ameba.integration.hibernate;
 
-import org.ameba.http.EnableMultiTenancy;
-import org.ameba.integration.jpa.SeparationStrategy;
+import org.ameba.integration.EnableMultiTenancy;
+import org.ameba.integration.SeparationStrategy;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -27,7 +27,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @author Heiko Scherrer
  */
 @Configuration
-@EnableMultiTenancy(separationStrategy = SeparationStrategy.SCHEMA)
+@EnableMultiTenancy(separationStrategy = SeparationStrategy.SCHEMA,
+    defaultDatabaseSchema = "PUBLIC",
+    tenantSchemaPrefix = "T_") // h2 is case-sensitive
 @EnableJpaRepositories(basePackageClasses = HibernateITConfig.class)
 @EntityScan(basePackageClasses = HibernateITConfig.class)
 public class HibernateITConfig {

@@ -15,16 +15,29 @@
  */
 package org.ameba.integration.jpa;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Entity;
+
 /**
- * A SeparationStrategy defines all possible data separation strategies in relation to multi-tenancy and relational
- * databases.
+ * A TestFailApplicationEntity.
  *
  * @author Heiko Scherrer
  */
-public enum SeparationStrategy {
+@Entity
+class TestFailApplicationEntity extends ApplicationEntity {
 
-    NONE,
-    //DISCRIMINATOR, // not supported yet
-    SCHEMA,
-    //DATABASE // not supported yet
+    @Basic
+    private int i = 0;
+
+    public TestFailApplicationEntity() {
+    }
+
+    @Override
+    protected void onEntityPersist() {
+        super.setPersistentKey(null);
+    }
+
+    public void inc() {
+        i++;
+    }
 }

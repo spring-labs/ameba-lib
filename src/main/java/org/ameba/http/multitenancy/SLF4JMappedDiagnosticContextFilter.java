@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http;
+package org.ameba.http.multitenancy;
 
-import org.ameba.Constants;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.ameba.LoggingCategories;
+import org.ameba.tenancy.TenantMdc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
-
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * A SLF4JMappedDiagnosticContextFilter adds the current tenant to SLF4J's Mapped Diagnostics Context.
@@ -45,10 +43,7 @@ public class SLF4JMappedDiagnosticContextFilter extends AbstractTenantAwareFilte
      */
     @Override
     protected void doBefore(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
-        MDC.put(Constants.HEADER_VALUE_X_TENANT, tenant);
-        if (RequestIDHolder.hasRequestID()) {
-            MDC.put(Constants.HEADER_VALUE_X_REQUESTID, RequestIDHolder.getRequestID());
-        }
+        TenantMdc.setContext(tenant);
     }
 
     /**
@@ -56,6 +51,6 @@ public class SLF4JMappedDiagnosticContextFilter extends AbstractTenantAwareFilte
      */
     @Override
     protected void doAfter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
-        MDC.clear();
+        TenantMdc.clearContext();
     }
 }

@@ -18,10 +18,10 @@ package org.ameba;
 import java.io.Serializable;
 
 /**
- * A IDGenerator.
+ * A IDGenerator is able to generate unique id of type {@code <T>}.
  *
  * @author Heiko Scherrer
- * @since 1.7
+ * @param <T> any type
  */
 public interface IDGenerator <T extends Serializable> {
 

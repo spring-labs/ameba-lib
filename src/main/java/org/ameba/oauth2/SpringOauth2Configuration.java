@@ -17,7 +17,6 @@ package org.ameba.oauth2;
 
 import com.auth0.jwk.JwkProvider;
 import org.ameba.annotation.ExcludeFromScan;
-import org.ameba.http.FilterStrategy;
 import org.ameba.oauth2.parser.RSA256TokenParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

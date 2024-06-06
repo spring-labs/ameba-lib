@@ -20,12 +20,16 @@ import org.ameba.http.identity.IdentityContextHolder;
 import org.springframework.amqp.core.MessagePostProcessor;
 
 /**
- * A IdentityCFDecorator.
+ * A IdentityHeaderResolver resolves the {@code Identity} from the AMQP message header ({@code owms_identity}) and stores it in the current
+ * thread context.
  *
  * @author Heiko Scherrer
  */
 class IdentityHeaderResolver implements MessagePostProcessorProvider {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public MessagePostProcessor getMessagePostProcessor() {
         return (m -> {

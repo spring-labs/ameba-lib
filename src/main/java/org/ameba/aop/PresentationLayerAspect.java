@@ -26,10 +26,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 
 /**
- * A PresentationLayerAspect.
+ * A PresentationLayerAspect defines the intercepting code around the presentation layer, basically around Spring MVC controllers. The
+ * order of the aspect is {@literal 20}.
  *
  * @author Heiko Scherrer
- * @since 1.2
  */
 @Aspect
 @Order(20)
@@ -46,7 +46,7 @@ public class PresentationLayerAspect {
     }
 
     /**
-     * Around intercepted methods do some logging and exception translation.
+     * Logging and exception translation happens for intercepted methods.
      * <ul>
      *     <li>Set log level of {@link LoggingCategories#PRESENTATION_LAYER_EXCEPTION} to ERROR to enable exception logging.</li>
      * </ul>
@@ -60,9 +60,9 @@ public class PresentationLayerAspect {
         try {
             return pjp.proceed();
         } catch (Exception ex) {
-            if (ex instanceof BusinessRuntimeException) {
+            if (ex instanceof BusinessRuntimeException bre) {
                 if (EXC_LOGGER.isErrorEnabled() && ex.getClass().getAnnotation(NotLogged.class) != null) {
-                    EXC_LOGGER.error(ex.getMessage(), ex, ((BusinessRuntimeException)ex).getData());
+                    EXC_LOGGER.error(ex.getMessage(), ex, bre.getData());
                 }
             } else {
                 if (EXC_LOGGER.isErrorEnabled() && ex.getClass().getAnnotation(NotLogged.class) != null) {

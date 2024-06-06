@@ -16,44 +16,58 @@
 package org.ameba.integration.jpa;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.fail;
 
 /**
  * A ApplicationEntityTest.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 1.0
  */
-@ExtendWith(SpringExtension.class)
 @DataJpaTest(showSql = false)
 @ContextConfiguration(classes = JPAITConfig.class)
 @ComponentScan(basePackageClasses = BaseEntityTest.class)
-class ApplicationEntityTest {
+class ApplicationEntityIT {
 
     @Autowired
     private TestEntityManager em;
 
-    @Test void testID() throws Exception {
-        TestEntity te = new TestEntity();
-        assertThat(te.getPersistentKey()).isNull();
-        te = em.persist(te);
-        assertThat(te.getPersistentKey()).isNotNull();
+    @Test void shall_set_persistentKey() {
+        var testee = new TestApplicationEntity();
+        assertThat(testee.getPersistentKey()).isNull();
+
+        testee = em.persist(testee);
+
+        assertThat(testee.hasPersistentKey()).isTrue();
+        assertThat(testee.getPersistentKey()).isNotNull();
     }
 
-    @Test void testNonUnique() throws Exception {
-        TestEntity te1 = new TestApplicationEntity();
-        TestEntity te2 = new TestApplicationEntity();
-        te1 = em.persist(te1);
-        te2 = em.persist(te2);
-        assertThat(te1.getPersistentKey()).isEqualTo(te2.getPersistentKey());
+    @Test void shall_fail_without_persistentKey() {
+        var testee = new TestFailApplicationEntity();
+        assertThat(testee.getPersistentKey()).isNull();
+        try {
+            em.persist(testee);
+            em.flush();
+            fail("Expecting a ConstraintViolationException");
+        } catch (Exception e) {
+            // We expect an exception when it comes to insertion (hibernate class!)
+            assertThat(e).isInstanceOf(org.hibernate.exception.ConstraintViolationException.class);
+        }
+    }
+
+    @Test void shall_create_unique_pKey() {
+        var testee1 = new TestApplicationEntity();
+        var testee2 = new TestApplicationEntity();
+
+        testee1 = em.persist(testee1);
+        testee2 = em.persist(testee2);
+
+        assertThat(testee1.getPersistentKey()).isEqualTo(testee2.getPersistentKey());
     }
 }

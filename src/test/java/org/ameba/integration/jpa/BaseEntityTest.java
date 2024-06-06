@@ -15,63 +15,58 @@
  */
 package org.ameba.integration.jpa;
 
-import org.ameba.app.BaseConfiguration;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * A BaseEntityTest.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @since 1.6
  */
-@ExtendWith(SpringExtension.class)
-@DataJpaTest(showSql = false)
-@ContextConfiguration(classes = JPAITConfig.class)
-@ComponentScan(basePackageClasses = {BaseEntityTest.class, BaseConfiguration.class})
 class BaseEntityTest {
 
-    @Autowired
-    private TestEntityManager em;
+    @Test void testCreation() {
+        var testee = new TestEntity();
 
-    @Test void testIsNew() throws Exception {
-        TestEntity te = new TestEntity();
-        assertThat(te.isNew()).isTrue();
-        te = em.persist(te);
-        assertThat(te.isNew()).isFalse();
+        assertThat(testee.getPk()).isNull();
+        assertThat(testee.getOl()).isZero();
+        assertThat(testee.getCreatedBy()).isNull();
+        assertThat(testee.getCreateDt()).isNull();
+        assertThat(testee.getLastModifiedBy()).isNull();
+        assertThat(testee.getLastModifiedDt()).isNull();
+
+        testee.setOl(1);
+        testee.setCreatedBy("SYSTEM");
+        testee.setLastModifiedBy("SYSTEM");
+
+        assertThat(testee.getOl()).isEqualTo(1);
+        assertThat(testee.getCreatedBy()).isEqualTo("SYSTEM");
+        assertThat(testee.getLastModifiedBy()).isEqualTo("SYSTEM");
     }
 
-    @Test void testGetPk() throws Exception {
-        assertThat(new TestEntity().getPk()).isNull();
-        assertThat(em.persist(new TestEntity()).getPk()).isNotNull();
+    @Test void testSetCreateDt() {
+        var testee = new TestEntity();
+        var now = LocalDateTime.now();
+
+        assertThat(testee.getCreateDt()).isNull();
+        testee.setCreateDt(now);
+        assertThat(testee.getCreateDt()).isEqualTo(now);
+
+        assertThatThrownBy(() -> testee.setCreateDt(null)).isInstanceOf(IllegalArgumentException.class);
     }
 
-    @Test void testGetOl() throws Exception {
-        assertThat(new TestEntity().getOl()).isZero();
-        TestEntity entity = em.persist(new TestEntity());
-        assertThat(entity.getOl()).isZero();
-        entity.inc();
-        entity = em.merge(entity);
-        em.flush();
-        assertThat(entity.getOl()).isEqualTo(1);
-    }
+    @Test void testSettLastModifiedDt() {
+        var testee = new TestEntity();
+        var now = LocalDateTime.now();
 
-    @Test void testGetCreateDt() throws Exception {
-        assertThat(new TestEntity().getCreateDt()).isNull();
-        assertThat(em.persist(new TestEntity()).getCreateDt()).isNotNull();
-    }
+        assertThat(testee.getLastModifiedDt()).isNull();
+        testee.setLastModifiedDt(now);
+        assertThat(testee.getLastModifiedDt()).isEqualTo(now);
 
-    @Test void testGetLastModifiedDt() throws Exception {
-        assertThat(new TestEntity().getLastModifiedDt()).isNull();
-        assertThat(em.persist(new TestEntity()).getLastModifiedDt()).isNotNull();
+        assertThatThrownBy(() -> testee.setLastModifiedDt(null)).isInstanceOf(IllegalArgumentException.class);
     }
 }

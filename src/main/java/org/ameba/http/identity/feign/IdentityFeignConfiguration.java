@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * A IdentityFeignConfiguration.
+ * A IdentityFeignConfiguration is Spring configuration class, excluded from component scanning that defines interceptors for Feign.
  *
  * @author Heiko Scherrer
  */

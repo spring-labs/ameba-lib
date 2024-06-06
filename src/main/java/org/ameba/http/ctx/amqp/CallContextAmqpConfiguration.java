@@ -19,19 +19,18 @@ import org.ameba.amqp.MessageHeaderEnhancer;
 import org.ameba.amqp.MessagePostProcessorProvider;
 import org.ameba.annotation.ExcludeFromScan;
 import org.ameba.http.ctx.CallContextProvider;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * A CallContextAmqpConfiguration enables CallContext handling and propagation.
  *
  * @author Heiko Scherrer
- * @since 3.0
  */
 @ExcludeFromScan
 @ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
-@Configuration
+@AutoConfiguration
 public class CallContextAmqpConfiguration {
 
     public @Bean MessagePostProcessorProvider callContextCFDecorator(CallContextProvider callContextProvider) {

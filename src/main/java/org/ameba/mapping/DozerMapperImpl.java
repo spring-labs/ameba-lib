@@ -30,7 +30,7 @@ import static java.util.Arrays.asList;
  */
 public class DozerMapperImpl implements BeanMapper {
 
-    private Mapper mapper;
+    private final Mapper mapper;
 
     /**
      * Constructor of this Bean must have a {@code Mapper Mapper} instance of the SF Dozer library.
@@ -50,7 +50,7 @@ public class DozerMapperImpl implements BeanMapper {
      * @param additionalMappingFiles Dozer mapping files
      */
     public DozerMapperImpl(String mappingFile, String... additionalMappingFiles) {
-        List<String> list = new ArrayList<>();
+        var list = new ArrayList<String>();
         list.add(mappingFile);
         list.addAll(asList(additionalMappingFiles));
         this.mapper = DozerBeanMapperBuilder.create().withMappingFiles(list).build();
@@ -59,9 +59,8 @@ public class DozerMapperImpl implements BeanMapper {
     /**
      * {@inheritDoc}
      * <p>
-     * Garbage in - garbage out principle. In case a caller uses a repository implementation that may
-     * return {@code null} in times of Java 8, a {@code null} value will simply be returned. It is not the job of this
-     * library to decide on {@code null} values.
+     * Garbage in - garbage out principle. In case a caller uses a repository implementation that may return {@code null} in times of
+     * Java 8, a {@code null} value will simply be returned. It is not the job of this library to decide on {@code null} values.
      */
     @Override
     public <S, T> T map(S entity, Class<T> clazz) {
@@ -74,9 +73,8 @@ public class DozerMapperImpl implements BeanMapper {
     /**
      * {@inheritDoc}
      * <p>
-     * Garbage in - garbage out principle. In case a caller uses a repository implementation that may
-     * return {@code null} in times of Java 8, a {@code null} value will simply be returned. It is not the job of this
-     * library to decide on {@code null} values.
+     * Garbage in - garbage out principle. In case a caller uses a repository implementation that may return {@code null} in times of
+     * Java 8, a {@code null} value will simply be returned. It is not the job of this library to decide on {@code null} values.
      */
     @Override
     public <S, T> T mapFromTo(S source, T target) {
@@ -92,15 +90,14 @@ public class DozerMapperImpl implements BeanMapper {
     /**
      * {@inheritDoc}
      * <p>
-     * The caller gets at least an empty {@code java.util.List List} implementation when {@code entities}
-     * is {@code null} or empty.
+     * The caller gets at least an empty {@code java.util.List List} implementation when {@code entities} is {@code null} or empty.
      */
     @Override
     public <S, T> List<T> map(List<S> entities, Class<T> clazz) {
         if (entities == null || entities.isEmpty()) {
             return new ArrayList<>(0);
         }
-        List<T> result = new ArrayList<>(entities.size());
+        var result = new ArrayList<T>(entities.size());
         for (S entity : entities) {
             result.add(mapper.map(entity, clazz));
         }

@@ -16,34 +16,37 @@
 package org.ameba.http;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.RepresentationModel;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Abstract base class adds Spring HATEOAS support.
  *
  * @author Heiko Scherrer
- * @version 1.0.0
- * @since 1.0.0
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
 public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends RepresentationModel<T> {
 
-    /** The current version of the Value Object (VO) usually derived from the version of the Entity Object (EO). */
+    public static final String DATETIME_FORMAT_ZULU = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'";
+
+    /** The current version of the Value Object (VO) derived from the version of the Entity Object (EO). */
     @JsonProperty("ol")
     private Long ol;
 
     /** Timestamp when the entity has been inserted. */
     @JsonProperty("createDt")
-    private Date createDt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATETIME_FORMAT_ZULU) // required
+    private LocalDateTime createDt;
 
     /** Timestamp when the entity has been updated the last time. */
     @JsonProperty("lastModifiedDt")
-    private Date lastModifiedDt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATETIME_FORMAT_ZULU) // required
+    private LocalDateTime lastModifiedDt;
 
     /**
      * Get the current version.
@@ -68,7 +71,7 @@ public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends 
      *
      * @return The createDt
      */
-    public Date getCreateDt() {
+    public LocalDateTime getCreateDt() {
         return createDt;
     }
 
@@ -77,7 +80,7 @@ public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends 
      *
      * @param createDt The createDt
      */
-    public void setCreateDt(Date createDt) {
+    public void setCreateDt(LocalDateTime createDt) {
         this.createDt = createDt;
     }
 
@@ -86,7 +89,7 @@ public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends 
      *
      * @return The lastModifiedDt
      */
-    public Date getLastModifiedDt() {
+    public LocalDateTime getLastModifiedDt() {
         return lastModifiedDt;
     }
 
@@ -95,7 +98,7 @@ public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends 
      *
      * @param lastModifiedDt The lastModifiedDt
      */
-    public void setLastModifiedDt(Date lastModifiedDt) {
+    public void setLastModifiedDt(LocalDateTime lastModifiedDt) {
         this.lastModifiedDt = lastModifiedDt;
     }
 }

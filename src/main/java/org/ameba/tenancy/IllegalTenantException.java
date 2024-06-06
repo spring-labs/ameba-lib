@@ -15,14 +15,14 @@
  */
 package org.ameba.tenancy;
 
+import org.ameba.exception.TechnicalRuntimeException;
+
 /**
  * A IllegalTenantException signals that the current tenant is invalid.
  *
  * @author Heiko Scherrer
- * @version 1.2
- * @since 1.3
  */
-public class IllegalTenantException extends RuntimeException {
+public class IllegalTenantException extends TechnicalRuntimeException {
 
     /**
      * Constructor with message only.

@@ -17,12 +17,14 @@ package org.ameba.http.identity.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
+import org.ameba.Constants;
 import org.ameba.http.identity.IdentityContextHolder;
+import org.ameba.tenancy.TenantHolder;
 
 import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 
 /**
- * A IdentityRequestInterceptor is a Feign interceptor to propagate the Identity.
+ * A IdentityRequestInterceptor is a Feign interceptor to propagate the {@code Identity} over Feign calls.
  *
  * @author Heiko Scherrer
  */
@@ -35,6 +37,7 @@ class IdentityRequestInterceptor implements RequestInterceptor {
      */
     @Override
     public void apply(RequestTemplate template) {
+        TenantHolder.setCurrentTenant((d) -> template.header(Constants.HEADER_VALUE_X_TENANT, d));
         IdentityContextHolder.currentIdentity().ifPresent(s -> template.header(HEADER_VALUE_X_IDENTITY, s));
     }
 }

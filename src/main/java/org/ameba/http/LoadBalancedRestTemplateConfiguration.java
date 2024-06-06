@@ -15,30 +15,32 @@
  */
 package org.ameba.http;
 
-import org.ameba.app.BaseClientHttpRequestInterceptor;
+import org.ameba.annotation.ExcludeFromScan;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 /**
- * A LoadBalancedRestTemplateConfiguration bootstraps a load balanced {@link RestTemplate} when Spring Cloud is on the classpath.
+ * A LoadBalancedRestTemplateConfiguration instantiates a load balanced {@link RestTemplate} when Spring Cloud is on the classpath and
+ * registers a bean with name {@literal aLoadBalanced}.
  *
  * @author Heiko Scherrer
  */
+@ExcludeFromScan
 @ConditionalOnClass(LoadBalanced.class)
-@Configuration
-class LoadBalancedRestTemplateConfiguration {
+@AutoConfiguration
+public class LoadBalancedRestTemplateConfiguration {
 
     @ConditionalOnMissingBean(name = "aLoadBalanced")
     @LoadBalanced
     @Bean(name = "aLoadBalanced")
-    RestTemplate aLoadBalanced(List<BaseClientHttpRequestInterceptor> baseInterceptors) {
-        RestTemplate restTemplate = new RestTemplate();
+    public RestTemplate aLoadBalanced(List<BaseClientHttpRequestInterceptor> baseInterceptors) {
+        var restTemplate = new RestTemplate();
         restTemplate.getInterceptors().addAll(baseInterceptors);
         return restTemplate;
     }

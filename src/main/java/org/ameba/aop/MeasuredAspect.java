@@ -25,12 +25,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.util.StopWatch;
 
 /**
- * An MeasuredAspect is used to measure execution time of methods in any application layer
- * annotated with {@link org.ameba.annotation.Measured Measured}. The order of the aspect
- * is {@literal 18}.
+ * An MeasuredAspect is used to measure execution time of methods in any application layer annotated with {@link org.ameba.annotation.Measured Measured}.
+ * The order of the aspect is {@literal 18}.
  *
  * @author Heiko Scherrer
- * @since 1.10
  */
 @Aspect
 @Order(18)
@@ -47,9 +45,8 @@ public class MeasuredAspect {
     }
 
     /**
-     * The execution time is measured of {@link org.ameba.annotation.Measured Measured}
-     * annotated,  Around intercepted methods when the log level of category `MEASURED` is
-     * set to `INFO`.
+     * The execution time is measured of {@link org.ameba.annotation.Measured Measured} annotated,  Around intercepted methods when the log
+     * level of category `MEASURED` is set to `INFO`.
      *
      * @param pjp The joinpoint
      * @return Method return value

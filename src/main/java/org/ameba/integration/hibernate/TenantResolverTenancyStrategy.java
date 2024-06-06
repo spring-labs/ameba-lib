@@ -45,6 +45,6 @@ public class TenantResolverTenancyStrategy implements CurrentTenantIdentifierRes
      */
     @Override
     public boolean validateExistingCurrentSessions() {
-        return false;
+        return true;
     }
 }

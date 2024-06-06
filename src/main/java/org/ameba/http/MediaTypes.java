@@ -22,6 +22,7 @@ import java.io.Serializable;
  *
  * @author Heiko Scherrer
  */
+@Deprecated(forRemoval = true)
 public class MediaTypes implements Serializable {
 
     /**

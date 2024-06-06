@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.annotation;
+package org.ameba.aop;
 
-import org.ameba.aop.ExceptionTranslator;
-import org.ameba.aop.IntegrationLayerAspect;
-import org.ameba.aop.MeasuredAspect;
-import org.ameba.aop.PresentationLayerAspect;
-import org.ameba.aop.ServiceLayerAspect;
+import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
- * A AspectsConfiguration.
+ * A AspectsConfiguration is a Spring configuration class that declares all Ameba aspect beans.
  *
  * @author Heiko Scherrer
- * @version 1.2
- * @since 1.0
  */
 @ExcludeFromScan
 @Configuration
@@ -40,22 +34,22 @@ public class AspectsConfiguration {
     /** Set by the selector. */
     public static boolean withRootCause = false;
 
-    @Bean(name = ServiceLayerAspect.COMPONENT_NAME)
+    @Bean(ServiceLayerAspect.COMPONENT_NAME)
     public ServiceLayerAspect serviceLayerAspect(@Autowired(required = false) ExceptionTranslator exceptionTranslator) {
         return new ServiceLayerAspect(withRootCause, exceptionTranslator);
     }
 
-    @Bean(name = MeasuredAspect.COMPONENT_NAME)
+    @Bean(MeasuredAspect.COMPONENT_NAME)
     public MeasuredAspect measuredAspect() {
         return new MeasuredAspect();
     }
 
-    @Bean(name = IntegrationLayerAspect.COMPONENT_NAME)
+    @Bean(IntegrationLayerAspect.COMPONENT_NAME)
     public IntegrationLayerAspect integrationLayerAspect() {
         return new IntegrationLayerAspect(withRootCause);
     }
 
-    @Bean(name = PresentationLayerAspect.COMPONENT_NAME)
+    @Bean(PresentationLayerAspect.COMPONENT_NAME)
     public PresentationLayerAspect presentationLayerAspect() {
         return new PresentationLayerAspect();
     }

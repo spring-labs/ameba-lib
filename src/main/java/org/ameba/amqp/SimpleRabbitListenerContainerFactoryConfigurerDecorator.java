@@ -18,8 +18,8 @@ package org.ameba.amqp;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.amqp.AbstractRabbitListenerContainerFactoryConfigurer;
+import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
 
 import java.util.List;
@@ -33,10 +33,17 @@ import java.util.List;
 public class SimpleRabbitListenerContainerFactoryConfigurerDecorator
         extends AbstractRabbitListenerContainerFactoryConfigurer<SimpleRabbitListenerContainerFactory> {
 
-    @Autowired
-    private SimpleRabbitListenerContainerFactoryConfigurer simpleRabbitListenerContainerFactoryConfigurer;
-    @Autowired(required = false)
+    private final SimpleRabbitListenerContainerFactoryConfigurer simpleRabbitListenerContainerFactoryConfigurer;
+
     private List<MessagePostProcessorProvider> messagePostProcessorProviders;
+
+    protected SimpleRabbitListenerContainerFactoryConfigurerDecorator(RabbitProperties rabbitProperties,
+            SimpleRabbitListenerContainerFactoryConfigurer simpleRabbitListenerContainerFactoryConfigurer,
+            List<MessagePostProcessorProvider> messagePostProcessorProviders) {
+        super(rabbitProperties);
+        this.simpleRabbitListenerContainerFactoryConfigurer = simpleRabbitListenerContainerFactoryConfigurer;
+        this.messagePostProcessorProviders = messagePostProcessorProviders;
+    }
 
     @Override
     public void configure(SimpleRabbitListenerContainerFactory factory, ConnectionFactory connectionFactory) {

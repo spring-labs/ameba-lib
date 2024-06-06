@@ -23,6 +23,7 @@ import java.io.Serializable;
  *
  * @author Heiko Scherrer
  * @since 1.8
+ * @param <T> any type
  */
 public interface Identifiable<T extends Serializable> {
 

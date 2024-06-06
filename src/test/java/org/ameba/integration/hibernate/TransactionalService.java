@@ -26,7 +26,5 @@ public interface TransactionalService {
 
     void create(String schemaName);
 
-    void createSchema(String schemaName);
-
     Optional<TestEntity> findBySchemaName(String schemaName);
 }

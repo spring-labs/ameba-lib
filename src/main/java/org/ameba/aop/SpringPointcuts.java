@@ -21,8 +21,6 @@ import org.aspectj.lang.annotation.Pointcut;
  * A SpringPointcuts class encapsulates AOP pointcut definitions that are specific to Spring's stereotype annotations.
  *
  * @author Heiko Scherrer
- * @version 1.1
- * @since 1.0
  */
 class SpringPointcuts {
 

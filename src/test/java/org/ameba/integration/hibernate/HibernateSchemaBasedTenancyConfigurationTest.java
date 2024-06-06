@@ -55,34 +55,33 @@ public class HibernateSchemaBasedTenancyConfigurationTest {
         TenantHolder.destroy();
     }
 
-    @Test void multipleSchemaTest() throws Exception {
+    @Test
+    void multipleSchemaTest() throws Exception {
         /*
         we need to wrap all operations into a transactional service, because the connection gets pooled again
         after the tx commits. Unfortunately a DataJpaTest itself is a transactional test, therefore we cannot takeover
         control of transaction boundaries.
         */
-        // Let's create two empty schemas first
-        service.createSchema("SCHEMA_1");
-        service.createSchema("SCHEMA_2");
+        // Schemas are created in import.sql
 
         // Switch Tenant and create record
         TenantHolder.setCurrentTenant("SCHEMA_1");
-        service.create("SCHEMA_1");
+        service.create("T_SCHEMA_1");
 
         // Switch Tenant and create record
         TenantHolder.setCurrentTenant("SCHEMA_2");
-        service.create("SCHEMA_2");
+        service.create("T_SCHEMA_2");
 
         // Switch Tenant and assert...
         TenantHolder.setCurrentTenant("SCHEMA_1");
-        Optional<TestEntity> e1 = service.findBySchemaName("SCHEMA_1");
-        Optional<TestEntity> e2 = service.findBySchemaName("SCHEMA_2");
+        Optional<TestEntity> e1 = service.findBySchemaName("T_SCHEMA_1");
+        Optional<TestEntity> e2 = service.findBySchemaName("T_SCHEMA_2");
         assertTrue(e1.isPresent());
         assertFalse(e2.isPresent());
 
         TenantHolder.setCurrentTenant("SCHEMA_2");
-        e1 = service.findBySchemaName("SCHEMA_1");
-        e2 = service.findBySchemaName("SCHEMA_2");
+        e1 = service.findBySchemaName("T_SCHEMA_1");
+        e2 = service.findBySchemaName("T_SCHEMA_2");
         assertFalse(e1.isPresent());
         assertTrue(e2.isPresent());
     }

@@ -15,7 +15,8 @@
  */
 package org.ameba.integration;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -25,6 +26,8 @@ import java.util.Collection;
  * @author Heiko Scherrer
  * @version 1.0
  * @since 1.0
+ * @param <ID> any serializable type
+ * @param <T> any TypedEntity type
  */
 public interface FindOperations<T extends TypedEntity<ID>, ID extends Serializable> {
 

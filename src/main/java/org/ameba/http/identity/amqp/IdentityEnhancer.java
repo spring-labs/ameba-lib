@@ -26,6 +26,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
  */
 class IdentityEnhancer implements MessageHeaderEnhancer {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void enhance(final RabbitTemplate rabbitTemplate) {
         rabbitTemplate.addBeforePublishPostProcessors(

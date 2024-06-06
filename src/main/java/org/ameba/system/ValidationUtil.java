@@ -15,11 +15,11 @@
  */
 package org.ameba.system;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Path;
-import javax.validation.Validator;
-import java.util.Set;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Path;
+import jakarta.validation.Validator;
+
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
@@ -31,8 +31,20 @@ import static java.lang.String.format;
  */
 public final class ValidationUtil {
 
+    private ValidationUtil() {}
+
+    /**
+     * Validates an object using the given validator.
+     *
+     * @param validator the validator to use for validation
+     * @param obj the object to validate
+     * @param clazz the classes (groups) to be validated, default to empty array
+     * @param <T> the type of the object to validate
+     * @return the validated object
+     * @throws ConstraintViolationException if any constraint violations occur
+     */
     public static <T> T validate(Validator validator, T obj, Class<?>... clazz) {
-        Set<ConstraintViolation<T>> violations = validator.validate(obj, clazz);
+        var violations = validator.validate(obj, clazz);
         if (!violations.isEmpty()) {
             throw new ConstraintViolationException(format("Validation error. Invalid fields [%s]",
                     violations

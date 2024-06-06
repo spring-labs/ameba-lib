@@ -16,8 +16,7 @@
 package org.ameba;
 
 /**
- * A Ameba is a final not instantiatable class used to include the org.ameba package into
- * component scanning.
+ * A Ameba is a final not instantiatable class used to include the org.ameba package into component scanning.
  *
  * @author Heiko Scherrer
  */

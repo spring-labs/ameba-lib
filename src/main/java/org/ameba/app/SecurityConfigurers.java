@@ -25,10 +25,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
  * @version 1.1
  * @since 1.4
  */
+@Deprecated(forRemoval = true)
 public final class SecurityConfigurers {
 
     /**
-     * A SecurityConfigurers implementation is recognized by subclasses of Spring's {@link org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+     * A SecurityConfigurers implementation is recognized by subclasses of Spring's {@code org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
      * WebSecurityConfigurerAdapter} and has the ability to configure the security through the given {@link
      * org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder AuthenticationManagerBuilder}.
      */

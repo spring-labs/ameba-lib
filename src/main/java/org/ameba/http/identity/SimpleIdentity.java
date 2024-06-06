@@ -18,7 +18,7 @@ package org.ameba.http.identity;
 import java.util.Map;
 
 /**
- * A SimpleIdentity.
+ * A SimpleIdentity is the simplest possible implementation of {@link Identity}.
  *
  * @author Heiko Scherrer
  */
@@ -27,6 +27,12 @@ public final class SimpleIdentity implements Identity {
     private final String id;
     private Map<String, String> details;
 
+    /**
+     * This method initializes a SimpleIdentity object with the provided ID. The ID must not be null or empty.
+     *
+     * @param id The ID of the SimpleIdentity
+     * @throws IllegalArgumentException If the ID is null or empty
+     */
     public SimpleIdentity(String id) {
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("ID of SimpleIdentity must not be null");
@@ -34,6 +40,13 @@ public final class SimpleIdentity implements Identity {
         this.id = id;
     }
 
+    /**
+     * Initializes a SimpleIdentity object with the provided ID and details.
+     *
+     * @param id The ID of the SimpleIdentity. Must not be null or empty.
+     * @param details A map of attributes that belong to the Identity.
+     * @throws IllegalArgumentException If the ID is null or empty.
+     */
     public SimpleIdentity(String id, Map<String, String> details) {
         this(id);
         this.details = details;

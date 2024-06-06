@@ -17,9 +17,9 @@ package org.ameba.http.ctx;
 
 import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -27,15 +27,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * A CallContextWebMvcConfiguration enables CallContext handling and propagation.
  *
  * @author Heiko Scherrer
- * @since 3.0
  */
 @ExcludeFromScan
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@Configuration
+@AutoConfiguration
 public class CallContextWebMvcConfiguration implements WebMvcConfigurer {
 
-    @Autowired
     private CallContextProvider callContextProvider;
+
+    @Autowired
+    public void setCallContextProvider(CallContextProvider callContextProvider) {
+        this.callContextProvider = callContextProvider;
+    }
 
     /**
      * {@inheritDoc}

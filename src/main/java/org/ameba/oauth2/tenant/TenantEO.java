@@ -15,11 +15,10 @@
  */
 package org.ameba.oauth2.tenant;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import org.ameba.integration.jpa.ApplicationEntity;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * A TenantEO is the persistent representation of a Tenant in a multi-tenancy system. It

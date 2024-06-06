@@ -56,9 +56,9 @@ public class HS512TokenParser implements TokenParser<Symmetric, Jwt> {
         Jwt jwt;
         try {
             jwt = Jwts.parser()
-                    .setAllowedClockSkewSeconds(issuer.getSkewSeconds())
+                    .clockSkewSeconds(issuer.getSkewSeconds())
                     .setSigningKey(issuer.getSigningKey())
-                    .parseClaimsJws(token);
+                    .build().parseClaimsJws(token);
             return jwt;
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);

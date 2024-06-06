@@ -19,7 +19,6 @@ package org.ameba;
  * A Constants class to collect common used constants.
  *
  * @author Heiko Scherrer
- * @since 0.9
  */
 public final class Constants {
 
@@ -58,6 +57,5 @@ public final class Constants {
     public static final String API_TIME_FORMAT = "hh:mm:ss";
 
     /** Hide constructor. */
-    private Constants() {
-    }
+    private Constants() { }
 }

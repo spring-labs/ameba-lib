@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http;
+package org.ameba.http.multitenancy;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.ameba.LoggingCategories;
 import org.ameba.tenancy.TenantHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
- * A MultiTenantSessionFilter set the current tenant value ({@value org.ameba.Constants#HEADER_VALUE_X_TENANT} in the
+ * A MultiTenantSessionFilter takes the current tenant value (from {@value org.ameba.Constants#HEADER_VALUE_X_TENANT} and puts it in the
  * {@link TenantHolder TenantHolder}.
  *
  * @author Heiko Scherrer
- * @version 1.0
- * @see TenantHolder
- * @since 1.0
  */
 public class MultiTenantSessionFilter extends AbstractTenantAwareFilter {
 
@@ -43,7 +39,8 @@ public class MultiTenantSessionFilter extends AbstractTenantAwareFilter {
 
     /**
      * {@inheritDoc}
-     * If {@code tenant} is present, set it in the {@link TenantHolder TenantHolder}
+     *
+     * If {@code tenant} is present, put it in the {@link TenantHolder TenantHolder}
      */
     @Override
     protected void doBefore(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String tenant) {
@@ -54,6 +51,7 @@ public class MultiTenantSessionFilter extends AbstractTenantAwareFilter {
 
     /**
      * {@inheritDoc}
+     *
      * Remove tenant from {@link TenantHolder TenantHolder}
      */
     @Override
