@@ -30,6 +30,7 @@ import java.io.IOException;
  *
  * @author Heiko Scherrer
  */
+@Deprecated
 public class MvcClientInterceptor implements ClientHttpRequestInterceptor {
 
     /**

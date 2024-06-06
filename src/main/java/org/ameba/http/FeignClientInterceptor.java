@@ -26,6 +26,7 @@ import org.ameba.tenancy.TenantHolder;
  *
  * @author Heiko Scherrer
  */
+@Deprecated
 public class FeignClientInterceptor implements RequestInterceptor {
 
     /**
