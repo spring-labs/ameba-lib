@@ -17,9 +17,9 @@ package org.ameba.http.identity.feign;
 
 import feign.RequestInterceptor;
 import org.ameba.annotation.ExcludeFromScan;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * A IdentityFeignConfiguration is Spring configuration class, excluded from component scanning that defines interceptors for Feign.
@@ -28,7 +28,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @ExcludeFromScan
 @ConditionalOnClass(feign.RequestInterceptor.class)
-@Configuration
+@AutoConfiguration
 public class IdentityFeignConfiguration {
 
     public @Bean RequestInterceptor identityRequestInterceptor() {
