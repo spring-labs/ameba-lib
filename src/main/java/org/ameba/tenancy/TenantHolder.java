@@ -15,6 +15,7 @@
  */
 package org.ameba.tenancy;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -38,6 +39,18 @@ public class TenantHolder {
      */
     public static String getCurrentTenant() {
         return TENANT_HOLDER.get();
+    }
+
+    /**
+     * Get the current Tenant.
+     *
+     * @return Tenant as String
+     */
+    public static Optional<String> currentTenant() {
+        if (TENANT_HOLDER.get() == null || TENANT_HOLDER.get().isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(TENANT_HOLDER.get());
     }
 
     /**
