@@ -19,7 +19,6 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.ameba.Constants;
 import org.ameba.http.identity.IdentityContextHolder;
-import org.ameba.tenancy.TenantHolder;
 
 import static org.ameba.Constants.HEADER_VALUE_X_IDENTITY;
 
@@ -33,11 +32,10 @@ class IdentityRequestInterceptor implements RequestInterceptor {
     /**
      * {@inheritDoc}
      *
-     * Add the Identity to outgoing requests.
+     * Add the {@value Constants#HEADER_VALUE_X_IDENTITY} header.
      */
     @Override
     public void apply(RequestTemplate template) {
-        TenantHolder.setCurrentTenant((d) -> template.header(Constants.HEADER_VALUE_X_TENANT, d));
         IdentityContextHolder.currentIdentity().ifPresent(s -> template.header(HEADER_VALUE_X_IDENTITY, s));
     }
 }
