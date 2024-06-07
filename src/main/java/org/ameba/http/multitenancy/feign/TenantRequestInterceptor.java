@@ -13,31 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http;
+package org.ameba.http.multitenancy.feign;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.ameba.Constants;
-import org.ameba.http.identity.IdentityContextHolder;
 import org.ameba.tenancy.TenantHolder;
 
 /**
- * A FeignClientInterceptor intercepts Feign client calls and adds the tenant header and identity header to each call.
+ * A TenantRequestInterceptor intercepts Feign client calls and adds the tenant header to each call.
  *
  * @author Heiko Scherrer
  */
-@Deprecated
-public class FeignClientInterceptor implements RequestInterceptor {
+class TenantRequestInterceptor implements RequestInterceptor {
 
     /**
      * {@inheritDoc}
      *
      * Add the {@value Constants#HEADER_VALUE_X_TENANT} header.
-     * Add the {@value Constants#HEADER_VALUE_X_IDENTITY} header.
      */
     @Override
     public void apply(RequestTemplate template) {
-        TenantHolder.setCurrentTenant(tenant -> template.header(Constants.HEADER_VALUE_X_TENANT, tenant));
-        IdentityContextHolder.setCurrentIdentity(tenant ->  template.header(Constants.HEADER_VALUE_X_IDENTITY, tenant));
+        TenantHolder.currentTenant().ifPresent(s -> template.header(Constants.HEADER_VALUE_X_TENANT, s));
     }
 }
