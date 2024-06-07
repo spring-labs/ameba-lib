@@ -42,6 +42,7 @@
         <h2.version>2.2.224</h2.version> <!-- in line with boot -->
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version> <!-- in line with boot -->
         <jackson.version>2.15.4</jackson.version> <!-- in line with boot -->
+        <jakarta.el.version>4.0.2</jakarta.el.version>
         <jakarta.enterprise.cdi-api.version>4.0.1</jakarta.enterprise.cdi-api.version>
         <jakarta-servlet.version>6.0.0</jakarta-servlet.version> <!-- in line with boot -->
         <jakarta.persistence-api.version>3.1.0</jakarta.persistence-api.version> <!-- in line with boot / hibernate-core -->
@@ -69,7 +70,6 @@
         <maven-release-plugin.version>3.0.1</maven-release-plugin.version>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version> <!-- in line with boot -->
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version> <!-- in line with boot -->
-        <jakarta.el.version>4.0.2</jakarta.el.version>
     </properties>
 
     <profiles>
