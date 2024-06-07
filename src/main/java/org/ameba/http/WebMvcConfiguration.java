@@ -18,6 +18,7 @@ package org.ameba.http;
 import org.ameba.annotation.ExcludeFromScan;
 import org.ameba.http.ctx.CallContextClientRequestInterceptor;
 import org.ameba.http.identity.IdentityClientRequestInterceptor;
+import org.ameba.http.multitenancy.TenantClientRequestInterceptor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +47,8 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     public @Bean List<BaseClientHttpRequestInterceptor> baseRestTemplateInterceptors() {
         return new ArrayList<>(asList(
                 new CallContextClientRequestInterceptor(),
-                new IdentityClientRequestInterceptor()
+                new IdentityClientRequestInterceptor(),
+                new TenantClientRequestInterceptor()
         ));
     }
 }
