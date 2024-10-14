@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.interface21</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>4.0</version>
+    <version>4.1-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <url>https://github.com/spring-labs/ameba-lib</url>
@@ -647,7 +647,7 @@
         <connection>scm:git:git@github.com:spring-labs/ameba-lib.git</connection>
         <developerConnection>scm:git:git@github.com:spring-labs/ameba-lib.git</developerConnection>
         <url>scm:git:git@github.com:spring-labs/ameba-lib.git</url>
-        <tag>4.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
