@@ -8,8 +8,10 @@ Ameba Lib is a collection of utils, exceptions, constants and other helpers used
 in Maven `provided` scope to cut transitive dependencies.
 
 ## Usage
-**Notice: For releases compatible with Spring Boot 1.5.x checkout ameba-lib version 1.x. The latest release and the current development
-branch are tested against Spring Boot 2.7.18**
+**Notice:** 
+- Spring Boot 1.5.x compatible releases use ameba-lib version 1.x
+- Spring Boot 2.7.x compatible releases use ameba-lib version 3.x
+- The latest release and the current development branch are tested against Spring Boot 3.2.5
 
 Add as Maven dependency
 ```
@@ -111,12 +113,12 @@ Referenced issues: [#1](https://github.com/spring-labs/ameba-lib/issues/1), [#2]
 
 ### Web & MVC extensions
 
-Usually you expose resources in a RESTful way. But in practise we've seen that a client application, written in languages like Objective-C, needs
-some help with the actual response type of a RESTful API. Of course we have HATEOAS and HAL but on the other end of the wire, the client
-need to know what is the expected type of response. That's why we put the resource into an _envelope_ - the `org.ameba.http.Response`. Beside
-the actual response entities, this class tracks a http status for each wrapped response object, has a message text and key and provides an
-arbitrary string dictionary that may be used to store the response type. On IOS there is no library to deal with HATEOAS responses in a
-comfortable way. Many solutions use [Restkit](https://github.com/RestKit/RestKit) and need to parse the response in a old-fashioned
+Usually you expose resources in a RESTful way. But in practise we've seen that a client application, written in languages like Objective-C,
+needs some help with the actual response kind of RESTful API. Of course, we have HATEOAS and HAL but on the other end of the wire, the
+client need to know what is the expected type of response. That's why we put the resource into an _envelope_ - the
+`org.ameba.http.Response`. Beside the actual response entities, this class tracks a http status for each wrapped response object, has a
+message text and key and provides an arbitrary string dictionary that may be used to store the response type. On IOS there is no library to
+deal with HATEOAS responses in a comfortable way. Many solutions use [Restkit](https://github.com/RestKit/RestKit) and need to parse the response in an old-fashioned
 low-level way.
 
 A server using ameba-lib may respond with:
@@ -148,12 +150,11 @@ Some filter implementations for multi-tenancy and SLF4J context propagation are 
 
 ### Mapper abstraction (0.7+)
 
-In first place we use [Dozer](http://dozer.sourceforge.net) as mapping library. But this dependency is optional, and other mapper libraries can be used as well. A common
-interface is defined were client applications can rely on. This is a Java 5 generic interface that makes it easy to map at compile time.
-Why we need to map at all in Java is a different discussion. Since version 0.7 a `org.ameba.mapping.BeanMapper` interface is provided to
-applications that need to map object structures. Since the same version the `org.ameba.mapping.DozerMapperImpl` and several Dozer converters
-exist. We'd a look at several other Java mapping frameworks and have chosen the one with no compile time dependencies - just in a
-declarative way - thers than Dozer use Java annotations for example.
+In first place we use [Dozer](http://dozer.sourceforge.net) as mapping library. But this dependency is optional, and other mapper libraries can be used as well. A
+common interface is defined were client applications can rely on. This is a Java 5 generic interface that makes it easy to map at compile
+time. Why we need to map at all in Java is a different discussion. Since version 0.7 a `org.ameba.mapping.BeanMapper` interface is provided
+to applications that need to map object structures. Since the same version the `org.ameba.mapping.DozerMapperImpl` and several Dozer
+converters exist.
 
 ### Multi-tenancy (1.0+)
 
@@ -161,16 +162,16 @@ Multi-tenancy support requires at first determination of the current tenant and 
 be taken depending on the tenant.
 
 Determination of the tenant can be realized using a web filter `org.ameba.http.MultiTenantSessionFilter` (1.0+). This filter tries to get
-a http header attribute called `X-Tenant` or `Tenant` and stores it in a threadlocal variable. On business- or integration layer this context
-information is used to separate log files or to separate between databases, database schemas or database tables (up to the specific solution).
-Have a look at the [tenancy sample](https://github.com/spring-labs/tenancy-sample) to understand how this works on database level. Separating
+a http header attribute called `X-Tenant` or `Tenant` and stores it in a threadlocal variable. On business- or integration layer this
+context information is used to separate log files or to separate between databases, database schemas or database tables (up to the specific
+solution). Look at the [tenancy sample](https://github.com/spring-labs/tenancy-sample) to understand how this works on database level. Separating
 the log files is special. Ameba-lib uses SLF4J to abstract from the underlying logging framework. In case of context-aware data (like the
 tenant name) needs to be populated down to the underlying logging library, SLF4J make it easy to work with [Logback](http://logback.qos.ch/).
 SLF4J smoothly populates the logback context with its own context. If you're using other frameworks, like Log4j you need to implement a
 custom _Context Populator_ that ready the SLF4J MDC/NDC and populates the log4j MDC/NDC properly.
 
-Starting with 1.7 the configuration of multi-tenancy support can be done much more elegant by using the classlevel annotation `@EnableMultiTenancy`. No
-manual filter registration needs to be done anymore.
+Starting with 1.7 the configuration of multi-tenancy support can be done much more elegant by using the classlevel annotation
+`@EnableMultiTenancy`. No manual filter registration needs to be done anymore.
 
 #### Data record separation
 
@@ -189,9 +190,10 @@ Referenced issues:
 
 ### Logging extensions (1.7+)
 
-Starting with version 1.7 some useful logging extensions were added. At first a `ThreadIdProvider` is used to identify each thread in a concurrent
-test run. By default logback does only provide a meaningless thread name. But a thread counter can now be configured to display the current value in the
-log message. To get the full power of Ameba log extensions just include the `logback-appenders.xml` and `logback-loggers.xml` into your logback.xml:
+Starting with version 1.7 some useful logging extensions were added. At first a `ThreadIdProvider` is used to identify each thread in a
+concurrent test run. By default, logback does only provide a meaningless thread name. But a thread counter can now be configured to display
+the current value in the log message. To get the full power of Ameba log extensions just include the `logback-appenders.xml` and
+`logback-loggers.xml` into your logback.xml:
 
  ````
  <configuration>
@@ -235,25 +237,26 @@ The logfile path can be configured by setting the logback property:
      <property name="LOG_PATH" value="/tmp"/>
  ```` 
 
-By default ameba logging first tries to find the configured $LOG_PATH property. If this property does not exist, it looks up $CATALINA_BASE
-to check if the application is running inside Tomcat. If even this does not exist it tries to find a logback property named $LOG_TEMP, and if
-that does not exist either, it will log to java.io.tmpdir.
+By default, ameba logging first tries to find the configured $LOG_PATH property. If this property does not exist, it looks up $CATALINA_BASE
+to check if the application is running inside Tomcat. If even this does not exist it tries to find a logback property named $LOG_TEMP, and
+if that does not exist either, it will log to java.io.tmpdir.
 
 Notice: The output pattern is defined to be aligned to the Grok pattern that is used in combination with Logstash ([logstash.conf][logstashconf]).
 
 ### OAuth2 Token Parsing and Handling (1.11+)
 
-Java package `org.ameba.oauth2` contains all types to ease the handling of OAuth2 and OpenID Connect JWT parsing, validation and handling. Notice that
-the structure nor the content of the tokens are not defined by the OAuth2 specification. Often the JWT format is used as token format with various
-signing algorithms. An application may define a servlet filter or a `javax.ws.rs.container.ContainerRequestFilter` to introduce OAuth2 Token handling.
-This filter could then delegate to an instance of `org.ameba.oauth2.JwtValidationStrategy` to integrate Ameba OAuth2 support.
+Java package `org.ameba.oauth2` contains all types to ease the handling of OAuth2 and OpenID Connect JWT parsing, validation and handling.
+Notice that the structure nor the content of the tokens are not defined by the OAuth2 specification. Often the JWT format is used as token
+format with various signing algorithms. An application may define a servlet filter or a `javax.ws.rs.container.ContainerRequestFilter` to
+introduce OAuth2 Token handling. This filter could then delegate to an instance of `org.ameba.oauth2.JwtValidationStrategy` to integrate
+Ameba OAuth2 support.
 
 Basically Ameba OAuth2 Support works as the follows;
  
  - The filter strategy uses Extractors and Validators to extract tokens from the incoming request and to validate them
  - The `BearerTokenExtractor` extracts a Bearer token from the Authorization header
- - The `DefaultTokenExtractor` uses the unsigned part of the JWT and validates the token issuer against an `IssuerWhiteList` first, afterward it
- uses one of the `TokenParsers` to extract and parse the token under consideration of the token signature
+ - The `DefaultTokenExtractor` uses the unsigned part of the JWT and validates the token issuer against an `IssuerWhiteList` first,
+ afterward it uses one of the `TokenParsers` to extract and parse the token under consideration of the token signature
  - The `TenantValidator` should be used when a Tenant identifier exists and the Tenant is configured to work with the Token issuer. 
 
 Extension Points:
@@ -267,8 +270,8 @@ Extension Points:
  follow:
 
   - All Java files must have the Apache License header on top
-  - All Java types must provide a meaningful Javadoc comment with the initial author (`@author`). The first sentence in Javadoc is used as headline and needs to
-    be a short but meaningful description of the type class.
+  - All Java types must provide a meaningful Javadoc comment with the initial author (`@author`). The first sentence in Javadoc is used as
+ headline and needs to be a short but meaningful description of the type class.
 
  ````
  /**
