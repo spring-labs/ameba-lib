@@ -51,7 +51,7 @@ public class IntegrationLayerAspect {
 
     /** Default constructor with some loginfo */
     public IntegrationLayerAspect() {
-        BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+        BOOT_LOGGER.info("-- w/ {}", COMPONENT_NAME);
     }
 
     /**
@@ -60,7 +60,7 @@ public class IntegrationLayerAspect {
      * @param withRootCause Whether the root cause shall be preserved or not
      */
     public IntegrationLayerAspect(boolean withRootCause) {
-        BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+        BOOT_LOGGER.info("-- w/ {}", COMPONENT_NAME);
         this.withRootCause = withRootCause;
     }
 

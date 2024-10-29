@@ -41,7 +41,7 @@ public class MeasuredAspect {
 
     /** Default constructor with some loginfo */
     public MeasuredAspect() {
-        BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+        BOOT_LOGGER.info("-- w/ {}", COMPONENT_NAME);
     }
 
     /**

@@ -42,7 +42,7 @@ public class PresentationLayerAspect {
 
     /** Default constructor with some loginfo */
     public PresentationLayerAspect() {
-        BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+        BOOT_LOGGER.info("-- w/ {}", COMPONENT_NAME);
     }
 
     /**

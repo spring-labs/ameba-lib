@@ -53,7 +53,7 @@ public class ServiceLayerAspect {
 
     /** Default constructor with some loginfo. */
     public ServiceLayerAspect() {
-        BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+        BOOT_LOGGER.info("-- w/ {}", COMPONENT_NAME);
     }
 
     /**
@@ -63,7 +63,7 @@ public class ServiceLayerAspect {
      * @param exceptionTranslator An instance used to translate exceptions
      */
     public ServiceLayerAspect(boolean withRootCause, ExceptionTranslator exceptionTranslator) {
-        BOOT_LOGGER.info("-- w/ " + COMPONENT_NAME);
+        BOOT_LOGGER.info("-- w/ {}", COMPONENT_NAME);
         this.withRootCause = withRootCause;
         this.exceptionTranslator = exceptionTranslator;
     }
@@ -82,8 +82,8 @@ public class ServiceLayerAspect {
     @Around("org.ameba.aop.Pointcuts.servicePointcut()")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         long startMillis = 0L;
-        if (SRV_LOGGER.isDebugEnabled()) {
-            SRV_LOGGER.debug("[S]>> Method call: {}", pjp.toShortString());
+        if (SRV_LOGGER.isInfoEnabled()) {
+            SRV_LOGGER.info("[S]>> Method call: {}", pjp.toShortString());
             startMillis = System.currentTimeMillis();
         }
 
@@ -102,8 +102,8 @@ public class ServiceLayerAspect {
             }
             throw ex;
         } finally {
-            if (SRV_LOGGER.isDebugEnabled()) {
-                SRV_LOGGER.debug("[S]<< {} took [{}] (ms)", pjp.toShortString(), (System.currentTimeMillis() - startMillis));
+            if (SRV_LOGGER.isInfoEnabled()) {
+                SRV_LOGGER.info("[S]<< {} took [{}] (ms)", pjp.toShortString(), (System.currentTimeMillis() - startMillis));
             }
         }
         return obj;

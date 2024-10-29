@@ -15,6 +15,9 @@
  */
 package org.ameba.app;
 
+import org.ameba.LoggingCategories;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -22,6 +25,12 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author Heiko Scherrer
  */
-@Deprecated(forRemoval = true)
 @Configuration
-public class BaseConfiguration { }
+public class BaseConfiguration {
+
+    private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
+
+    public BaseConfiguration() {
+        BOOT_LOGGER.info("Ameba Lib 4.1");
+    }
+}
