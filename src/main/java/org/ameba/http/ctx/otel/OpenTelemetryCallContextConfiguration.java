@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ameba.http.ctx.sleuth;
+package org.ameba.http.ctx.otel;
 
+import io.micrometer.tracing.otel.bridge.OtelTracer;
 import org.ameba.LoggingCategories;
 import org.ameba.annotation.ExcludeFromScan;
 import org.ameba.http.ctx.CallContextProvider;
@@ -22,25 +23,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * A TraceableCallContextConfiguration provides a CallContextProvider suitable for traceable environments.
+ * A OpenTelemetryCallContextConfiguration provides a CallContextProvider suitable for traceable environments.
  *
  * @author Heiko Scherrer
  */
 @ExcludeFromScan
-@ConditionalOnClass(name = "org.springframework.cloud.sleuth.Tracer")
 @AutoConfiguration
-public class TraceableCallContextConfiguration {
+public class OpenTelemetryCallContextConfiguration {
 
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
 
-    @ConditionalOnClass(name = "org.springframework.cloud.sleuth.Tracer")
-    @Bean(name = "traceableCallContextProvider")
-    public CallContextProvider traceableCallContextProvider(Tracer tracer) {
-        BOOT_LOGGER.info("-- w/ Sleuth Tracing");
-        return new TraceableCallContextProvider(tracer);
+    @Configuration(proxyBeanMethods = false)
+    @ConditionalOnClass(name = "io.micrometer.tracing.otel.bridge.OtelTracer")
+    public static class OtelConfiguration {
+        @ConditionalOnClass(name = "io.micrometer.tracing.otel.bridge.OtelTracer")
+        @Bean(name = "openTelemetryCallContextProvider")
+        public CallContextProvider openTelemetryCallContextProvider(OtelTracer tracer) {
+            BOOT_LOGGER.info("-- w/ Micrometer Tracing");
+            return new OpenTelemetryCallContextProvider(tracer);
+        }
     }
 }

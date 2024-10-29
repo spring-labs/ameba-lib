@@ -38,6 +38,8 @@ public final class CallContextHolder {
     private static final Logger LOGGER = LoggerFactory.getLogger(CALL_CONTEXT);
     private static final InheritableThreadLocal<CallContext> callContext = new InheritableThreadLocal<>();
 
+    private CallContextHolder() {}
+
     /**
      * Retrieve the current {@link CallContext}.
      *

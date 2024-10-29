@@ -27,7 +27,10 @@ import org.springframework.context.annotation.Bean;
  * @author Heiko Scherrer
  */
 @ExcludeFromScan
-@ConditionalOnMissingClass("org.springframework.cloud.sleuth.Tracer")
+@ConditionalOnMissingClass({
+        "org.springframework.cloud.sleuth.Tracer",
+        "io.micrometer.tracing.otel.bridge.OtelTracer"
+})
 @AutoConfiguration
 public class DefaultCallContextProviderConfiguration {
 

@@ -19,6 +19,7 @@ import org.ameba.annotation.ExcludeFromScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,9 +38,7 @@ public class RestTemplateConfiguration {
 
     @ConditionalOnMissingBean(name = "aLoadBalanced")
     @Bean
-    public RestTemplate aLoadBalanced(List<BaseClientHttpRequestInterceptor> baseInterceptors) {
-        var restTemplate = new RestTemplate();
-        restTemplate.getInterceptors().addAll(baseInterceptors);
-        return restTemplate;
+    public RestTemplate aLoadBalanced(RestTemplateBuilder builder, List<BaseClientHttpRequestInterceptor> baseInterceptors) {
+        return builder.additionalInterceptors(baseInterceptors).build();
     }
 }
