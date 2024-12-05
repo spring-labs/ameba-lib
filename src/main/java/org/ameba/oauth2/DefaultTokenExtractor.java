@@ -21,6 +21,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.JwtParser;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.impl.TextCodec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,11 +68,10 @@ public class DefaultTokenExtractor implements TokenExtractor {
         if (splitToken.length < 2) {
             throw new InvalidTokenException("Token is not a JWT");
         }
-        Jwt<Header, Claims> jwt = null;
+        Jwt<Header, Claims> jwt;
+        JwtParser jwtParser = Jwts.parser().clockSkewSeconds(Issuer.DEFAULT_MAX_SKEW_SECONDS).build();
         try {
-//            jwt = Jwts.parser()
-//                    .setAllowedClockSkewSeconds(Issuer.DEFAULT_MAX_SKEW_SECONDS)
-//                    .parse(splitToken[0] + "." + splitToken[1] + ".");
+            jwt = jwtParser.parse(splitToken[0] + "." + splitToken[1] + ".").accept(Jwt.UNSECURED_CLAIMS);
         } catch (ExpiredJwtException e) {
             LOGGER.error(e.getMessage(), e);
             throw new InvalidTokenException("Token has expired");
@@ -82,12 +83,12 @@ public class DefaultTokenExtractor implements TokenExtractor {
         Issuer issuer;
         if (jwt.getHeader().containsKey("kid")) {
 
-            issuer = whiteList.getIssuer(jwt.getBody().getIssuer(), ""+jwt.getHeader().get("kid"));
+            issuer = whiteList.getIssuer(jwt.getPayload().getIssuer(), "" + jwt.getHeader().get("kid"));
         } else {
 
             List<Issuer> issuers = whiteList.getIssuers(jwt.getBody().getIssuer());
             // Okay, the issuer seems to have multiple kids for the same issuer ID, so take the first one...
-            issuer = issuers.isEmpty() ? null : issuers.get(0);
+            issuer = issuers.isEmpty() ? null : issuers.getFirst();
         }
 
         if (issuer == null) {
