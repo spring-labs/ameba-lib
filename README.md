@@ -9,6 +9,7 @@ in Maven `provided` scope to cut transitive dependencies.
 
 ## Usage
 **Notice:** 
+- Two development branches exist for the minimal supported Java version (jdk/17/dev branch) and the current supported Java version (master branch)
 - The latest release and the current development branch are tested against Spring Boot 3.2.5
 - Spring Boot 2.7.x compatible releases use ameba-lib version 3.x
 - Spring Boot 1.5.x compatible releases use ameba-lib version 1.x
@@ -20,12 +21,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>4.1-SNAPSHOT</version>
+                <version>4.1-jdk17-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>4.1-SNAPSHOT</version>
+                <version>4.1-jdk17-SNAPSHOT</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>

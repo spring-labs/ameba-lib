@@ -58,7 +58,7 @@ public class TokenResolverStrategy implements IdentityResolverStrategy {
         }
         ExtractionResult extract;
         try {
-            extract = tokenExtractor.extract(identity.getFirst());
+            extract = tokenExtractor.extract(identity.get(0));
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             return Optional.empty();

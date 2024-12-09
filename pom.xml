@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.interface21</groupId>
     <artifactId>ameba-lib</artifactId>
-    <version>4.1-SNAPSHOT</version>
+    <version>4.1-jdk17-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>Ameba Utilities</description>
     <url>https://github.com/spring-labs/ameba-lib</url>
@@ -28,7 +28,7 @@
     </developers>
     <properties>
         <additionalparam>-Xdoclint:none</additionalparam> <!-- see: http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html -->
-        <java.version>21</java.version>
+        <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>

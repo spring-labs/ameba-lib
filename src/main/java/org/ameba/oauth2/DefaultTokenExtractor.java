@@ -99,7 +99,7 @@ public class DefaultTokenExtractor implements TokenExtractor {
 
             var issuers = whiteList.getIssuers(tokenPayload.get("iss").asText());
             // Okay, the issuer seems to have multiple kids for the same issuer ID, so take the first one...
-            issuer = issuers.isEmpty() ? null : issuers.getFirst();
+            issuer = issuers.isEmpty() ? null : issuers.get(0);
         }
 
         if (issuer == null) {

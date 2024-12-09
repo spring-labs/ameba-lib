@@ -41,6 +41,6 @@ public class HeaderAttributeResolverStrategy implements IdentityResolverStrategy
         if (identity.isEmpty() || identity.get().isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(new SimpleIdentity(identity.get().getFirst()));
+        return Optional.of(new SimpleIdentity(identity.get().get(0)));
     }
 }
