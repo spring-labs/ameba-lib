@@ -3,7 +3,7 @@ on:
   push:
     branches-ignore:
       - master
-      - jdk/*
+      - jdk/**
 
 env:
   MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
