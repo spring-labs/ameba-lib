@@ -22,11 +22,17 @@ package org.ameba.http.ctx;
  */
 class SimpleCallContextProvider implements CallContextProvider {
 
+    private final String caller;
+
+    public SimpleCallContextProvider(String caller) {
+        this.caller = caller;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public CallContext getInitialCallContext() {
-        return new CallContext();
+        return caller != null ? new CallContext(caller) : new CallContext();
     }
 }

@@ -27,9 +27,11 @@ import org.springframework.cloud.sleuth.Tracer;
 class TraceableCallContextProvider implements CallContextProvider {
 
     private final Tracer tracer;
+    private final String caller;
 
-    public TraceableCallContextProvider(Tracer tracer) {
+    public TraceableCallContextProvider(Tracer tracer, String caller) {
         this.tracer = tracer;
+        this.caller = caller;
     }
 
     /**
@@ -39,7 +41,7 @@ class TraceableCallContextProvider implements CallContextProvider {
      */
     @Override
     public CallContext getInitialCallContext() {
-        var ctx = new CallContext();
+        var ctx = caller != null ? new CallContext(caller) : new CallContext();
         if (tracer != null && tracer.currentSpan() != null) {
             ctx.setTraceId(tracer.currentSpan().context().traceId());
         }

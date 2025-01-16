@@ -27,9 +27,11 @@ import org.ameba.http.ctx.CallContextProvider;
 class OpenTelemetryCallContextProvider implements CallContextProvider {
 
     private final Tracer tracer;
+    private final String caller;
 
-    public OpenTelemetryCallContextProvider(Tracer tracer) {
+    public OpenTelemetryCallContextProvider(Tracer tracer, String caller) {
         this.tracer = tracer;
+        this.caller = caller;
     }
 
     /**
@@ -39,7 +41,7 @@ class OpenTelemetryCallContextProvider implements CallContextProvider {
      */
     @Override
     public CallContext getInitialCallContext() {
-        var ctx = new CallContext();
+        var ctx = caller != null ? new CallContext(caller) : new CallContext();
         if (tracer != null && tracer.currentSpan() != null) {
             ctx.setTraceId(tracer.currentSpan().context().traceId());
         }
