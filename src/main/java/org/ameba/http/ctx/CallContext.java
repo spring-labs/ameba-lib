@@ -16,7 +16,9 @@
 package org.ameba.http.ctx;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.ameba.annotation.Default;
 
+import java.beans.ConstructorProperties;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +39,14 @@ public class CallContext implements Serializable {
     private String traceId;
     /** Arbitrary details populated as part of the {@link CallContext}. */
     private Map<String, Serializable> details = new HashMap<>();
+
+    @Default
+    public CallContext() {}
+
+    @ConstructorProperties("caller")
+    public CallContext(String caller) {
+        this.caller = caller;
+    }
 
     /**
      * Get the name of the business transaction.

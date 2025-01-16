@@ -20,6 +20,7 @@ import org.ameba.annotation.ExcludeFromScan;
 import org.ameba.http.ctx.CallContextProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.cloud.sleuth.Tracer;
@@ -39,8 +40,9 @@ public class TraceableCallContextConfiguration {
 
     @ConditionalOnClass(name = "org.springframework.cloud.sleuth.Tracer")
     @Bean(name = "traceableCallContextProvider")
-    public CallContextProvider traceableCallContextProvider(Tracer tracer) {
+    public CallContextProvider traceableCallContextProvider(Tracer tracer,
+            @Value("${spring.application.name:#{null}}") String applicationName) {
         BOOT_LOGGER.info("-- w/ Sleuth Tracing");
-        return new TraceableCallContextProvider(tracer);
+        return new TraceableCallContextProvider(tracer, applicationName);
     }
 }

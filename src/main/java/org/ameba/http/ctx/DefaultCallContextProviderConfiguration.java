@@ -16,6 +16,7 @@
 package org.ameba.http.ctx;
 
 import org.ameba.annotation.ExcludeFromScan;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
@@ -36,7 +37,7 @@ public class DefaultCallContextProviderConfiguration {
 
     @ConditionalOnMissingBean(name = "traceableCallContextProvider")
     @Bean
-    public CallContextProvider callContextProvider() {
-        return new SimpleCallContextProvider();
+    public CallContextProvider callContextProvider(@Value("${spring.application.name:#{null}}") String applicationName) {
+        return new SimpleCallContextProvider(applicationName);
     }
 }
