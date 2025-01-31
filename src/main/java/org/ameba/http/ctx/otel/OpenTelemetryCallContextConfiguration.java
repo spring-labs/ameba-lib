@@ -49,4 +49,6 @@ public class OpenTelemetryCallContextConfiguration {
             return new OpenTelemetryCallContextProvider(tracer, applicationName);
         }
     }
+
+    private OpenTelemetryCallContextConfiguration() { }
 }

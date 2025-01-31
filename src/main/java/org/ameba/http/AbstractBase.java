@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Abstract base class adds Spring HATEOAS support.
@@ -100,5 +101,28 @@ public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends 
      */
     public void setLastModifiedDt(LocalDateTime lastModifiedDt) {
         this.lastModifiedDt = lastModifiedDt;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AbstractBase<?> that = (AbstractBase<?>) o;
+        return Objects.equals(ol, that.ol) && Objects.equals(createDt, that.createDt) && Objects.equals(lastModifiedDt, that.lastModifiedDt);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * All fields.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), ol, createDt, lastModifiedDt);
     }
 }

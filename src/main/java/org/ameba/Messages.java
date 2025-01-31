@@ -48,11 +48,13 @@ public final class Messages {
     /** Signals that a resource does exist unexpectedly. */
     public static final String ALREADY_EXISTS = "already.exists";
     /** Signals a generic gateway problem. */
-    public static String GW_GENERIC = "gw.generic";
+    public static final String GW_GENERIC = "gw.generic";
     /** Signals a gateway timeout. */
-    public static String GW_TIMEOUT = "gw.timeout";
+    public static final String GW_TIMEOUT = "gw.timeout";
     /** Signals a bad request. */
-    public static String REQ_GENERIC = "req.generic-error";
+    public static final String REQ_GENERIC = "req.generic-error";
 	/** Signals that a resource has changed unexpectedly and cannot be modified by the caller. */
 	public static final String RESOURCE_CHANGED_UNEXPECTEDLY = "resource.changed.unexpectedly";
+
+    private Messages() { }
 }

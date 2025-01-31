@@ -60,7 +60,7 @@ public class IdentityFilter extends OncePerRequestFilter {
             HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         String fromSC = (String) request.getServletContext().getAttribute(Constants.PARAM_IDENTITY_ENABLED);
-        boolean identityEnabled = Boolean.valueOf(fromSC == null ? getFilterConfig().getInitParameter(Constants.PARAM_IDENTITY_ENABLED) : fromSC);
+        boolean identityEnabled = Boolean.parseBoolean(fromSC == null ? getFilterConfig().getInitParameter(Constants.PARAM_IDENTITY_ENABLED) : fromSC);
         if (identityEnabled) {
 
             Optional<Identity> identity = strategy.getIdentity(getHeaders(request));
@@ -68,7 +68,7 @@ public class IdentityFilter extends OncePerRequestFilter {
                 IdentityContextHolder.setCurrentIdentity(identity.get().getId());
             } else {
                 String throwParam = (String) request.getServletContext().getAttribute(Constants.PARAM_IDENTITY_THROW_IF_NOT_PRESENT);
-                boolean throwIfNotPresent = Boolean.valueOf(throwParam == null ? getFilterConfig().getInitParameter(Constants.PARAM_IDENTITY_THROW_IF_NOT_PRESENT) : throwParam);
+                boolean throwIfNotPresent = Boolean.parseBoolean(throwParam == null ? getFilterConfig().getInitParameter(Constants.PARAM_IDENTITY_THROW_IF_NOT_PRESENT) : throwParam);
                 if (throwIfNotPresent) {
                     response.setStatus(HttpStatus.BAD_REQUEST.value());
                     throw new IllegalArgumentException(String.format("No identity information available in http header. Expected header [%s] attribute not set", HEADER_VALUE_X_IDENTITY));

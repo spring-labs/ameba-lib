@@ -30,11 +30,12 @@ import java.util.Properties;
 /**
  * An AbstractMvcConfiguration class can be extended to inherit a pre-configured {@code MessageSource} and ressource handlers
  *
+ * @deprecated Will be removed if not used anymore
  * @author Heiko Scherrer
  * @version 1.0
  * @since 1.4.1
  */
-@Deprecated
+@Deprecated(since = "4.1.0")
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public abstract class AbstractMvcConfiguration implements WebMvcConfigurer {
 
