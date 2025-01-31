@@ -34,6 +34,12 @@
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.scm.id>github</project.scm.id> <!-- Used to release and tag on GitHub -->
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.java.binaries>target/classes</sonar.java.binaries>
+        <sonar.java.source>${java.version}</sonar.java.source>
+        <sonar.organization>openwms-github</sonar.organization>
+        <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+        <sonar.sources>src/main/java/</sonar.sources>
 
         <!-- Dependency versions -->
         <de.flapdoodle.embed.mongo.version>4.12.2</de.flapdoodle.embed.mongo.version>
