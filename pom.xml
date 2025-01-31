@@ -40,6 +40,7 @@
         <sonar.organization>openwms-github</sonar.organization>
         <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
         <sonar.sources>src/main/java/</sonar.sources>
+        <sonar.branch.name>master</sonar.branch.name>
 
         <!-- Dependency versions -->
         <de.flapdoodle.embed.mongo.version>4.12.2</de.flapdoodle.embed.mongo.version>
