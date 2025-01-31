@@ -39,7 +39,7 @@ import static org.ameba.oauth2.issuer.IssuerEO.TABLE_NAME;
 public class IssuerEO extends ApplicationEntity implements Symmetric, Asymmetric, Issuer {
 
     public static final String TABLE_NAME = "T_ISSUER";
-    /** An unique name of the issuer. */
+    /** A unique name of the issuer. */
     @Column(name = "C_NAME", nullable = false, unique = true)
     private String name;
     /** The unique ID of the issuer, this may be a URL. */

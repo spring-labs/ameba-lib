@@ -41,8 +41,6 @@ public final class Constants {
     public static final String PARAM_IDENTITY_ENABLED = "identity.enabled";
     /** Name of servlet context param to define whether an exception shall be thrown in case the identity header is not present. */
     public static final String PARAM_IDENTITY_THROW_IF_NOT_PRESENT = "identity.throw";
-    /** */
-    public static final String PARAM_IDENTITY_STRATEGY = "identity.strategy";
 
     /** Name of the http attribute to propagate a client identifying name. */
     public static final String HEADER_VALUE_X_CALLERID = "X-CallerID";

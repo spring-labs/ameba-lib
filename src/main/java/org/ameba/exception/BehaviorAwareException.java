@@ -31,7 +31,7 @@ import java.io.Serializable;
 public abstract class BehaviorAwareException extends BusinessRuntimeException {
 
     /** Default constructor. */
-    public BehaviorAwareException() {
+    protected BehaviorAwareException() {
         super();
     }
 
@@ -40,7 +40,7 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      *
      * @param message The message
      */
-    public BehaviorAwareException(String message) {
+    protected BehaviorAwareException(String message) {
         super(message);
     }
 
@@ -50,7 +50,7 @@ public abstract class BehaviorAwareException extends BusinessRuntimeException {
      * @param message The message
      * @param messageKey The message key
      */
-    public BehaviorAwareException(String message, String messageKey) {
+    protected BehaviorAwareException(String message, String messageKey) {
         super(message, messageKey);
     }
 

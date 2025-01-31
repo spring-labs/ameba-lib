@@ -55,18 +55,38 @@ public final class ExtractionResult {
         this.extractionPossible = false;
     }
 
+    /**
+     * Is extraction of the JWT possible.
+     *
+     * @return {@code true} if so
+     */
     public boolean isExtractionPossible() {
         return extractionPossible;
     }
 
+    /**
+     * Get the reason.
+     *
+     * @return The reason as String
+     */
     public String getReason() {
         return reason;
     }
 
+    /**
+     * Get the JWT.
+     *
+     * @return The JWT
+     */
     public Jwt<?,?> getJwt() {
         return jwt;
     }
 
+    /**
+     * Check whether a JWT is part of the result.
+     *
+     * @return {@code true} if so
+     */
     public boolean hasJwt() {
         return jwt != null;
     }

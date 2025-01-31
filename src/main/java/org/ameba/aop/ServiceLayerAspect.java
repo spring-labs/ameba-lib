@@ -44,7 +44,7 @@ import java.util.stream.Stream;
 public class ServiceLayerAspect {
 
     /** Springs component name. */
-    public static final String COMPONENT_NAME = "ServiceLayerAspect";
+    public static final String COMPONENT_NAME = "serviceLayerAspect";
     private static final Logger SRV_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_ACCESS);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
@@ -126,8 +126,7 @@ public class ServiceLayerAspect {
      * @return Returns the exception to be thrown
      */
     public Exception translateException(Exception ex) {
-        if (ex instanceof BusinessRuntimeException) {
-            BusinessRuntimeException bre = (BusinessRuntimeException) ex;
+        if (ex instanceof BusinessRuntimeException bre) {
             MDC.put(LoggingCategories.MSGKEY, bre.getMessageKey());
             if (bre.getData() != null) {
                 MDC.put(LoggingCategories.MSGDATA, String.join(",", Stream.of(bre.getData()).filter(Objects::nonNull).map(Object::toString).toArray(String[]::new)));

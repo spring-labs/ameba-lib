@@ -38,6 +38,7 @@ import static com.jayway.jsonpath.JsonPath.read;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Response<T extends Serializable> extends RepresentationModel<Response<T>> implements Serializable {
 
+    public static final String CLASS = "class";
     /** A text message to transfer as server response. */
     private String message = "";
 
@@ -81,7 +82,7 @@ public class Response<T extends Serializable> extends RepresentationModel<Respon
         if (s.contains("message") &&
                 s.contains("messageKey") &&
                 s.contains("httpStatus") &&
-                s.contains("class")) {
+                s.contains(CLASS)) {
             var d = Configuration.defaultConfiguration().jsonProvider().parse(s);
             String[] obj = read(d, "$.obj");
             var r = new Response<>(read(d, "$.message"), read(d, "$.messageKey"), read(d, "$.httpStatus"), obj);
@@ -97,7 +98,7 @@ public class Response<T extends Serializable> extends RepresentationModel<Respon
     @JsonAnyGetter
     protected Map<String, String> any() {
         if (getFirst() != null) {
-            other.put("class", getFirst().getClass().getSimpleName());
+            other.put(CLASS, getFirst().getClass().getSimpleName());
         }
         return other;
     }
@@ -105,7 +106,7 @@ public class Response<T extends Serializable> extends RepresentationModel<Respon
     @JsonAnySetter
     protected void set(String name, String value) {
         if (getFirst() != null) {
-            other.put("class", getFirst().getClass().getSimpleName());
+            other.put(CLASS, getFirst().getClass().getSimpleName());
         }
     }
 
