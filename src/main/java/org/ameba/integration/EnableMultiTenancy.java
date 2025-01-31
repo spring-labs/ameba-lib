@@ -36,7 +36,9 @@ import java.lang.annotation.Target;
 @Import(MultiTenancySelector.class)
 public @interface EnableMultiTenancy {
 
+    /** The name of the default database schema. */
     String DEFAULT_SCHEMA = "public";
+    /** The prefix used to differentiate database schemas. */
     String DEFAULT_TENANT_SCHEMA_PREFIX = "t_";
 
     /**

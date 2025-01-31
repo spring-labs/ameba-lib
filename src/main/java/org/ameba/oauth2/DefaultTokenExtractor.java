@@ -40,6 +40,9 @@ public class DefaultTokenExtractor implements TokenExtractor {
     private final IssuerWhiteList<Issuer> whiteList;
     private final List<TokenParser> parsers;
 
+    /**
+     * {@inheritDoc}
+     */
     public DefaultTokenExtractor(IssuerWhiteList whiteList, List<TokenParser> parsers) {
         this.whiteList = whiteList;
         this.parsers = parsers;
