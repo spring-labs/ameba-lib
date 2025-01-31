@@ -38,7 +38,7 @@
         <sonar.java.binaries>target/classes</sonar.java.binaries>
         <sonar.java.source>${java.version}</sonar.java.source>
         <sonar.organization>openwms-github</sonar.organization>
-        <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+        <sonar.projectKey>org.openwms:${project.artifactId}</sonar.projectKey>
         <sonar.sources>src/main/java/</sonar.sources>
 
         <!-- Dependency versions -->
