@@ -22,6 +22,7 @@ package org.ameba.app;
  */
 public final class SpringProfiles {
 
+	/*~ ------ Stages ------- */
 	/** Activate this profile in development environment. */
 	public static final String DEVELOPMENT_PROFILE = "DEV";
 	/** Activate this profile in integration test environment (e.g. CI system). */
@@ -30,8 +31,25 @@ public final class SpringProfiles {
 	public static final String UAT_PROFILE = "UAT";
 	/** Activate this profile in production environment. */
 	public static final String PRODUCTION_PROFILE = "PROD";
-	/** Activate this profile to enable asynchronous messaging capabilities. */
+
+	/*~ ------ Operation Modes ------- */
+	/** Used to define that the service is running in a distributed environment. */
+	public static final String DISTRIBUTED = "DISTRIBUTED";
+
+	/*~ ------ Asynchronous Messaging ------- */
+	/**
+	 * Activate this profile to enable asynchronous messaging capabilities.
+	 *
+	 * @deprecated Pick one of the concrete asynchronous messaging solutions instead, like {@link #AMQP}, {@link #MQTT} or {@link #KAFKA}.
+	 */
+	@Deprecated(forRemoval = true)
 	public static final String ASYNCHRONOUS_PROFILE ="ASYNCHRONOUS";
+	/** Activate this profile to enable asynchronous messaging capabilities over an AMQP message broker. */
+	public static final String AMQP ="AMQP";
+	/** Activate this profile to enable asynchronous messaging capabilities over a MQTT message broker. */
+	public static final String MQTT ="MQTT";
+	/** Activate this profile to enable asynchronous messaging capabilities over a Kafka message broker. */
+	public static final String KAFKA ="KAFKA";
 
 	private SpringProfiles() { }
 }
