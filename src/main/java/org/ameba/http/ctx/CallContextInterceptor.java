@@ -53,8 +53,12 @@ public class CallContextInterceptor implements HandlerInterceptor {
         if (LOGGER.isTraceEnabled()) {
             LOGGER.trace("CTXInterceptor: Enter preHandle");
         }
-        CallContextHolder.setCallContext(() -> request.getHeader(HEADER_VALUE_X_CALL_CONTEXT), callContextProvider.getInitialCallContext());
-        CallContextHolder.setCaller(() -> request.getHeader(HEADER_VALUE_X_CALLERID));
+        if (CallContextHolder.getOptionalCallContext().isEmpty()) {
+            CallContextHolder.setCallContext(() -> request.getHeader(HEADER_VALUE_X_CALL_CONTEXT), callContextProvider.getInitialCallContext());
+            CallContextHolder.setCaller(() -> request.getHeader(HEADER_VALUE_X_CALLERID));
+        } else {
+            LOGGER.warn("CTXInterceptor: CallContext already initialized");
+        }
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 

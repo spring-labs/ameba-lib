@@ -54,7 +54,7 @@ public final class CallContextHolder {
      *
      * @param caller The callerId
      */
-    static void setCaller(Supplier<String> caller) {
+    public static void setCaller(Supplier<String> caller) {
         if (caller == null || caller.get() == null || caller.get().isEmpty()) {
             if (LOGGER.isTraceEnabled()) {
                 LOGGER.trace("CTXHolder: No caller to set in context");
@@ -115,7 +115,7 @@ public final class CallContextHolder {
     /**
      * Destroy the thread-bound {@link CallContext}.
      */
-    static void destroy() {
+    public static void destroy() {
         callContext.remove();
     }
 }
