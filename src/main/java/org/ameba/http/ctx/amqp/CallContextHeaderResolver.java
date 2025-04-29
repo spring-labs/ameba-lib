@@ -18,7 +18,11 @@ package org.ameba.http.ctx.amqp;
 import org.ameba.amqp.MessagePostProcessorProvider;
 import org.ameba.http.ctx.CallContextHolder;
 import org.ameba.http.ctx.CallContextProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.MessagePostProcessor;
+
+import static org.ameba.LoggingCategories.CALL_CONTEXT;
 
 /**
  * A CallContextHeaderResolver.
@@ -27,6 +31,7 @@ import org.springframework.amqp.core.MessagePostProcessor;
  */
 class CallContextHeaderResolver implements MessagePostProcessorProvider {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CALL_CONTEXT);
     private final CallContextProvider callContextProvider;
 
     CallContextHeaderResolver(CallContextProvider callContextProvider) {
@@ -38,11 +43,18 @@ class CallContextHeaderResolver implements MessagePostProcessorProvider {
      */
     @Override
     public MessagePostProcessor getMessagePostProcessor() {
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("CallContextHeaderResolver: Enter getMessagePostProcessor");
+        }
         return (m -> {
             if (m.getMessageProperties().getHeaders().containsKey("owms_callcontext")) {
-                CallContextHolder.setCallContext(
-                        () -> (String) m.getMessageProperties().getHeaders().get("owms_callcontext"),
-                        callContextProvider.getInitialCallContext());
+                if (CallContextHolder.getOptionalCallContext().isEmpty()) {
+                    CallContextHolder.setCallContext(
+                            () -> (String) m.getMessageProperties().getHeaders().get("owms_callcontext"),
+                            callContextProvider.getInitialCallContext());
+                } else {
+                    LOGGER.warn("CallContextHeaderResolver: CallContext already initialized");
+                }
             }
             return m;
         });
