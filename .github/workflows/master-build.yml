@@ -35,7 +35,7 @@ jobs:
         with:
           servers: |
             [{
-              "id": "sonatype-nexus-snapshots",
+              "id": "ossrh-staging-api",
               "username": "${{ secrets.OSS_USERNAME }}",
               "password": "${{ secrets.OSS_PASSWORD }}"
             },
