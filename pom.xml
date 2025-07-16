@@ -674,9 +674,9 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>ossrh-staging-api</id>
+            <name>OSSRH Staging Repository</name>
+            <url>https://ossrh-staging-api.central.sonatype.com</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
