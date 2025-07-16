@@ -10,15 +10,16 @@ in Maven `provided` scope to cut transitive dependencies.
 ## Usage
 **Notice:** 
 - Two development branches exist for the minimal supported Java version (jdk/17/dev branch) and the current supported Java version (master branch)
-- The latest release and the current development branch are tested against Spring Boot 3.2.5
+- Spring Boot 3.5.x compatible releases use ameba-lib version 4.2
+- Spring Boot 3.2.x compatible releases use ameba-lib version 4.1
 - Spring Boot 2.7.x compatible releases use ameba-lib version 3.x
 - Spring Boot 1.5.x compatible releases use ameba-lib version 1.x
 
 | Ameba version | Spring Boot version | Java version | Supported until |
 |---------------|---------------------|--------------|-----------------|
-| 4.1.0         | 3.2.5               | 21           | 5.0             |
+| 4.1.0         | 3.2.5               | 21           | 4.2             |
 | 4.1.0-jdk17   | 3.2.5               | 17           | 4.2             |
-| 4.0           | 3.2.5               | 21           | 5.0             |
+| 4.0           | 3.2.5               | 21           | 4.1             |
 | 3.1           | 2.7.18.RELEASE      | 11           | EOL             |
 | 2.6           | 2.2.1.RELEASE       | 8            | EOL             |
 | 1.11.1        | 1.5.3.RELEASE       | 8            | EOL             |
@@ -30,12 +31,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>4.1.0-SNAPSHOT</version>
+                <version>4.1.1</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>4.1.0-SNAPSHOT</version>
+                <version>4.1.1</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>

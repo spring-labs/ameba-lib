@@ -32,6 +32,7 @@ import java.util.UUID;
 @MappedSuperclass
 public class ApplicationEntity extends BaseEntity implements Serializable {
 
+    /** Column name of persistent key. */
     public static final String C_ID = "C_PID";
     /**
      * Technical persisted key field, independently of the underlying database, assigned by the application layer, remains the same over
