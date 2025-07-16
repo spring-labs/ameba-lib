@@ -669,7 +669,7 @@
         <snapshotRepository>
             <id>ossrh-staging-api</id>
             <name>OSSRH Staging Repository</name>
-            <url>https://ossrh-staging-api.central.sonatype.com</url>
+            <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
