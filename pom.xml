@@ -184,9 +184,15 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <compilerArguments>
-                        <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-                    </compilerArguments>
+                    <!-- 
+                        Note: There's a warning that JPAMetaModelEntityProcessor is deprecated and replaced by 
+                        org.hibernate.processor.HibernateProcessor, but this processor is only available in 
+                        Hibernate 7.x, not in the current version 6.4.4.Final. When upgrading to Hibernate 7.x,
+                        this should be updated to use the new processor and add the hibernate-processor dependency.
+                    -->
+                    <annotationProcessors>
+                        <annotationProcessor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</annotationProcessor>
+                    </annotationProcessors>
                 </configuration>
             </plugin>
             <plugin>
