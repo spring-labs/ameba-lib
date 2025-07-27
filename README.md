@@ -17,7 +17,7 @@ in Maven `provided` scope to cut transitive dependencies.
 
 | Ameba version | Spring Boot version | Java version | Supported until |
 |---------------|---------------------|--------------|-----------------|
-| 4.1.2         | 3.2.5               | 21           | 4.2             |
+| 4.1.1         | 3.2.5               | 21           | 4.2             |
 | 4.1.1-jdk17   | 3.2.5               | 17           | 4.2             |
 | 4.0           | 3.2.5               | 21           | 4.1             |
 | 3.1           | 2.7.18.RELEASE      | 11           | EOL             |
