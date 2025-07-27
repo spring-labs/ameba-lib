@@ -21,6 +21,8 @@ import io.jsonwebtoken.Jwt;
  * A TokenParser is able to parse tokens as Strings into JWT types.
  *
  * @author Heiko Scherrer
+ * @param <T> Type of Issuer
+ * @param <U> Type of Jwt
  */
 public interface TokenParser<T extends Issuer, U extends Jwt> {
 

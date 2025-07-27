@@ -36,8 +36,8 @@ jobs:
           servers: |
             [{
               "id": "ossrh-staging-api",
-              "username": "${{ secrets.OSS_USERNAME }}",
-              "password": "${{ secrets.OSS_PASSWORD }}"
+              "username": "${{ secrets.OSSRH_USERNAME }}",
+              "password": "${{ secrets.OSSRH_PASSWORD }}"
             },
             {
               "id": "sonatype-nexus-staging",

@@ -16,7 +16,6 @@
 package org.ameba.amqp;
 
 import org.ameba.annotation.ExcludeFromScan;
-import org.ameba.app.SpringProfiles;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 
 import java.util.List;
 
@@ -36,7 +34,6 @@ import java.util.List;
  *
  * @author Heiko Scherrer
  */
-@Profile({SpringProfiles.ASYNCHRONOUS_PROFILE, SpringProfiles.AMQP})
 @ExcludeFromScan
 @ConditionalOnClass(org.springframework.amqp.rabbit.core.RabbitTemplate.class)
 @AutoConfiguration

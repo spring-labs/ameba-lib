@@ -28,11 +28,13 @@ import java.util.Objects;
  * Abstract base class adds Spring HATEOAS support.
  *
  * @author Heiko Scherrer
+ * @param <T> Any bounded type
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.PUBLIC_ONLY)
 public abstract class AbstractBase<T extends AbstractBase<? extends T>> extends RepresentationModel<T> {
 
+    /** Date time format with Zulu identifier and nanoseconds. */
     public static final String DATETIME_FORMAT_ZULU = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'";
 
     /** The current version of the Value Object (VO) derived from the version of the Entity Object (EO). */

@@ -34,6 +34,7 @@ import static com.jayway.jsonpath.JsonPath.read;
  * It contains an array of items specific to the request. Refer to the concept of <a href="https://github.com/kevinswiber/siren">SIREN</a>.
  *
  * @author Heiko Scherrer
+ * @param <T> Any type
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Response<T extends Serializable> extends RepresentationModel<Response<T>> implements Serializable {
