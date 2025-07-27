@@ -18,7 +18,7 @@ in Maven `provided` scope to cut transitive dependencies.
 | Ameba version | Spring Boot version | Java version | Supported until |
 |---------------|---------------------|--------------|-----------------|
 | 4.1.2         | 3.2.5               | 21           | 4.2             |
-| 4.1.0-jdk17   | 3.2.5               | 17           | 4.2             |
+| 4.1.1-jdk17   | 3.2.5               | 17           | 4.2             |
 | 4.0           | 3.2.5               | 21           | 4.1             |
 | 3.1           | 2.7.18.RELEASE      | 11           | EOL             |
 | 2.6           | 2.2.1.RELEASE       | 8            | EOL             |
@@ -31,12 +31,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>4.1.2</version>
+                <version>4.2.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>4.1.2</version>
+                <version>4.2.0-SNAPSHOT</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>
