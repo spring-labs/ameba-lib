@@ -31,6 +31,6 @@ public class BaseConfiguration {
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);
 
     public BaseConfiguration() {
-        BOOT_LOGGER.info("Ameba Lib 4.1");
+        BOOT_LOGGER.info("Ameba Lib 4.2.0");
     }
 }
