@@ -22,12 +22,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,7 +49,7 @@ public abstract class AbstractMongoDBIntegrationTests {
     static final String DATABASE = "database";
     @Autowired
     MongoTemplate template;
-    @MockBean
+    @MockitoBean
     private Tracer tracer;
     /*
     @BeforeClass
