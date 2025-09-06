@@ -44,7 +44,7 @@ import java.util.stream.Stream;
 public class ServiceLayerAspect {
 
     /** Springs component name. */
-    public static final String COMPONENT_NAME = "serviceLayerAspect";
+    public static final String COMPONENT_NAME = "ServiceLayerAspect";
     private static final Logger SRV_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_ACCESS);
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.SERVICE_LAYER_EXCEPTION);
     private static final Logger BOOT_LOGGER = LoggerFactory.getLogger(LoggingCategories.BOOT);

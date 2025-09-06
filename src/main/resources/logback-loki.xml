@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+
+    <variable scope="context" name="mdcPattern" value="%replace(;%X{MSGKEY};%X{MSGDATA}){';+( |$)', ''}"/>
+    <springProperty scope="context" name="appName" source="spring.application.name"/>
+
+    <conversionRule conversionWord="tid" class="org.ameba.logging.ThreadIdProvider" />
+    <conversionRule conversionWord="clr" class="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" class="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" class="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) [${appName}: traceId:%X{traceId}, spanId:%X{spanId}] %clr([${PID:- }/%tid]){magenta} %clr(%X{X-Tenant:-none}){red} %clr(-){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+        <message>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </message>
+        <http>
+            <url>http://loki:3100/loki/api/v1/push</url>
+        </http>
+        <batch>
+            <maxItems>800</maxItems> <!-- Max number of events to put into a single batch before sending it to Loki -->
+            <timeoutMs>10000</timeoutMs> <!-- Max time in milliseconds to keep a batch before sending it to Loki -->
+            <staticLabels>true</staticLabels> <!-- Labels will be calculated only once for the first log record and then used for all other log records without re-calculation -->
+        </batch>
+        <labels>
+            app=${appName}
+            host=${HOSTNAME}
+        </labels>
+        <structuredMetadata>
+            level=%level
+            thread=%thread
+            logger=%logger
+        </structuredMetadata>
+        <readMarkers>false</readMarkers> <!-- Disabled to prevent conflicts with staticLabels. Markers would add dynamic labels which contradicts static label configuration -->
+        <metricsEnabled>true</metricsEnabled> <!-- The appender will report its metrics using Micrometer -->
+    </appender>
+</included>

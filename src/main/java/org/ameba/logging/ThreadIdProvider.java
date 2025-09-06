@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * Logback:
  * <pre>
- *     &lt;conversionRule conversionWord="tid" converterClass="org.ameba.logging.ThreadIdProvider" /&gt;
+ *     &lt;conversionRule conversionWord="tid" class="org.ameba.logging.ThreadIdProvider" /&gt;
  *     &lt;appender&gt;
  *         &lt;encoder&gt;
  *             ...
