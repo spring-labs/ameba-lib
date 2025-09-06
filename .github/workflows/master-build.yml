@@ -32,7 +32,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Check version for PR
+      - name: Check version
         if: github.event_name != 'pull_request'
         id: version-check
         run: |
@@ -87,7 +87,6 @@ jobs:
         run: >
           ./mvnw clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar
           -Dsonar.login=$SONAR_TOKEN
-          -DSONAR_TOKEN=$SONAR_TOKEN
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -B $MAVEN_OPTS
         env:
