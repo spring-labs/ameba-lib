@@ -61,7 +61,7 @@ public class PresentationLayerAspect {
         } catch (Exception ex) {
             if (EXC_LOGGER.isErrorEnabled() && !AspectSupport.hasNotLogged(ex)) {
                 if (ex instanceof BusinessRuntimeException bre) {
-                    EXC_LOGGER.error(ex.getMessage(), ex, bre.getData());
+                    EXC_LOGGER.error("{} [data={}]", ex.getMessage(), bre.getData(), ex);
                 } else {
                     EXC_LOGGER.error(ex.getMessage(), ex);
                 }

@@ -213,10 +213,9 @@ payload that travels back to the caller.
   `BadRequestException` (400), `GatewayException` (502), `GatewayTimeoutException` (504).
 
 Combine with `org.ameba.annotation.NotLogged` on exception types whose stack traces should never hit the log.
-The marker is honoured by all three layer aspects (service, integration, presentation) and is resolved through
-`AspectSupport.hasNotLogged`, which (a) walks the full cause chain so a `@NotLogged` exception wrapped inside a
-non-annotated one is also suppressed, and (b) relies on `@Inherited`, so subclasses of a `@NotLogged` base type
-inherit the suppression automatically.
+The marker is honoured by all three layer aspects (service, integration, presentation): logging is suppressed if
+the thrown exception or any exception in its cause chain is annotated with `@NotLogged`. Because the annotation is
+`@Inherited`, subclasses of a `@NotLogged` base type inherit the suppression automatically.
 
 ### Internationalised messages
 
