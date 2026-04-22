@@ -32,7 +32,7 @@ import org.springframework.context.annotation.Bean;
 @AutoConfiguration
 public class DefaultCallContextProviderConfiguration {
 
-    @ConditionalOnMissingBean(name = "traceableCallContextProvider")
+    @ConditionalOnMissingBean(CallContextProvider.class)
     @Bean
     public CallContextProvider callContextProvider(@Value("${spring.application.name:#{null}}") String applicationName) {
         return new SimpleCallContextProvider(applicationName);

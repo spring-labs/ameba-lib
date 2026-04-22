@@ -97,7 +97,7 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
             dataSource = this.defaultDataSource;
         } else {
             ConnectionProvider cp = ((ServiceRegistryImplementor) sessionFactory.getServiceRegistry()).getService(ConnectionProvider.class);
-            dataSource = cp == null ? null : cp.unwrap(DataSource.class);
+            dataSource = (cp != null && cp.isUnwrappableAs(DataSource.class)) ? cp.unwrap(DataSource.class) : null;
         }
         if (dataSource == null) {
             dataSource = springDataSource;
