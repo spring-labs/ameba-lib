@@ -35,12 +35,12 @@ Add as Maven dependency
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>4.3.0-SNAPSHOT</version>
+                <version>4.3.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
-                <version>4.3.0-SNAPSHOT</version>
+                <version>4.3.1-SNAPSHOT</version>
                 <type>test-jar</type>
             </dependency>
         </dependencies>
@@ -213,6 +213,9 @@ payload that travels back to the caller.
   `BadRequestException` (400), `GatewayException` (502), `GatewayTimeoutException` (504).
 
 Combine with `org.ameba.annotation.NotLogged` on exception types whose stack traces should never hit the log.
+The marker is honoured by all three layer aspects (service, integration, presentation): logging is suppressed if
+the thrown exception or any exception in its cause chain is annotated with `@NotLogged`. Because the annotation is
+`@Inherited`, subclasses of a `@NotLogged` base type inherit the suppression automatically.
 
 ### Internationalised messages
 
@@ -258,7 +261,8 @@ Supporting annotations in `org.ameba.annotation`:
 
 - `@TxService` – meta-annotation combining `@Service`, `@Transactional`, and `@Validated`.
 - `@Measured` – mark classes or public methods for timing by `MeasuredAspect`.
-- `@NotLogged` – suppress stack-trace logging for an exception type.
+- `@NotLogged` – suppress stack-trace logging for an exception type; `@Inherited`, and matched across the cause
+  chain by all three layer aspects.
 - `@NotTransformed` – opt a single service/integration method out of exception translation.
 - `@Public` – document that a type is intentionally `public`.
 - `@Default` – mark a preferred constructor/method (e.g. for MapStruct).

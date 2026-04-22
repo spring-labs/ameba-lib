@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2024 the original author or authors.
+ * Copyright 2015-2026 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,17 +17,21 @@ package org.ameba.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * A NotLogged is a marker annotation for application exception types to not log them with the logging framework.
+ * A NotLogged is a marker annotation for application exception types to not log them with the logging framework. The marker is
+ * {@link Inherited} so subclasses of an annotated exception are suppressed too. The ameba layer aspects additionally walk the cause chain,
+ * so a {@link NotLogged}-annotated exception wrapped inside another exception is also suppressed.
  *
  * @author Heiko Scherrer
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+@Inherited
 public @interface NotLogged {
 }

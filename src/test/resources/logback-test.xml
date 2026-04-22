@@ -6,7 +6,15 @@
     <appender name="CAP" class="org.ameba.test.LogCaptureAppender" />
     <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
 
-    <logger name="SERVICE_LAYER_EXCEPTION" level="ERROR">
+    <logger name="SERVICE_LAYER_EXCEPTION" level="ERROR" additivity="false">
+        <appender-ref ref="CAP"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="INTEGRATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
+        <appender-ref ref="CAP"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="PRESENTATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
         <appender-ref ref="CAP"/>
         <appender-ref ref="STDOUT"/>
     </logger>

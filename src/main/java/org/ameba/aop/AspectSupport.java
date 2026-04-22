@@ -15,20 +15,29 @@
  */
 package org.ameba.aop;
 
-import java.util.Optional;
+import org.ameba.annotation.NotLogged;
 
 /**
- * A ExceptionTranslator is able to translate a given Exception type.
+ * A AspectSupport collects small helpers shared between the ameba layer aspects.
  *
  * @author Heiko Scherrer
  */
-public interface ExceptionTranslator {
+final class AspectSupport {
+
+    private AspectSupport() {}
 
     /**
-     * Translates the given exception.
+     * Check whether {@code ex} or any exception in its cause chain is annotated with {@link NotLogged}.
      *
-     * @param ex The exception to be translated
-     * @return An optional containing the translated exception, or empty if translation is not possible
+     * @param ex The exception to inspect
+     * @return {@literal true} if {@link NotLogged} is present on the exception or any of its causes
      */
-    Optional<Exception> translate(Exception ex);
+    static boolean hasNotLogged(Throwable ex) {
+        for (Throwable t = ex; t != null; t = t.getCause()) {
+            if (t.getClass().getAnnotation(NotLogged.class) != null) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
