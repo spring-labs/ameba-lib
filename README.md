@@ -213,6 +213,10 @@ payload that travels back to the caller.
   `BadRequestException` (400), `GatewayException` (502), `GatewayTimeoutException` (504).
 
 Combine with `org.ameba.annotation.NotLogged` on exception types whose stack traces should never hit the log.
+The marker is honoured by all three layer aspects (service, integration, presentation) and is resolved through
+`AspectSupport.hasNotLogged`, which (a) walks the full cause chain so a `@NotLogged` exception wrapped inside a
+non-annotated one is also suppressed, and (b) relies on `@Inherited`, so subclasses of a `@NotLogged` base type
+inherit the suppression automatically.
 
 ### Internationalised messages
 
@@ -258,7 +262,8 @@ Supporting annotations in `org.ameba.annotation`:
 
 - `@TxService` – meta-annotation combining `@Service`, `@Transactional`, and `@Validated`.
 - `@Measured` – mark classes or public methods for timing by `MeasuredAspect`.
-- `@NotLogged` – suppress stack-trace logging for an exception type.
+- `@NotLogged` – suppress stack-trace logging for an exception type; `@Inherited`, and matched across the cause
+  chain by all three layer aspects.
 - `@NotTransformed` – opt a single service/integration method out of exception translation.
 - `@Public` – document that a type is intentionally `public`.
 - `@Default` – mark a preferred constructor/method (e.g. for MapStruct).
