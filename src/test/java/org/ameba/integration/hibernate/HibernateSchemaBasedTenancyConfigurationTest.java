@@ -21,11 +21,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.cloud.sleuth.Tracer;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
@@ -46,9 +44,6 @@ public class HibernateSchemaBasedTenancyConfigurationTest {
 
     @Autowired
     private TransactionalService service;
-
-    @MockitoBean
-    private Tracer tracer;
 
     @AfterAll
     public static void clearContext() {

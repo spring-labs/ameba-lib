@@ -16,8 +16,9 @@
 package org.ameba.integration.hibernate;
 
 import org.hibernate.cfg.MultiTenancySettings;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
+import org.springframework.boot.hibernate.autoconfigure.HibernatePropertiesCustomizer;
 
+import javax.sql.DataSource;
 import java.util.Map;
 
 /**
@@ -31,6 +32,16 @@ import java.util.Map;
 public class SchemaSeparationConfigurator implements HibernatePropertiesCustomizer {
 
     public static Object tenantResolver;
+
+    /**
+     * Creates a configurator and registers the Spring-managed DataSource as a static bridge for
+     * {@link DefaultMultiTenantConnectionProvider}, which is instantiated by Hibernate (outside Spring's IoC container).
+     *
+     * @param dataSource the Spring-managed DataSource
+     */
+    public SchemaSeparationConfigurator(DataSource dataSource) {
+        DefaultMultiTenantConnectionProvider.springDataSource = dataSource;
+    }
 
     /**
      * {@inheritDoc}

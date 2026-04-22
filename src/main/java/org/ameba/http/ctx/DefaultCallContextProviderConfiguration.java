@@ -23,19 +23,16 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClas
 import org.springframework.context.annotation.Bean;
 
 /**
- * A DefaultCallContextProviderConfiguration provides the default (fallback) CallContextProvider if no Sleuth is used.
+ * A DefaultCallContextProviderConfiguration provides the default (fallback) CallContextProvider if no OpenTelemetry tracer is present.
  *
  * @author Heiko Scherrer
  */
 @ExcludeFromScan
-@ConditionalOnMissingClass({
-        "org.springframework.cloud.sleuth.Tracer",
-        "io.micrometer.tracing.otel.bridge.OtelTracer"
-})
+@ConditionalOnMissingClass("io.micrometer.tracing.otel.bridge.OtelTracer")
 @AutoConfiguration
 public class DefaultCallContextProviderConfiguration {
 
-    @ConditionalOnMissingBean(name = "traceableCallContextProvider")
+    @ConditionalOnMissingBean(CallContextProvider.class)
     @Bean
     public CallContextProvider callContextProvider(@Value("${spring.application.name:#{null}}") String applicationName) {
         return new SimpleCallContextProvider(applicationName);
