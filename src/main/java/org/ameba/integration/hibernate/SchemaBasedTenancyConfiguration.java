@@ -16,9 +16,12 @@
 package org.ameba.integration.hibernate;
 
 import org.ameba.annotation.ExcludeFromScan;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
+import org.springframework.boot.hibernate.autoconfigure.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
+
 
 /**
  * A SchemaBasedTenancyConfiguration is a Spring configuration file, excluded from component scanning to bootstrap beans
@@ -31,8 +34,8 @@ import org.springframework.context.annotation.Configuration;
 public class SchemaBasedTenancyConfiguration {
 
     /** Contribute Hibernate properties to use schema based separation. */
-    @Bean HibernatePropertiesCustomizer schemaSeparationConfigurator() {
-        return new SchemaSeparationConfigurator();
+    @Bean HibernatePropertiesCustomizer schemaSeparationConfigurator(DataSource dataSource) {
+        return new SchemaSeparationConfigurator(dataSource);
     }
 
     // @Bean DefaultMultiTenantConnectionProvider DefaultMultiTenantConnectionProvider() {

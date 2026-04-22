@@ -27,7 +27,6 @@ import org.hibernate.service.spi.ServiceRegistryAwareService;
 import org.hibernate.service.spi.ServiceRegistryImplementor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate5.SessionFactoryUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -46,14 +45,19 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
     SessionFactoryImplementor sessionFactory;
     public static String defaultSchema;
     public static String tenantSchemaPrefix;
+    /** Provided by the Spring-managed {@link SchemaSeparationConfigurator} as a fallback when Hibernate settings lookup fails. */
+    static DataSource springDataSource;
 
     private DataSource defaultDataSource;
 
     @Override
     public void injectServices(ServiceRegistryImplementor serviceRegistry) {
-        Object dataSourceConfigValue = serviceRegistry.getService(ConfigurationService.class)
-                .getSettings()
-                .get(AvailableSettings.DATASOURCE);
+        var settings = serviceRegistry.getService(ConfigurationService.class).getSettings();
+        Object dataSourceConfigValue = settings.get(AvailableSettings.DATASOURCE);
+        if (dataSourceConfigValue == null) {
+            // Spring Boot 4.0+ sets the Jakarta standard property instead of the Hibernate-specific one
+            dataSourceConfigValue = settings.get("jakarta.persistence.nonJtaDataSource");
+        }
         if (dataSourceConfigValue instanceof DataSource dataSource) {
             this.defaultDataSource = dataSource;
         } else if (dataSourceConfigValue instanceof String jndiName) {
@@ -77,7 +81,8 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
                         "]");
             }
         } else {
-            throw new HibernateException("DataSource configuration not found");
+            LOGGER.warn("DataSource configuration not found in Hibernate settings under '{}' or 'jakarta.persistence.nonJtaDataSource'",
+                    AvailableSettings.DATASOURCE);
         }
     }
 
@@ -91,7 +96,11 @@ public class DefaultMultiTenantConnectionProvider implements MultiTenantConnecti
             LOGGER.warn("SessionFactory not set, using default DataSource");
             dataSource = this.defaultDataSource;
         } else {
-            dataSource = SessionFactoryUtils.getDataSource(sessionFactory);
+            ConnectionProvider cp = ((ServiceRegistryImplementor) sessionFactory.getServiceRegistry()).getService(ConnectionProvider.class);
+            dataSource = cp == null ? null : cp.unwrap(DataSource.class);
+        }
+        if (dataSource == null) {
+            dataSource = springDataSource;
         }
         if (dataSource == null) {
             throw new SQLException("Cannot obtain JDBC Connection, no DataSource accessible from SessionFactory");

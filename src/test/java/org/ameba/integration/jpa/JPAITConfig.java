@@ -15,12 +15,10 @@
  */
 package org.ameba.integration.jpa;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.cloud.sleuth.Tracer;
+import org.springframework.boot.persistence.autoconfigure.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /**
  * A JPAITConfig.
@@ -34,6 +32,4 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 @EntityScan(basePackageClasses = JPAITConfig.class)
 public class JPAITConfig {
 
-    @MockitoBean
-    private Tracer tracer;
 }

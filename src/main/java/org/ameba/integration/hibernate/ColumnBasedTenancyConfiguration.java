@@ -16,7 +16,7 @@
 package org.ameba.integration.hibernate;
 
 import org.ameba.annotation.ExcludeFromScan;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
+import org.springframework.boot.hibernate.autoconfigure.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
 
 /**

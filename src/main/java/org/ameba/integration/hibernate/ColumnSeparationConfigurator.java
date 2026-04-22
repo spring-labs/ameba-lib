@@ -16,7 +16,7 @@
 package org.ameba.integration.hibernate;
 
 import org.hibernate.cfg.MultiTenancySettings;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
+import org.springframework.boot.hibernate.autoconfigure.HibernatePropertiesCustomizer;
 
 import java.util.Map;
 

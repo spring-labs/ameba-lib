@@ -16,6 +16,7 @@
 package org.ameba.integration.hibernate;
 
 import org.hibernate.boot.Metadata;
+import org.hibernate.boot.spi.BootstrapContext;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.integrator.spi.Integrator;
 import org.hibernate.service.UnknownServiceException;
@@ -43,10 +44,10 @@ public class SessionFactoryIntegrator implements Integrator {
      * Set the {@code sessionFactory} at the {@link DefaultMultiTenantConnectionProvider}.
      */
     @Override
-    public void integrate(Metadata metadata, SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
+    public void integrate(Metadata metadata, BootstrapContext bootstrapContext, SessionFactoryImplementor sessionFactory) {
         LOGGER.info("Integrating Hibernate session factory into {}", DefaultMultiTenantConnectionProvider.class.getName());
         try {
-            DefaultMultiTenantConnectionProvider service = serviceRegistry.getService(DefaultMultiTenantConnectionProvider.class);
+            DefaultMultiTenantConnectionProvider service = sessionFactory.getServiceRegistry().getService(DefaultMultiTenantConnectionProvider.class);
             service.sessionFactory = sessionFactory;
         } catch (UnknownServiceException use) {
             LOGGER.error("No Hibernate service DefaultMultiTenantConnectionProvider is registered, check the bootstrap configuration (i.e. Spring configuration)");

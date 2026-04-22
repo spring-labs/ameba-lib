@@ -10,6 +10,7 @@ in Maven `provided` scope to cut transitive dependencies.
 ## Usage
 **Notice:** 
 - Two development branches exist for the minimal supported Java version (jdk/17/dev branch) and the current supported Java version (master branch)
+- Spring Boot 4.0.x compatible releases use ameba-lib version 4.3
 - Spring Boot 3.5.x compatible releases use ameba-lib version 4.2
 - Spring Boot 3.2.x compatible releases use ameba-lib version 4.1
 - Spring Boot 2.7.x compatible releases use ameba-lib version 3.x
@@ -17,6 +18,7 @@ in Maven `provided` scope to cut transitive dependencies.
 
 | Ameba version | Spring Boot version | Java version | Supported until |
 |---------------|---------------------|--------------|-----------------|
+| 4.3.0         | 4.0.5               | 21           | TBD             |
 | 4.2.0         | 3.5.4               | 21           | 4.3.0           |
 | 4.2.0-jdk17   | 3.5.4               | 17           | 4.3.0-jdk17     |
 | 4.1.1         | 3.2.5               | 21           | 4.2.0           |
@@ -75,208 +77,430 @@ Add as Maven dependency
 To benefit from some abstract test classes use the `test-jar` for all other stuff go with 
 the `jar`.
 
-## Core Features
+## What's in the box
 
-- Spring Data extensions
-- Useful AOP aspects
-- Common exception classes
-- Web & MVC extensions
-- Mapper abstraction
-- Multi-tenancy
-- Logging extensions (Logback & Logstash)
-- OAuth2 Token Parsing and Handling
+Ameba-lib is a tool belt for Spring Boot services. Adding the jar pulls in **auto-configured infrastructure**
+(response envelope, REST template wiring, AMQP wiring, call-context propagation, JPA auditing). Optional
+capabilities (AOP, multi-tenancy, identity awareness) are activated with an `@Enable*` annotation on one of
+your `@Configuration` classes.
 
-### Spring Data extensions (1.4+)
+| Category                   | Package                              | Activation                                          |
+|----------------------------|--------------------------------------|-----------------------------------------------------|
+| Base/validation/REST/AMQP  | `org.ameba.app`, `org.ameba.http`, `org.ameba.amqp` | Auto-configured                      |
+| Call context propagation   | `org.ameba.http.ctx`                 | Auto-configured                                     |
+| Request-ID filter          | `org.ameba.http.RequestIDFilter`     | Register as `FilterRegistrationBean`                |
+| JPA / MongoDB base entities| `org.ameba.integration.{jpa,mongodb}`| Extend `BaseEntity` / `ApplicationEntity`           |
+| Exceptions & i18n          | `org.ameba.exception`, `org.ameba.i18n` | Import types directly                            |
+| Response envelope          | `org.ameba.http.Response`            | Import types directly                               |
+| AOP aspects                | `org.ameba.aop`, `org.ameba.annotation` | `@EnableAspects`                                 |
+| Multi-tenancy              | `org.ameba.tenancy`, `org.ameba.http.multitenancy`, `org.ameba.integration.hibernate` | `@EnableMultiTenancy` |
+| Identity awareness         | `org.ameba.http.identity`            | `@EnableIdentityAwareness`                          |
+| OAuth2 / JWT               | `org.ameba.oauth2`                   | Wire `JwtValidationStrategy` into your own filter   |
+| Logback extensions         | `logback-appenders.xml`, `logback-loggers.xml`, `org.ameba.logging` | `<include>` from `logback.xml` |
+| Bean mapping               | `org.ameba.mapping`                  | Inject `BeanMapper` (Dozer by default)              |
 
-Since version 1.4+ Ameba provides base classes for JPA entities ([#69][2], [#166][5]) as well as for Spring Data MongoDB entity classes
-([#79][3]). These common used types provide unique key definitions, version fields and timestamp fields to store date created and modified.
-An additional feature is the abstraction of Spring Data repositories. All this is put in package `org.ameba.integration`.
+## Quick start
 
-### Useful AOP aspects (1.2+)
+Adding the jar alone wires the following into your Spring Boot application without further configuration
+(listed in `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`):
 
-Four aspects are implemented to track method calls around application layers. Three of them measure and trace the method execution time at
-a defined logging category. The pointcut definition where the aspect actually takes place is pre-defined in `org.ameba.aop.Pointcuts`. This
-definition can be overridden by putting a customized `org.ameba.aop.Pointcuts` class on the classpath. In addition to method tracing some
-aspects although care about exception translation and offer an extension point to translate custom exceptions.
+- `BaseConfiguration`, `ValidationConfiguration` – base bootstrap and a `Validator` bean.
+- `RestTemplateConfiguration`, `LoadBalancedRestTemplateConfiguration` – a ready-to-use `RestTemplateBuilder`
+  (load-balanced variant conditional on Spring Cloud LoadBalancer).
+- `WebMvcConfiguration` – registers HTTP client interceptors that propagate call context, identity, and tenant
+  headers with any `RestTemplate` that picks up the `baseRestTemplateInterceptors` bean list.
+- `AmqpConfiguration` – overrides the default `SimpleRabbitListenerContainerFactory` to apply
+  `MessageHeaderEnhancer` and `MessagePostProcessorProvider` beans (conditional on the RabbitMQ AMQP classpath).
+- `CallContextWebMvcConfiguration`, `CallContextAmqpConfiguration`, `CallContextFeignConfiguration`,
+  `OpenTelemetryCallContextConfiguration`, `DefaultCallContextProviderConfiguration` – call-context propagation
+  over HTTP, AMQP, Feign, and OTel.
+- `IdentityFeignConfiguration`, `TenantFeignConfiguration`, `TenantAmqpConfiguration` – Feign and AMQP adapters
+  for identity and tenant headers (activated once `@EnableIdentityAwareness` / `@EnableMultiTenancy` is present).
+- `BaseJpaConfiguration` – JPA auditor wiring so `@CreatedBy` / `@LastModifiedBy` on `BaseEntity` works.
 
-Ameba AOP support is enabled by including the package `org.ameba.annotation` in component-scan **or** by using the `@EnableAspects`
-annotation on a custom `@Configuration` class. Furthermore `org.springframework:spring-aspects` needs to be at the classpath at runtime.
+A minimal Spring Boot application therefore only needs:
 
-| Aspect (classname)           | Method Tracing Logging Category | Exception Translation  | Exception Logging Category   |
-| ---------------------------- |:------------------------------- |:----------------------:|:---------------------------- |
-| PresentationLayerAspect      | --                              | --                     | PRESENTATION_LAYER_EXCEPTION |
-| ServiceLayerAspect           | SERVICE_LAYER_ACCESS            | X                      | SERVICE_LAYER_EXCEPTION      |
-| IntegrationLayerAspect       | INTEGRATION_LAYER_ACCESS        | X                      | INTEGRATION_LAYER_EXCEPTION  |
-| MeasuredAspect               | MEASURED                        | --                     | --                           |
+```java
+@SpringBootApplication
+@FilteredComponentScan(basePackages = "com.acme")     // optional, see "Component scanning"
+@EnableAspects                                        // optional, turns on AOP aspects
+@EnableMultiTenancy(separationStrategy = SeparationStrategy.SCHEMA)   // optional
+@EnableIdentityAwareness                              // optional
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+```
 
-For method tracing the SLF4J loglevel has to be configured to `INFO`, exception logging need to be configured to level `ERROR` instead.
-Since 2.2 logging of exception stack traces can be turned off for specific exception types that are marked with `org.ameba.annotation.NotLogged`.
+## Feature reference
 
-### Common exception classes (0.2+)
+### JPA & MongoDB base entities
 
- Exception classes we have used over and over again in projects were re-implemented in ameba-lib. All of them encapsulate a message key that
- can be used to translate the actual message text. Some kind of exceptions are of technical nature, whereas other exceptions express a
- behavior.
+`org.ameba.integration.jpa.BaseEntity` contributes a `Long` primary key (`C_PK`), an optimistic-locking column
+(`C_OL`), and the four auditing columns (`C_CREATED`, `C_CREATED_BY`, `C_UPDATED`, `C_UPDATED_BY`). Auditing is
+wired through `BaseJpaConfiguration`; the `AuditorAware` resolves the current identity from
+`IdentityContextHolder` when `@EnableIdentityAwareness` is active.
+
+```java
+@Entity
+@Table(name = "T_CUSTOMER")
+public class Customer extends ApplicationEntity {
+    @Column(name = "C_NAME") private String name;
+}
+```
+
+- `BaseEntity` – technical PK, optimistic locking, auditing timestamps and users.
+- `ApplicationEntity extends BaseEntity` – adds `pKey` (UUID-seeded `C_PID`) as a stable business key that
+  survives database migrations; `equals`/`hashCode` are based on `pKey`.
+- `TypedEntity<ID>` – marker interface both entities implement; used by `FindOperations` / `SaveOperations`.
+
+For MongoDB, `org.ameba.integration.mongodb.BaseEntity` provides the same shape (`_id`, `_ol`, `_created`,
+`_updated`). Put `@EnableMongoAuditing` on one of your `@Configuration` classes to activate the timestamps.
+
+### Repository operation abstractions
+
+The marker interfaces `FindOperations<T, ID>` and `SaveOperations<T, ID>` in `org.ameba.integration` declare
+`findAll` / `findById(id)` / `save` / `saveAll` contracts independent of the persistence provider. Use them
+when a service layer API should not leak Spring Data types.
+
+### Response envelope
+
+`org.ameba.http.Response<T>` wraps a payload with `message`, `messageKey`, `httpStatus`, and a dynamic
+`class` attribute (SIREN-inspired) so that non-HATEOAS-aware clients (e.g. native mobile apps) can discriminate
+response types.
+
+```java
+return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .body(Response.<CustomerVO>newBuilder()
+                .withMessage("Created")
+                .withMessageKey("customer.created")
+                .withHttpStatus(HttpStatus.CREATED.toString())
+                .withObj(customerVO)
+                .build());
+```
+
+Example payload:
+
+```json
+{
+  "message": "Created",
+  "messageKey": "customer.created",
+  "httpStatus": "201",
+  "obj": [ { "pKey": "a204c4ce-...", "name": "ACME" } ],
+  "class": "CustomerVO"
+}
+```
+
+`org.ameba.http.AbstractBase<T>` is a HATEOAS `RepresentationModel` superclass for view objects that adds
+`ol` / `createDt` / `lastModifiedDt` fields, serialised in Zulu time (`yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSS'Z'`).
+
+### Exception hierarchy
+
+All ameba exceptions carry a `messageKey` (for i18n via `Translator`) plus an optional `Serializable[] data`
+payload that travels back to the caller.
 
 ![Exception hierarchy][4]
 
-Referenced issues: [#1](https://github.com/spring-labs/ameba-lib/issues/1), [#2](https://github.com/spring-labs/ameba-lib/issues/2),
-[#8](https://github.com/spring-labs/ameba-lib/issues/8), [#21](https://github.com/spring-labs/ameba-lib/issues/21),
-[#37](https://github.com/spring-labs/ameba-lib/issues/37)
+- `TechnicalRuntimeException` – infrastructure / programming errors. Subclass: `IntegrationLayerException`,
+  `PresentationLayerException`, `ServiceLayerException`.
+- `BusinessRuntimeException` – expected business failures; can take a `Translator` to resolve the message
+  directly from the key.
+- `BehaviorAwareException` extends `BusinessRuntimeException` with an HTTP status mapping and a
+  `toResponse()` that produces a ready-to-return `ResponseEntity<Response>`. Subclasses:
+  `NotFoundException` (404), `ResourceExistsException` (409), `ResourceChangedException` (409),
+  `BadRequestException` (400), `GatewayException` (502), `GatewayTimeoutException` (504).
 
-### Web & MVC extensions
+Combine with `org.ameba.annotation.NotLogged` on exception types whose stack traces should never hit the log.
 
-Usually you expose resources in a RESTful way. But in practise we've seen that a client application, written in languages like Objective-C,
-needs some help with the actual response kind of RESTful API. Of course, we have HATEOAS and HAL but on the other end of the wire, the
-client need to know what is the expected type of response. That's why we put the resource into an _envelope_ - the
-`org.ameba.http.Response`. Beside the actual response entities, this class tracks a http status for each wrapped response object, has a
-message text and key and provides an arbitrary string dictionary that may be used to store the response type. On IOS there is no library to
-deal with HATEOAS responses in a comfortable way. Many solutions use [Restkit](https://github.com/RestKit/RestKit) and need to parse the response in an old-fashioned
-low-level way.
+### Internationalised messages
 
-A server using ameba-lib may respond with:
+`org.ameba.i18n.Translator` and the abstract bases `AbstractTranslator` / `AbstractSpringTranslator` turn a
+`messageKey` + args into a localised string using Spring's `MessageSource`. The auxiliary
+`NestedReloadableResourceBundleMessageSource` (in `org.ameba.i18n`) lets you chain multiple resource bundles
+without giving up hot-reload.
 
+```java
+throw new NotFoundException(translator, "customer.notfound", new Serializable[]{ id }, id);
 ```
-{
-  "message" : "Created",
-  "messageKey" : "generic.created",
-  "obj" : [ {
-    "userId" : "a204c4ce-adc2-4d32-a2f6-64be710933ad",
-    "name" : "admin",
-    "version" : "f7afa81b-6b77-41e5-bca9-872d9842c38b",
-    "lastModifiedDate" : [ 2014, 2, 16, 5, 28, 18, 866000000 ],
-    "_identifier" : "56cfd462e4b008cd0d16d3b0"
-  } ],
-  "httpStatus" : "201",
-  "class" : "User"
+
+### AOP aspects
+
+Add `@EnableAspects` to any `@Configuration` class and put `spring-aspects` on the runtime classpath. Four
+aspects kick in against pointcuts defined in `org.ameba.aop.Pointcuts` (override by placing your own
+`org.ameba.aop.Pointcuts` class earlier on the classpath):
+
+| Aspect                   | Method-tracing category    | Exception translation | Exception category             |
+|--------------------------|----------------------------|-----------------------|--------------------------------|
+| `PresentationLayerAspect`| –                          | –                     | `PRESENTATION_LAYER_EXCEPTION` |
+| `ServiceLayerAspect`     | `SERVICE_LAYER_ACCESS`     | yes                   | `SERVICE_LAYER_EXCEPTION`      |
+| `IntegrationLayerAspect` | `INTEGRATION_LAYER_ACCESS` | yes                   | `INTEGRATION_LAYER_EXCEPTION`  |
+| `MeasuredAspect`         | `MEASURED`                 | –                     | –                              |
+
+Set the respective SLF4J category to `INFO` for tracing and `ERROR` for exception logging (the bundled
+`logback-loggers.xml` already does this). Register an `ExceptionTranslator` bean to translate custom
+exception types into framework-recognised ones.
+
+```java
+@TxService                                // transactional + validated service stereotype
+public class CustomerService {
+
+    @Measured                             // log method execution time under MEASURED
+    public CustomerVO create(@Valid CustomerVO vo) { ... }
+
+    @NotTransformed                       // opt a single method out of exception translation
+    public void raw() { ... }
+}
+```
+
+Supporting annotations in `org.ameba.annotation`:
+
+- `@TxService` – meta-annotation combining `@Service`, `@Transactional`, and `@Validated`.
+- `@Measured` – mark classes or public methods for timing by `MeasuredAspect`.
+- `@NotLogged` – suppress stack-trace logging for an exception type.
+- `@NotTransformed` – opt a single service/integration method out of exception translation.
+- `@Public` – document that a type is intentionally `public`.
+- `@Default` – mark a preferred constructor/method (e.g. for MapStruct).
+- `@ExcludeFromScan` – exclude a `@Configuration` from component scans.
+- `@FilteredComponentScan` – `@ComponentScan` variant with the exclude filter above pre-applied.
+
+For measured REST controllers, use the composed stereotype:
+
+```java
+@MeasuredRestController("customers")   // = @RestController + @Measured + @Timed
+@RequestMapping("/v1/customers")
+public class CustomerController { ... }
+```
+
+### Multi-tenancy
+
+Activate with `@EnableMultiTenancy` on any `@Configuration` class:
+
+```java
+@Configuration
+@EnableMultiTenancy(
+    separationStrategy = SeparationStrategy.SCHEMA,   // or NONE (default), COLUMN
+    throwIfNotPresent  = true,                         // reject requests without tenant header
+    urlPatterns        = { "/api/*" },
+    defaultDatabaseSchema = "public",
+    tenantSchemaPrefix    = "t_"
+)
+public class AppConfig {}
+```
+
+What it wires up:
+
+1. `MultiTenantSessionFilter` – reads the `X-Tenant` (or `Tenant`) HTTP header and stores the value in
+   `TenantHolder` (an `InheritableThreadLocal`). Also mirrors the tenant into SLF4J MDC for the
+   `TenantDiscriminator` so Logback can route logs per tenant.
+2. `TenantClientRequestInterceptor` (auto-configured) – propagates the header to downstream `RestTemplate`
+   calls.
+3. `TenantFeignConfiguration.TenantRequestInterceptor` – same for Feign clients.
+4. `TenantAmqpConfiguration` – header propagation across RabbitMQ messages via
+   `TenantAmpqHeaderEnhancer` and `TenantAmqpHeaderResolver`.
+5. `SeparationStrategy.SCHEMA` – imports `SchemaBasedTenancyConfiguration`, which installs a Hibernate
+   `MultiTenantConnectionProvider` (`DefaultMultiTenantConnectionProvider`) that switches the JDBC schema per
+   tenant (`<tenantSchemaPrefix><tenant>`). Schemas must exist already – Hibernate DDL is not executed across
+   schemas. `SeparationStrategy.COLUMN` imports `ColumnBasedTenancyConfiguration` for discriminator-column
+   separation.
+
+Access the current tenant anywhere:
+
+```java
+TenantHolder.currentTenant().ifPresent(t -> logger.info("tenant={}", t));
+```
+
+Utility `org.ameba.tenancy.TenantSchemaUtils` applies a tenant to a JDBC `Connection`;
+`IllegalTenantException` is thrown when required tenant data is missing.
+
+### Identity awareness
+
+Activate with `@EnableIdentityAwareness`:
+
+```java
+@Configuration
+@EnableIdentityAwareness(
+    throwIfNotPresent    = true,
+    urlPatterns          = { "/api/*" },
+    identityResolverStrategy = HeaderAttributeResolverStrategy.class   // default
+)
+public class SecurityConfig {}
+```
+
+This registers `IdentityFilter`, which uses a pluggable `IdentityResolverStrategy` to extract the identity
+(default: `X-Identity` header via `HeaderAttributeResolverStrategy`; alternative:
+`TokenResolverStrategy` for JWT-subject extraction) and stores it in `IdentityContextHolder`.
+`IdentityClientRequestInterceptor` / `IdentityRequestInterceptor` / `IdentityAmqpConfiguration` propagate the
+same identity downstream over HTTP, Feign, and AMQP.
+
+```java
+String whoami = IdentityContextHolder.currentIdentity().orElse("anonymous");
+```
+
+### Call context propagation
+
+A `CallContext` object (caller, trace ID, free-form details) travels with every request and is exposed through
+`CallContextHolder`:
+
+```java
+CallContextHolder.setCaller(() -> "order-service");
+CallContextHolder.getOptionalCallContext()
+        .map(CallContext::getTraceId)
+        .ifPresent(MDC::put);
+```
+
+Transport adapters (auto-configured):
+
+- `CallContextWebMvcConfiguration` – servlet filter that reads the base64-encoded `X-CallContext` header and
+  populates the holder; client-side `CallContextClientRequestInterceptor` writes it out.
+- `CallContextFeignConfiguration.CallContextRequestInterceptor` – same for Feign.
+- `CallContextAmqpConfiguration` – enhancer/resolver for AMQP.
+- `OpenTelemetryCallContextConfiguration` – picks up the trace ID from an active OpenTelemetry `Span` (falls
+  back to `SimpleCallContextProvider` when OTel is not on the classpath).
+
+Extend `CallContextProvider` to plug in alternative trace sources.
+
+### Request-ID filter
+
+`org.ameba.http.RequestIDFilter` honours an existing `X-RequestID` header or mints a new ID via any
+`IDGenerator<String>` (default: `JdkIDGenerator` using `UUID.randomUUID()`). Register it explicitly:
+
+```java
+@Bean
+FilterRegistrationBean<RequestIDFilter> requestIdFilter() {
+    var reg = new FilterRegistrationBean<>(new RequestIDFilter(new JdkIDGenerator()));
+    reg.addUrlPatterns("/*");
+    return reg;
+}
+```
+
+Read from anywhere with `RequestIDHolder.getRequestID()`.
+
+### AMQP integration
+
+With RabbitMQ on the classpath, `AmqpConfiguration` installs a `SimpleRabbitListenerContainerFactory` that
+runs collected `MessagePostProcessorProvider` beans (inbound post-processing) and configures the outbound
+`RabbitTemplate` through `RabbitTemplateConfigurable` + `MessageHeaderEnhancer` beans. Typical usage:
+
+```java
+@Bean
+MessageHeaderEnhancer myHeaders() {
+    return msg -> msg.getMessageProperties().setHeader("X-Source", "customer-svc");
 }
 
+@Bean
+MessagePostProcessorProvider tenantInbound() {
+    return () -> List.of(message -> {
+        Object tenant = message.getMessageProperties().getHeaders().get("X-Tenant");
+        if (tenant != null) TenantHolder.setCurrentTenant(tenant.toString());
+        return message;
+    });
+}
 ```
 
-The client application may first read the status code of the http response, then the status code of each response item and then the
-type of response entity (e.g. `"class" : "User"`. With this type information the client can then select the
-appropriate converter to convert from JSON into the corresponding client specific class. A similar concept is included in [JSON Siren]
-(https://github.com/kevinswiber/siren).
+The Call-Context, Identity, and Tenant modules ship ready-made enhancer/resolver beans that use exactly this
+hook, so cross-service AMQP traffic stays contextually consistent without additional code.
 
-Beside the response encapsulation ameba-lib provides an abstract base class, that provides HATEOAS and Jackson support (`org.ameba.http.AbstractBase`).
-Some filter implementations for multi-tenancy and SLF4J context propagation are provided as well.
+### OAuth2 / JWT support
 
-### Mapper abstraction (0.7+)
+`org.ameba.oauth2` provides composable building blocks for validating JWTs in inbound requests. It does **not**
+register a filter by itself – wire `JwtValidationStrategy` into your own `ContainerRequestFilter` or
+`OncePerRequestFilter`:
 
-In first place we use [Dozer](http://dozer.sourceforge.net) as mapping library. But this dependency is optional, and other mapper libraries can be used as well. A
-common interface is defined were client applications can rely on. This is a Java 5 generic interface that makes it easy to map at compile
-time. Why we need to map at all in Java is a different discussion. Since version 0.7 a `org.ameba.mapping.BeanMapper` interface is provided
-to applications that need to map object structures. Since the same version the `org.ameba.mapping.DozerMapperImpl` and several Dozer
-converters exist.
+```java
+@Bean
+OncePerRequestFilter jwtFilter(List<TokenExtractor> extractors, JwtValidator validator) {
+    var strategy = new JwtValidationStrategy(extractors, validator);
+    return new OncePerRequestFilter() {
+        @Override protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain c)
+                throws ServletException, IOException {
+            strategy.doFilter(req, res);
+            c.doFilter(req, res);
+        }
+    };
+}
+```
 
-### Multi-tenancy (1.0+)
+Moving parts:
 
-Multi-tenancy support requires at first determination of the current tenant and afterwards actions, mostly on persistent data, that need to
-be taken depending on the tenant.
+- `TokenExtractor` – `BearerTokenExtractor` pulls the raw JWT from the `Authorization` header;
+  `DefaultTokenExtractor` validates the issuer against an `IssuerWhiteList` before delegating to a matching
+  `TokenParser` (ships with `HS512TokenParser` and `RSA256TokenParser` under `parser/`).
+- `IssuerWhiteList` – either `ConfigurationIssuerWhiteList` (YAML/properties) or
+  `PersistentIssuerWhiteList` (JPA-backed, with `JwksUrlRepository` for rotating keys).
+- `TenantValidator` – validates that the tenant carried on the request is configured for the token issuer.
+- `JwtValidator` – implement extra business checks (audience, scopes, revocation).
 
-Determination of the tenant can be realized using a web filter `org.ameba.http.MultiTenantSessionFilter` (1.0+). This filter tries to get
-a http header attribute called `X-Tenant` or `Tenant` and stores it in a threadlocal variable. On business- or integration layer this
-context information is used to separate log files or to separate between databases, database schemas or database tables (up to the specific
-solution). Look at the [tenancy sample](https://github.com/spring-labs/tenancy-sample) to understand how this works on database level. Separating
-the log files is special. Ameba-lib uses SLF4J to abstract from the underlying logging framework. In case of context-aware data (like the
-tenant name) needs to be populated down to the underlying logging library, SLF4J make it easy to work with [Logback](http://logback.qos.ch/).
-SLF4J smoothly populates the logback context with its own context. If you're using other frameworks, like Log4j you need to implement a
-custom _Context Populator_ that ready the SLF4J MDC/NDC and populates the log4j MDC/NDC properly.
+### Logback extensions
 
-Starting with 1.7 the configuration of multi-tenancy support can be done much more elegant by using the classlevel annotation
-`@EnableMultiTenancy`. No manual filter registration needs to be done anymore.
+Include the bundled fragments in your `logback.xml`:
 
-#### Data record separation
+```xml
+<configuration>
+    <property name="MODULE_NAME" value="customer-svc"/>
+    <!-- <property name="LOG_PATH"   value="/var/log/customer-svc"/> -->
 
-New since 2.0: Tenant separation on database schema level. With the `@EnableMultiTenancy` annotation it is now possible to
-define a data separation strategy for relational databases. Currently only the `SeparationStrategy.SCHEMA` is
-supported and by default database separation is turned off (`SeparationStrategy.NONE`).
+    <include resource="logback-appenders.xml"/>
+    <include resource="logback-loggers.xml"/>
 
-**Requirements and restrictions**
-- Requires Hibernate 5.x and Spring Boot 2.x
-- Only database schema separation supported yet (2.0)
-- Database schema must already exist and cannot be created with Hibernate creation strategies on the fly
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="LOGFILE"/>
+    </root>
+</configuration>
+```
 
-Referenced issues:
-- [#102](https://github.com/spring-labs/ameba-lib/issues/102)
-- [#141](https://github.com/spring-labs/ameba-lib/issues/141)
+Appenders defined in `logback-appenders.xml`:
 
-### Logging extensions (1.7+)
+| Appender | Destination                                      | Purpose                                             |
+|----------|--------------------------------------------------|-----------------------------------------------------|
+| STDOUT   | stdout                                           | Useful for tests and containerised deployments      |
+| LOGFILE  | `<LOG_PATH>/BOOT-<MODULE_NAME>.log`              | Application / trace logging                         |
+| EXCFILE  | `<LOG_PATH>/BOOT-<MODULE_NAME>.exlog`            | Exception logging (`*_LAYER_EXCEPTION` categories)  |
+| TSL      | `<LOG_PATH>/BOOT-<MODULE_NAME>.tslog`            | `SERVICE_LAYER_ACCESS` / `INTEGRATION_LAYER_ACCESS` |
 
-Starting with version 1.7 some useful logging extensions were added. At first a `ThreadIdProvider` is used to identify each thread in a
-concurrent test run. By default, logback does only provide a meaningless thread name. But a thread counter can now be configured to display
-the current value in the log message. To get the full power of Ameba log extensions just include the `logback-appenders.xml` and
-`logback-loggers.xml` into your logback.xml:
+Output paths fall back in this order: `$LOG_PATH` → `$CATALINA_BASE` → `$LOG_TEMP` → `java.io.tmpdir`. The
+tenant segment defaults to `BOOT` when no tenant is bound. For Loki deployments include
+`logback-loki.xml` instead.
 
- ````
- <configuration>
- 
-     <property name="MODULE_NAME" value="stamplets"/>
- 
-     <include resource="logback-appenders.xml" />
-     <include resource="logback-loggers.xml" />
- 
-     <logger name="org.foo" level="ERROR"/>
- 
-     <root level="DEBUG">
-         <appender-ref ref="STDOUT"/>
-         <appender-ref ref="LOGFILE"/>
-     </root>
- 
- </configuration>
- ```` 
+Extensions in `org.ameba.logging`:
 
-The following appender names are defined: 
+- `TenantDiscriminator` – sift appender discriminator keying on `TenantHolder.getCurrentTenant()`.
+- `ThreadIdProvider` – a numeric counter exposed as a property for the Logback pattern, so concurrent test
+  runs become readable.
 
-| Appender name | Outputs to                              | Description                              |
-| ------------- |:--------------------------------------- |:---------------------------------------- |
-| STDOUT        | stdout                                  | Print sto stdout. Useful for test output |
-| LOGFILE       | java.io.tmpdir/BOOT-<MODULE_NAME>.log   | Standard program or trace logging        |
-| EXCFILE       | java.io.tmpdir/BOOT-<MODULE_NAME>.exlog | Exception logs                           |
-| TSL           | java.io.tmpdir/BOOT-<MODULE_NAME>.tslog | Technical service logging. Logs method execution consumption |
+Log categories used across the aspects and propagation machinery are constants on
+`org.ameba.LoggingCategories` (`SERVICE_LAYER_ACCESS`, `INTEGRATION_LAYER_EXCEPTION`, `MEASURED`, `BOOT`,
+`CALLCONTEXT`, …).
 
-The module name can be configured as logback property:
+### Bean mapping
 
- ```` 
-     <property name="MODULE_NAME" value="my-module"/>
- ```` 
+`org.ameba.mapping.BeanMapper` is a minimal, implementation-agnostic mapping facade.
+`DozerMapperImpl` is provided out of the box, along with `LocalDateConverter`, `LocalDateTimeConverter`,
+and `ZonedDateTimeConverter` for the Java 8 date-time types.
 
-`BOOT` is the default tenant name. The logging is basically multitenant-aware. If no active tenant is set, the default is used as prefix.
-A tenant can be set by adding a property called `Tenant` to the `org.slf4j.MDC`. See `org.ameba.http.SLF4JMappedDiagnosticContextFilter`.
+```java
+@Autowired BeanMapper mapper;
+CustomerVO vo  = mapper.map(customer, CustomerVO.class);
+List<CustomerVO> vos = mapper.map(customers, CustomerVO.class);
+mapper.mapFromTo(customer, existingVO);    // merges into an existing target
+```
 
-The logfile path can be configured by setting the logback property:
+Swap the implementation by providing your own `BeanMapper` bean (MapStruct, ModelMapper, …). Dozer is an
+optional dependency – supply it yourself.
 
- ```` 
-     <property name="LOG_PATH" value="/tmp"/>
- ```` 
+### Utility constants and helpers
 
-By default, ameba logging first tries to find the configured $LOG_PATH property. If this property does not exist, it looks up $CATALINA_BASE
-to check if the application is running inside Tomcat. If even this does not exist it tries to find a logback property named $LOG_TEMP, and
-if that does not exist either, it will log to java.io.tmpdir.
-
-Notice: The output pattern is defined to be aligned to the Grok pattern that is used in combination with Logstash ([logstash.conf][logstashconf]).
-
-### OAuth2 Token Parsing and Handling (1.11+)
-
-Java package `org.ameba.oauth2` contains all types to ease the handling of OAuth2 and OpenID Connect JWT parsing, validation and handling.
-Notice that the structure nor the content of the tokens are not defined by the OAuth2 specification. Often the JWT format is used as token
-format with various signing algorithms. An application may define a servlet filter or a `javax.ws.rs.container.ContainerRequestFilter` to
-introduce OAuth2 Token handling. This filter could then delegate to an instance of `org.ameba.oauth2.JwtValidationStrategy` to integrate
-Ameba OAuth2 support.
-
-Basically Ameba OAuth2 Support works as the follows;
- 
- - The filter strategy uses Extractors and Validators to extract tokens from the incoming request and to validate them
- - The `BearerTokenExtractor` extracts a Bearer token from the Authorization header
- - The `DefaultTokenExtractor` uses the unsigned part of the JWT and validates the token issuer against an `IssuerWhiteList` first,
- afterward it uses one of the `TokenParsers` to extract and parse the token under consideration of the token signature
- - The `TenantValidator` should be used when a Tenant identifier exists and the Tenant is configured to work with the Token issuer. 
-
-Extension Points:
- 
- - Support additional signing algorithms and implement another `TokenParser`
- - Implement your own Repository to retrieve whitelist information and implement `IssuerWhiteList`
- - Implement your own `JwtValidator`
+- `org.ameba.app.SpringProfiles` – canonical profile names (`DEV`, `IT`, `UAT`, `PROD`, `DISTRIBUTED`,
+  `AMQP`, `MQTT`, `KAFKA`).
+- `org.ameba.Constants` – canonical HTTP header names (`HEADER_VALUE_X_TENANT`, `HEADER_VALUE_X_IDENTITY`,
+  `HEADER_VALUE_X_REQUESTID`, `HEADER_VALUE_X_CALLERID`, `HEADER_VALUE_X_CALL_CONTEXT`) and API date
+  patterns.
+- `org.ameba.IDGenerator<T>` / `JdkIDGenerator` – inject your own strategy for correlation IDs.
+- `org.ameba.system.ValidationUtil.validate(validator, bean, groups...)` – throws
+  `ConstraintViolationException` with a readable message listing the invalid property paths.
+- `org.ameba.Identifiable<T>` – marker interface for entities exposing an identifier.
 
 ## Development process
  Contribution welcome. The development process is kept lean, without the need to apply any IDE formatter templates. Just a few rules to
