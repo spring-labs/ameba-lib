@@ -17,7 +17,8 @@ package org.ameba.oauth2.parser;
 
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.ameba.oauth2.InvalidTokenException;
 import org.ameba.oauth2.Symmetric;
 import org.ameba.oauth2.TokenParser;
@@ -25,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A HS256TokenParser uses a symmetric SHA-512 signing key to verify the signature.
+ * A HS512TokenParser uses a symmetric SHA-512 signing key to verify the signature.
  *
  * @author Heiko Scherrer
  */
@@ -38,7 +39,7 @@ public class HS512TokenParser implements TokenParser<Symmetric, Jwt> {
      */
     @Override
     public String supportAlgorithm() {
-        return SignatureAlgorithm.HS512.toString();
+        return Jwts.SIG.HS512.getId();
     }
 
     /**
@@ -49,17 +50,16 @@ public class HS512TokenParser implements TokenParser<Symmetric, Jwt> {
         if (issuer == null) {
             throw new IllegalArgumentException("Expected symmetric issuer is null");
         }
-        if (issuer.getSigningKey() == null || "".equals(issuer.getSigningKey())) {
+        if (issuer.getSigningKey() == null || issuer.getSigningKey().isEmpty()) {
             throw new IllegalArgumentException("Symmetric signing key is null or empty. Configure a signing key");
         }
-
-        Jwt jwt;
         try {
-            jwt = Jwts.parser()
+            var key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(issuer.getSigningKey()));
+            return Jwts.parser()
                     .clockSkewSeconds(issuer.getSkewSeconds())
-                    .setSigningKey(issuer.getSigningKey())
-                    .build().parseClaimsJws(token);
-            return jwt;
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw new InvalidTokenException(e.getMessage());

@@ -15,13 +15,11 @@
  */
 package org.ameba.oauth2.parser;
 
-import com.auth0.jwk.Jwk;
 import com.auth0.jwk.JwkProvider;
 import com.auth0.jwk.UrlJwkProvider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.ameba.oauth2.Asymmetric;
 import org.ameba.oauth2.InvalidTokenException;
 import org.ameba.oauth2.TokenParser;
@@ -31,8 +29,6 @@ import org.slf4j.LoggerFactory;
 import java.security.KeyFactory;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
-
-import static java.lang.String.format;
 
 /**
  * A RSA256TokenParser uses a SHA-256 Public Key to verify signature.
@@ -55,7 +51,7 @@ public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
      */
     @Override
     public String supportAlgorithm() {
-        return SignatureAlgorithm.RS256.toString();
+        return Jwts.SIG.RS256.getId();
     }
 
     /**
@@ -66,26 +62,25 @@ public class RSA256TokenParser implements TokenParser<Asymmetric, Jws<Claims>> {
         if (issuer == null) {
             throw new IllegalArgumentException("Expected asymmetric issuer is null");
         }
-        if (issuer.getKID() == null || "".equals(issuer.getKID())) {
+        if (issuer.getKID() == null || issuer.getKID().isEmpty()) {
             throw new IllegalArgumentException("JWK kid is null or empty. Configure a kid");
         }
-        Jws<Claims> jws;
         try {
             if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug(format("Checking issuer with KID [%s]", issuer.getKID()));
+                LOGGER.debug("Checking issuer with KID [{}]", issuer.getKID());
             }
-            Jwk jwk = jwkProvider == null
+            var jwk = jwkProvider == null
                     ? new UrlJwkProvider(issuer.getJWKURL(), 60000, 60000).get(issuer.getKID())
                     : jwkProvider.get(issuer.getKID());
-            byte[] publicKeyBytes = jwk.getPublicKey().getEncoded();
-            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            var publicKeyBytes = jwk.getPublicKey().getEncoded();
+            var keySpec = new X509EncodedKeySpec(publicKeyBytes);
+            var keyFactory = KeyFactory.getInstance("RSA");
             PublicKey pubKey = keyFactory.generatePublic(keySpec);
-            jws = Jwts.parser()
-                    .setAllowedClockSkewSeconds(issuer.getSkewSeconds())
-                    .setSigningKey(pubKey)
-                    .build().parseClaimsJws(token);
-            return jws;
+            return Jwts.parser()
+                    .clockSkewSeconds(issuer.getSkewSeconds())
+                    .verifyWith(pubKey)
+                    .build()
+                    .parseSignedClaims(token);
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             throw new InvalidTokenException(e.getMessage());
