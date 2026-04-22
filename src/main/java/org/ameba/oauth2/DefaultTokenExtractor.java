@@ -67,14 +67,14 @@ public class DefaultTokenExtractor implements TokenExtractor {
     }
 
     private void ensureTokenNotExpired(JsonNode tokenPayload) {
-        long nowTime = new Date().getTime();
-        var exp = tokenPayload.get("exp").isNull() ? null : new Date(tokenPayload.get("exp").asLong() * 1000);
-        if (exp != null) {
-            var maxTime = nowTime - Issuer.DEFAULT_MAX_SKEW_SECONDS;
-            var max = new Date(maxTime);
-            if (max.after(exp)) {
-                throw new InvalidTokenException("Token has expired");
-            }
+        var expNode = tokenPayload.path("exp");
+        if (expNode.isMissingNode() || expNode.isNull()) {
+            return;
+        }
+        var exp = new Date(expNode.asLong() * 1000);
+        var maxTime = new Date().getTime() - Issuer.DEFAULT_MAX_SKEW_SECONDS;
+        if (new Date(maxTime).after(exp)) {
+            throw new InvalidTokenException("Token has expired");
         }
     }
 
@@ -94,13 +94,17 @@ public class DefaultTokenExtractor implements TokenExtractor {
 
         ensureTokenNotExpired(tokenPayload);
 
+        var issNode = tokenPayload.path("iss");
+        if (issNode.isMissingNode() || issNode.isNull() || issNode.asText().isEmpty()) {
+            throw new InvalidTokenException("Missing iss claim");
+        }
+        var iss = issNode.asText();
+
         Issuer issuer;
         if (tokenHeader.has("kid")) {
-
-            issuer = whiteList.getIssuer(tokenPayload.get("iss").asText(), tokenHeader.get("kid").asText());
+            issuer = whiteList.getIssuer(iss, tokenHeader.get("kid").asText());
         } else {
-
-            var issuers = whiteList.getIssuers(tokenPayload.get("iss").asText());
+            var issuers = whiteList.getIssuers(iss);
             // Okay, the issuer seems to have multiple kids for the same issuer ID, so take the first one...
             issuer = issuers.isEmpty() ? null : issuers.getFirst();
         }
