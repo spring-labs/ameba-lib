@@ -37,13 +37,22 @@ public class BearerTokenExtractor extends DefaultTokenExtractor {
      */
     @Override
     public ExtractionResult canExtract(String authHeader) {
-        String token = stripBearer(authHeader);
-        String[] parts = token.split("\\.");
-        return authHeader.startsWith("Bearer ") && parts.length == 3 ? new ExtractionResult() : new ExtractionResult("Not a valid JWT");
+        if (authHeader == null) {
+            return new ExtractionResult("No Authorization header");
+        }
+        if (!authHeader.startsWith("Bearer ")) {
+            return new ExtractionResult("Not a valid JWT");
+        }
+        var token = stripBearer(authHeader);
+        var parts = token.split("\\.");
+        if (parts.length != 3 || token.indexOf(' ') >= 0) {
+            return new ExtractionResult("Not a valid JWT");
+        }
+        return new ExtractionResult();
     }
 
     private String stripBearer(String authHeader) {
-        return authHeader.replace("Bearer ", "");
+        return authHeader.startsWith("Bearer ") ? authHeader.substring("Bearer ".length()) : authHeader;
     }
 
     /**
