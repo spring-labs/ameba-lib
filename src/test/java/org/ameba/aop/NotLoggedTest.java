@@ -92,6 +92,20 @@ class NotLoggedTest {
             e.printStackTrace();
         }
     }
+
+    @Test void testNotLoggedInCauseChainIsSuppressed() {
+        try {
+            service.wrapsNotLogged();
+            fail("Expected exception");
+        } catch (Exception ex) {
+            // expected
+        }
+        for (ILoggingEvent next : LogCaptureAppender.getEvents()) {
+            if (next.getMessage() != null && next.getMessage().contains("wrapper of not-logged")) {
+                fail("Exception with @NotLogged in its cause chain was logged");
+            }
+        }
+    }
 }
 
 @TxService
@@ -101,6 +115,9 @@ class MyService {
     }
     void logged() {
         throw new MyException("Must be logged");
+    }
+    void wrapsNotLogged() {
+        throw new MyException("wrapper of not-logged", new MyNotLoggedException("inner"));
     }
 }
 
@@ -114,5 +131,8 @@ class MyNotLoggedException extends RuntimeException {
 class MyException extends RuntimeException {
     public MyException(String message) {
         super(message);
+    }
+    public MyException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

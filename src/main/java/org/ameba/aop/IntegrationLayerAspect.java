@@ -16,7 +16,6 @@
 package org.ameba.aop;
 
 import org.ameba.LoggingCategories;
-import org.ameba.annotation.NotLogged;
 import org.ameba.annotation.NotTransformed;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.IntegrationLayerException;
@@ -110,7 +109,7 @@ public class IntegrationLayerAspect {
      * @return Returns the exception to be thrown
      */
     public Exception translateException(Exception ex) {
-        if (EXC_LOGGER.isErrorEnabled() && ex.getClass().getAnnotation(NotLogged.class) != null) {
+        if (EXC_LOGGER.isErrorEnabled() && !AspectSupport.hasNotLogged(ex)) {
             EXC_LOGGER.error(ex.getLocalizedMessage(), ex);
         }
 

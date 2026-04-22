@@ -16,7 +16,6 @@
 package org.ameba.aop;
 
 import org.ameba.LoggingCategories;
-import org.ameba.annotation.NotLogged;
 import org.ameba.annotation.NotTransformed;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.ServiceLayerException;
@@ -95,7 +94,7 @@ public class ServiceLayerAspect {
             var notTransformed = method.getAnnotation(NotTransformed.class);
             if (notTransformed == null) {
                 Exception e = translateException(ex);
-                if (EXC_LOGGER.isErrorEnabled() && !hasNotLogged(ex)) {
+                if (EXC_LOGGER.isErrorEnabled() && !AspectSupport.hasNotLogged(ex)) {
                     EXC_LOGGER.error(e.getLocalizedMessage(), e);
                 }
                 throw e;
@@ -107,16 +106,6 @@ public class ServiceLayerAspect {
             }
         }
         return obj;
-    }
-
-    private boolean hasNotLogged(Throwable ex) {
-        if (ex.getClass().getAnnotation(NotLogged.class) != null) {
-            return true;
-        }
-        if (ex.getCause() != null) {
-            return hasNotLogged(ex.getCause());
-        }
-        return false;
     }
 
     /**
