@@ -32,6 +32,7 @@
             logger=%logger
         </structuredMetadata>
         <readMarkers>false</readMarkers> <!-- Disabled to prevent conflicts with staticLabels. Markers would add dynamic labels which contradicts static label configuration -->
-        <metricsEnabled>true</metricsEnabled> <!-- The appender will report its metrics using Micrometer -->
+        <metricsEnabled>${LOKI_METRICS_ENABLED:-false}</metricsEnabled> <!-- Opt-in: set LOKI_METRICS_ENABLED=true to report appender metrics via Micrometer. Note that enabling
+             it causes a benign one-time CompositeMeterRegistry WARN, because meters are registered at logging-init time before Spring Boot sets up its registries -->
     </appender>
 </included>
