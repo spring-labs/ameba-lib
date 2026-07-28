@@ -18,16 +18,18 @@ package org.ameba.http;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.jayway.jsonpath.Configuration;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.jayway.jsonpath.JsonPath.read;
 
 /**
  * An instance of Response is a transfer object that is used to encapsulate a server response to the client application.
@@ -71,25 +73,49 @@ public class Response<T extends Serializable> extends RepresentationModel<Respon
         httpStatus = builder.httpStatus;
     }
 
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
     /**
      * Checks whether all mandatory fields are set on the String passed as {@literal s} and parses this String into a
-     * valid instance.
+     * valid instance. The {@literal componentType} is required to materialise the {@code obj} array at runtime because
+     * Java generics erase the element type of {@code T[]}.
      *
      * @param s The String to get the mandatory fields from
+     * @param componentType The runtime component type used to build the {@code obj} array
      * @return The instance
      * @throws ParseException In case the given String didn't match
      */
-    public static <T extends Serializable> Response<T> parse(String s) throws ParseException {
-        if (s.contains("message") &&
-                s.contains("messageKey") &&
-                s.contains("httpStatus") &&
-                s.contains(CLASS)) {
-            var d = Configuration.defaultConfiguration().jsonProvider().parse(s);
-            String[] obj = read(d, "$.obj");
-            var r = new Response<>(read(d, "$.message"), read(d, "$.messageKey"), read(d, "$.httpStatus"), obj);
-            r.any();
+    @SuppressWarnings("unchecked")
+    public static <T extends Serializable> Response<T> parse(String s, Class<T> componentType) throws ParseException {
+        JsonNode tree;
+        try {
+            tree = MAPPER.readTree(s);
+        } catch (JsonProcessingException e) {
+            throw (ParseException) new ParseException(String.format("Invalid JSON. [%s]", s), -1).initCause(e);
         }
-        throw new ParseException(String.format("String does not contain mandatory fields. [%s]", s), -1);
+        if (!tree.has("message") || !tree.has("messageKey") || !tree.has("httpStatus") || !tree.has(CLASS)) {
+            throw new ParseException(String.format("String does not contain mandatory fields. [%s]", s), -1);
+        }
+        var objList = new ArrayList<T>();
+        var objNode = tree.get("obj");
+        if (objNode != null && objNode.isArray()) {
+            for (var elem : objNode) {
+                try {
+                    objList.add(MAPPER.treeToValue(elem, componentType));
+                } catch (JsonProcessingException e) {
+                    throw (ParseException) new ParseException(String.format("Cannot convert obj element. [%s]", elem), -1).initCause(e);
+                }
+            }
+        }
+        var empty = (T[]) Array.newInstance(componentType, 0);
+        var obj = objList.isEmpty() ? null : objList.toArray(empty);
+        var r = new Response<>(
+                tree.path("message").asText(null),
+                tree.path("messageKey").asText(null),
+                tree.path("httpStatus").asText(null),
+                obj);
+        r.any();
+        return r;
     }
 
     public static <T extends Serializable> Builder<T> newBuilder() {

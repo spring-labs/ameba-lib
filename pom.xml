@@ -54,7 +54,6 @@
         <jakarta-servlet.version>6.1.0</jakarta-servlet.version> <!-- in line with boot -->
         <jakarta.persistence-api.version>3.2.0</jakarta.persistence-api.version> <!-- in line with boot / hibernate-core -->
         <jakarta.validation-api.version>3.1.1</jakarta.validation-api.version> <!-- in line with hibernate-validator-parent -->
-        <json-path.version>2.10.0</json-path.version> <!-- in line with boot -->
         <jjwt.version>0.12.6</jjwt.version>
         <jwks-rsa.version>0.22.2</jwks-rsa.version>
         <logback.version>1.5.32</logback.version> <!-- in line with boot -->
@@ -374,8 +373,8 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
@@ -624,11 +623,6 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.jayway.jsonpath</groupId>
-                <artifactId>json-path</artifactId>
-                <version>${json-path.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.dozermapper</groupId>
